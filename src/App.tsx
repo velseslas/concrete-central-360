@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Sidebar from "./components/layout/Sidebar";
 import Header from "./components/layout/Header";
 import Dashboard from "./pages/Dashboard";
+import Formulations from "./pages/Formulations";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = () => (
             <main>
               <Routes>
                 <Route path="/" element={<Dashboard />} />
+                <Route path="/formulations" element={<Formulations />} />
               </Routes>
             </main>
           </div>
