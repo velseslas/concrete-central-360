@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import { FormulationForm } from "@/components/formulations/FormulationForm";
+import { useToast } from "@/components/ui/use-toast";
 
 const Formulations = () => {
-  const formulations = [
+  const [formulations, setFormulations] = useState([
     {
       id: 1,
       nom: "B25",
@@ -24,7 +27,25 @@ const Formulations = () => {
       eau: "180 L/m³",
       status: "Active",
     },
-  ];
+  ]);
+
+  const [open, setOpen] = useState(false);
+  const { toast } = useToast();
+
+  const handleSubmit = (data: any) => {
+    const newFormulation = {
+      id: formulations.length + 1,
+      ...data,
+      status: "Active",
+    };
+
+    setFormulations([...formulations, newFormulation]);
+    setOpen(false);
+    toast({
+      title: "Formulation créée",
+      description: "La nouvelle formulation a été ajoutée avec succès.",
+    });
+  };
 
   return (
     <div className="p-6">
@@ -33,7 +54,7 @@ const Formulations = () => {
           <h1 className="text-2xl font-bold">Formulations</h1>
           <p className="text-gray-500">Gérez vos formulations de béton</p>
         </div>
-        <Button>
+        <Button onClick={() => setOpen(true)}>
           <Plus className="mr-2 h-4 w-4" />
           Nouvelle formulation
         </Button>
@@ -71,6 +92,12 @@ const Formulations = () => {
           </TableBody>
         </Table>
       </div>
+
+      <FormulationForm 
+        open={open} 
+        onOpenChange={setOpen}
+        onSubmit={handleSubmit}
+      />
     </div>
   );
 };
