@@ -12,19 +12,13 @@ const Formulations = () => {
       nom: "B25",
       resistance: "25 MPa",
       ciment: "350 kg/m³",
-      sable: "800 kg/m³",
-      gravier: "1050 kg/m³",
+      sable01: "200 kg/m³",
+      sable03: "300 kg/m³",
+      sable04: "300 kg/m³",
+      gravier38: "350 kg/m³",
+      gravier815: "350 kg/m³",
+      gravier1525: "350 kg/m³",
       eau: "175 L/m³",
-      status: "Active",
-    },
-    {
-      id: 2,
-      nom: "B30",
-      resistance: "30 MPa",
-      ciment: "400 kg/m³",
-      sable: "750 kg/m³",
-      gravier: "1100 kg/m³",
-      eau: "180 L/m³",
       status: "Active",
     },
   ]);
@@ -60,17 +54,30 @@ const Formulations = () => {
         </Button>
       </div>
 
-      <div className="bg-white rounded-lg shadow">
+      <div className="bg-white rounded-lg shadow overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow>
               <TableHead>Nom</TableHead>
               <TableHead>Résistance</TableHead>
               <TableHead>Ciment</TableHead>
-              <TableHead>Sable</TableHead>
-              <TableHead>Gravier</TableHead>
+              <TableHead className="text-center" colSpan={3}>Sables</TableHead>
+              <TableHead className="text-center" colSpan={3}>Graviers</TableHead>
               <TableHead>Eau</TableHead>
               <TableHead>Status</TableHead>
+            </TableRow>
+            <TableRow>
+              <TableHead></TableHead>
+              <TableHead></TableHead>
+              <TableHead></TableHead>
+              <TableHead>0/1</TableHead>
+              <TableHead>0/3</TableHead>
+              <TableHead>0/4</TableHead>
+              <TableHead>3/8</TableHead>
+              <TableHead>8/15</TableHead>
+              <TableHead>15/25</TableHead>
+              <TableHead></TableHead>
+              <TableHead></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -79,8 +86,12 @@ const Formulations = () => {
                 <TableCell className="font-medium">{formulation.nom}</TableCell>
                 <TableCell>{formulation.resistance}</TableCell>
                 <TableCell>{formulation.ciment}</TableCell>
-                <TableCell>{formulation.sable}</TableCell>
-                <TableCell>{formulation.gravier}</TableCell>
+                <TableCell>{formulation.sable01}</TableCell>
+                <TableCell>{formulation.sable03}</TableCell>
+                <TableCell>{formulation.sable04}</TableCell>
+                <TableCell>{formulation.gravier38}</TableCell>
+                <TableCell>{formulation.gravier815}</TableCell>
+                <TableCell>{formulation.gravier1525}</TableCell>
                 <TableCell>{formulation.eau}</TableCell>
                 <TableCell>
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">

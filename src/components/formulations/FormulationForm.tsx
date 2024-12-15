@@ -10,8 +10,14 @@ const formulationSchema = z.object({
   nom: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
   resistance: z.string().min(1, "La résistance est requise"),
   ciment: z.string().min(1, "Le dosage en ciment est requis"),
-  sable: z.string().min(1, "Le dosage en sable est requis"),
-  gravier: z.string().min(1, "Le dosage en gravier est requis"),
+  // Sables
+  sable01: z.string().min(1, "Le dosage en sable 0/1 est requis"),
+  sable03: z.string().min(1, "Le dosage en sable 0/3 est requis"),
+  sable04: z.string().min(1, "Le dosage en sable 0/4 est requis"),
+  // Graviers
+  gravier38: z.string().min(1, "Le dosage en gravier 3/8 est requis"),
+  gravier815: z.string().min(1, "Le dosage en gravier 8/15 est requis"),
+  gravier1525: z.string().min(1, "Le dosage en gravier 15/25 est requis"),
   eau: z.string().min(1, "Le dosage en eau est requis"),
 });
 
@@ -30,8 +36,12 @@ export function FormulationForm({ open, onOpenChange, onSubmit }: FormulationFor
       nom: "",
       resistance: "",
       ciment: "",
-      sable: "",
-      gravier: "",
+      sable01: "",
+      sable03: "",
+      sable04: "",
+      gravier38: "",
+      gravier815: "",
+      gravier1525: "",
       eau: "",
     },
   });
@@ -83,32 +93,90 @@ export function FormulationForm({ open, onOpenChange, onSubmit }: FormulationFor
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="sable"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Sable (kg/m³)</FormLabel>
-                  <FormControl>
-                    <Input placeholder="800 kg/m³" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="gravier"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Gravier (kg/m³)</FormLabel>
-                  <FormControl>
-                    <Input placeholder="1050 kg/m³" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="space-y-4">
+              <h3 className="font-medium">Sables</h3>
+              <FormField
+                control={form.control}
+                name="sable01"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Sable 0/1 (kg/m³)</FormLabel>
+                    <FormControl>
+                      <Input placeholder="200 kg/m³" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="sable03"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Sable 0/3 (kg/m³)</FormLabel>
+                    <FormControl>
+                      <Input placeholder="300 kg/m³" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="sable04"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Sable 0/4 (kg/m³)</FormLabel>
+                    <FormControl>
+                      <Input placeholder="300 kg/m³" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="space-y-4">
+              <h3 className="font-medium">Graviers</h3>
+              <FormField
+                control={form.control}
+                name="gravier38"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Gravier 3/8 (kg/m³)</FormLabel>
+                    <FormControl>
+                      <Input placeholder="350 kg/m³" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="gravier815"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Gravier 8/15 (kg/m³)</FormLabel>
+                    <FormControl>
+                      <Input placeholder="350 kg/m³" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="gravier1525"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Gravier 15/25 (kg/m³)</FormLabel>
+                    <FormControl>
+                      <Input placeholder="350 kg/m³" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
             <FormField
               control={form.control}
               name="eau"
