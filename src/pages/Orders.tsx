@@ -1,0 +1,136 @@
+import { useState } from "react";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { Plus, FileText, Truck, CheckCircle } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+
+interface Order {
+  id: string;
+  client: string;
+  formulation: string;
+  volume: number;
+  status: "pending" | "in_progress" | "completed";
+  deliveryDate: string;
+}
+
+const Orders = () => {
+  const [orders] = useState<Order[]>([
+    {
+      id: "CMD001",
+      client: "Client A",
+      formulation: "B25",
+      volume: 30,
+      status: "pending",
+      deliveryDate: "2024-03-20",
+    },
+    {
+      id: "CMD002",
+      client: "Client B",
+      formulation: "B30",
+      volume: 45,
+      status: "in_progress",
+      deliveryDate: "2024-03-21",
+    },
+  ]);
+
+  const getStatusBadge = (status: Order["status"]) => {
+    const statusConfig = {
+      pending: { label: "En attente", className: "bg-yellow-100 text-yellow-800" },
+      in_progress: { label: "En cours", className: "bg-blue-100 text-blue-800" },
+      completed: { label: "Terminée", className: "bg-green-100 text-green-800" },
+    };
+
+    const config = statusConfig[status];
+    return (
+      <Badge variant="outline" className={config.className}>
+        {config.label}
+      </Badge>
+    );
+  };
+
+  return (
+    <div className="p-6 space-y-6">
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold text-primary">Commandes</h1>
+          <p className="text-gray-500">Gestion des commandes clients</p>
+        </div>
+        <Button className="bg-primary">
+          <Plus className="mr-2 h-4 w-4" />
+          Nouvelle commande
+        </Button>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="card-dashboard">
+          <div className="flex items-center space-x-4">
+            <div className="p-3 bg-blue-100 rounded-full">
+              <FileText className="h-6 w-6 text-blue-600" />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-gray-500">Total commandes</p>
+              <p className="text-2xl font-semibold">{orders.length}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="card-dashboard">
+          <div className="flex items-center space-x-4">
+            <div className="p-3 bg-yellow-100 rounded-full">
+              <Truck className="h-6 w-6 text-yellow-600" />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-gray-500">En cours</p>
+              <p className="text-2xl font-semibold">
+                {orders.filter((o) => o.status === "in_progress").length}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="card-dashboard">
+          <div className="flex items-center space-x-4">
+            <div className="p-3 bg-green-100 rounded-full">
+              <CheckCircle className="h-6 w-6 text-green-600" />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-gray-500">Terminées</p>
+              <p className="text-2xl font-semibold">
+                {orders.filter((o) => o.status === "completed").length}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-xl shadow-sm border">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>N° Commande</TableHead>
+              <TableHead>Client</TableHead>
+              <TableHead>Formulation</TableHead>
+              <TableHead>Volume (m³)</TableHead>
+              <TableHead>Date de livraison</TableHead>
+              <TableHead>Statut</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {orders.map((order) => (
+              <TableRow key={order.id}>
+                <TableCell className="font-medium">{order.id}</TableCell>
+                <TableCell>{order.client}</TableCell>
+                <TableCell>{order.formulation}</TableCell>
+                <TableCell>{order.volume}</TableCell>
+                <TableCell>{order.deliveryDate}</TableCell>
+                <TableCell>{getStatusBadge(order.status)}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+    </div>
+  );
+};
+
+export default Orders;

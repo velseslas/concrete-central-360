@@ -51,8 +51,7 @@ const MaterialsTable = () => {
               <TableCell className="w-[200px]">
                 <Progress
                   value={percentage}
-                  className="h-2"
-                  indicatorClassName={progressColor}
+                  className={`h-2 ${progressColor}`}
                 />
               </TableCell>
             </TableRow>

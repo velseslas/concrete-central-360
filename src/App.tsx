@@ -7,6 +7,7 @@ import Sidebar from "./components/layout/Sidebar";
 import Header from "./components/layout/Header";
 import Dashboard from "./pages/Dashboard";
 import Formulations from "./pages/Formulations";
+import Orders from "./pages/Orders";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ const App = () => (
               <Routes>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/formulations" element={<Formulations />} />
+                <Route path="/orders" element={<Orders />} />
               </Routes>
             </main>
           </div>
