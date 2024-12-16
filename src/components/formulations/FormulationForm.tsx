@@ -7,6 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { FormulationBasicInfo } from "./FormulationBasicInfo";
 import { FormulationSablesSection } from "./FormulationSablesSection";
 import { FormulationGraviersSection } from "./FormulationGraviersSection";
+import { FormulationAdditionalSection } from "./FormulationAdditionalSection";
 
 const formulationSchema = z.object({
   nom: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
@@ -19,6 +20,7 @@ const formulationSchema = z.object({
   gravier815: z.string().min(1, "Le dosage en gravier 8/15 est requis"),
   gravier1525: z.string().min(1, "Le dosage en gravier 15/25 est requis"),
   eau: z.string().min(1, "Le dosage en eau est requis"),
+  adjuvant: z.string().min(1, "Le dosage en adjuvant est requis"),
 });
 
 export type FormulationFormValues = z.infer<typeof formulationSchema>;
@@ -43,6 +45,7 @@ export function FormulationForm({ open, onOpenChange, onSubmit }: FormulationFor
       gravier815: "",
       gravier1525: "",
       eau: "",
+      adjuvant: "",
     },
   });
 
@@ -57,6 +60,7 @@ export function FormulationForm({ open, onOpenChange, onSubmit }: FormulationFor
             <FormulationBasicInfo form={form} />
             <FormulationSablesSection form={form} />
             <FormulationGraviersSection form={form} />
+            <FormulationAdditionalSection form={form} />
             <div className="flex justify-end space-x-2 pt-4 border-t">
               <Button variant="outline" onClick={() => onOpenChange(false)}>
                 Annuler

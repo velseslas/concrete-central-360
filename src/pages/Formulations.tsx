@@ -19,6 +19,7 @@ const Formulations = () => {
       gravier815: "350 kg/m³",
       gravier1525: "350 kg/m³",
       eau: "175 L/m³",
+      adjuvant: "2.5 kg/m³",
       status: "Active",
     },
   ]);
@@ -84,7 +85,9 @@ const Formulations = () => {
               <TableHead className="text-center bg-gray-50" colSpan={3}>
                 Graviers
               </TableHead>
-              <TableHead>Eau</TableHead>
+              <TableHead className="text-center bg-green-50" colSpan={2}>
+                Additifs
+              </TableHead>
               <TableHead>Status</TableHead>
             </TableRow>
             <TableRow>
@@ -97,7 +100,8 @@ const Formulations = () => {
               <TableHead className="bg-gray-50">3/8</TableHead>
               <TableHead className="bg-gray-50">8/15</TableHead>
               <TableHead className="bg-gray-50">15/25</TableHead>
-              <TableHead></TableHead>
+              <TableHead className="bg-green-50">Eau</TableHead>
+              <TableHead className="bg-green-50">Adjuvant</TableHead>
               <TableHead></TableHead>
             </TableRow>
           </TableHeader>
@@ -113,7 +117,8 @@ const Formulations = () => {
                 <TableCell className="bg-gray-50/50">{formulation.gravier38}</TableCell>
                 <TableCell className="bg-gray-50/50">{formulation.gravier815}</TableCell>
                 <TableCell className="bg-gray-50/50">{formulation.gravier1525}</TableCell>
-                <TableCell>{formulation.eau}</TableCell>
+                <TableCell className="bg-green-50/50">{formulation.eau}</TableCell>
+                <TableCell className="bg-green-50/50">{formulation.adjuvant}</TableCell>
                 <TableCell>
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                     {formulation.status}
