@@ -1,7 +1,9 @@
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { UseFormReturn } from "react-hook-form";
-import { FormulationFormValues } from "./FormulationForm";
+import { FormulationForm } from "./FormulationForm";
+
+type FormulationFormValues = React.ComponentProps<typeof FormulationForm>["onSubmit"] extends (data: infer T) => any ? T : never;
 
 interface FormulationGraviersSectionProps {
   form: UseFormReturn<FormulationFormValues>;

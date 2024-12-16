@@ -42,27 +42,48 @@ const Formulations = () => {
   };
 
   return (
-    <div className="p-6">
-      <div className="flex justify-between items-center mb-6">
+    <div className="p-6 space-y-6">
+      <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold">Formulations</h1>
-          <p className="text-gray-500">Gérez vos formulations de béton</p>
+          <h1 className="text-3xl font-bold text-primary">Formulations</h1>
+          <p className="text-gray-500 mt-1">Gérez vos formulations de béton</p>
         </div>
-        <Button onClick={() => setOpen(true)}>
+        <Button onClick={() => setOpen(true)} className="bg-primary hover:bg-primary-600">
           <Plus className="mr-2 h-4 w-4" />
           Nouvelle formulation
         </Button>
       </div>
 
-      <div className="bg-white rounded-lg shadow overflow-x-auto">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="card-dashboard">
+          <h3 className="text-lg font-semibold mb-2">Total Formulations</h3>
+          <p className="text-3xl font-bold text-primary">{formulations.length}</p>
+        </div>
+        <div className="card-dashboard">
+          <h3 className="text-lg font-semibold mb-2">Formulations Actives</h3>
+          <p className="text-3xl font-bold text-green-600">
+            {formulations.filter((f) => f.status === "Active").length}
+          </p>
+        </div>
+        <div className="card-dashboard">
+          <h3 className="text-lg font-semibold mb-2">Dernière mise à jour</h3>
+          <p className="text-3xl font-bold text-blue-600">Aujourd'hui</p>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-xl shadow-sm border">
         <Table>
           <TableHeader>
             <TableRow>
               <TableHead>Nom</TableHead>
               <TableHead>Résistance</TableHead>
               <TableHead>Ciment</TableHead>
-              <TableHead className="text-center" colSpan={3}>Sables</TableHead>
-              <TableHead className="text-center" colSpan={3}>Graviers</TableHead>
+              <TableHead className="text-center bg-blue-50" colSpan={3}>
+                Sables
+              </TableHead>
+              <TableHead className="text-center bg-gray-50" colSpan={3}>
+                Graviers
+              </TableHead>
               <TableHead>Eau</TableHead>
               <TableHead>Status</TableHead>
             </TableRow>
@@ -70,28 +91,28 @@ const Formulations = () => {
               <TableHead></TableHead>
               <TableHead></TableHead>
               <TableHead></TableHead>
-              <TableHead>0/1</TableHead>
-              <TableHead>0/3</TableHead>
-              <TableHead>0/4</TableHead>
-              <TableHead>3/8</TableHead>
-              <TableHead>8/15</TableHead>
-              <TableHead>15/25</TableHead>
+              <TableHead className="bg-blue-50">0/1</TableHead>
+              <TableHead className="bg-blue-50">0/3</TableHead>
+              <TableHead className="bg-blue-50">0/4</TableHead>
+              <TableHead className="bg-gray-50">3/8</TableHead>
+              <TableHead className="bg-gray-50">8/15</TableHead>
+              <TableHead className="bg-gray-50">15/25</TableHead>
               <TableHead></TableHead>
               <TableHead></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {formulations.map((formulation) => (
-              <TableRow key={formulation.id} className="cursor-pointer hover:bg-gray-50">
+              <TableRow key={formulation.id} className="hover:bg-gray-50">
                 <TableCell className="font-medium">{formulation.nom}</TableCell>
                 <TableCell>{formulation.resistance}</TableCell>
                 <TableCell>{formulation.ciment}</TableCell>
-                <TableCell>{formulation.sable01}</TableCell>
-                <TableCell>{formulation.sable03}</TableCell>
-                <TableCell>{formulation.sable04}</TableCell>
-                <TableCell>{formulation.gravier38}</TableCell>
-                <TableCell>{formulation.gravier815}</TableCell>
-                <TableCell>{formulation.gravier1525}</TableCell>
+                <TableCell className="bg-blue-50/50">{formulation.sable01}</TableCell>
+                <TableCell className="bg-blue-50/50">{formulation.sable03}</TableCell>
+                <TableCell className="bg-blue-50/50">{formulation.sable04}</TableCell>
+                <TableCell className="bg-gray-50/50">{formulation.gravier38}</TableCell>
+                <TableCell className="bg-gray-50/50">{formulation.gravier815}</TableCell>
+                <TableCell className="bg-gray-50/50">{formulation.gravier1525}</TableCell>
                 <TableCell>{formulation.eau}</TableCell>
                 <TableCell>
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
