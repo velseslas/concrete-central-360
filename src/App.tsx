@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import Formulations from "./pages/Formulations";
 import Orders from "./pages/Orders";
 import Clients from "./pages/Clients";
+import Suppliers from "./pages/Suppliers";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,7 @@ const App = () => (
                 <Route path="/formulations" element={<Formulations />} />
                 <Route path="/orders" element={<Orders />} />
                 <Route path="/clients" element={<Clients />} />
+                <Route path="/suppliers" element={<Suppliers />} />
               </Routes>
             </main>
           </div>
