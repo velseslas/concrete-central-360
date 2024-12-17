@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import VehicleForm from "@/components/vehicles/VehicleForm";
 import VehicleList from "@/components/vehicles/VehicleList";
+import DocumentAlerts from "@/components/vehicles/DocumentAlerts";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 
 const Vehicles = () => {
