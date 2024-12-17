@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ConsumablesList from "@/components/consumables/ConsumablesList";
 import ConsumableForm from "@/components/consumables/ConsumableForm";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
-import { GasPump } from "lucide-react";
+import { Fuel } from "lucide-react";
 
 const Consumables = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +32,7 @@ const Consumables = () => {
         <Drawer open={isOpen} onOpenChange={setIsOpen}>
           <DrawerTrigger asChild>
             <Button>
-              <GasPump className="mr-2 h-4 w-4" />
+              <Fuel className="mr-2 h-4 w-4" />
               Ajouter une consommation
             </Button>
           </DrawerTrigger>
