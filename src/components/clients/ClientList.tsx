@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Edit, Trash, Building } from "lucide-react";
+import { Edit, Trash, Building, FileText } from "lucide-react";
 import { ClientForm } from "./ClientForm";
 import { ProjectForm } from "../projects/ProjectForm";
+import { DocumentUpload } from "./DocumentUpload";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 const mockClients = [
   {
@@ -26,6 +28,7 @@ const ClientList = () => {
   const [selectedClient, setSelectedClient] = useState<any>(null);
   const [showEditForm, setShowEditForm] = useState(false);
   const [showProjectForm, setShowProjectForm] = useState(false);
+  const [showDocumentUpload, setShowDocumentUpload] = useState(false);
 
   const handleDelete = (clientId: number) => {
     console.log("Deleting client:", clientId);
@@ -40,6 +43,11 @@ const ClientList = () => {
   const handleAddProject = (client: any) => {
     setSelectedClient(client);
     setShowProjectForm(true);
+  };
+
+  const handleDocumentUpload = (client: any) => {
+    setSelectedClient(client);
+    setShowDocumentUpload(true);
   };
 
   return (
@@ -83,6 +91,13 @@ const ClientList = () => {
                     <Button
                       variant="outline"
                       size="sm"
+                      onClick={() => handleDocumentUpload(client)}
+                    >
+                      <FileText className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
                       onClick={() => handleDelete(client.id)}
                     >
                       <Trash className="h-4 w-4" />
@@ -107,6 +122,16 @@ const ClientList = () => {
           onOpenChange={setShowProjectForm}
           clientId={selectedClient.id}
         />
+      )}
+      {selectedClient && (
+        <Dialog open={showDocumentUpload} onOpenChange={setShowDocumentUpload}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Documents administratifs - {selectedClient.nom}</DialogTitle>
+            </DialogHeader>
+            <DocumentUpload clientId={selectedClient.id} />
+          </DialogContent>
+        </Dialog>
       )}
     </div>
   );
