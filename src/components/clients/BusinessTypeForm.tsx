@@ -5,81 +5,74 @@ import { Button } from "@/components/ui/button";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { toast } from "sonner";
 
-const projectSchema = z.object({
-  adresse: z.string().min(5, "L'adresse est requise"),
-  volumeBeton: z.string().min(1, "Le volume de béton est requis"),
+const businessTypeSchema = z.object({
+  name: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
+  description: z.string().optional(),
 });
 
-export type ProjectFormValues = z.infer<typeof projectSchema>;
+type BusinessTypeFormValues = z.infer<typeof businessTypeSchema>;
 
-interface ProjectFormProps {
+interface BusinessTypeFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  clientId: number;
-  projectToEdit?: ProjectFormValues;
 }
 
-export function ProjectForm({ open, onOpenChange, clientId, projectToEdit }: ProjectFormProps) {
-  const form = useForm<ProjectFormValues>({
-    resolver: zodResolver(projectSchema),
-    defaultValues: projectToEdit || {
-      adresse: "",
-      volumeBeton: "",
+export function BusinessTypeForm({ open, onOpenChange }: BusinessTypeFormProps) {
+  const form = useForm<BusinessTypeFormValues>({
+    resolver: zodResolver(businessTypeSchema),
+    defaultValues: {
+      name: "",
+      description: "",
     },
   });
 
-  const onSubmit = (data: ProjectFormValues) => {
-    console.log("Project data:", { ...data, clientId });
+  const onSubmit = (data: BusinessTypeFormValues) => {
+    console.log("Business type data:", data);
+    toast.success("Raison sociale ajoutée avec succès");
     onOpenChange(false);
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-primary">
-            {projectToEdit ? "Modifier le chantier" : "Nouveau chantier"}
-          </DialogTitle>
+          <DialogTitle>Nouvelle raison sociale</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
-              name="adresse"
+              name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Adresse du chantier</FormLabel>
+                  <FormLabel>Nom</FormLabel>
                   <FormControl>
-                    <Input placeholder="Adresse" {...field} />
+                    <Input placeholder="Nom de la raison sociale" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
-              name="volumeBeton"
+              name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Volume de béton requis (m³)</FormLabel>
+                  <FormLabel>Description</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="Volume" {...field} />
+                    <Input placeholder="Description (optionnel)" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-
-            <div className="flex justify-end space-x-2 pt-4 border-t">
+            <div className="flex justify-end space-x-2 pt-4">
               <Button variant="outline" onClick={() => onOpenChange(false)}>
                 Annuler
               </Button>
-              <Button type="submit">
-                {projectToEdit ? "Modifier" : "Créer"}
-              </Button>
+              <Button type="submit">Créer</Button>
             </div>
           </form>
         </Form>
