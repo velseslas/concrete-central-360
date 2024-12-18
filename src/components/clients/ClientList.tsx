@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ClientForm } from "./ClientForm";
 import { ProjectForm } from "../projects/ProjectForm";
-import { DocumentUpload } from "./DocumentUpload";
+import { DocumentsWidget } from "./widgets/DocumentsWidget";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { ClientTable } from "./ClientTable";
 
@@ -48,38 +48,33 @@ const ClientList = () => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow">
-      <ClientTable
-        clients={mockClients}
-        onEdit={handleEdit}
-        onAddProject={handleAddProject}
-        onDocumentUpload={handleDocumentUpload}
-        onDelete={handleDelete}
-      />
+    <div className="space-y-6">
+      <div className="bg-white rounded-lg shadow">
+        <ClientTable
+          clients={mockClients}
+          onEdit={handleEdit}
+          onAddProject={handleAddProject}
+          onDocumentUpload={handleDocumentUpload}
+          onDelete={handleDelete}
+        />
+      </div>
       
       {selectedClient && (
-        <ClientForm
-          open={showEditForm}
-          onOpenChange={setShowEditForm}
-          clientToEdit={selectedClient}
-        />
-      )}
-      {selectedClient && (
-        <ProjectForm
-          open={showProjectForm}
-          onOpenChange={setShowProjectForm}
-          clientId={selectedClient.id}
-        />
-      )}
-      {selectedClient && (
-        <Dialog open={showDocumentUpload} onOpenChange={setShowDocumentUpload}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Documents administratifs - {selectedClient.nom}</DialogTitle>
-            </DialogHeader>
-            <DocumentUpload clientId={selectedClient.id} />
-          </DialogContent>
-        </Dialog>
+        <>
+          <ClientForm
+            open={showEditForm}
+            onOpenChange={setShowEditForm}
+            clientToEdit={selectedClient}
+          />
+          <ProjectForm
+            open={showProjectForm}
+            onOpenChange={setShowProjectForm}
+            clientId={selectedClient.id}
+          />
+          {showDocumentUpload && (
+            <DocumentsWidget clientId={selectedClient.id} />
+          )}
+        </>
       )}
     </div>
   );
