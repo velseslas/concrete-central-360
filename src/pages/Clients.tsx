@@ -4,7 +4,9 @@ import { BusinessTypeForm } from "@/components/clients/BusinessTypeForm";
 import { ProductForm } from "@/components/clients/ProductForm";
 import { PriceForm } from "@/components/clients/PriceForm";
 import { ClientListWidget } from "@/components/clients/widgets/ClientListWidget";
-import { ClientActionsWidget } from "@/components/clients/widgets/ClientActionsWidget";
+import { ProductCategoryWidget } from "@/components/clients/widgets/ProductCategoryWidget";
+import { UnitsWidget } from "@/components/clients/widgets/UnitsWidget";
+import { BusinessTypeWidget } from "@/components/clients/widgets/BusinessTypeWidget";
 
 const Clients = () => {
   const [showNewClientForm, setShowNewClientForm] = useState(false);
@@ -16,12 +18,11 @@ const Clients = () => {
     <div className="container mx-auto p-6 space-y-6">
       <h1 className="text-2xl font-bold text-gray-900">Gestion des Clients</h1>
       
-      <ClientActionsWidget
-        onNewClient={() => setShowNewClientForm(true)}
-        onNewBusinessType={() => setShowBusinessTypeForm(true)}
-        onNewProduct={() => setShowProductForm(true)}
-        onNewPrice={() => setShowPriceForm(true)}
-      />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <ProductCategoryWidget onNewCategory={() => setShowProductForm(true)} />
+        <UnitsWidget onNewUnit={() => setShowPriceForm(true)} />
+        <BusinessTypeWidget onNewBusinessType={() => setShowBusinessTypeForm(true)} />
+      </div>
 
       <ClientListWidget />
 
