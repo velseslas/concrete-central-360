@@ -9,7 +9,7 @@ import { UnitsWidget } from "@/components/clients/widgets/UnitsWidget";
 import { BusinessTypeWidget } from "@/components/clients/widgets/BusinessTypeWidget";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ShoppingCart, EuroSign, UserPlus } from "lucide-react";
+import { ShoppingCart, DollarSign, UserPlus } from "lucide-react";
 
 const Clients = () => {
   const [showNewClientForm, setShowNewClientForm] = useState(false);
@@ -47,7 +47,7 @@ const Clients = () => {
               className="w-full justify-start"
               variant="outline"
             >
-              <EuroSign className="mr-2 h-4 w-4" />
+              <DollarSign className="mr-2 h-4 w-4" />
               Nouveau Prix
             </Button>
           </CardContent>
