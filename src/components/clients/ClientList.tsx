@@ -2,7 +2,8 @@ import { useState } from "react";
 import { ClientForm } from "./ClientForm";
 import { ProjectForm } from "../projects/ProjectForm";
 import { DocumentsWidget } from "./widgets/DocumentsWidget";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { OrdersWidget } from "./widgets/OrdersWidget";
+import { ProductionWidget } from "./widgets/ProductionWidget";
 import { ClientTable } from "./ClientTable";
 
 const mockClients = [
@@ -74,6 +75,13 @@ const ClientList = () => {
           {showDocumentUpload && (
             <DocumentsWidget clientId={selectedClient.id} />
           )}
+          <OrdersWidget 
+            clientId={selectedClient.id}
+            clientName={selectedClient.nom}
+          />
+          <ProductionWidget 
+            clientId={selectedClient.id}
+          />
         </>
       )}
     </div>
