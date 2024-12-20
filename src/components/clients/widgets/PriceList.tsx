@@ -17,6 +17,10 @@ interface Price {
   price: number;
 }
 
+interface PriceListProps {
+  onEdit: (price: Price) => void;
+}
+
 const mockPrices: Price[] = [
   {
     id: 1,
@@ -34,11 +38,7 @@ const mockPrices: Price[] = [
   },
 ];
 
-export function PriceList() {
-  const handleEdit = (price: Price) => {
-    console.log("Edit price:", price);
-  };
-
+export function PriceList({ onEdit }: PriceListProps) {
   const handleDelete = (priceId: number) => {
     console.log("Delete price:", priceId);
   };
@@ -67,7 +67,7 @@ export function PriceList() {
                   <Button 
                     variant="ghost" 
                     size="icon"
-                    onClick={() => handleEdit(price)}
+                    onClick={() => onEdit(price)}
                   >
                     <Edit className="h-4 w-4" />
                   </Button>

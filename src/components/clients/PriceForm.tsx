@@ -21,12 +21,13 @@ type PriceFormValues = z.infer<typeof priceSchema>;
 interface PriceFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  priceToEdit?: PriceFormValues;
 }
 
-export function PriceForm({ open, onOpenChange }: PriceFormProps) {
+export function PriceForm({ open, onOpenChange, priceToEdit }: PriceFormProps) {
   const form = useForm<PriceFormValues>({
     resolver: zodResolver(priceSchema),
-    defaultValues: {
+    defaultValues: priceToEdit || {
       clientId: "",
       projectId: "",
       productCategory: "",
@@ -37,7 +38,7 @@ export function PriceForm({ open, onOpenChange }: PriceFormProps) {
 
   const onSubmit = (data: PriceFormValues) => {
     console.log("Price data:", data);
-    toast.success("Prix ajouté avec succès");
+    toast.success(priceToEdit ? "Prix modifié avec succès" : "Prix ajouté avec succès");
     onOpenChange(false);
   };
 
