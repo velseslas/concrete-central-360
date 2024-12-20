@@ -11,6 +11,7 @@ import { Edit, Trash2 } from "lucide-react";
 
 interface Project {
   id: number;
+  clientName: string;
   name: string;
   address: string;
   volume: string;
@@ -19,12 +20,14 @@ interface Project {
 const mockProjects: Project[] = [
   {
     id: 1,
+    clientName: "Client A",
     name: "Projet A",
     address: "123 Rue Principale",
     volume: "500m³",
   },
   {
     id: 2,
+    clientName: "Client B",
     name: "Projet B",
     address: "456 Avenue Secondaire",
     volume: "750m³",
@@ -45,7 +48,8 @@ export function ProjectList() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Nom</TableHead>
+            <TableHead>Client</TableHead>
+            <TableHead>Nom du chantier</TableHead>
             <TableHead>Adresse</TableHead>
             <TableHead>Volume</TableHead>
             <TableHead className="text-right">Actions</TableHead>
@@ -54,6 +58,7 @@ export function ProjectList() {
         <TableBody>
           {mockProjects.map((project) => (
             <TableRow key={project.id}>
+              <TableCell>{project.clientName}</TableCell>
               <TableCell>{project.name}</TableCell>
               <TableCell>{project.address}</TableCell>
               <TableCell>{project.volume}</TableCell>

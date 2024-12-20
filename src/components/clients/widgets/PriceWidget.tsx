@@ -7,6 +7,12 @@ import { PriceForm } from "../PriceForm";
 
 export function PriceWidget() {
   const [showNewPriceForm, setShowNewPriceForm] = useState(false);
+  const [selectedPrice, setSelectedPrice] = useState<any>(null);
+
+  const handleEdit = (price: any) => {
+    setSelectedPrice(price);
+    setShowNewPriceForm(true);
+  };
 
   return (
     <Card>
@@ -18,12 +24,13 @@ export function PriceWidget() {
         </Button>
       </CardHeader>
       <CardContent>
-        <PriceList />
+        <PriceList onEdit={handleEdit} />
       </CardContent>
 
       <PriceForm 
         open={showNewPriceForm} 
-        onOpenChange={setShowNewPriceForm} 
+        onOpenChange={setShowNewPriceForm}
+        priceToEdit={selectedPrice}
       />
     </Card>
   );

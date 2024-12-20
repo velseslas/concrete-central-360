@@ -8,6 +8,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const projectSchema = z.object({
+  clientId: z.string().min(1, "Le client est requis"),
+  nom: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
   adresse: z.string().min(5, "L'adresse est requise"),
   volumeBeton: z.string().min(1, "Le volume de béton est requis"),
 });
@@ -17,21 +19,28 @@ export type ProjectFormValues = z.infer<typeof projectSchema>;
 interface ProjectFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  clientId: number;
+  clientId?: number;
   projectToEdit?: ProjectFormValues;
 }
+
+const mockClients = [
+  { id: "1", name: "Client A" },
+  { id: "2", name: "Client B" },
+];
 
 export function ProjectForm({ open, onOpenChange, clientId, projectToEdit }: ProjectFormProps) {
   const form = useForm<ProjectFormValues>({
     resolver: zodResolver(projectSchema),
     defaultValues: projectToEdit || {
+      clientId: clientId?.toString() || "",
+      nom: "",
       adresse: "",
       volumeBeton: "",
     },
   });
 
   const onSubmit = (data: ProjectFormValues) => {
-    console.log("Project data:", { ...data, clientId });
+    console.log("Project data:", data);
     onOpenChange(false);
   };
 
@@ -45,6 +54,45 @@ export function ProjectForm({ open, onOpenChange, clientId, projectToEdit }: Pro
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="clientId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Client</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Sélectionner un client" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {mockClients.map((client) => (
+                        <SelectItem key={client.id} value={client.id}>
+                          {client.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="nom"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Nom du chantier</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Nom du chantier" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="adresse"

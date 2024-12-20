@@ -5,10 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 
 const productSchema = z.object({
   name: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
+  category: z.string().min(1, "La catégorie est requise"),
   description: z.string().optional(),
 });
 
@@ -17,20 +19,28 @@ type ProductFormValues = z.infer<typeof productSchema>;
 interface ProductFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  productToEdit?: ProductFormValues;
 }
 
-export function ProductForm({ open, onOpenChange }: ProductFormProps) {
+const mockCategories = [
+  { id: "1", name: "Béton" },
+  { id: "2", name: "Pompe" },
+  { id: "3", name: "Location" },
+];
+
+export function ProductForm({ open, onOpenChange, productToEdit }: ProductFormProps) {
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productSchema),
-    defaultValues: {
+    defaultValues: productToEdit || {
       name: "",
+      category: "",
       description: "",
     },
   });
 
   const onSubmit = (data: ProductFormValues) => {
-    console.log("Product category data:", data);
-    toast.success("Catégorie ajoutée avec succès");
+    console.log("Product data:", data);
+    toast.success(productToEdit ? "Produit modifié avec succès" : "Produit ajouté avec succès");
     onOpenChange(false);
   };
 
@@ -38,10 +48,34 @@ export function ProductForm({ open, onOpenChange }: ProductFormProps) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Nouvelle catégorie de produit</DialogTitle>
+          <DialogTitle>{productToEdit ? "Modifier le produit" : "Nouveau produit"}</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="category"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Catégorie</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Sélectionner une catégorie" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {mockCategories.map((category) => (
+                        <SelectItem key={category.id} value={category.id}>
+                          {category.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="name"
@@ -49,7 +83,7 @@ export function ProductForm({ open, onOpenChange }: ProductFormProps) {
                 <FormItem>
                   <FormLabel>Nom</FormLabel>
                   <FormControl>
-                    <Input placeholder="Nom de la catégorie" {...field} />
+                    <Input placeholder="Nom du produit" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -72,7 +106,9 @@ export function ProductForm({ open, onOpenChange }: ProductFormProps) {
               <Button variant="outline" onClick={() => onOpenChange(false)}>
                 Annuler
               </Button>
-              <Button type="submit">Créer</Button>
+              <Button type="submit">
+                {productToEdit ? "Modifier" : "Créer"}
+              </Button>
             </div>
           </form>
         </Form>
