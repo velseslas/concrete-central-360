@@ -17,6 +17,10 @@ interface Project {
   volume: string;
 }
 
+interface ProjectListProps {
+  onEdit: (project: Project) => void;
+}
+
 const mockProjects: Project[] = [
   {
     id: 1,
@@ -34,11 +38,7 @@ const mockProjects: Project[] = [
   },
 ];
 
-export function ProjectList() {
-  const handleEdit = (project: Project) => {
-    console.log("Edit project:", project);
-  };
-
+export function ProjectList({ onEdit }: ProjectListProps) {
   const handleDelete = (projectId: number) => {
     console.log("Delete project:", projectId);
   };
@@ -67,7 +67,7 @@ export function ProjectList() {
                   <Button 
                     variant="ghost" 
                     size="icon"
-                    onClick={() => handleEdit(project)}
+                    onClick={() => onEdit(project)}
                   >
                     <Edit className="h-4 w-4" />
                   </Button>

@@ -13,7 +13,11 @@ interface Product {
   id: number;
   name: string;
   category: string;
-  unit: string;
+  description: string;
+}
+
+interface ProductListProps {
+  onEdit: (product: Product) => void;
 }
 
 const mockProducts: Product[] = [
@@ -21,21 +25,17 @@ const mockProducts: Product[] = [
     id: 1,
     name: "Béton B25",
     category: "Béton",
-    unit: "m³",
+    description: "Béton standard",
   },
   {
     id: 2,
     name: "Pompe 36m",
     category: "Pompe",
-    unit: "heure",
+    description: "Pompe à béton",
   },
 ];
 
-export function ProductList() {
-  const handleEdit = (product: Product) => {
-    console.log("Edit product:", product);
-  };
-
+export function ProductList({ onEdit }: ProductListProps) {
   const handleDelete = (productId: number) => {
     console.log("Delete product:", productId);
   };
@@ -47,7 +47,7 @@ export function ProductList() {
           <TableRow>
             <TableHead>Nom</TableHead>
             <TableHead>Catégorie</TableHead>
-            <TableHead>Unité</TableHead>
+            <TableHead>Description</TableHead>
             <TableHead className="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -56,13 +56,13 @@ export function ProductList() {
             <TableRow key={product.id}>
               <TableCell>{product.name}</TableCell>
               <TableCell>{product.category}</TableCell>
-              <TableCell>{product.unit}</TableCell>
+              <TableCell>{product.description}</TableCell>
               <TableCell className="text-right">
                 <div className="flex justify-end space-x-2">
                   <Button 
                     variant="ghost" 
                     size="icon"
-                    onClick={() => handleEdit(product)}
+                    onClick={() => onEdit(product)}
                   >
                     <Edit className="h-4 w-4" />
                   </Button>

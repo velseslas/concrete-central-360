@@ -7,6 +7,12 @@ import { ProductForm } from "../ProductForm";
 
 export function ProductWidget() {
   const [showNewProductForm, setShowNewProductForm] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
+
+  const handleEdit = (product: any) => {
+    setSelectedProduct(product);
+    setShowNewProductForm(true);
+  };
 
   return (
     <Card>
@@ -18,12 +24,13 @@ export function ProductWidget() {
         </Button>
       </CardHeader>
       <CardContent>
-        <ProductList />
+        <ProductList onEdit={handleEdit} />
       </CardContent>
 
       <ProductForm 
         open={showNewProductForm} 
         onOpenChange={setShowNewProductForm} 
+        productToEdit={selectedProduct}
       />
     </Card>
   );

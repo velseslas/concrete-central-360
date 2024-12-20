@@ -7,6 +7,12 @@ import { ProjectForm } from "../../projects/ProjectForm";
 
 export function ProjectWidget() {
   const [showNewProjectForm, setShowNewProjectForm] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<any>(null);
+
+  const handleEdit = (project: any) => {
+    setSelectedProject(project);
+    setShowNewProjectForm(true);
+  };
 
   return (
     <Card>
@@ -18,12 +24,13 @@ export function ProjectWidget() {
         </Button>
       </CardHeader>
       <CardContent>
-        <ProjectList />
+        <ProjectList onEdit={handleEdit} />
       </CardContent>
 
       <ProjectForm 
         open={showNewProjectForm} 
         onOpenChange={setShowNewProjectForm}
+        projectToEdit={selectedProject}
         clientId={1}
       />
     </Card>
