@@ -12,10 +12,24 @@ import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 
+// Define the Order type to match the structure in OrderWidget
+interface Order {
+  id: string;
+  clientId: number;
+  clientName: string;
+  product: string;
+  quantity: number;
+  status: "pending" | "in_progress" | "completed";
+  orderDate: string;
+  deliveryDate: string;
+  totalPrice: number;
+}
+
 const orderSchema = z.object({
   client: z.string().min(2, "Le nom du client doit contenir au moins 2 caractères"),
-  formulation: z.string().min(1, "La formulation est requise"),
-  volume: z.string().min(1, "Le volume est requis"),
+  product: z.string().min(1, "Le produit est requis"),
+  quantity: z.string().min(1, "La quantité est requise"),
+  status: z.enum(["pending", "in_progress", "completed"]),
   deliveryDate: z.date({
     required_error: "La date de livraison est requise",
   }),
@@ -27,21 +41,41 @@ interface OrderFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSubmit: (data: OrderFormValues) => void;
+  orderToEdit?: Order; // Make orderToEdit optional
 }
 
-export function OrderForm({ open, onOpenChange, onSubmit }: OrderFormProps) {
+export function OrderForm({ 
+  open, 
+  onOpenChange, 
+  onSubmit, 
+  orderToEdit 
+}: OrderFormProps) {
   const form = useForm<OrderFormValues>({
     resolver: zodResolver(orderSchema),
+    defaultValues: orderToEdit ? {
+      client: orderToEdit.clientName,
+      product: orderToEdit.product,
+      quantity: orderToEdit.quantity.toString(),
+      status: orderToEdit.status,
+      deliveryDate: new Date(orderToEdit.deliveryDate)
+    } : undefined
   });
+
+  const handleSubmit = (data: OrderFormValues) => {
+    onSubmit(data);
+    onOpenChange(false);
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-primary">Nouvelle commande</DialogTitle>
+          <DialogTitle className="text-2xl font-bold text-primary">
+            {orderToEdit ? "Modifier la commande" : "Nouvelle commande"}
+          </DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
             <FormField
               control={form.control}
               name="client"
@@ -58,20 +92,20 @@ export function OrderForm({ open, onOpenChange, onSubmit }: OrderFormProps) {
 
             <FormField
               control={form.control}
-              name="formulation"
+              name="product"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Formulation</FormLabel>
+                  <FormLabel>Produit</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Sélectionner une formulation" />
+                        <SelectValue placeholder="Sélectionner un produit" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="B25">B25</SelectItem>
-                      <SelectItem value="B30">B30</SelectItem>
-                      <SelectItem value="B35">B35</SelectItem>
+                      <SelectItem value="Béton B25">Béton B25</SelectItem>
+                      <SelectItem value="Béton B30">Béton B30</SelectItem>
+                      <SelectItem value="Béton B35">Béton B35</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -81,13 +115,36 @@ export function OrderForm({ open, onOpenChange, onSubmit }: OrderFormProps) {
 
             <FormField
               control={form.control}
-              name="volume"
+              name="quantity"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Volume (m³)</FormLabel>
+                  <FormLabel>Quantité (m³)</FormLabel>
                   <FormControl>
                     <Input type="number" placeholder="30" {...field} />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="status"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Statut</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Sélectionner un statut" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="pending">En attente</SelectItem>
+                      <SelectItem value="in_progress">En cours</SelectItem>
+                      <SelectItem value="completed">Terminée</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -136,7 +193,9 @@ export function OrderForm({ open, onOpenChange, onSubmit }: OrderFormProps) {
               <Button variant="outline" onClick={() => onOpenChange(false)}>
                 Annuler
               </Button>
-              <Button type="submit">Créer</Button>
+              <Button type="submit">
+                {orderToEdit ? "Modifier" : "Créer"}
+              </Button>
             </div>
           </form>
         </Form>
