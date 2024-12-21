@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { FileText } from "lucide-react";
 
 interface Report {
   id: string;
@@ -21,7 +22,7 @@ export function ReportsWidget() {
   const [endDate, setEndDate] = useState<string>("");
   const [selectedProduct, setSelectedProduct] = useState<string>("");
 
-  // Mock data for demonstration
+  // Données de démonstration
   const reports: Report[] = [
     {
       id: "1",
@@ -42,7 +43,7 @@ export function ReportsWidget() {
   ];
 
   const handleGenerateReport = () => {
-    console.log("Generating report with filters:", {
+    console.log("Génération du rapport avec les filtres:", {
       client: selectedClient,
       project: selectedProject,
       startDate,
@@ -54,7 +55,10 @@ export function ReportsWidget() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Rapports</CardTitle>
+        <CardTitle className="flex items-center gap-2">
+          <FileText className="h-5 w-5" />
+          Rapports
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
@@ -126,7 +130,7 @@ export function ReportsWidget() {
                     <TableCell>{report.client}</TableCell>
                     <TableCell>{report.project}</TableCell>
                     <TableCell>{report.product}</TableCell>
-                    <TableCell>{report.quantity}</TableCell>
+                    <TableCell>{report.quantity} m³</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
