@@ -2,191 +2,131 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calendar as CalendarIcon, FileText, Filter } from "lucide-react";
-import { format } from "date-fns";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 interface Report {
   id: string;
-  clientName: string;
-  projectName: string;
   date: string;
+  client: string;
+  project: string;
   product: string;
-  category: string;
   quantity: number;
-  status: string;
 }
 
 export function ReportsWidget() {
-  const [client, setClient] = useState<string>("");
-  const [project, setProject] = useState<string>("");
-  const [category, setCategory] = useState<string>("");
-  const [product, setProduct] = useState<string>("");
-  const [dateFrom, setDateFrom] = useState<Date>();
-  const [dateTo, setDateTo] = useState<Date>();
+  const [selectedClient, setSelectedClient] = useState<string>("");
+  const [selectedProject, setSelectedProject] = useState<string>("");
+  const [startDate, setStartDate] = useState<string>("");
+  const [endDate, setEndDate] = useState<string>("");
+  const [selectedProduct, setSelectedProduct] = useState<string>("");
 
-  // Mock data - à remplacer par des données réelles
+  // Mock data for demonstration
   const reports: Report[] = [
     {
-      id: "R001",
-      clientName: "Client A",
-      projectName: "Projet X",
+      id: "1",
       date: "2024-03-20",
+      client: "Client A",
+      project: "Projet 1",
       product: "B25",
-      category: "Béton",
       quantity: 30,
-      status: "Livré",
+    },
+    {
+      id: "2",
+      date: "2024-03-21",
+      client: "Client B",
+      project: "Projet 2",
+      product: "B30",
+      quantity: 45,
     },
   ];
 
-  const mockClients = ["Client A", "Client B"];
-  const mockProjects = ["Projet X", "Projet Y"];
-  const mockCategories = ["Béton", "Pompe"];
-  const mockProducts = ["B25", "B30"];
+  const handleGenerateReport = () => {
+    console.log("Generating report with filters:", {
+      client: selectedClient,
+      project: selectedProject,
+      startDate,
+      endDate,
+      product: selectedProduct,
+    });
+  };
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <FileText className="h-5 w-5" />
-          Rapports
-        </CardTitle>
+        <CardTitle>Rapports</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Select value={client} onValueChange={setClient}>
+            <Select value={selectedClient} onValueChange={setSelectedClient}>
               <SelectTrigger>
                 <SelectValue placeholder="Sélectionner un client" />
               </SelectTrigger>
               <SelectContent>
-                {mockClients.map((c) => (
-                  <SelectItem key={c} value={c}>
-                    {c}
-                  </SelectItem>
-                ))}
+                <SelectItem value="client-a">Client A</SelectItem>
+                <SelectItem value="client-b">Client B</SelectItem>
               </SelectContent>
             </Select>
 
-            <Select value={project} onValueChange={setProject}>
+            <Select value={selectedProject} onValueChange={setSelectedProject}>
               <SelectTrigger>
-                <SelectValue placeholder="Sélectionner un chantier" />
+                <SelectValue placeholder="Sélectionner un projet" />
               </SelectTrigger>
               <SelectContent>
-                {mockProjects.map((p) => (
-                  <SelectItem key={p} value={p}>
-                    {p}
-                  </SelectItem>
-                ))}
+                <SelectItem value="project-1">Projet 1</SelectItem>
+                <SelectItem value="project-2">Projet 2</SelectItem>
               </SelectContent>
             </Select>
 
-            <Select value={category} onValueChange={setCategory}>
-              <SelectTrigger>
-                <SelectValue placeholder="Catégorie de produit" />
-              </SelectTrigger>
-              <SelectContent>
-                {mockCategories.map((c) => (
-                  <SelectItem key={c} value={c}>
-                    {c}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-
-            <Select value={product} onValueChange={setProduct}>
+            <Select value={selectedProduct} onValueChange={setSelectedProduct}>
               <SelectTrigger>
                 <SelectValue placeholder="Sélectionner un produit" />
               </SelectTrigger>
               <SelectContent>
-                {mockProducts.map((p) => (
-                  <SelectItem key={p} value={p}>
-                    {p}
-                  </SelectItem>
-                ))}
+                <SelectItem value="b25">B25</SelectItem>
+                <SelectItem value="b30">B30</SelectItem>
               </SelectContent>
             </Select>
 
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  className={cn(
-                    "justify-start text-left font-normal",
-                    !dateFrom && "text-muted-foreground"
-                  )}
-                >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {dateFrom ? format(dateFrom, "dd/MM/yyyy") : "Date début"}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
-                <Calendar
-                  mode="single"
-                  selected={dateFrom}
-                  onSelect={setDateFrom}
-                  initialFocus
-                />
-              </PopoverContent>
-            </Popover>
+            <Input
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+              placeholder="Date début"
+            />
 
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  className={cn(
-                    "justify-start text-left font-normal",
-                    !dateTo && "text-muted-foreground"
-                  )}
-                >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {dateTo ? format(dateTo, "dd/MM/yyyy") : "Date fin"}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
-                <Calendar
-                  mode="single"
-                  selected={dateTo}
-                  onSelect={setDateTo}
-                  initialFocus
-                />
-              </PopoverContent>
-            </Popover>
-          </div>
+            <Input
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+              placeholder="Date fin"
+            />
 
-          <div className="flex justify-end">
-            <Button>
-              <Filter className="mr-2 h-4 w-4" />
-              Filtrer
+            <Button onClick={handleGenerateReport}>
+              Générer le rapport
             </Button>
           </div>
 
-          <div className="rounded-md border">
+          <div className="mt-6">
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Client</TableHead>
-                  <TableHead>Chantier</TableHead>
                   <TableHead>Date</TableHead>
-                  <TableHead>Catégorie</TableHead>
+                  <TableHead>Client</TableHead>
+                  <TableHead>Projet</TableHead>
                   <TableHead>Produit</TableHead>
                   <TableHead>Quantité</TableHead>
-                  <TableHead>Statut</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {reports.map((report) => (
                   <TableRow key={report.id}>
-                    <TableCell>{report.clientName}</TableCell>
-                    <TableCell>{report.projectName}</TableCell>
                     <TableCell>{report.date}</TableCell>
-                    <TableCell>{report.category}</TableCell>
+                    <TableCell>{report.client}</TableCell>
+                    <TableCell>{report.project}</TableCell>
                     <TableCell>{report.product}</TableCell>
-                    <TableCell>{report.quantity} m³</TableCell>
-                    <TableCell>{report.status}</TableCell>
+                    <TableCell>{report.quantity}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
