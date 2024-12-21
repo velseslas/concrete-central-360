@@ -5,6 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { ShoppingCart, Plus } from "lucide-react";
 import { OrderForm } from "@/components/orders/OrderForm";
+import { toast } from "sonner";
 
 interface Order {
   id: string;
@@ -55,6 +56,17 @@ export function OrderWidget() {
   const handleEdit = (order: Order) => {
     setSelectedOrder(order);
     setShowOrderForm(true);
+  };
+
+  const handleSubmit = (data: any) => {
+    console.log("Form submitted:", data);
+    if (selectedOrder) {
+      toast.success("Commande modifiée avec succès");
+    } else {
+      toast.success("Nouvelle commande créée avec succès");
+    }
+    setShowOrderForm(false);
+    setSelectedOrder(null);
   };
 
   return (
@@ -108,6 +120,7 @@ export function OrderWidget() {
         open={showOrderForm}
         onOpenChange={setShowOrderForm}
         orderToEdit={selectedOrder}
+        onSubmit={handleSubmit}
       />
     </Card>
   );
