@@ -14,6 +14,7 @@ interface Order {
   product: string;
   quantity: number;
   deliveryDate: string;
+  orderDate: string; // Added this line to resolve the TypeScript error
   totalPrice: number;
   status: "pending" | "in_progress" | "completed";
 }
@@ -30,6 +31,7 @@ export function OrderWidget() {
       product: "B25",
       quantity: 30,
       deliveryDate: "2024-03-20",
+      orderDate: new Date().toISOString().split('T')[0], // Added this line
       totalPrice: 150000,
       status: "pending",
     },
