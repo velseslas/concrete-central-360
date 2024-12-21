@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { ShoppingCart, Plus, UserPlus, Trash2 } from "lucide-react";
+import { ShoppingCart, Plus, Trash2 } from "lucide-react";
 import { OrderForm } from "@/components/orders/OrderForm";
 import { toast } from "sonner";
 
@@ -13,28 +13,25 @@ interface Order {
   clientName: string;
   product: string;
   quantity: number;
-  status: "pending" | "in_progress" | "completed";
-  orderDate: string;
   deliveryDate: string;
   totalPrice: number;
+  status: "pending" | "in_progress" | "completed";
 }
 
 export function OrderWidget() {
   const [showOrderForm, setShowOrderForm] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
-  // Mock data - replace with actual data fetching
   const [orders, setOrders] = useState<Order[]>([
     {
       id: "CMD001",
       clientId: 1,
-      clientName: "Entreprise ABC",
-      product: "Béton B25",
+      clientName: "Client A",
+      product: "B25",
       quantity: 30,
-      status: "pending",
-      orderDate: "2024-03-15",
       deliveryDate: "2024-03-20",
-      totalPrice: 360000,
+      totalPrice: 150000,
+      status: "pending",
     },
   ]);
 
@@ -63,11 +60,6 @@ export function OrderWidget() {
     setShowOrderForm(true);
   };
 
-  const handleNewClient = () => {
-    // Cette fonction sera implémentée plus tard pour ouvrir le formulaire de nouveau client
-    console.log("Nouveau client");
-  };
-
   const handleDeleteOrder = (orderId: string) => {
     const confirmDelete = window.confirm("Êtes-vous sûr de vouloir supprimer cette commande ?");
     if (confirmDelete) {
@@ -84,7 +76,6 @@ export function OrderWidget() {
       toast.success("Nouvelle commande créée avec succès");
     }
     setShowOrderForm(false);
-    setSelectedOrder(null);
   };
 
   return (
@@ -94,16 +85,10 @@ export function OrderWidget() {
           <ShoppingCart className="h-5 w-5" />
           Commandes Clients
         </CardTitle>
-        <div className="flex gap-2">
-          <Button onClick={handleNewClient} variant="outline" size="sm">
-            <UserPlus className="mr-2 h-4 w-4" />
-            Nouveau client
-          </Button>
-          <Button onClick={handleNewOrder} size="sm">
-            <Plus className="mr-2 h-4 w-4" />
-            Nouvelle commande
-          </Button>
-        </div>
+        <Button onClick={handleNewOrder} size="sm">
+          <Plus className="mr-2 h-4 w-4" />
+          Nouvelle commande
+        </Button>
       </CardHeader>
       <CardContent>
         <div className="rounded-md border">
@@ -156,8 +141,8 @@ export function OrderWidget() {
       <OrderForm
         open={showOrderForm}
         onOpenChange={setShowOrderForm}
-        orderToEdit={selectedOrder}
         onSubmit={handleSubmit}
+        orderToEdit={selectedOrder}
       />
     </Card>
   );

@@ -5,6 +5,9 @@ import { DocumentsWidget } from "./widgets/DocumentsWidget";
 import { OrdersWidget } from "./widgets/OrdersWidget";
 import { ProductionWidget } from "./widgets/ProductionWidget";
 import { ClientTable } from "./ClientTable";
+import { Button } from "../ui/button";
+import { UserPlus } from "lucide-react";
+import { ReportsWidget } from "./widgets/ReportsWidget";
 
 const mockClients = [
   {
@@ -26,6 +29,7 @@ const mockClients = [
 const ClientList = () => {
   const [selectedClient, setSelectedClient] = useState<any>(null);
   const [showEditForm, setShowEditForm] = useState(false);
+  const [showNewForm, setShowNewForm] = useState(false);
   const [showProjectForm, setShowProjectForm] = useState(false);
   const [showDocumentUpload, setShowDocumentUpload] = useState(false);
 
@@ -50,6 +54,14 @@ const ClientList = () => {
 
   return (
     <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-bold">Liste des clients</h2>
+        <Button onClick={() => setShowNewForm(true)}>
+          <UserPlus className="mr-2 h-4 w-4" />
+          Nouveau client
+        </Button>
+      </div>
+
       <div className="bg-white rounded-lg shadow">
         <ClientTable
           clients={mockClients}
@@ -82,8 +94,14 @@ const ClientList = () => {
           <ProductionWidget 
             clientId={selectedClient.id}
           />
+          <ReportsWidget />
         </>
       )}
+
+      <ClientForm
+        open={showNewForm}
+        onOpenChange={setShowNewForm}
+      />
     </div>
   );
 };
