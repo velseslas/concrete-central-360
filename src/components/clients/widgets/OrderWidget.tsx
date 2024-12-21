@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { ShoppingCart, Plus } from "lucide-react";
+import { ShoppingCart, Plus, UserPlus, Trash2 } from "lucide-react";
 import { OrderForm } from "@/components/orders/OrderForm";
 import { toast } from "sonner";
 
@@ -24,7 +24,7 @@ export function OrderWidget() {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
   // Mock data - replace with actual data fetching
-  const [orders] = useState<Order[]>([
+  const [orders, setOrders] = useState<Order[]>([
     {
       id: "CMD001",
       clientId: 1,
@@ -58,6 +58,24 @@ export function OrderWidget() {
     setShowOrderForm(true);
   };
 
+  const handleNewOrder = () => {
+    setSelectedOrder(null);
+    setShowOrderForm(true);
+  };
+
+  const handleNewClient = () => {
+    // Cette fonction sera implémentée plus tard pour ouvrir le formulaire de nouveau client
+    console.log("Nouveau client");
+  };
+
+  const handleDeleteOrder = (orderId: string) => {
+    const confirmDelete = window.confirm("Êtes-vous sûr de vouloir supprimer cette commande ?");
+    if (confirmDelete) {
+      setOrders(orders.filter(order => order.id !== orderId));
+      toast.success("Commande supprimée avec succès");
+    }
+  };
+
   const handleSubmit = (data: any) => {
     console.log("Form submitted:", data);
     if (selectedOrder) {
@@ -76,10 +94,16 @@ export function OrderWidget() {
           <ShoppingCart className="h-5 w-5" />
           Commandes Clients
         </CardTitle>
-        <Button onClick={() => setShowOrderForm(true)} size="sm">
-          <Plus className="mr-2 h-4 w-4" />
-          Nouvelle commande
-        </Button>
+        <div className="flex gap-2">
+          <Button onClick={handleNewClient} variant="outline" size="sm">
+            <UserPlus className="mr-2 h-4 w-4" />
+            Nouveau client
+          </Button>
+          <Button onClick={handleNewOrder} size="sm">
+            <Plus className="mr-2 h-4 w-4" />
+            Nouvelle commande
+          </Button>
+        </div>
       </CardHeader>
       <CardContent>
         <div className="rounded-md border">
@@ -93,6 +117,7 @@ export function OrderWidget() {
                 <TableHead>Date de livraison</TableHead>
                 <TableHead>Prix Total</TableHead>
                 <TableHead>Statut</TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -100,15 +125,27 @@ export function OrderWidget() {
                 <TableRow 
                   key={order.id}
                   className="cursor-pointer hover:bg-gray-50"
-                  onClick={() => handleEdit(order)}
                 >
-                  <TableCell className="font-medium">{order.id}</TableCell>
-                  <TableCell>{order.clientName}</TableCell>
-                  <TableCell>{order.product}</TableCell>
-                  <TableCell>{order.quantity} m³</TableCell>
-                  <TableCell>{order.deliveryDate}</TableCell>
-                  <TableCell>{order.totalPrice.toLocaleString()} DA</TableCell>
-                  <TableCell>{getStatusBadge(order.status)}</TableCell>
+                  <TableCell className="font-medium" onClick={() => handleEdit(order)}>{order.id}</TableCell>
+                  <TableCell onClick={() => handleEdit(order)}>{order.clientName}</TableCell>
+                  <TableCell onClick={() => handleEdit(order)}>{order.product}</TableCell>
+                  <TableCell onClick={() => handleEdit(order)}>{order.quantity} m³</TableCell>
+                  <TableCell onClick={() => handleEdit(order)}>{order.deliveryDate}</TableCell>
+                  <TableCell onClick={() => handleEdit(order)}>{order.totalPrice.toLocaleString()} DA</TableCell>
+                  <TableCell onClick={() => handleEdit(order)}>{getStatusBadge(order.status)}</TableCell>
+                  <TableCell>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteOrder(order.id);
+                      }}
+                      className="text-red-500 hover:text-red-700"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
