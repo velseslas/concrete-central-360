@@ -2,12 +2,13 @@ import { useState } from "react";
 import { ClientForm } from "@/components/clients/ClientForm";
 import { BusinessTypeForm } from "@/components/clients/BusinessTypeForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, Building2, Construction, Package, DollarSign } from "lucide-react";
+import { Users, Building2, Construction, Package, DollarSign, FileText } from "lucide-react";
 import { ClientListWidget } from "@/components/clients/widgets/ClientListWidget";
 import { ProductCategoryWidget } from "@/components/clients/widgets/ProductCategoryWidget";
 import { ProjectWidget } from "@/components/clients/widgets/ProjectWidget";
 import { ProductWidget } from "@/components/clients/widgets/ProductWidget";
 import { PriceWidget } from "@/components/clients/widgets/PriceWidget";
+import { AdminDocumentsWidget } from "@/components/clients/widgets/AdminDocumentsWidget";
 
 const Clients = () => {
   const [activeWidget, setActiveWidget] = useState<string | null>(null);
@@ -26,6 +27,13 @@ const Clients = () => {
       icon: Building2,
       color: 'text-green-500',
       component: ProductCategoryWidget
+    },
+    {
+      id: 'documents',
+      title: 'Documents',
+      icon: FileText,
+      color: 'text-yellow-500',
+      component: AdminDocumentsWidget
     },
     {
       id: 'chantiers',
