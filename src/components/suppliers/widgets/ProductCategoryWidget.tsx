@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useState } from "react";
+import { ProductCategoryForm } from "./forms/ProductCategoryForm";
 
 export function ProductCategoryWidget() {
   const [showNewCategoryForm, setShowNewCategoryForm] = useState(false);
@@ -16,7 +17,11 @@ export function ProductCategoryWidget() {
         </Button>
       </CardHeader>
       <CardContent>
-        {/* Table des catégories à implémenter */}
+        {/* Table will be implemented later */}
+        <ProductCategoryForm 
+          open={showNewCategoryForm} 
+          onOpenChange={setShowNewCategoryForm}
+        />
       </CardContent>
     </Card>
   );
