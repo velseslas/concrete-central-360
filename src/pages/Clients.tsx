@@ -10,6 +10,7 @@ import { ProductWidget } from "@/components/clients/widgets/ProductWidget";
 import { PriceWidget } from "@/components/clients/widgets/PriceWidget";
 import { AdminDocumentsWidget } from "@/components/clients/widgets/AdminDocumentsWidget";
 import { OrderWidget } from "@/components/clients/widgets/OrderWidget";
+import { ReportsWidget } from "@/components/clients/widgets/ReportsWidget";
 
 const Clients = () => {
   const [activeWidget, setActiveWidget] = useState<string | null>(null);
@@ -63,6 +64,13 @@ const Clients = () => {
       icon: ShoppingCart,
       color: 'text-indigo-500',
       component: OrderWidget
+    },
+    {
+      id: 'rapports',
+      title: 'Rapports',
+      icon: FileText,
+      color: 'text-gray-500',
+      component: ReportsWidget
     }
   ];
 
