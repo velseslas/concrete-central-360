@@ -88,7 +88,7 @@ const Suppliers = () => {
               <h2 className="text-2xl font-bold">{widget.title}</h2>
             </div>
             {widget.id === 'suppliers' ? (
-              <WidgetComponent onEdit={handleEdit} onDelete={handleDelete} />
+              <SupplierList onEdit={handleEdit} onDelete={handleDelete} />
             ) : (
               <WidgetComponent />
             )}
