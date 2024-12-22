@@ -1,31 +1,16 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, Package, Tags, DollarSign, Truck, FileText } from "lucide-react";
-import { SupplierForm } from "@/components/suppliers/SupplierForm";
+import { Users, Package, DollarSign, FileText, Truck } from "lucide-react";
 import { SupplierList } from "@/components/suppliers/SupplierList";
-import { ProductCategoryWidget } from "@/components/suppliers/widgets/ProductCategoryWidget";
 import { ProductWidget } from "@/components/suppliers/widgets/ProductWidget";
 import { PriceWidget } from "@/components/suppliers/widgets/PriceWidget";
 import { DeliveryWidget } from "@/components/suppliers/widgets/DeliveryWidget";
-import { ReportsWidget } from "@/components/suppliers/widgets/ReportsWidget";
-import { toast } from "sonner";
+import { DocumentsWidget } from "@/components/suppliers/widgets/DocumentsWidget";
 
 const Suppliers = () => {
   const [activeWidget, setActiveWidget] = useState<string | null>(null);
-  const [selectedSupplier, setSelectedSupplier] = useState<any>(null);
-  const [showEditForm, setShowEditForm] = useState(false);
-
-  const handleEdit = (supplier: any) => {
-    setSelectedSupplier(supplier);
-    setShowEditForm(true);
-    console.log("Editing supplier:", supplier);
-  };
-
-  const handleDelete = (supplierId: number) => {
-    console.log("Deleting supplier:", supplierId);
-    toast.success("Fournisseur supprimé avec succès");
-  };
-
+  const [selectedSupplierId, setSelectedSupplierId] = useState<number | null>(null);
+  
   const widgets = [
     {
       id: 'suppliers',
@@ -33,13 +18,6 @@ const Suppliers = () => {
       icon: Users,
       color: 'text-blue-500',
       component: SupplierList
-    },
-    {
-      id: 'categories',
-      title: 'Catégories',
-      icon: Tags,
-      color: 'text-green-500',
-      component: ProductCategoryWidget
     },
     {
       id: 'products',
@@ -50,26 +28,35 @@ const Suppliers = () => {
     },
     {
       id: 'prices',
-      title: 'Prix Produits',
+      title: 'Prix',
       icon: DollarSign,
       color: 'text-yellow-500',
       component: PriceWidget
     },
     {
-      id: 'delivery',
-      title: 'Livraisons',
-      icon: Truck,
-      color: 'text-indigo-500',
-      component: DeliveryWidget
+      id: 'documents',
+      title: 'Documents',
+      icon: FileText,
+      color: 'text-green-500',
+      component: DocumentsWidget
     },
     {
-      id: 'reports',
-      title: 'Rapports',
-      icon: FileText,
-      color: 'text-gray-500',
-      component: ReportsWidget
+      id: 'deliveries',
+      title: 'Livraisons',
+      icon: Truck,
+      color: 'text-orange-500',
+      component: DeliveryWidget
     }
   ];
+
+  const handleEdit = (supplier: any) => {
+    console.log("Edit supplier:", supplier);
+    setSelectedSupplierId(supplier.id);
+  };
+
+  const handleDelete = (supplierId: number) => {
+    console.log("Delete supplier:", supplierId);
+  };
 
   const renderContent = () => {
     if (activeWidget) {
@@ -87,11 +74,11 @@ const Suppliers = () => {
               </button>
               <h2 className="text-2xl font-bold">{widget.title}</h2>
             </div>
-            {widget.id === 'suppliers' ? (
-              <SupplierList onEdit={handleEdit} onDelete={handleDelete} />
-            ) : (
-              <WidgetComponent />
-            )}
+            <WidgetComponent 
+              supplierId={selectedSupplierId}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+            />
           </div>
         );
       }
@@ -129,14 +116,6 @@ const Suppliers = () => {
     <div className="container mx-auto p-6 space-y-6">
       <h1 className="text-2xl font-bold text-gray-900">Gestion des Fournisseurs</h1>
       {renderContent()}
-      
-      {selectedSupplier && (
-        <SupplierForm
-          open={showEditForm}
-          onOpenChange={setShowEditForm}
-          supplierToEdit={selectedSupplier}
-        />
-      )}
     </div>
   );
 };

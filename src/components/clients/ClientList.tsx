@@ -2,12 +2,9 @@ import { useState } from "react";
 import { ClientForm } from "./ClientForm";
 import { ProjectForm } from "../projects/ProjectForm";
 import { DocumentsWidget } from "./widgets/DocumentsWidget";
-import { OrdersWidget } from "./widgets/OrdersWidget";
-import { ProductionWidget } from "./widgets/ProductionWidget";
 import { ClientTable } from "./ClientTable";
 import { Button } from "../ui/button";
 import { UserPlus } from "lucide-react";
-import { ReportsWidget } from "./widgets/ReportsWidget";
 
 const mockClients = [
   {
@@ -87,14 +84,6 @@ const ClientList = () => {
           {showDocumentUpload && (
             <DocumentsWidget clientId={selectedClient.id} />
           )}
-          <OrdersWidget 
-            clientId={selectedClient.id}
-            clientName={selectedClient.nom}
-          />
-          <ProductionWidget 
-            clientId={selectedClient.id}
-          />
-          <ReportsWidget />
         </>
       )}
 
