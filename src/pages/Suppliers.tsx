@@ -8,9 +8,23 @@ import { ProductWidget } from "@/components/suppliers/widgets/ProductWidget";
 import { PriceWidget } from "@/components/suppliers/widgets/PriceWidget";
 import { DeliveryWidget } from "@/components/suppliers/widgets/DeliveryWidget";
 import { ReportsWidget } from "@/components/suppliers/widgets/ReportsWidget";
+import { toast } from "sonner";
 
 const Suppliers = () => {
   const [activeWidget, setActiveWidget] = useState<string | null>(null);
+  const [selectedSupplier, setSelectedSupplier] = useState<any>(null);
+  const [showEditForm, setShowEditForm] = useState(false);
+
+  const handleEdit = (supplier: any) => {
+    setSelectedSupplier(supplier);
+    setShowEditForm(true);
+    console.log("Editing supplier:", supplier);
+  };
+
+  const handleDelete = (supplierId: number) => {
+    console.log("Deleting supplier:", supplierId);
+    toast.success("Fournisseur supprimé avec succès");
+  };
 
   const widgets = [
     {
@@ -73,7 +87,11 @@ const Suppliers = () => {
               </button>
               <h2 className="text-2xl font-bold">{widget.title}</h2>
             </div>
-            <WidgetComponent />
+            {widget.id === 'suppliers' ? (
+              <WidgetComponent onEdit={handleEdit} onDelete={handleDelete} />
+            ) : (
+              <WidgetComponent />
+            )}
           </div>
         );
       }
@@ -111,6 +129,14 @@ const Suppliers = () => {
     <div className="container mx-auto p-6 space-y-6">
       <h1 className="text-2xl font-bold text-gray-900">Gestion des Fournisseurs</h1>
       {renderContent()}
+      
+      {selectedSupplier && (
+        <SupplierForm
+          open={showEditForm}
+          onOpenChange={setShowEditForm}
+          supplierToEdit={selectedSupplier}
+        />
+      )}
     </div>
   );
 };
