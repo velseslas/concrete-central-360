@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { useState } from "react";
+import { ProductForm } from "@/components/clients/ProductForm";
 
 export function ProductWidget() {
   const [showNewProductForm, setShowNewProductForm] = useState(false);
@@ -17,6 +18,10 @@ export function ProductWidget() {
       </CardHeader>
       <CardContent>
         {/* Table des produits à implémenter */}
+        <ProductForm 
+          open={showNewProductForm} 
+          onOpenChange={setShowNewProductForm}
+        />
       </CardContent>
     </Card>
   );

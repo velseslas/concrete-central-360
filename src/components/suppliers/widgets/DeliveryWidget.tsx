@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { useState } from "react";
+import { DeliveryForm } from "./forms/DeliveryForm";
 
 export function DeliveryWidget() {
   const [showNewDeliveryForm, setShowNewDeliveryForm] = useState(false);
@@ -17,6 +18,10 @@ export function DeliveryWidget() {
       </CardHeader>
       <CardContent>
         {/* Table des livraisons à implémenter */}
+        <DeliveryForm 
+          open={showNewDeliveryForm} 
+          onOpenChange={setShowNewDeliveryForm}
+        />
       </CardContent>
     </Card>
   );

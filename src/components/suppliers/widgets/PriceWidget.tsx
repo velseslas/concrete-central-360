@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { useState } from "react";
+import { PriceForm } from "./forms/PriceForm";
 
 export function PriceWidget() {
   const [showNewPriceForm, setShowNewPriceForm] = useState(false);
@@ -17,6 +18,10 @@ export function PriceWidget() {
       </CardHeader>
       <CardContent>
         {/* Table des prix à implémenter */}
+        <PriceForm 
+          open={showNewPriceForm} 
+          onOpenChange={setShowNewPriceForm}
+        />
       </CardContent>
     </Card>
   );
