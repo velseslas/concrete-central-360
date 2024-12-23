@@ -6,6 +6,7 @@ import { ProductWidget } from "@/components/suppliers/widgets/ProductWidget";
 import { PriceWidget } from "@/components/suppliers/widgets/PriceWidget";
 import { DeliveryWidget } from "@/components/suppliers/widgets/DeliveryWidget";
 import { DocumentsWidget } from "@/components/suppliers/widgets/DocumentsWidget";
+import { ReportsWidget } from "@/components/suppliers/widgets/ReportsWidget";
 
 const Suppliers = () => {
   const [activeWidget, setActiveWidget] = useState<string | null>(null);
@@ -46,6 +47,13 @@ const Suppliers = () => {
       icon: Truck,
       color: 'text-orange-500',
       component: DeliveryWidget
+    },
+    {
+      id: 'reports',
+      title: 'Rapports',
+      icon: FileText,
+      color: 'text-gray-500',
+      component: ReportsWidget
     }
   ];
 
