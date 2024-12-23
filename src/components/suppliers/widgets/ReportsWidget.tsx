@@ -23,12 +23,12 @@ export function ReportsWidget() {
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
 
-  // Mock data for demonstration
+  // Données d'exemple plus complètes
   const reports: Report[] = [
     {
       id: "1",
       date: "2024-03-20",
-      supplier: "Fournisseur A",
+      supplier: "SARL CIMENT PLUS",
       product: "Ciment",
       quantity: 100,
       price: 1200,
@@ -37,12 +37,30 @@ export function ReportsWidget() {
     {
       id: "2",
       date: "2024-03-21",
-      supplier: "Fournisseur B",
-      product: "Gravier",
+      supplier: "EURL AGREGATS",
+      product: "Gravier 8/15",
       quantity: 50,
       price: 800,
       total: 40000
     },
+    {
+      id: "3",
+      date: "2024-03-22",
+      supplier: "SARL CIMENT PLUS",
+      product: "Ciment",
+      quantity: 150,
+      price: 1200,
+      total: 180000
+    },
+    {
+      id: "4",
+      date: "2024-03-23",
+      supplier: "SPA SABLE",
+      product: "Sable Fin",
+      quantity: 75,
+      price: 600,
+      total: 45000
+    }
   ];
 
   const handleGenerateReport = () => {
@@ -54,6 +72,9 @@ export function ReportsWidget() {
     });
     toast.success("Rapport généré avec succès");
   };
+
+  // Calcul du total général
+  const totalGeneral = reports.reduce((sum, report) => sum + report.total, 0);
 
   return (
     <Card>
@@ -76,8 +97,9 @@ export function ReportsWidget() {
                 <SelectValue placeholder="Sélectionner un fournisseur" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="supplier-1">Fournisseur A</SelectItem>
-                <SelectItem value="supplier-2">Fournisseur B</SelectItem>
+                <SelectItem value="supplier-1">SARL CIMENT PLUS</SelectItem>
+                <SelectItem value="supplier-2">EURL AGREGATS</SelectItem>
+                <SelectItem value="supplier-3">SPA SABLE</SelectItem>
               </SelectContent>
             </Select>
 
@@ -87,7 +109,8 @@ export function ReportsWidget() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="ciment">Ciment</SelectItem>
-                <SelectItem value="gravier">Gravier</SelectItem>
+                <SelectItem value="gravier">Gravier 8/15</SelectItem>
+                <SelectItem value="sable">Sable Fin</SelectItem>
               </SelectContent>
             </Select>
 
@@ -133,6 +156,10 @@ export function ReportsWidget() {
                     <TableCell>{report.total.toLocaleString()} DA</TableCell>
                   </TableRow>
                 ))}
+                <TableRow className="font-bold bg-gray-50">
+                  <TableCell colSpan={5} className="text-right">Total Général:</TableCell>
+                  <TableCell>{totalGeneral.toLocaleString()} DA</TableCell>
+                </TableRow>
               </TableBody>
             </Table>
           </div>

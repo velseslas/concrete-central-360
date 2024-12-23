@@ -25,13 +25,13 @@ export function ReportsWidget() {
   const [endDate, setEndDate] = useState<string>("");
   const [selectedProduct, setSelectedProduct] = useState<string>("");
 
-  // Mock data for demonstration
+  // Données d'exemple plus complètes
   const reports: Report[] = [
     {
       id: "1",
       date: "2024-03-20",
-      client: "Client A",
-      project: "Projet 1",
+      client: "EURL BATIMENT PLUS",
+      project: "Construction Villa",
       product: "B25",
       quantity: 30,
       price: 12000,
@@ -40,13 +40,33 @@ export function ReportsWidget() {
     {
       id: "2",
       date: "2024-03-21",
-      client: "Client B",
-      project: "Projet 2",
+      client: "SARL CONSTRUCTION MODERNE",
+      project: "Immeuble 20 Logements",
       product: "B30",
       quantity: 45,
       price: 13000,
       total: 585000
     },
+    {
+      id: "3",
+      date: "2024-03-22",
+      client: "EURL BATIMENT PLUS",
+      project: "Construction Villa",
+      product: "B20",
+      quantity: 25,
+      price: 11000,
+      total: 275000
+    },
+    {
+      id: "4",
+      date: "2024-03-23",
+      client: "SPA IMMOBILIER",
+      project: "Centre Commercial",
+      product: "B40",
+      quantity: 60,
+      price: 14000,
+      total: 840000
+    }
   ];
 
   const handleGenerateReport = () => {
@@ -59,6 +79,9 @@ export function ReportsWidget() {
     });
     toast.success("Rapport généré avec succès");
   };
+
+  // Calcul du total général
+  const totalGeneral = reports.reduce((sum, report) => sum + report.total, 0);
 
   return (
     <Card>
@@ -81,8 +104,9 @@ export function ReportsWidget() {
                 <SelectValue placeholder="Sélectionner un client" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="client-a">Client A</SelectItem>
-                <SelectItem value="client-b">Client B</SelectItem>
+                <SelectItem value="client-1">EURL BATIMENT PLUS</SelectItem>
+                <SelectItem value="client-2">SARL CONSTRUCTION MODERNE</SelectItem>
+                <SelectItem value="client-3">SPA IMMOBILIER</SelectItem>
               </SelectContent>
             </Select>
 
@@ -91,8 +115,9 @@ export function ReportsWidget() {
                 <SelectValue placeholder="Sélectionner un projet" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="project-1">Projet 1</SelectItem>
-                <SelectItem value="project-2">Projet 2</SelectItem>
+                <SelectItem value="project-1">Construction Villa</SelectItem>
+                <SelectItem value="project-2">Immeuble 20 Logements</SelectItem>
+                <SelectItem value="project-3">Centre Commercial</SelectItem>
               </SelectContent>
             </Select>
 
@@ -101,8 +126,10 @@ export function ReportsWidget() {
                 <SelectValue placeholder="Sélectionner un produit" />
               </SelectTrigger>
               <SelectContent>
+                <SelectItem value="b20">B20</SelectItem>
                 <SelectItem value="b25">B25</SelectItem>
                 <SelectItem value="b30">B30</SelectItem>
+                <SelectItem value="b40">B40</SelectItem>
               </SelectContent>
             </Select>
 
@@ -150,6 +177,10 @@ export function ReportsWidget() {
                     <TableCell>{report.total.toLocaleString()} DA</TableCell>
                   </TableRow>
                 ))}
+                <TableRow className="font-bold bg-gray-50">
+                  <TableCell colSpan={6} className="text-right">Total Général:</TableCell>
+                  <TableCell>{totalGeneral.toLocaleString()} DA</TableCell>
+                </TableRow>
               </TableBody>
             </Table>
           </div>
