@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { FileText, Filter } from "lucide-react";
+import { FileText, Filter, Printer } from "lucide-react";
 import { toast } from "sonner";
 
 interface Report {
@@ -73,6 +73,84 @@ export function ReportsWidget() {
     toast.success("Rapport généré avec succès");
   };
 
+  const handlePrint = () => {
+    // Create a new window for printing
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) return;
+
+    // Calculate total
+    const totalGeneral = reports.reduce((sum, report) => sum + report.total, 0);
+
+    // Generate the HTML content for printing
+    const printContent = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Rapport des Livraisons</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 20px; }
+            h1 { color: #333; margin-bottom: 20px; }
+            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            th { background-color: #f5f5f5; }
+            .total-row { font-weight: bold; background-color: #f5f5f5; }
+            .header-info { margin-bottom: 20px; }
+            .date { color: #666; }
+            @media print {
+              button { display: none; }
+            }
+          </style>
+        </head>
+        <body>
+          <div class="header-info">
+            <h1>Rapport des Livraisons</h1>
+            <p class="date">Date d'impression: ${new Date().toLocaleDateString()}</p>
+            ${startDate && endDate ? `<p>Période: Du ${startDate} au ${endDate}</p>` : ''}
+            ${selectedSupplier ? `<p>Fournisseur: ${selectedSupplier}</p>` : ''}
+            ${selectedProduct ? `<p>Produit: ${selectedProduct}</p>` : ''}
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Fournisseur</th>
+                <th>Produit</th>
+                <th>Quantité</th>
+                <th>Prix unitaire</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${reports.map(report => `
+                <tr>
+                  <td>${report.date}</td>
+                  <td>${report.supplier}</td>
+                  <td>${report.product}</td>
+                  <td>${report.quantity} T</td>
+                  <td>${report.price.toLocaleString()} DA</td>
+                  <td>${report.total.toLocaleString()} DA</td>
+                </tr>
+              `).join('')}
+              <tr class="total-row">
+                <td colspan="5" style="text-align: right;">Total Général:</td>
+                <td>${totalGeneral.toLocaleString()} DA</td>
+              </tr>
+            </tbody>
+          </table>
+          <button onclick="window.print()" style="margin-top: 20px; padding: 10px 20px;">
+            Imprimer
+          </button>
+        </body>
+      </html>
+    `;
+
+    // Write the content to the new window and print
+    printWindow.document.write(printContent);
+    printWindow.document.close();
+    console.log("Opening print window");
+    toast.success("Fenêtre d'impression ouverte");
+  };
+
   // Calcul du total général
   const totalGeneral = reports.reduce((sum, report) => sum + report.total, 0);
 
@@ -130,6 +208,11 @@ export function ReportsWidget() {
 
             <Button onClick={handleGenerateReport}>
               Générer le rapport
+            </Button>
+
+            <Button onClick={handlePrint} variant="outline" className="flex items-center gap-2">
+              <Printer className="h-4 w-4" />
+              Version imprimable
             </Button>
           </div>
 
