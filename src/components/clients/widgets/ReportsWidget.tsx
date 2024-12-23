@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { FileText } from "lucide-react";
+import { FileText, Filter } from "lucide-react";
+import { toast } from "sonner";
 
 interface Report {
   id: string;
@@ -13,6 +14,8 @@ interface Report {
   project: string;
   product: string;
   quantity: number;
+  price: number;
+  total: number;
 }
 
 export function ReportsWidget() {
@@ -22,7 +25,7 @@ export function ReportsWidget() {
   const [endDate, setEndDate] = useState<string>("");
   const [selectedProduct, setSelectedProduct] = useState<string>("");
 
-  // Données de démonstration
+  // Mock data for demonstration
   const reports: Report[] = [
     {
       id: "1",
@@ -31,6 +34,8 @@ export function ReportsWidget() {
       project: "Projet 1",
       product: "B25",
       quantity: 30,
+      price: 12000,
+      total: 360000
     },
     {
       id: "2",
@@ -39,17 +44,20 @@ export function ReportsWidget() {
       project: "Projet 2",
       product: "B30",
       quantity: 45,
+      price: 13000,
+      total: 585000
     },
   ];
 
   const handleGenerateReport = () => {
-    console.log("Génération du rapport avec les filtres:", {
+    console.log("Generating report with filters:", {
       client: selectedClient,
       project: selectedProject,
       startDate,
       endDate,
       product: selectedProduct,
     });
+    toast.success("Rapport généré avec succès");
   };
 
   return (
@@ -57,11 +65,16 @@ export function ReportsWidget() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <FileText className="h-5 w-5" />
-          Rapports
+          Rapports des ventes
         </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
+          <div className="flex items-center gap-2 mb-4">
+            <Filter className="h-4 w-4" />
+            <span className="font-medium">Filtres</span>
+          </div>
+          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Select value={selectedClient} onValueChange={setSelectedClient}>
               <SelectTrigger>
@@ -121,6 +134,8 @@ export function ReportsWidget() {
                   <TableHead>Projet</TableHead>
                   <TableHead>Produit</TableHead>
                   <TableHead>Quantité</TableHead>
+                  <TableHead>Prix unitaire</TableHead>
+                  <TableHead>Total</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -131,6 +146,8 @@ export function ReportsWidget() {
                     <TableCell>{report.project}</TableCell>
                     <TableCell>{report.product}</TableCell>
                     <TableCell>{report.quantity} m³</TableCell>
+                    <TableCell>{report.price.toLocaleString()} DA</TableCell>
+                    <TableCell>{report.total.toLocaleString()} DA</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

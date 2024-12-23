@@ -1,15 +1,12 @@
 import { useState } from "react";
-import { ClientForm } from "@/components/clients/ClientForm";
-import { BusinessTypeForm } from "@/components/clients/BusinessTypeForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, Building2, Construction, Package, DollarSign, FileText, ShoppingCart } from "lucide-react";
+import { Users, Building2, Construction, Package, DollarSign, FileText } from "lucide-react";
 import { ClientListWidget } from "@/components/clients/widgets/ClientListWidget";
 import { ProductCategoryWidget } from "@/components/clients/widgets/ProductCategoryWidget";
 import { ProjectWidget } from "@/components/clients/widgets/ProjectWidget";
 import { ProductWidget } from "@/components/clients/widgets/ProductWidget";
 import { PriceWidget } from "@/components/clients/widgets/PriceWidget";
 import { AdminDocumentsWidget } from "@/components/clients/widgets/AdminDocumentsWidget";
-import { OrderWidget } from "@/components/clients/widgets/OrderWidget";
 import { ReportsWidget } from "@/components/clients/widgets/ReportsWidget";
 
 const Clients = () => {
@@ -57,13 +54,6 @@ const Clients = () => {
       icon: DollarSign,
       color: 'text-yellow-500',
       component: PriceWidget
-    },
-    {
-      id: 'commandes',
-      title: 'Commandes',
-      icon: ShoppingCart,
-      color: 'text-indigo-500',
-      component: OrderWidget
     },
     {
       id: 'rapports',
@@ -130,6 +120,6 @@ const Clients = () => {
       {renderContent()}
     </div>
   );
-};
+}
 
 export default Clients;
