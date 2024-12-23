@@ -9,12 +9,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { toast } from "sonner";
 
 const deliverySchema = z.object({
+  category: z.string().min(1, "La catégorie est requise"),
+  supplier: z.string().min(1, "Le fournisseur est requis"),
   product: z.string().min(1, "Le produit est requis"),
+  date: z.string().min(1, "La date est requise"),
+  vehicleNumber: z.string().min(1, "Le matricule du camion est requis"),
+  deliveryNoteNumber: z.string().min(1, "Le numéro de bon de livraison est requis"),
   quantity: z.string().min(1, "La quantité est requise"),
   unit: z.string().min(1, "L'unité est requise"),
-  deliveryDate: z.string().min(1, "La date de livraison est requise"),
-  vehicle: z.string().min(1, "Le véhicule est requis"),
-  driver: z.string().min(1, "Le chauffeur est requis"),
 });
 
 type DeliveryFormValues = z.infer<typeof deliverySchema>;
@@ -29,12 +31,14 @@ export function DeliveryForm({ open, onOpenChange, deliveryToEdit }: DeliveryFor
   const form = useForm<DeliveryFormValues>({
     resolver: zodResolver(deliverySchema),
     defaultValues: deliveryToEdit || {
+      category: "",
+      supplier: "",
       product: "",
+      date: "",
+      vehicleNumber: "",
+      deliveryNoteNumber: "",
       quantity: "",
       unit: "",
-      deliveryDate: "",
-      vehicle: "",
-      driver: "",
     },
   });
 
@@ -52,6 +56,51 @@ export function DeliveryForm({ open, onOpenChange, deliveryToEdit }: DeliveryFor
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="category"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Catégorie de produit</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Sélectionner une catégorie" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="ciment">Ciment</SelectItem>
+                      <SelectItem value="gravier">Gravier</SelectItem>
+                      <SelectItem value="sable">Sable</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="supplier"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Fournisseur</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Sélectionner un fournisseur" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="supplier1">Fournisseur 1</SelectItem>
+                      <SelectItem value="supplier2">Fournisseur 2</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="product"
@@ -73,6 +122,49 @@ export function DeliveryForm({ open, onOpenChange, deliveryToEdit }: DeliveryFor
                 </FormItem>
               )}
             />
+
+            <FormField
+              control={form.control}
+              name="date"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Date de livraison</FormLabel>
+                  <FormControl>
+                    <Input type="date" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="vehicleNumber"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Matricule du camion</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Ex: 1234-123-16" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="deliveryNoteNumber"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Numéro bon de livraison</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Ex: BL-2024-001" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="quantity"
@@ -80,12 +172,13 @@ export function DeliveryForm({ open, onOpenChange, deliveryToEdit }: DeliveryFor
                 <FormItem>
                   <FormLabel>Quantité</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="Quantité" {...field} />
+                    <Input type="number" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="unit"
@@ -99,70 +192,16 @@ export function DeliveryForm({ open, onOpenChange, deliveryToEdit }: DeliveryFor
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="kg">Kilogramme</SelectItem>
-                      <SelectItem value="t">Tonne</SelectItem>
-                      <SelectItem value="l">Litre</SelectItem>
+                      <SelectItem value="tonnes">Tonnes</SelectItem>
+                      <SelectItem value="kg">Kilogrammes</SelectItem>
+                      <SelectItem value="m3">Mètres cubes</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="deliveryDate"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Date de livraison</FormLabel>
-                  <FormControl>
-                    <Input type="date" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="vehicle"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Véhicule</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Sélectionner un véhicule" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="vehicle1">Véhicule 1</SelectItem>
-                      <SelectItem value="vehicle2">Véhicule 2</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="driver"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Chauffeur</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Sélectionner un chauffeur" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="driver1">Chauffeur 1</SelectItem>
-                      <SelectItem value="driver2">Chauffeur 2</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+
             <div className="flex justify-end space-x-2 pt-4">
               <Button variant="outline" onClick={() => onOpenChange(false)}>
                 Annuler

@@ -4,7 +4,18 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { FileText } from "lucide-react";
+import { FileText, Filter } from "lucide-react";
+import { toast } from "sonner";
+
+interface Report {
+  id: string;
+  date: string;
+  supplier: string;
+  product: string;
+  quantity: number;
+  price: number;
+  total: number;
+}
 
 export function ReportsWidget() {
   const [selectedSupplier, setSelectedSupplier] = useState<string>("");
@@ -12,13 +23,36 @@ export function ReportsWidget() {
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
 
+  // Mock data for demonstration
+  const reports: Report[] = [
+    {
+      id: "1",
+      date: "2024-03-20",
+      supplier: "Fournisseur A",
+      product: "Ciment",
+      quantity: 100,
+      price: 1200,
+      total: 120000
+    },
+    {
+      id: "2",
+      date: "2024-03-21",
+      supplier: "Fournisseur B",
+      product: "Gravier",
+      quantity: 50,
+      price: 800,
+      total: 40000
+    },
+  ];
+
   const handleGenerateReport = () => {
-    console.log("Génération du rapport avec les filtres:", {
+    console.log("Generating report with filters:", {
       supplier: selectedSupplier,
       product: selectedProduct,
       startDate,
       endDate,
     });
+    toast.success("Rapport généré avec succès");
   };
 
   return (
@@ -26,19 +60,24 @@ export function ReportsWidget() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <FileText className="h-5 w-5" />
-          Rapports Fournisseurs
+          Rapports des livraisons
         </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
+          <div className="flex items-center gap-2 mb-4">
+            <Filter className="h-4 w-4" />
+            <span className="font-medium">Filtres</span>
+          </div>
+          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Select value={selectedSupplier} onValueChange={setSelectedSupplier}>
               <SelectTrigger>
                 <SelectValue placeholder="Sélectionner un fournisseur" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="supplier-1">Fournisseur 1</SelectItem>
-                <SelectItem value="supplier-2">Fournisseur 2</SelectItem>
+                <SelectItem value="supplier-1">Fournisseur A</SelectItem>
+                <SelectItem value="supplier-2">Fournisseur B</SelectItem>
               </SelectContent>
             </Select>
 
@@ -47,8 +86,8 @@ export function ReportsWidget() {
                 <SelectValue placeholder="Sélectionner un produit" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="product-1">Produit 1</SelectItem>
-                <SelectItem value="product-2">Produit 2</SelectItem>
+                <SelectItem value="ciment">Ciment</SelectItem>
+                <SelectItem value="gravier">Gravier</SelectItem>
               </SelectContent>
             </Select>
 
@@ -79,11 +118,21 @@ export function ReportsWidget() {
                   <TableHead>Fournisseur</TableHead>
                   <TableHead>Produit</TableHead>
                   <TableHead>Quantité</TableHead>
-                  <TableHead>Prix</TableHead>
+                  <TableHead>Prix unitaire</TableHead>
+                  <TableHead>Total</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {/* Les données du rapport seront affichées ici */}
+                {reports.map((report) => (
+                  <TableRow key={report.id}>
+                    <TableCell>{report.date}</TableCell>
+                    <TableCell>{report.supplier}</TableCell>
+                    <TableCell>{report.product}</TableCell>
+                    <TableCell>{report.quantity} T</TableCell>
+                    <TableCell>{report.price.toLocaleString()} DA</TableCell>
+                    <TableCell>{report.total.toLocaleString()} DA</TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </div>
