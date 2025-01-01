@@ -10,6 +10,8 @@ import { DocumentsWidget } from "@/components/suppliers/widgets/DocumentsWidget"
 import { ReportsWidget } from "@/components/suppliers/widgets/ReportsWidget";
 import { PurchaseOrderWidget } from "@/components/suppliers/widgets/PurchaseOrderWidget";
 import { PaymentWidget } from "@/components/suppliers/widgets/PaymentWidget";
+import { StatsCards } from "@/components/suppliers/widgets/StatsCards";
+import { SupplierActivityChart } from "@/components/suppliers/widgets/SupplierActivityChart";
 
 const Suppliers = () => {
   const [activeWidget, setActiveWidget] = useState<string | null>(null);
@@ -117,29 +119,33 @@ const Suppliers = () => {
     }
 
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {widgets.map((widget) => {
-          const IconComponent = widget.icon;
-          return (
-            <Card 
-              key={widget.id}
-              className="cursor-pointer hover:shadow-lg transition-shadow"
-              onClick={() => setActiveWidget(widget.id)}
-            >
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <IconComponent className={`h-6 w-6 ${widget.color}`} />
-                  {widget.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600">
-                  Gérer les {widget.title.toLowerCase()}
-                </p>
-              </CardContent>
-            </Card>
-          );
-        })}
+      <div className="space-y-6">
+        <StatsCards />
+        <SupplierActivityChart />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {widgets.map((widget) => {
+            const IconComponent = widget.icon;
+            return (
+              <Card 
+                key={widget.id}
+                className="cursor-pointer hover:shadow-lg transition-shadow"
+                onClick={() => setActiveWidget(widget.id)}
+              >
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <IconComponent className={`h-6 w-6 ${widget.color}`} />
+                    {widget.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-600">
+                    Gérer les {widget.title.toLowerCase()}
+                  </p>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
       </div>
     );
   };
