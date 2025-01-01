@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, Package, DollarSign, FileText, Truck } from "lucide-react";
+import { Users, Package, CreditCard, FileText, Truck, ShoppingCart } from "lucide-react";
 import { SupplierList } from "@/components/suppliers/SupplierList";
 import { ProductWidget } from "@/components/suppliers/widgets/ProductWidget";
 import { PriceWidget } from "@/components/suppliers/widgets/PriceWidget";
 import { DeliveryWidget } from "@/components/suppliers/widgets/DeliveryWidget";
 import { DocumentsWidget } from "@/components/suppliers/widgets/DocumentsWidget";
 import { ReportsWidget } from "@/components/suppliers/widgets/ReportsWidget";
+import { PurchaseOrderWidget } from "@/components/suppliers/widgets/PurchaseOrderWidget";
+import { PaymentWidget } from "@/components/suppliers/widgets/PaymentWidget";
 
 const Suppliers = () => {
   const [activeWidget, setActiveWidget] = useState<string | null>(null);
@@ -28,18 +30,18 @@ const Suppliers = () => {
       component: ProductWidget
     },
     {
-      id: 'prices',
-      title: 'Prix',
-      icon: DollarSign,
-      color: 'text-yellow-500',
-      component: PriceWidget
+      id: 'purchase-orders',
+      title: 'Bons de commande',
+      icon: ShoppingCart,
+      color: 'text-green-500',
+      component: PurchaseOrderWidget
     },
     {
-      id: 'documents',
-      title: 'Documents',
-      icon: FileText,
-      color: 'text-green-500',
-      component: DocumentsWidget
+      id: 'payments',
+      title: 'Paiements',
+      icon: CreditCard,
+      color: 'text-yellow-500',
+      component: PaymentWidget
     },
     {
       id: 'deliveries',
@@ -49,10 +51,17 @@ const Suppliers = () => {
       component: DeliveryWidget
     },
     {
+      id: 'documents',
+      title: 'Documents',
+      icon: FileText,
+      color: 'text-gray-500',
+      component: DocumentsWidget
+    },
+    {
       id: 'reports',
       title: 'Rapports',
       icon: FileText,
-      color: 'text-gray-500',
+      color: 'text-indigo-500',
       component: ReportsWidget
     }
   ];
