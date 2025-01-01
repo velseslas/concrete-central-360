@@ -1,21 +1,20 @@
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertTriangle } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 interface Material {
   name: string;
   stock: number;
   threshold: number;
   unit: string;
+  urgency: "high" | "medium";
+  daysUntilEmpty: number;
 }
 
 const materials: Material[] = [
-  { name: "Ciment", stock: 25000, threshold: 30000, unit: "kg" },
-  { name: "Sable 0/1", stock: 15000, threshold: 20000, unit: "kg" },
-  { name: "Sable 0/3", stock: 18000, threshold: 20000, unit: "kg" },
-  { name: "Sable 0/4", stock: 22000, threshold: 20000, unit: "kg" },
-  { name: "Gravier 3/8", stock: 12000, threshold: 15000, unit: "kg" },
-  { name: "Gravier 8/15", stock: 14000, threshold: 15000, unit: "kg" },
-  { name: "Gravier 15/25", stock: 13000, threshold: 15000, unit: "kg" },
+  { name: "Ciment", stock: 25000, threshold: 30000, unit: "kg", urgency: "medium", daysUntilEmpty: 5 },
+  { name: "Sable 0/1", stock: 15000, threshold: 20000, unit: "kg", urgency: "high", daysUntilEmpty: 2 },
+  { name: "Gravier 3/8", stock: 12000, threshold: 15000, unit: "kg", urgency: "high", daysUntilEmpty: 3 },
 ];
 
 const StockAlerts = () => {
@@ -24,19 +23,38 @@ const StockAlerts = () => {
   );
 
   if (lowStockMaterials.length === 0) {
-    return null;
+    return (
+      <div className="text-center text-gray-500 py-4">
+        Aucune alerte de stock
+      </div>
+    );
   }
 
   return (
     <div className="space-y-4">
       {lowStockMaterials.map((material) => (
-        <Alert variant="destructive" key={material.name}>
-          <AlertTriangle className="h-4 w-4" />
-          <AlertTitle>Stock faible - {material.name}</AlertTitle>
-          <AlertDescription>
-            Stock actuel: {material.stock.toLocaleString()} {material.unit} (Seuil
-            minimum: {material.threshold.toLocaleString()} {material.unit})
-          </AlertDescription>
+        <Alert 
+          variant={material.urgency === "high" ? "destructive" : "default"}
+          key={material.name}
+          className="flex items-center justify-between"
+        >
+          <div className="flex items-start gap-4">
+            <AlertTriangle className="h-5 w-5" />
+            <div>
+              <AlertTitle className="mb-2">Stock faible - {material.name}</AlertTitle>
+              <AlertDescription className="text-sm">
+                Stock actuel: {material.stock.toLocaleString()} {material.unit}
+                <br />
+                Seuil minimum: {material.threshold.toLocaleString()} {material.unit}
+              </AlertDescription>
+            </div>
+          </div>
+          <Badge 
+            variant="outline" 
+            className={material.urgency === "high" ? "bg-red-100 text-red-800" : "bg-yellow-100 text-yellow-800"}
+          >
+            {material.daysUntilEmpty} jours restants
+          </Badge>
         </Alert>
       ))}
     </div>
