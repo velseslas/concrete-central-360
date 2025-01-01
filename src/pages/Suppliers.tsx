@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, Package, CreditCard, FileText, Truck, ShoppingCart } from "lucide-react";
+import { Users, Package, CreditCard, FileText, Truck, ShoppingCart, Tag, Euro, Factory } from "lucide-react";
 import { SupplierList } from "@/components/suppliers/SupplierList";
 import { ProductWidget } from "@/components/suppliers/widgets/ProductWidget";
 import { PriceWidget } from "@/components/suppliers/widgets/PriceWidget";
+import { ProductCategoryWidget } from "@/components/suppliers/widgets/ProductCategoryWidget";
 import { DeliveryWidget } from "@/components/suppliers/widgets/DeliveryWidget";
 import { DocumentsWidget } from "@/components/suppliers/widgets/DocumentsWidget";
 import { ReportsWidget } from "@/components/suppliers/widgets/ReportsWidget";
@@ -23,31 +24,52 @@ const Suppliers = () => {
       component: SupplierList
     },
     {
+      id: 'categories',
+      title: 'Catégories',
+      icon: Tag,
+      color: 'text-purple-500',
+      component: ProductCategoryWidget
+    },
+    {
       id: 'products',
       title: 'Produits',
       icon: Package,
-      color: 'text-purple-500',
+      color: 'text-green-500',
+      component: ProductWidget
+    },
+    {
+      id: 'prices',
+      title: 'Prix',
+      icon: Euro,
+      color: 'text-yellow-500',
+      component: PriceWidget
+    },
+    {
+      id: 'producers',
+      title: 'Producteurs',
+      icon: Factory,
+      color: 'text-orange-500',
       component: ProductWidget
     },
     {
       id: 'purchase-orders',
       title: 'Bons de commande',
       icon: ShoppingCart,
-      color: 'text-green-500',
+      color: 'text-indigo-500',
       component: PurchaseOrderWidget
     },
     {
       id: 'payments',
       title: 'Paiements',
       icon: CreditCard,
-      color: 'text-yellow-500',
+      color: 'text-pink-500',
       component: PaymentWidget
     },
     {
       id: 'deliveries',
       title: 'Livraisons',
       icon: Truck,
-      color: 'text-orange-500',
+      color: 'text-teal-500',
       component: DeliveryWidget
     },
     {
@@ -56,13 +78,6 @@ const Suppliers = () => {
       icon: FileText,
       color: 'text-gray-500',
       component: DocumentsWidget
-    },
-    {
-      id: 'reports',
-      title: 'Rapports',
-      icon: FileText,
-      color: 'text-indigo-500',
-      component: ReportsWidget
     }
   ];
 
