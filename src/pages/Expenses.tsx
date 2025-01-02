@@ -82,27 +82,32 @@ const Expenses = () => {
     }
 
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {widgets.map((widget) => {
-          const IconComponent = widget.icon;
-          return (
-            <Card
-              key={widget.id}
-              className="cursor-pointer hover:shadow-lg transition-shadow hover:scale-105 transition-all duration-200"
-              onClick={() => setActiveWidget(widget.id)}
-            >
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <IconComponent className={`h-6 w-6 ${widget.color}`} />
-                  {widget.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600">{widget.description}</p>
-              </CardContent>
-            </Card>
-          );
-        })}
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {widgets.map((widget) => {
+            const IconComponent = widget.icon;
+            return (
+              <Card
+                key={widget.id}
+                className="cursor-pointer hover:shadow-lg transition-shadow hover:scale-105 transition-all duration-200"
+                onClick={() => setActiveWidget(widget.id)}
+              >
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <IconComponent className={`h-6 w-6 ${widget.color}`} />
+                    {widget.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-600">{widget.description}</p>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+        <div className="lg:col-span-1">
+          <ExpenseCategoryWidget />
+        </div>
       </div>
     );
   };
