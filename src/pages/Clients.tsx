@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, Building2, Construction, Package, DollarSign, FileText } from "lucide-react";
+import { Users, Building2, Construction, Package, DollarSign, FileText, CreditCard, ShoppingCart } from "lucide-react";
 import { ClientListWidget } from "@/components/clients/widgets/ClientListWidget";
 import { ProductCategoryWidget } from "@/components/clients/widgets/ProductCategoryWidget";
 import { ProjectWidget } from "@/components/clients/widgets/ProjectWidget";
@@ -8,6 +8,8 @@ import { ProductWidget } from "@/components/clients/widgets/ProductWidget";
 import { PriceWidget } from "@/components/clients/widgets/PriceWidget";
 import { AdminDocumentsWidget } from "@/components/clients/widgets/AdminDocumentsWidget";
 import { ReportsWidget } from "@/components/clients/widgets/ReportsWidget";
+import { OrderWidget } from "@/components/clients/widgets/OrderWidget";
+import { PaymentWidget } from "@/components/clients/widgets/PaymentWidget";
 
 const Clients = () => {
   const [activeWidget, setActiveWidget] = useState<string | null>(null);
@@ -56,6 +58,20 @@ const Clients = () => {
       component: PriceWidget
     },
     {
+      id: 'commandes',
+      title: 'Commandes',
+      icon: ShoppingCart,
+      color: 'text-indigo-500',
+      component: OrderWidget
+    },
+    {
+      id: 'paiements',
+      title: 'Paiements',
+      icon: CreditCard,
+      color: 'text-emerald-500',
+      component: PaymentWidget
+    },
+    {
       id: 'rapports',
       title: 'Rapports',
       icon: FileText,
@@ -93,7 +109,7 @@ const Clients = () => {
           return (
             <Card 
               key={widget.id}
-              className="cursor-pointer hover:shadow-lg transition-shadow"
+              className="cursor-pointer hover:shadow-lg transition-shadow hover:scale-105 transition-all duration-200"
               onClick={() => setActiveWidget(widget.id)}
             >
               <CardHeader>
@@ -120,6 +136,6 @@ const Clients = () => {
       {renderContent()}
     </div>
   );
-}
+};
 
 export default Clients;
