@@ -5,6 +5,7 @@ import ExpenseForm from "@/components/expenses/ExpenseForm";
 import ExpenseList from "@/components/expenses/ExpenseList";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
 import { DollarSign, Car, Building2 } from "lucide-react";
+import { ExpenseCategoryWidget } from "@/components/expenses/widgets/ExpenseCategoryWidget";
 
 const Expenses = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,11 +31,11 @@ const Expenses = () => {
       description: 'Gérer les dépenses générales de l\'entreprise'
     },
     {
-      id: 'vehicles',
-      title: 'Dépenses Parc Roulant',
+      id: 'mechanical',
+      title: 'Dépenses Parc Mécanique',
       icon: Car,
       color: 'text-green-500',
-      description: 'Gérer les dépenses liées aux véhicules'
+      description: 'Gérer les dépenses liées au parc mécanique'
     },
     {
       id: 'concrete',
@@ -61,14 +62,21 @@ const Expenses = () => {
             </button>
             <h2 className="text-2xl font-bold">{widget.title}</h2>
           </div>
-          <Card>
-            <CardHeader>
-              <CardTitle>{widget.title}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ExpenseList onEdit={handleEdit} category={widget.id} />
-            </CardContent>
-          </Card>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2">
+              <Card>
+                <CardHeader>
+                  <CardTitle>{widget.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ExpenseList onEdit={handleEdit} category={widget.id} />
+                </CardContent>
+              </Card>
+            </div>
+            <div>
+              <ExpenseCategoryWidget />
+            </div>
+          </div>
         </div>
       );
     }
