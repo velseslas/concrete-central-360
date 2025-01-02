@@ -5,25 +5,44 @@ import { toast } from "sonner";
 
 interface ExpenseListProps {
   onEdit: (expense: any) => void;
+  category: string;
 }
 
 const mockExpenses = [
   {
     id: 1,
     date: "2024-02-20",
-    category: "Maintenance",
+    category: "concrete",
     amount: 1500,
     description: "Réparation du malaxeur",
     supplier: "Technique Services",
   },
-  // Add more mock expenses as needed
+  {
+    id: 2,
+    date: "2024-02-21",
+    category: "vehicles",
+    amount: 2000,
+    description: "Vidange camion",
+    supplier: "Auto Service",
+  },
+  {
+    id: 3,
+    date: "2024-02-22",
+    category: "general",
+    amount: 500,
+    description: "Fournitures de bureau",
+    supplier: "Bureau Plus",
+  },
 ];
 
-const ExpenseList = ({ onEdit }: ExpenseListProps) => {
+const ExpenseList = ({ onEdit, category }: ExpenseListProps) => {
   const handleDelete = (id: number) => {
     console.log("Deleting expense:", id);
     toast.success("Dépense supprimée");
   };
+
+  // Filter expenses based on category
+  const filteredExpenses = mockExpenses.filter(expense => expense.category === category);
 
   return (
     <Table>
@@ -37,7 +56,7 @@ const ExpenseList = ({ onEdit }: ExpenseListProps) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {mockExpenses.map((expense) => (
+        {filteredExpenses.map((expense) => (
           <TableRow key={expense.id}>
             <TableCell>{new Date(expense.date).toLocaleDateString()}</TableCell>
             <TableCell>{expense.category}</TableCell>
