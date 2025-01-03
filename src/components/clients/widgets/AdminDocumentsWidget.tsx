@@ -110,9 +110,9 @@ export function AdminDocumentsWidget() {
         <Dialog open={showPreview} onOpenChange={setShowPreview}>
           <DialogContent className="max-w-4xl h-[80vh]">
             <DialogHeader>
-              <DialogTitle className="flex justify-between items-center">
+              <DialogTitle className="flex justify-between items-center pr-12">
                 <span>{selectedDocument?.title}</span>
-                <Button onClick={handlePrint}>
+                <Button onClick={handlePrint} className="mr-8">
                   <Printer className="h-4 w-4 mr-2" />
                   Imprimer
                 </Button>
