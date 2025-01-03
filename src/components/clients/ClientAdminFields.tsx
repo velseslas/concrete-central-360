@@ -10,15 +10,15 @@ interface ClientAdminFieldsProps {
 export function ClientAdminFields({ form }: ClientAdminFieldsProps) {
   return (
     <div className="space-y-6 w-full">
-      <div className="flex gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <FormField
           control={form.control}
           name="registreCommerce"
           render={({ field }) => (
-            <FormItem className="flex-1">
+            <FormItem className="w-full">
               <FormLabel>Registre de Commerce</FormLabel>
               <FormControl>
-                <Input placeholder="Registre de Commerce" className="h-12" {...field} />
+                <Input placeholder="Registre de Commerce" className="h-12 w-full" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -28,25 +28,25 @@ export function ClientAdminFields({ form }: ClientAdminFieldsProps) {
           control={form.control}
           name="nif"
           render={({ field }) => (
-            <FormItem className="flex-1">
+            <FormItem className="w-full">
               <FormLabel>NIF</FormLabel>
               <FormControl>
-                <Input placeholder="NIF" className="h-12" {...field} />
+                <Input placeholder="NIF" className="h-12 w-full" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
       </div>
-      <div className="flex gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <FormField
           control={form.control}
           name="nis"
           render={({ field }) => (
-            <FormItem className="flex-1">
+            <FormItem className="w-full">
               <FormLabel>NIS</FormLabel>
               <FormControl>
-                <Input placeholder="NIS" className="h-12" {...field} />
+                <Input placeholder="NIS" className="h-12 w-full" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -56,10 +56,10 @@ export function ClientAdminFields({ form }: ClientAdminFieldsProps) {
           control={form.control}
           name="numeroArticle"
           render={({ field }) => (
-            <FormItem className="flex-1">
+            <FormItem className="w-full">
               <FormLabel>Article Imposition</FormLabel>
               <FormControl>
-                <Input placeholder="Article Imposition" className="h-12" {...field} />
+                <Input placeholder="Article Imposition" className="h-12 w-full" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

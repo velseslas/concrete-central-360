@@ -14,7 +14,7 @@ export function ClientAddressFields({ form }: ClientAddressFieldsProps) {
         control={form.control}
         name="adresse"
         render={({ field }) => (
-          <FormItem>
+          <FormItem className="w-full">
             <FormLabel>Adresse</FormLabel>
             <FormControl>
               <Input placeholder="Adresse" className="w-full h-12" {...field} />
@@ -23,15 +23,15 @@ export function ClientAddressFields({ form }: ClientAddressFieldsProps) {
           </FormItem>
         )}
       />
-      <div className="flex gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <FormField
           control={form.control}
           name="ville"
           render={({ field }) => (
-            <FormItem className="flex-1">
+            <FormItem className="w-full">
               <FormLabel>Ville</FormLabel>
               <FormControl>
-                <Input placeholder="Ville" className="h-12" {...field} />
+                <Input placeholder="Ville" className="h-12 w-full" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -41,10 +41,10 @@ export function ClientAddressFields({ form }: ClientAddressFieldsProps) {
           control={form.control}
           name="codePostal"
           render={({ field }) => (
-            <FormItem className="flex-1">
+            <FormItem className="w-full">
               <FormLabel>Code postal</FormLabel>
               <FormControl>
-                <Input placeholder="Code postal" className="h-12" {...field} />
+                <Input placeholder="Code postal" className="h-12 w-full" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
