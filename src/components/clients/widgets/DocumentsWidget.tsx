@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DocumentUpload } from "../DocumentUpload";
+import { DocumentUpload } from "@/components/shared/DocumentUpload";
 
 interface DocumentsWidgetProps {
   clientId: number;
