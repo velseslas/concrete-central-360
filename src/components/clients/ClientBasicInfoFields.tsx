@@ -35,6 +35,19 @@ export function ClientBasicInfoFields({ form }: ClientBasicInfoFieldsProps) {
       />
       <FormField
         control={form.control}
+        name="raisonSociale"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Raison sociale</FormLabel>
+            <FormControl>
+              <Input placeholder="Raison sociale" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
         name="nom"
         render={({ field }) => (
           <FormItem>
