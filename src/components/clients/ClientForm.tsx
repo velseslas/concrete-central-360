@@ -7,6 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { ClientBasicInfoFields } from "./ClientBasicInfoFields";
 import { ClientAddressFields } from "./ClientAddressFields";
 import { ClientAdminFields } from "./ClientAdminFields";
+import { Printer } from "lucide-react";
 
 const clientSchema = z.object({
   categorieClient: z.string().min(1, "La catégorie client est requise"),
@@ -57,6 +58,42 @@ export function ClientForm({ open, onOpenChange, clientToEdit }: ClientFormProps
     onOpenChange(false);
   };
 
+  const handlePrint = () => {
+    if (!clientToEdit) return;
+    const printWindow = window.open('', '_blank');
+    if (printWindow) {
+      printWindow.document.write(`
+        <html>
+          <head>
+            <title>Détails du client</title>
+            <style>
+              body { font-family: Arial, sans-serif; padding: 20px; }
+              table { width: 100%; border-collapse: collapse; }
+              th, td { padding: 8px; border: 1px solid #ddd; }
+              th { background-color: #f5f5f5; text-align: left; }
+              h1 { color: #2563eb; }
+            </style>
+          </head>
+          <body>
+            <h1>Détails du client</h1>
+            <table>
+              ${Object.entries(clientToEdit)
+                .filter(([key]) => key !== 'id')
+                .map(([key, value]) => `
+                  <tr>
+                    <th>${key.replace(/([A-Z])/g, ' $1').toLowerCase()}</th>
+                    <td>${value || '-'}</td>
+                  </tr>
+                `).join('')}
+            </table>
+          </body>
+        </html>
+      `);
+      printWindow.document.close();
+      printWindow.print();
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[90vh] w-[90vw] max-w-[800px] overflow-y-auto">
@@ -77,6 +114,12 @@ export function ClientForm({ open, onOpenChange, clientToEdit }: ClientFormProps
               <ClientAdminFields form={form} />
             </div>
             <div className="flex justify-end space-x-2 pt-4 border-t">
+              {clientToEdit && (
+                <Button type="button" variant="outline" onClick={handlePrint}>
+                  <Printer className="mr-2 h-4 w-4" />
+                  Imprimer
+                </Button>
+              )}
               <Button variant="outline" onClick={() => onOpenChange(false)}>
                 Annuler
               </Button>
