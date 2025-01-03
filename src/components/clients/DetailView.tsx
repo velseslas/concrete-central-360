@@ -14,7 +14,7 @@ interface DetailViewProps {
 export function DetailView({ open, onOpenChange, data, title }: DetailViewProps) {
   const excludedFields = ['id'];
   
-  // Define the order of fields
+  // Définir l'ordre exact des champs
   const fieldOrder = [
     'categorieClient',
     'raisonSociale',
@@ -54,7 +54,7 @@ export function DetailView({ open, onOpenChange, data, title }: DetailViewProps)
       nis: 'NIS',
       numeroArticle: 'Article Imposition'
     };
-    return fieldNameMap[key] || key.replace(/([A-Z])/g, ' $1').toLowerCase();
+    return fieldNameMap[key];
   };
 
   const handlePrint = () => {
