@@ -8,6 +8,18 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 
+interface Order {
+  id: string;
+  clientId: number;
+  clientName: string;
+  product: string;
+  quantity: number;
+  deliveryDate: string;
+  orderDate: string;
+  totalPrice: number;
+  status: "pending" | "in_progress" | "completed";
+}
+
 const orderSchema = z.object({
   clientId: z.string().min(1, "Le client est requis"),
   projectId: z.string().min(1, "Le chantier est requis"),
