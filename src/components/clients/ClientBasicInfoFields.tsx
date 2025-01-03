@@ -10,8 +10,8 @@ interface ClientBasicInfoFieldsProps {
 
 export function ClientBasicInfoFields({ form }: ClientBasicInfoFieldsProps) {
   return (
-    <div className="space-y-4">
-      <div className="flex gap-4">
+    <div className="space-y-6 w-full">
+      <div className="flex gap-6">
         <FormField
           control={form.control}
           name="categorieClient"
@@ -20,7 +20,7 @@ export function ClientBasicInfoFields({ form }: ClientBasicInfoFieldsProps) {
               <FormLabel>Catégorie client</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger className="h-12">
                     <SelectValue placeholder="Sélectionner une catégorie" />
                   </SelectTrigger>
                 </FormControl>
@@ -41,14 +41,14 @@ export function ClientBasicInfoFields({ form }: ClientBasicInfoFieldsProps) {
             <FormItem className="flex-1">
               <FormLabel>Raison sociale</FormLabel>
               <FormControl>
-                <Input placeholder="Raison sociale" {...field} />
+                <Input placeholder="Raison sociale" className="h-12" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
       </div>
-      <div className="flex gap-4">
+      <div className="flex gap-6">
         <FormField
           control={form.control}
           name="nom"
@@ -56,7 +56,7 @@ export function ClientBasicInfoFields({ form }: ClientBasicInfoFieldsProps) {
             <FormItem className="flex-1">
               <FormLabel>Nom</FormLabel>
               <FormControl>
-                <Input placeholder="Nom du client" {...field} />
+                <Input placeholder="Nom du client" className="h-12" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -72,6 +72,7 @@ export function ClientBasicInfoFields({ form }: ClientBasicInfoFieldsProps) {
                 <Input 
                   placeholder="Nom du contact" 
                   maxLength={30}
+                  className="h-12"
                   {...field} 
                 />
               </FormControl>

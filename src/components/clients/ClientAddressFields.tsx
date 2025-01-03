@@ -9,7 +9,7 @@ interface ClientAddressFieldsProps {
 
 export function ClientAddressFields({ form }: ClientAddressFieldsProps) {
   return (
-    <div className="space-y-4">
+    <div className="space-y-6 w-full">
       <FormField
         control={form.control}
         name="adresse"
@@ -17,13 +17,13 @@ export function ClientAddressFields({ form }: ClientAddressFieldsProps) {
           <FormItem>
             <FormLabel>Adresse</FormLabel>
             <FormControl>
-              <Input placeholder="Adresse" className="w-full" {...field} />
+              <Input placeholder="Adresse" className="w-full h-12" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
         )}
       />
-      <div className="flex gap-4">
+      <div className="flex gap-6">
         <FormField
           control={form.control}
           name="ville"
@@ -31,7 +31,7 @@ export function ClientAddressFields({ form }: ClientAddressFieldsProps) {
             <FormItem className="flex-1">
               <FormLabel>Ville</FormLabel>
               <FormControl>
-                <Input placeholder="Ville" {...field} />
+                <Input placeholder="Ville" className="h-12" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -44,7 +44,7 @@ export function ClientAddressFields({ form }: ClientAddressFieldsProps) {
             <FormItem className="flex-1">
               <FormLabel>Code postal</FormLabel>
               <FormControl>
-                <Input placeholder="Code postal" {...field} />
+                <Input placeholder="Code postal" className="h-12" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
