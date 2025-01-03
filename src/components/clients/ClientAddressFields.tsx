@@ -17,7 +17,7 @@ export function ClientAddressFields({ form }: ClientAddressFieldsProps) {
           <FormItem className="w-full">
             <FormLabel>Adresse</FormLabel>
             <FormControl>
-              <Input placeholder="Adresse" className="w-full h-12" {...field} />
+              <Input placeholder="Adresse" className="w-full h-12" maxLength={255} {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -31,7 +31,7 @@ export function ClientAddressFields({ form }: ClientAddressFieldsProps) {
             <FormItem className="w-full">
               <FormLabel>Ville</FormLabel>
               <FormControl>
-                <Input placeholder="Ville" className="h-12 w-full" {...field} />
+                <Input placeholder="Ville" className="h-12 w-full" maxLength={50} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -44,7 +44,7 @@ export function ClientAddressFields({ form }: ClientAddressFieldsProps) {
             <FormItem className="w-full">
               <FormLabel>Code postal</FormLabel>
               <FormControl>
-                <Input placeholder="Code postal" className="h-12 w-full" {...field} />
+                <Input placeholder="Code postal" className="h-12 w-full" maxLength={10} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

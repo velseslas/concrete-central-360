@@ -17,7 +17,7 @@ export function ClientContactFields({ form }: ClientContactFieldsProps) {
           <FormItem>
             <FormLabel>Téléphone</FormLabel>
             <FormControl>
-              <Input placeholder="Numéro de téléphone" {...field} />
+              <Input placeholder="Numéro de téléphone" maxLength={15} {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -30,7 +30,7 @@ export function ClientContactFields({ form }: ClientContactFieldsProps) {
           <FormItem>
             <FormLabel>Email</FormLabel>
             <FormControl>
-              <Input placeholder="Adresse email" {...field} />
+              <Input placeholder="Adresse email" maxLength={100} {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>

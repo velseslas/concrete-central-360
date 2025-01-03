@@ -41,7 +41,7 @@ export function ClientBasicInfoFields({ form }: ClientBasicInfoFieldsProps) {
             <FormItem className="w-full">
               <FormLabel>Raison sociale</FormLabel>
               <FormControl>
-                <Input placeholder="Raison sociale" className="h-12 w-full" {...field} />
+                <Input placeholder="Raison sociale" className="h-12 w-full" maxLength={100} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -56,7 +56,7 @@ export function ClientBasicInfoFields({ form }: ClientBasicInfoFieldsProps) {
             <FormItem className="w-full">
               <FormLabel>Nom</FormLabel>
               <FormControl>
-                <Input placeholder="Nom du client" className="h-12 w-full" {...field} />
+                <Input placeholder="Nom du client" className="h-12 w-full" maxLength={100} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
