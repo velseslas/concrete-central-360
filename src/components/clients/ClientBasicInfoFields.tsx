@@ -71,8 +71,8 @@ export function ClientBasicInfoFields({ form }: ClientBasicInfoFieldsProps) {
               <FormControl>
                 <Input 
                   placeholder="Nom du contact" 
-                  maxLength={30}
                   className="h-12 w-full"
+                  maxLength={30}
                   {...field} 
                 />
               </FormControl>
