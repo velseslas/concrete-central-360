@@ -2,12 +2,17 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 interface ExpenseCategoryFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onSubmit: (name: string, type: string) => void;
+  initialData?: {
+    name: string;
+    type: string;
+  } | null;
 }
 
 const expenseTypes = [
@@ -16,9 +21,24 @@ const expenseTypes = [
   { id: "concrete", label: "Centrale à Béton" }
 ];
 
-export function ExpenseCategoryForm({ open, onOpenChange }: ExpenseCategoryFormProps) {
+export function ExpenseCategoryForm({ 
+  open, 
+  onOpenChange, 
+  onSubmit,
+  initialData 
+}: ExpenseCategoryFormProps) {
   const [categoryName, setCategoryName] = useState("");
   const [expenseType, setExpenseType] = useState("");
+
+  useEffect(() => {
+    if (initialData) {
+      setCategoryName(initialData.name);
+      setExpenseType(initialData.type);
+    } else {
+      setCategoryName("");
+      setExpenseType("");
+    }
+  }, [initialData, open]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,8 +50,9 @@ export function ExpenseCategoryForm({ open, onOpenChange }: ExpenseCategoryFormP
       toast.error("Veuillez sélectionner un type de dépense");
       return;
     }
-    console.log("Creating category:", { name: categoryName, type: expenseType });
-    toast.success("Catégorie créée avec succès");
+
+    onSubmit(categoryName, expenseType);
+    toast.success(initialData ? "Catégorie modifiée avec succès" : "Catégorie créée avec succès");
     setCategoryName("");
     setExpenseType("");
     onOpenChange(false);
@@ -41,7 +62,9 @@ export function ExpenseCategoryForm({ open, onOpenChange }: ExpenseCategoryFormP
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Nouvelle Catégorie</DialogTitle>
+          <DialogTitle>
+            {initialData ? "Modifier la Catégorie" : "Nouvelle Catégorie"}
+          </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
@@ -69,7 +92,9 @@ export function ExpenseCategoryForm({ open, onOpenChange }: ExpenseCategoryFormP
             <Button variant="outline" type="button" onClick={() => onOpenChange(false)}>
               Annuler
             </Button>
-            <Button type="submit">Créer</Button>
+            <Button type="submit">
+              {initialData ? "Modifier" : "Créer"}
+            </Button>
           </div>
         </form>
       </DialogContent>
