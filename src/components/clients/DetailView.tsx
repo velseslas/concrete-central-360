@@ -14,21 +14,21 @@ interface DetailViewProps {
 export function DetailView({ open, onOpenChange, data, title }: DetailViewProps) {
   const excludedFields = ['id'];
   
-  // Définir l'ordre exact des champs
+  // Définir l'ordre exact des champs avec tous les champs nécessaires
   const fieldOrder = [
     'categorieClient',
     'raisonSociale',
     'nom',
     'contact',
+    'registreCommerce',
+    'nif',
+    'nis',
+    'numeroArticle',
     'adresse',
     'ville',
     'codePostal',
     'telephone',
-    'email',
-    'registreCommerce',
-    'nif',
-    'nis',
-    'numeroArticle'
+    'email'
   ];
   
   const formatValue = (value: any) => {
@@ -44,15 +44,15 @@ export function DetailView({ open, onOpenChange, data, title }: DetailViewProps)
       raisonSociale: 'Raison Sociale',
       nom: 'Nom',
       contact: 'Contact',
+      registreCommerce: 'Registre de Commerce',
+      nif: 'NIF',
+      nis: 'NIS',
+      numeroArticle: 'Article Imposition',
       adresse: 'Adresse',
       ville: 'Ville',
       codePostal: 'Code Postal',
       telephone: 'Téléphone',
-      email: 'Email',
-      registreCommerce: 'Registre de Commerce',
-      nif: 'NIF',
-      nis: 'NIS',
-      numeroArticle: 'Article Imposition'
+      email: 'Email'
     };
     return fieldNameMap[key];
   };
