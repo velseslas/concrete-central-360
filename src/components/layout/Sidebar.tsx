@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, Users, TestTube, ClipboardList, Truck, Car, DollarSign, FileText, Factory, Fuel } from "lucide-react";
+import { Home, Users, TestTube, Truck, Car, DollarSign, FileText, Factory } from "lucide-react";
 
 const Sidebar = () => {
   const location = useLocation();
@@ -8,11 +8,9 @@ const Sidebar = () => {
     { to: "/", icon: Home, label: "Tableau de bord" },
     { to: "/clients", icon: Users, label: "Clients" },
     { to: "/formulations", icon: TestTube, label: "Formulations" },
-    { to: "/orders", icon: ClipboardList, label: "Commandes" },
     { to: "/production", icon: Factory, label: "Production" },
     { to: "/suppliers", icon: Truck, label: "Fournisseurs" },
     { to: "/vehicles", icon: Car, label: "Parc roulant" },
-    { to: "/consumables", icon: Fuel, label: "Consommables" },
     { to: "/expenses", icon: DollarSign, label: "Dépenses" },
     { to: "/invoices", icon: FileText, label: "Factures" },
   ];
