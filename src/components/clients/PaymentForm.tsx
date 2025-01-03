@@ -10,7 +10,7 @@ import { Upload } from "lucide-react";
 import { toast } from "sonner";
 
 const paymentSchema = z.object({
-  supplier: z.string().min(1, "Le fournisseur est requis"),
+  clientId: z.string().min(1, "Le client est requis"),
   amount: z.string().min(1, "Le montant est requis"),
   paymentMethod: z.string().min(1, "Le mode de paiement est requis"),
   paymentDate: z.string().min(1, "La date de paiement est requise"),
@@ -29,7 +29,7 @@ export function PaymentForm({ open, onOpenChange, paymentToEdit }: PaymentFormPr
   const form = useForm<PaymentFormValues>({
     resolver: zodResolver(paymentSchema),
     defaultValues: paymentToEdit || {
-      supplier: "",
+      clientId: "",
       amount: "",
       paymentMethod: "",
       paymentDate: "",
@@ -63,19 +63,19 @@ export function PaymentForm({ open, onOpenChange, paymentToEdit }: PaymentFormPr
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
-              name="supplier"
+              name="clientId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Fournisseur</FormLabel>
+                  <FormLabel>Client</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Sélectionner un fournisseur" />
+                        <SelectValue placeholder="Sélectionner un client" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="supplier1">Fournisseur 1</SelectItem>
-                      <SelectItem value="supplier2">Fournisseur 2</SelectItem>
+                      <SelectItem value="client1">Client 1</SelectItem>
+                      <SelectItem value="client2">Client 2</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -108,9 +108,9 @@ export function PaymentForm({ open, onOpenChange, paymentToEdit }: PaymentFormPr
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="virement">Virement bancaire</SelectItem>
-                      <SelectItem value="cheque">Chèque</SelectItem>
-                      <SelectItem value="especes">Espèces</SelectItem>
+                      <SelectItem value="cash">Espèces</SelectItem>
+                      <SelectItem value="check">Chèque</SelectItem>
+                      <SelectItem value="transfer">Virement</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
