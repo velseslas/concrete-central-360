@@ -10,12 +10,12 @@ interface ClientBasicInfoFieldsProps {
 
 export function ClientBasicInfoFields({ form }: ClientBasicInfoFieldsProps) {
   return (
-    <>
+    <div className="grid grid-cols-2 gap-4">
       <FormField
         control={form.control}
         name="categorieClient"
         render={({ field }) => (
-          <FormItem className="col-span-2">
+          <FormItem>
             <FormLabel>Catégorie client</FormLabel>
             <Select onValueChange={field.onChange} defaultValue={field.value}>
               <FormControl>
@@ -66,12 +66,16 @@ export function ClientBasicInfoFields({ form }: ClientBasicInfoFieldsProps) {
           <FormItem>
             <FormLabel>Contact</FormLabel>
             <FormControl>
-              <Input placeholder="Nom du contact" {...field} />
+              <Input 
+                placeholder="Nom du contact" 
+                maxLength={30}
+                {...field} 
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
         )}
       />
-    </>
+    </div>
   );
 }
