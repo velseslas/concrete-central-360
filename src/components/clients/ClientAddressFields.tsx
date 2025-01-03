@@ -9,46 +9,48 @@ interface ClientAddressFieldsProps {
 
 export function ClientAddressFields({ form }: ClientAddressFieldsProps) {
   return (
-    <>
+    <div className="space-y-4">
       <FormField
         control={form.control}
         name="adresse"
         render={({ field }) => (
-          <FormItem className="col-span-2">
+          <FormItem>
             <FormLabel>Adresse</FormLabel>
             <FormControl>
-              <Input placeholder="Adresse" {...field} />
+              <Input placeholder="Adresse" className="w-full" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
         )}
       />
-      <FormField
-        control={form.control}
-        name="ville"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Ville</FormLabel>
-            <FormControl>
-              <Input placeholder="Ville" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="codePostal"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Code postal</FormLabel>
-            <FormControl>
-              <Input placeholder="Code postal" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-    </>
+      <div className="flex gap-4">
+        <FormField
+          control={form.control}
+          name="ville"
+          render={({ field }) => (
+            <FormItem className="flex-1">
+              <FormLabel>Ville</FormLabel>
+              <FormControl>
+                <Input placeholder="Ville" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="codePostal"
+          render={({ field }) => (
+            <FormItem className="flex-1">
+              <FormLabel>Code postal</FormLabel>
+              <FormControl>
+                <Input placeholder="Code postal" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
+    </div>
   );
 }
