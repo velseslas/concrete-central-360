@@ -2,23 +2,22 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import { Form } from "@/components/ui/form";
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { ClientBasicInfoFields } from "./ClientBasicInfoFields";
-import { ClientAddressFields } from "./ClientAddressFields";
-import { ClientAdminFields } from "./ClientAdminFields";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Printer } from "lucide-react";
 
 const clientSchema = z.object({
   categorieClient: z.string().min(1, "La catégorie client est requise"),
+  raisonSociale: z.string().min(2, "La raison sociale est requise"),
   nom: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
   contact: z.string().min(2, "Le contact est requis"),
-  raisonSociale: z.string().min(2, "La raison sociale est requise"),
-  telephone: z.string().min(8, "Le numéro de téléphone est requis"),
-  email: z.string().email("Email invalide"),
   adresse: z.string().min(5, "L'adresse est requise"),
   ville: z.string().min(2, "La ville est requise"),
   codePostal: z.string().min(4, "Le code postal est requis"),
+  telephone: z.string().min(8, "Le numéro de téléphone est requis"),
+  email: z.string().email("Email invalide"),
   registreCommerce: z.string().min(1, "Le registre de commerce est requis"),
   nif: z.string().min(1, "Le NIF est requis"),
   nis: z.string().min(1, "Le NIS est requis"),
@@ -38,14 +37,14 @@ export function ClientForm({ open, onOpenChange, clientToEdit }: ClientFormProps
     resolver: zodResolver(clientSchema),
     defaultValues: clientToEdit || {
       categorieClient: "",
+      raisonSociale: "",
       nom: "",
       contact: "",
-      raisonSociale: "",
-      telephone: "",
-      email: "",
       adresse: "",
       ville: "",
       codePostal: "",
+      telephone: "",
+      email: "",
       registreCommerce: "",
       nif: "",
       nis: "",
@@ -105,13 +104,184 @@ export function ClientForm({ open, onOpenChange, clientToEdit }: ClientFormProps
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <ClientBasicInfoFields form={form} />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <ClientAddressFields form={form} />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <ClientAdminFields form={form} />
+              <FormField
+                control={form.control}
+                name="categorieClient"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <FormLabel>Catégorie client</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Sélectionner une catégorie" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="particulier">Particulier</SelectItem>
+                        <SelectItem value="entreprise">Entreprise</SelectItem>
+                        <SelectItem value="administration">Administration</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="raisonSociale"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Raison sociale</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Raison sociale" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="nom"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Nom</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Nom du client" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="contact"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Contact</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Nom du contact" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="adresse"
+                render={({ field }) => (
+                  <FormItem className="col-span-2">
+                    <FormLabel>Adresse</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Adresse" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="ville"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Ville</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Ville" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="codePostal"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Code postal</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Code postal" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="telephone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Téléphone</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Numéro de téléphone" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Adresse email" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="registreCommerce"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>RC</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Registre de Commerce" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="nif"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>NIF</FormLabel>
+                    <FormControl>
+                      <Input placeholder="NIF" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="nis"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>NIS</FormLabel>
+                    <FormControl>
+                      <Input placeholder="NIS" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="numeroArticle"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Article Imposition</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Article Imposition" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
             <div className="flex justify-end space-x-2 pt-4 border-t">
               {clientToEdit && (
