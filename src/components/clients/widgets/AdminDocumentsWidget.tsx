@@ -5,6 +5,7 @@ import { FileText, Eye, Printer } from "lucide-react";
 import { toast } from "sonner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 // Mock data pour les clients et leurs documents
 const mockClients = [
@@ -30,6 +31,7 @@ export function AdminDocumentsWidget() {
   const [showDocuments, setShowDocuments] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState<any>(null);
   const [showPreview, setShowPreview] = useState(false);
+  const [documentTitle, setDocumentTitle] = useState("");
 
   const handleViewDocuments = (client: any) => {
     setSelectedClient(client);
@@ -45,6 +47,15 @@ export function AdminDocumentsWidget() {
   const handlePrint = () => {
     console.log("Impression du document:", selectedDocument);
     toast.success("Impression lancée");
+  };
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      console.log("Téléchargement du fichier:", file, "pour le client:", selectedClient?.name);
+      toast.success("Document téléchargé avec succès");
+      setDocumentTitle("");
+    }
   };
 
   return (
@@ -91,6 +102,33 @@ export function AdminDocumentsWidget() {
                 Documents de {selectedClient?.name}
               </DialogTitle>
             </DialogHeader>
+            
+            {/* Section d'ajout de document */}
+            <div className="space-y-4 p-4 border rounded-lg mb-4">
+              <h3 className="font-semibold">Ajouter un document</h3>
+              <div className="flex gap-4">
+                <Input
+                  placeholder="Titre du document"
+                  value={documentTitle}
+                  onChange={(e) => setDocumentTitle(e.target.value)}
+                />
+                <div className="relative">
+                  <Input
+                    type="file"
+                    className="hidden"
+                    id="file-upload"
+                    onChange={handleFileUpload}
+                  />
+                  <Button asChild>
+                    <label htmlFor="file-upload" className="cursor-pointer">
+                      <FileText className="h-4 w-4 mr-2" />
+                      Télécharger
+                    </label>
+                  </Button>
+                </div>
+              </div>
+            </div>
+
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 p-4">
               {selectedClient?.documents.map((doc: any) => (
                 <div 
