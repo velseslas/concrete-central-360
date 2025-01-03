@@ -17,7 +17,12 @@ export function ClientContactFields({ form }: ClientContactFieldsProps) {
           <FormItem className="w-full">
             <FormLabel>Téléphone</FormLabel>
             <FormControl>
-              <Input placeholder="Numéro de téléphone" className="h-12 w-full" maxLength={15} {...field} />
+              <Input 
+                placeholder="Numéro de téléphone" 
+                className="h-12 w-full" 
+                maxLength={15} 
+                {...field} 
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -30,7 +35,12 @@ export function ClientContactFields({ form }: ClientContactFieldsProps) {
           <FormItem className="w-full">
             <FormLabel>Email</FormLabel>
             <FormControl>
-              <Input placeholder="Adresse email" className="h-12 w-full" maxLength={100} {...field} />
+              <Input 
+                placeholder="Adresse email" 
+                className="h-12 w-full" 
+                maxLength={100} 
+                {...field} 
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
