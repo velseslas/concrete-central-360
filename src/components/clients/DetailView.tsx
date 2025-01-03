@@ -14,7 +14,6 @@ interface DetailViewProps {
 export function DetailView({ open, onOpenChange, data, title }: DetailViewProps) {
   const excludedFields = ['id'];
   
-  // Updated field order with contact and registreCommerce
   const fieldOrder = [
     'categorieClient',
     'raisonSociale',
