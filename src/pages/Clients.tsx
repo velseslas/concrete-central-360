@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, Building2, Construction, Package, DollarSign, FileText, CreditCard, ShoppingCart } from "lucide-react";
+import { Users, FileText, Construction, Building2, Package, DollarSign, ShoppingCart, CreditCard } from "lucide-react";
 import { ClientListWidget } from "@/components/clients/widgets/ClientListWidget";
 import { ProductCategoryWidget } from "@/components/clients/widgets/ProductCategoryWidget";
 import { ProjectWidget } from "@/components/clients/widgets/ProjectWidget";
@@ -23,13 +23,6 @@ const Clients = () => {
       component: ClientListWidget
     },
     {
-      id: 'categories',
-      title: 'Catégories',
-      icon: Building2,
-      color: 'text-green-500',
-      component: ProductCategoryWidget
-    },
-    {
       id: 'documents',
       title: 'Documents',
       icon: FileText,
@@ -42,6 +35,13 @@ const Clients = () => {
       icon: Construction,
       color: 'text-orange-500',
       component: ProjectWidget
+    },
+    {
+      id: 'categories',
+      title: 'Catégories',
+      icon: Building2,
+      color: 'text-green-500',
+      component: ProductCategoryWidget
     },
     {
       id: 'produits',
@@ -65,18 +65,18 @@ const Clients = () => {
       component: OrderWidget
     },
     {
-      id: 'paiements',
-      title: 'Paiements',
-      icon: CreditCard,
-      color: 'text-emerald-500',
-      component: PaymentWidget
-    },
-    {
       id: 'rapports',
       title: 'Rapports',
       icon: FileText,
       color: 'text-gray-500',
       component: ReportsWidget
+    },
+    {
+      id: 'paiements',
+      title: 'Paiements',
+      icon: CreditCard,
+      color: 'text-emerald-500',
+      component: PaymentWidget
     }
   ];
 
