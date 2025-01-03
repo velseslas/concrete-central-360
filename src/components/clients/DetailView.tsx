@@ -14,11 +14,47 @@ interface DetailViewProps {
 export function DetailView({ open, onOpenChange, data, title }: DetailViewProps) {
   const excludedFields = ['id'];
   
+  // Define the order of fields
+  const fieldOrder = [
+    'categorieClient',
+    'raisonSociale',
+    'nom',
+    'contact',
+    'adresse',
+    'ville',
+    'codePostal',
+    'telephone',
+    'email',
+    'registreCommerce',
+    'nif',
+    'nis',
+    'numeroArticle'
+  ];
+  
   const formatValue = (value: any) => {
     if (value === null || value === undefined) return '-';
     if (typeof value === 'boolean') return value ? 'Oui' : 'Non';
     if (typeof value === 'object') return JSON.stringify(value);
     return value.toString();
+  };
+
+  const formatFieldName = (key: string) => {
+    const fieldNameMap: Record<string, string> = {
+      categorieClient: 'Catégorie Client',
+      raisonSociale: 'Raison Sociale',
+      nom: 'Nom',
+      contact: 'Contact',
+      adresse: 'Adresse',
+      ville: 'Ville',
+      codePostal: 'Code Postal',
+      telephone: 'Téléphone',
+      email: 'Email',
+      registreCommerce: 'Registre de Commerce',
+      nif: 'NIF',
+      nis: 'NIS',
+      numeroArticle: 'Article Imposition'
+    };
+    return fieldNameMap[key] || key.replace(/([A-Z])/g, ' $1').toLowerCase();
   };
 
   const handlePrint = () => {
@@ -39,12 +75,12 @@ export function DetailView({ open, onOpenChange, data, title }: DetailViewProps)
           <body>
             <h1>${title}</h1>
             <table>
-              ${Object.entries(data)
-                .filter(([key]) => !excludedFields.includes(key))
-                .map(([key, value]) => `
+              ${fieldOrder
+                .filter(key => !excludedFields.includes(key) && data[key] !== undefined)
+                .map(key => `
                   <tr>
-                    <th>${key.replace(/([A-Z])/g, ' $1').toLowerCase()}</th>
-                    <td>${formatValue(value)}</td>
+                    <th>${formatFieldName(key)}</th>
+                    <td>${formatValue(data[key])}</td>
                   </tr>
                 `).join('')}
             </table>
@@ -70,14 +106,14 @@ export function DetailView({ open, onOpenChange, data, title }: DetailViewProps)
         <ScrollArea className="max-h-[600px] pr-4">
           <Table>
             <TableBody>
-              {Object.entries(data)
-                .filter(([key]) => !excludedFields.includes(key))
-                .map(([key, value]) => (
+              {fieldOrder
+                .filter(key => !excludedFields.includes(key) && data[key] !== undefined)
+                .map(key => (
                   <TableRow key={key}>
-                    <TableCell className="font-medium capitalize">
-                      {key.replace(/([A-Z])/g, ' $1').toLowerCase()}
+                    <TableCell className="font-medium">
+                      {formatFieldName(key)}
                     </TableCell>
-                    <TableCell>{formatValue(value)}</TableCell>
+                    <TableCell>{formatValue(data[key])}</TableCell>
                   </TableRow>
                 ))}
             </TableBody>
