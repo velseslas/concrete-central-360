@@ -18,7 +18,12 @@ export function ClientAdminFields({ form }: ClientAdminFieldsProps) {
             <FormItem className="w-full">
               <FormLabel>Registre de Commerce</FormLabel>
               <FormControl>
-                <Input placeholder="Registre de Commerce" className="h-12 w-full" {...field} />
+                <Input 
+                  placeholder="Registre de Commerce" 
+                  className="h-12 w-full" 
+                  maxLength={20}
+                  {...field} 
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -31,7 +36,12 @@ export function ClientAdminFields({ form }: ClientAdminFieldsProps) {
             <FormItem className="w-full">
               <FormLabel>NIF</FormLabel>
               <FormControl>
-                <Input placeholder="NIF" className="h-12 w-full" {...field} />
+                <Input 
+                  placeholder="NIF" 
+                  className="h-12 w-full" 
+                  maxLength={20}
+                  {...field} 
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -46,7 +56,12 @@ export function ClientAdminFields({ form }: ClientAdminFieldsProps) {
             <FormItem className="w-full">
               <FormLabel>NIS</FormLabel>
               <FormControl>
-                <Input placeholder="NIS" className="h-12 w-full" {...field} />
+                <Input 
+                  placeholder="NIS" 
+                  className="h-12 w-full" 
+                  maxLength={20}
+                  {...field} 
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -59,7 +74,12 @@ export function ClientAdminFields({ form }: ClientAdminFieldsProps) {
             <FormItem className="w-full">
               <FormLabel>Article Imposition</FormLabel>
               <FormControl>
-                <Input placeholder="Article Imposition" className="h-12 w-full" {...field} />
+                <Input 
+                  placeholder="Article Imposition" 
+                  className="h-12 w-full" 
+                  maxLength={20}
+                  {...field} 
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
