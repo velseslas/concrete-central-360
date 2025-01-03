@@ -10,7 +10,6 @@ import { Upload } from "lucide-react";
 import { toast } from "sonner";
 
 const paymentSchema = z.object({
-  clientId: z.string().min(1, "Le client est requis"),
   amount: z.string().min(1, "Le montant est requis"),
   paymentMethod: z.string().min(1, "Le mode de paiement est requis"),
   paymentDate: z.string().min(1, "La date de paiement est requise"),
@@ -22,14 +21,14 @@ type PaymentFormValues = z.infer<typeof paymentSchema>;
 interface PaymentFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  clientId: number;
   paymentToEdit?: PaymentFormValues;
 }
 
-export function PaymentForm({ open, onOpenChange, paymentToEdit }: PaymentFormProps) {
+export function PaymentForm({ open, onOpenChange, clientId, paymentToEdit }: PaymentFormProps) {
   const form = useForm<PaymentFormValues>({
     resolver: zodResolver(paymentSchema),
     defaultValues: paymentToEdit || {
-      clientId: "",
       amount: "",
       paymentMethod: "",
       paymentDate: "",
@@ -46,7 +45,7 @@ export function PaymentForm({ open, onOpenChange, paymentToEdit }: PaymentFormPr
   };
 
   const onSubmit = (data: PaymentFormValues) => {
-    console.log("Payment data:", data);
+    console.log("Payment data:", data, "for client:", clientId);
     toast.success(paymentToEdit ? "Paiement modifié" : "Paiement enregistré");
     onOpenChange(false);
   };
@@ -61,27 +60,6 @@ export function PaymentForm({ open, onOpenChange, paymentToEdit }: PaymentFormPr
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="clientId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Client</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Sélectionner un client" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="client1">Client 1</SelectItem>
-                      <SelectItem value="client2">Client 2</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
             <FormField
               control={form.control}
               name="amount"
