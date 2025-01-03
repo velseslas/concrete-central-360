@@ -11,10 +11,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-// Mock data pour les clients
+// Mock data pour les clients - à remplacer par des données réelles plus tard
 const mockClients = [
   { id: 1, name: "Client A" },
   { id: 2, name: "Client B" },
+  { id: 3, name: "Client C" },
 ];
 
 interface DocumentUploadProps {
@@ -30,14 +31,12 @@ export function DocumentUpload({ clientId: initialClientId }: DocumentUploadProp
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      console.log(
-        "Uploading file:", 
-        file, 
-        "for client:", 
-        selectedClientId, 
-        "with title:", 
-        documentTitle
-      );
+      // Log pour debug
+      console.log("Fichier sélectionné:", file.name);
+      console.log("Client ID:", selectedClientId);
+      console.log("Titre du document:", documentTitle);
+
+      // Simuler l'upload
       toast.success("Document téléchargé avec succès");
       setDocumentTitle("");
     }
@@ -45,7 +44,7 @@ export function DocumentUpload({ clientId: initialClientId }: DocumentUploadProp
 
   return (
     <div className="space-y-4 p-4 border rounded-lg">
-      <h3 className="font-semibold">Documents administratifs</h3>
+      <h3 className="font-semibold">Télécharger un document</h3>
       <div className="space-y-4">
         {!initialClientId && (
           <Select
