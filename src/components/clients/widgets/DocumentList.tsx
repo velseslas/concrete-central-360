@@ -48,7 +48,7 @@ export function DocumentList() {
 
       <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
         <DialogContent className="max-h-[90vh] w-[90vw] max-w-[800px] overflow-y-auto">
-          <DialogHeader className="flex flex-row items-center justify-between space-y-0">
+          <DialogHeader className="flex flex-row items-center justify-between space-y-0 print:hidden">
             <DialogTitle className="text-2xl font-bold text-primary">
               Aperçu - {selectedDoc?.title}
             </DialogTitle>
@@ -64,6 +64,18 @@ export function DocumentList() {
           </div>
         </DialogContent>
       </Dialog>
+
+      <style jsx global>{`
+        @media print {
+          .print\\:hidden {
+            display: none !important;
+          }
+          [data-radix-popper-content-wrapper] {
+            position: static !important;
+            transform: none !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }
