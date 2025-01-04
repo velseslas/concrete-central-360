@@ -9,7 +9,7 @@ interface ClientContactFieldsProps {
 
 export function ClientContactFields({ form }: ClientContactFieldsProps) {
   return (
-    <div className="space-y-6 w-full">
+    <div className="grid grid-cols-1 gap-6 w-full">
       <FormField
         control={form.control}
         name="telephone"
