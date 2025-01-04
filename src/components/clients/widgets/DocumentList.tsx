@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { FileText } from "lucide-react";
 import { Dialog } from "@/components/ui/dialog";
 import { useState } from "react";
-import { CustomDialogContent } from "./CustomDialogContent";
+import { DocumentPreview } from "./DocumentPreview";
 
 interface Document {
   id: number;
@@ -41,15 +41,13 @@ export function DocumentList() {
         </motion.div>
       ))}
 
-      <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
-        <CustomDialogContent className="max-h-[90vh] w-[90vw] max-w-[800px] overflow-y-auto">
-          <div className="flex flex-col items-center gap-4 py-4">
-            <div className="w-full aspect-[3/4] bg-gray-100 rounded-lg flex items-center justify-center">
-              <FileText className="h-24 w-24 text-gray-400" />
-            </div>
-          </div>
-        </CustomDialogContent>
-      </Dialog>
+      {selectedDoc && (
+        <DocumentPreview
+          open={previewOpen}
+          onOpenChange={setPreviewOpen}
+          document={selectedDoc}
+        />
+      )}
     </div>
   );
 }
