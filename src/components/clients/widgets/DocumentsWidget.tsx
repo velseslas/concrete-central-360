@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { DocumentList } from "../DocumentList";
-import { DocumentUploadDialog } from "../DocumentUploadDialog";
+import { DocumentList } from "@/components/clients/widgets/DocumentList";
+import { DocumentUploadDialog } from "@/components/clients/widgets/DocumentUploadDialog";
 
 export function DocumentsWidget() {
   const [showUploadDialog, setShowUploadDialog] = useState(false);
