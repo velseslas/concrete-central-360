@@ -12,6 +12,7 @@ import { DeliveryQuantityInfo } from "./delivery/DeliveryQuantityInfo";
 const deliverySchema = z.object({
   category: z.string().min(1, "La catégorie est requise"),
   supplier: z.string().min(1, "Le fournisseur est requis"),
+  producer: z.string().min(1, "Le producteur est requis"),
   product: z.string().min(1, "Le produit est requis"),
   date: z.string().min(1, "La date est requise"),
   vehicleNumber: z.string().min(1, "Le matricule du camion est requis"),
@@ -34,6 +35,7 @@ export function DeliveryForm({ open, onOpenChange, deliveryToEdit }: DeliveryFor
     defaultValues: deliveryToEdit || {
       category: "",
       supplier: "",
+      producer: "",
       product: "",
       date: "",
       vehicleNumber: "",
@@ -51,22 +53,22 @@ export function DeliveryForm({ open, onOpenChange, deliveryToEdit }: DeliveryFor
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[1000px] w-full max-h-[80vh]">
+      <DialogContent className="sm:max-w-[1000px] w-full max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
             {deliveryToEdit ? "Modifier la livraison" : "Nouvelle livraison"}
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-4">
-              <div>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="md:col-span-1">
                 <DeliveryBasicInfo control={form.control} />
               </div>
-              <div>
+              <div className="md:col-span-2">
                 <DeliverySupplierInfo control={form.control} />
               </div>
-              <div className="md:col-span-2">
+              <div className="md:col-span-3">
                 <DeliveryQuantityInfo control={form.control} />
               </div>
             </div>
