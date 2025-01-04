@@ -40,41 +40,41 @@ export function OverviewWidget() {
   const getTrendIcon = (status: StatItem["status"]) => {
     switch (status) {
       case "increase":
-        return <ArrowUp className="h-4 w-4 text-emerald-500" />;
+        return <ArrowUp className="h-4 w-4 text-white" />;
       case "decrease":
-        return <ArrowDown className="h-4 w-4 text-rose-500" />;
+        return <ArrowDown className="h-4 w-4 text-white" />;
       default:
-        return <TrendingUp className="h-4 w-4 text-blue-500" />;
+        return <TrendingUp className="h-4 w-4 text-white" />;
     }
   };
 
   const getTrendColor = (status: StatItem["status"]) => {
     switch (status) {
       case "increase":
-        return "text-emerald-500 bg-emerald-50 border-emerald-200";
+        return "bg-[#0EA5E9] text-white";
       case "decrease":
-        return "text-rose-500 bg-rose-50 border-rose-200";
+        return "bg-[#8B5CF6] text-white";
       default:
-        return "text-blue-500 bg-blue-50 border-blue-200";
+        return "bg-[#D946EF] text-white";
     }
   };
 
   const getCardColor = (index: number) => {
     const colors = [
-      "from-violet-500/10 to-violet-400/5",
-      "from-blue-500/10 to-blue-400/5",
-      "from-emerald-500/10 to-emerald-400/5",
-      "from-amber-500/10 to-amber-400/5"
+      "from-[#0EA5E9] to-[#8B5CF6]",
+      "from-[#8B5CF6] to-[#D946EF]",
+      "from-[#D946EF] to-[#F97316]",
+      "from-[#F97316] to-[#0EA5E9]"
     ];
     return colors[index];
   };
 
   return (
-    <Card className="col-span-4">
+    <Card className="col-span-4 bg-gray-800/50 backdrop-blur-lg border border-gray-700/50">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-xl font-bold flex items-center gap-2">
-          <Activity className="h-5 w-5 text-indigo-500" />
-          <span className="bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
+          <Activity className="h-5 w-5 text-[#0EA5E9]" />
+          <span className="bg-gradient-to-r from-[#0EA5E9] to-[#8B5CF6] bg-clip-text text-transparent">
             Aperçu Général
           </span>
         </CardTitle>
@@ -85,16 +85,16 @@ export function OverviewWidget() {
             <Card key={index} className={`bg-gradient-to-br ${getCardColor(index)} border-0 shadow-lg hover:shadow-xl transition-all duration-300`}>
               <CardContent className="p-4">
                 <div className="flex flex-col space-y-2">
-                  <p className="text-sm font-medium text-gray-600">
+                  <p className="text-sm font-medium text-white/80">
                     {stat.label}
                   </p>
                   <div className="flex items-center justify-between">
-                    <p className="text-2xl font-bold bg-gradient-to-r from-gray-700 to-gray-900 bg-clip-text text-transparent">
+                    <p className="text-2xl font-bold text-white">
                       {stat.value}
                     </p>
                     <Badge 
                       variant="outline" 
-                      className={`flex items-center gap-1 ${getTrendColor(stat.status)} border`}
+                      className={`flex items-center gap-1 ${getTrendColor(stat.status)} border-0`}
                     >
                       {getTrendIcon(stat.status)}
                       {stat.trend}%
