@@ -9,6 +9,7 @@ import { ClientAddressFields } from "./ClientAddressFields";
 import { ClientContactFields } from "./ClientContactFields";
 import { ClientAdminFields } from "./ClientAdminFields";
 import { SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { toast } from "sonner";
 
 const clientSchema = z.object({
   categorieClient: z.string().min(1, "La catégorie client est requise"),
@@ -30,9 +31,10 @@ export type ClientFormValues = z.infer<typeof clientSchema>;
 
 interface ClientFormProps {
   clientToEdit?: ClientFormValues;
+  onSuccess?: () => void;
 }
 
-export function ClientForm({ clientToEdit }: ClientFormProps) {
+export function ClientForm({ clientToEdit, onSuccess }: ClientFormProps) {
   const form = useForm<ClientFormValues>({
     resolver: zodResolver(clientSchema),
     defaultValues: clientToEdit || {
@@ -52,8 +54,12 @@ export function ClientForm({ clientToEdit }: ClientFormProps) {
     },
   });
 
-  const onSubmit = (data: ClientFormValues) => {
+  const onSubmit = async (data: ClientFormValues) => {
     console.log("Client data:", data);
+    toast.success(clientToEdit ? "Client modifié avec succès" : "Client créé avec succès");
+    if (onSuccess) {
+      onSuccess();
+    }
   };
 
   const handlePrint = () => {

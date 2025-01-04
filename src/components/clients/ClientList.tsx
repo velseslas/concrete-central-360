@@ -6,7 +6,8 @@ import { ClientTable } from "./ClientTable";
 import { Button } from "../ui/button";
 import { UserPlus } from "lucide-react";
 import { motion } from "framer-motion";
-import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
+import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
+import { Sheet, SheetContent } from "../ui/sheet";
 
 const mockClients = [
   {
@@ -29,6 +30,7 @@ const ClientList = () => {
   const [selectedClient, setSelectedClient] = useState<any>(null);
   const [showProjectForm, setShowProjectForm] = useState(false);
   const [showDocumentUpload, setShowDocumentUpload] = useState(false);
+  const [isNewClientDialogOpen, setIsNewClientDialogOpen] = useState(false);
 
   const handleDelete = (clientId: number) => {
     console.log("Deleting client:", clientId);
@@ -62,17 +64,17 @@ const ClientList = () => {
         className="flex justify-between items-center"
       >
         <h2 className="text-2xl font-bold">Liste des clients</h2>
-        <Sheet>
-          <SheetTrigger asChild>
+        <Dialog open={isNewClientDialogOpen} onOpenChange={setIsNewClientDialogOpen}>
+          <DialogTrigger asChild>
             <Button>
               <UserPlus className="mr-2 h-4 w-4" />
               Nouveau client
             </Button>
-          </SheetTrigger>
-          <SheetContent side="right" className="w-[400px] sm:w-[540px]">
-            <ClientForm />
-          </SheetContent>
-        </Sheet>
+          </DialogTrigger>
+          <DialogContent className="max-w-[800px] max-h-[90vh] overflow-y-auto">
+            <ClientForm onSuccess={() => setIsNewClientDialogOpen(false)} />
+          </DialogContent>
+        </Dialog>
       </motion.div>
 
       <motion.div
