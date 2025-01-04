@@ -50,7 +50,7 @@ export function SupplierDashboard({ widgets, activeWidget, setActiveWidget }: Da
               </CardHeader>
               <CardContent>
                 <p className="text-gray-400">
-                  Gérer les {widget.title.toLowerCase()}
+                  Gestion de {widget.title.toLowerCase()}
                 </p>
               </CardContent>
             </Card>
