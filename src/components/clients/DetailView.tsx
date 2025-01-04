@@ -94,11 +94,11 @@ export function DetailView({ open, onOpenChange, data, title }: DetailViewProps)
   return (
     <Dialog open={open} onOpenChange={onOpenChange} modal={false}>
       <DialogContent className="max-h-[90vh] w-[90vw] max-w-[800px] overflow-y-auto">
-        <DialogHeader className="flex flex-row items-center justify-between">
-          <DialogTitle className="text-2xl font-bold text-primary">
-            {title}
-          </DialogTitle>
-          <div className="flex items-center -ml-32">
+        <DialogHeader className="flex flex-row items-center justify-between space-x-4">
+          <div className="flex items-center gap-4">
+            <DialogTitle className="text-2xl font-bold text-primary">
+              {title}
+            </DialogTitle>
             <Button variant="outline" size="icon" onClick={handlePrint}>
               <Printer className="h-4 w-4" />
             </Button>
