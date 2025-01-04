@@ -6,6 +6,7 @@ import { ClientTable } from "./ClientTable";
 import { Button } from "../ui/button";
 import { UserPlus } from "lucide-react";
 import { motion } from "framer-motion";
+import { ProductManagementWidget } from "./widgets/ProductManagementWidget";
 
 const mockClients = [
   {
@@ -83,6 +84,15 @@ const ClientList = () => {
           onDocumentUpload={handleDocumentUpload}
           onDelete={handleDelete}
         />
+      </motion.div>
+
+      {/* Ajout du widget de gestion des produits */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, delay: 0.3 }}
+      >
+        <ProductManagementWidget />
       </motion.div>
       
       {selectedClient && (
