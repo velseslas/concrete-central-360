@@ -41,7 +41,7 @@ export function DocumentList() {
       ))}
 
       <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
-        <DialogContent className="max-h-[90vh] w-[90vw] max-w-[800px] overflow-y-auto">
+        <DialogContent className="max-h-[90vh] w-[90vw] max-w-[800px] overflow-y-auto" hideClose>
           <div className="flex flex-col items-center gap-4 py-4">
             <div className="w-full aspect-[3/4] bg-gray-100 rounded-lg flex items-center justify-center">
               <FileText className="h-24 w-24 text-gray-400" />
@@ -49,17 +49,6 @@ export function DocumentList() {
           </div>
         </DialogContent>
       </Dialog>
-
-      <style>
-        {`
-          @media print {
-            [data-radix-popper-content-wrapper] {
-              position: static !important;
-              transform: none !important;
-            }
-          }
-        `}
-      </style>
     </div>
   );
 }
