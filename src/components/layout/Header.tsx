@@ -1,7 +1,35 @@
 import { Bell } from "lucide-react";
 import { motion } from "framer-motion";
+import { useLocation } from "react-router-dom";
 
 const Header = () => {
+  const location = useLocation();
+
+  const getPageTitle = (path: string) => {
+    switch (path) {
+      case "/":
+        return "Tableau de bord";
+      case "/formulations":
+        return "Formulations";
+      case "/orders":
+        return "Commandes";
+      case "/clients":
+        return "Clients";
+      case "/suppliers":
+        return "Fournisseurs";
+      case "/vehicles":
+        return "Véhicules";
+      case "/expenses":
+        return "Dépenses";
+      case "/production":
+        return "Production";
+      case "/invoices":
+        return "Factures";
+      default:
+        return "Tableau de bord";
+    }
+  };
+
   return (
     <motion.header 
       initial={{ opacity: 0, y: -20 }}
@@ -16,7 +44,7 @@ const Header = () => {
           className="space-y-1"
         >
           <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-            Bienvenue
+            {getPageTitle(location.pathname)}
           </h2>
           <p className="text-gray-400">
             Gérez votre centrale à béton
