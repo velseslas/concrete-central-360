@@ -13,7 +13,7 @@ import { PaymentStateDialog } from "./payment/PaymentStateDialog";
 
 const mockClients = [
   {
-    id: "1", // Changé en string
+    id: "1",
     name: "Entreprise ABC",
     totalPaid: 15000,
     lastPayment: "2024-03-20",
@@ -42,7 +42,7 @@ const mockClients = [
     ]
   },
   {
-    id: "2", // Changé en string
+    id: "2",
     name: "SARL XYZ",
     totalPaid: 25000,
     lastPayment: "2024-03-19",
@@ -65,37 +65,12 @@ const mockClients = [
   }
 ];
 
-// Données d'exemple pour le rapport
-const reportData = [
-  {
-    date: "2024-03-20",
-    reference: "PAY001",
-    amount: 150000,
-    method: "Chèque",
-    status: "Payé"
-  },
-  {
-    date: "2024-03-21",
-    reference: "PAY002",
-    amount: 75000,
-    method: "Virement",
-    status: "Payé"
-  }
-];
-
 export function PaymentWidget() {
   const [selectedClient, setSelectedClient] = useState<any>(null);
   const [showPaymentForm, setShowPaymentForm] = useState(false);
   const [showPaymentDetails, setShowPaymentDetails] = useState(false);
   const [showDocumentPreview, setShowDocumentPreview] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState<string | null>(null);
-
-  // États pour la génération du rapport
-  const [reportClient, setReportClient] = useState<string>("");
-  const [startDate, setStartDate] = useState<string>("");
-  const [endDate, setEndDate] = useState<string>("");
-  const [paymentMethod, setPaymentMethod] = useState<string>("");
-  const [showReport, setShowReport] = useState(false);
 
   const handleViewDetails = (client: any) => {
     setSelectedClient(client);
@@ -107,65 +82,12 @@ export function PaymentWidget() {
     setShowDocumentPreview(true);
   };
 
-  const handleGenerateReport = () => {
-    if (!reportClient || !startDate || !endDate || !paymentMethod) {
-      toast.error("Veuillez remplir tous les champs");
-      return;
-    }
-
-    console.log("Generating report with filters:", {
-      client: reportClient,
-      startDate,
-      endDate,
-      paymentMethod,
-    });
-    
-    setShowReport(true);
-    toast.success("État de paiement généré avec succès");
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <Card className="mb-6 bg-white shadow-lg">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <FileText className="h-5 w-5" />
-            État des Paiements
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <PaymentStateFilters 
-            clients={mockClients}
-            selectedClient={reportClient}
-            startDate={startDate}
-            endDate={endDate}
-            paymentMethod={paymentMethod}
-            onClientChange={setReportClient}
-            onStartDateChange={setStartDate}
-            onEndDateChange={setEndDate}
-            onPaymentMethodChange={setPaymentMethod}
-            onGenerateReport={handleGenerateReport}
-          />
-        </CardContent>
-      </Card>
-
-      <PaymentStateDialog 
-        open={showReport}
-        onOpenChange={setShowReport}
-        reportData={reportData}
-        filters={{
-          client: mockClients.find(c => c.id === reportClient)?.name || "",
-          startDate,
-          endDate,
-          paymentMethod: paymentMethod === "check" ? "Chèque" : 
-                        paymentMethod === "transfer" ? "Virement" : "Espèces"
-        }}
-      />
-
       <Card className="bg-gradient-to-br from-[#ec4899] to-[#8b5cf6] border-0 shadow-lg hover:shadow-xl transition-all duration-300">
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle className="text-white flex items-center gap-2">
