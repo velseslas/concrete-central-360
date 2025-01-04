@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ShoppingCart, Package, TruckDelivery } from "lucide-react";
+import { ShoppingCart, Package, Truck } from "lucide-react";
 import { motion } from "framer-motion";
 
 export function OrderWidget() {
@@ -28,7 +28,7 @@ export function OrderWidget() {
               </div>
               <div className="p-4 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
                 <h3 className="font-semibold mb-2 text-white flex items-center gap-2">
-                  <TruckDelivery className="h-5 w-5" />
+                  <Truck className="h-5 w-5" />
                   En livraison
                 </h3>
                 <p className="text-2xl font-bold text-white">3</p>
