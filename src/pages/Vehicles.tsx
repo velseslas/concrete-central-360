@@ -43,7 +43,13 @@ const Vehicles = () => {
           {[
             { title: "Véhicules Actifs", value: "12", icon: Car, color: "text-green-400" },
             { title: "En Maintenance", value: "3", icon: Settings, color: "text-orange-400" },
-            { title: "Alertes", value: "2", icon: AlertTriangle, color: "text-red-400" },
+            { 
+              title: "Alertes", 
+              value: "2", 
+              icon: AlertTriangle, 
+              color: "text-red-400",
+              isPulsing: true 
+            },
           ].map((stat, index) => (
             <motion.div
               key={stat.title}
@@ -56,10 +62,12 @@ const Vehicles = () => {
                   <CardTitle className="text-sm font-medium text-gray-300">
                     {stat.title}
                   </CardTitle>
-                  <stat.icon className={`h-5 w-5 ${stat.color}`} />
+                  <stat.icon className={`h-5 w-5 ${stat.color} ${stat.isPulsing ? 'animate-pulse' : ''}`} />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-white">{stat.value}</div>
+                  <div className={`text-2xl font-bold text-white ${stat.isPulsing ? 'animate-pulse' : ''}`}>
+                    {stat.value}
+                  </div>
                 </CardContent>
               </Card>
             </motion.div>
