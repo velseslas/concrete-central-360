@@ -29,12 +29,14 @@ const stats: StatItem[] = [
     status: "increase"
   },
   {
-    label: "Livraisons du jour",
-    value: "18",
-    trend: 0,
-    status: "neutral"
+    label: "Taux de recouvrement",
+    value: "85%",
+    trend: 5.3,
+    status: "increase"
   }
 ];
+
+// ... keep existing code (getTrendIcon, getTrendColor, and getCardColor functions)
 
 export function OverviewWidget() {
   const getTrendIcon = (status: StatItem["status"]) => {
