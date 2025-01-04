@@ -9,30 +9,15 @@ import { cn } from "@/lib/utils";
 const Sidebar = () => {
   const location = useLocation();
 
-  const menuSections = [
-    {
-      title: "Principal",
-      items: [
-        { to: "/", icon: Home, label: "Tableau de bord", iconColor: "text-blue-500" },
-        { to: "/clients", icon: Users, label: "Clients", iconColor: "text-green-500" },
-      ]
-    },
-    {
-      title: "Production",
-      items: [
-        { to: "/formulations", icon: TestTube, label: "Formulations", iconColor: "text-purple-500" },
-        { to: "/production", icon: Factory, label: "Production", iconColor: "text-orange-500" },
-      ]
-    },
-    {
-      title: "Gestion",
-      items: [
-        { to: "/suppliers", icon: Truck, label: "Fournisseurs", iconColor: "text-yellow-500" },
-        { to: "/vehicles", icon: Car, label: "Parc roulant", iconColor: "text-red-500" },
-        { to: "/expenses", icon: DollarSign, label: "Dépenses", iconColor: "text-emerald-500" },
-        { to: "/invoices", icon: FileSpreadsheet, label: "Factures", iconColor: "text-indigo-500" },
-      ]
-    }
+  const menuItems = [
+    { to: "/", icon: Home, label: "Tableau de bord", iconColor: "text-blue-500" },
+    { to: "/clients", icon: Users, label: "Clients", iconColor: "text-green-500" },
+    { to: "/formulations", icon: TestTube, label: "Formulations", iconColor: "text-purple-500" },
+    { to: "/production", icon: Factory, label: "Production", iconColor: "text-orange-500" },
+    { to: "/suppliers", icon: Truck, label: "Fournisseurs", iconColor: "text-yellow-500" },
+    { to: "/vehicles", icon: Car, label: "Parc roulant", iconColor: "text-red-500" },
+    { to: "/expenses", icon: DollarSign, label: "Dépenses", iconColor: "text-emerald-500" },
+    { to: "/invoices", icon: FileSpreadsheet, label: "Factures", iconColor: "text-indigo-500" },
   ];
 
   return (
@@ -57,63 +42,48 @@ const Sidebar = () => {
         </h1>
       </motion.div>
       
-      <nav className="space-y-6">
-        {menuSections.map((section, sectionIndex) => (
-          <motion.div
-            key={section.title}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: sectionIndex * 0.1 }}
-            className="space-y-2"
-          >
-            <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider px-4">
-              {section.title}
-            </h2>
-            <div className="space-y-1">
-              {section.items.map((item, index) => {
-                const Icon = item.icon;
-                const isActive = location.pathname === item.to;
+      <nav className="space-y-1">
+        {menuItems.map((item, index) => {
+          const Icon = item.icon;
+          const isActive = location.pathname === item.to;
+          
+          return (
+            <motion.div
+              key={item.to}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.05 }}
+            >
+              <Link
+                to={item.to}
+                className={cn(
+                  "flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium",
+                  "transition-all duration-300 group relative",
+                  "hover:bg-gray-800/50 hover:backdrop-blur-xl",
+                  isActive 
+                    ? 'text-white bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20' 
+                    : 'text-gray-400 hover:text-white'
+                )}
+              >
+                <Icon 
+                  className={item.iconColor}
+                  size={20}
+                />
                 
-                return (
+                <span className="transition-colors duration-300">
+                  {item.label}
+                </span>
+                
+                {isActive && (
                   <motion.div
-                    key={item.to}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: (sectionIndex * 0.1) + (index * 0.05) }}
-                  >
-                    <Link
-                      to={item.to}
-                      className={cn(
-                        "flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium",
-                        "transition-all duration-300 group relative",
-                        "hover:bg-gray-800/50 hover:backdrop-blur-xl",
-                        isActive 
-                          ? 'text-white bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20' 
-                          : 'text-gray-400 hover:text-white'
-                      )}
-                    >
-                      <Icon 
-                        className={item.iconColor}
-                        size={20}
-                      />
-                      
-                      <span className="transition-colors duration-300">
-                        {item.label}
-                      </span>
-                      
-                      {isActive && (
-                        <motion.div
-                          layoutId="active-pill"
-                          className="absolute right-2 w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-400 to-blue-400"
-                        />
-                      )}
-                    </Link>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </motion.div>
-        ))}
+                    layoutId="active-pill"
+                    className="absolute right-2 w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-400 to-blue-400"
+                  />
+                )}
+              </Link>
+            </motion.div>
+          );
+        })}
       </nav>
 
       <motion.div 
