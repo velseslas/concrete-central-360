@@ -178,11 +178,23 @@ export function PaymentWidget() {
 
       <Dialog open={showDocumentPreview} onOpenChange={setShowDocumentPreview}>
         <DialogContent className="max-h-[90vh] w-[90vw] max-w-[800px]">
+          <style>
+            {`
+              @media print {
+                .no-print {
+                  display: none !important;
+                }
+                [role="dialog"] button[type="button"] {
+                  display: none !important;
+                }
+              }
+            `}
+          </style>
           <DialogHeader className="flex flex-row items-center justify-between space-y-0">
             <DialogTitle className="text-2xl font-bold">
               Aperçu - {selectedDocument}
             </DialogTitle>
-            <Button onClick={handlePrint} variant="outline">
+            <Button onClick={handlePrint} variant="outline" className="no-print mr-8">
               <Printer className="mr-2 h-4 w-4" />
               Imprimer
             </Button>
