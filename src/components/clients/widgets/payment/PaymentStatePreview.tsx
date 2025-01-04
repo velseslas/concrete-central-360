@@ -40,28 +40,6 @@ export function PaymentStatePreview({ open, onOpenChange, reportData }: PaymentS
                 margin: 0 auto;
                 padding: 20px;
               }
-              .print-info {
-                background-color: #f9fafb;
-                border-radius: 4px;
-                padding: 12px;
-                margin-bottom: 24px;
-              }
-              .info-grid {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 16px;
-              }
-              .info-item {
-                margin-bottom: 8px;
-              }
-              .info-label {
-                color: #6b7280;
-                font-size: 0.875rem;
-                margin-bottom: 4px;
-              }
-              .info-value {
-                font-weight: 500;
-              }
               table {
                 width: 100%;
                 border-collapse: collapse;
@@ -89,31 +67,18 @@ export function PaymentStatePreview({ open, onOpenChange, reportData }: PaymentS
                   -webkit-print-color-adjust: exact;
                   print-color-adjust: exact;
                 }
+                @page {
+                  margin: 0;
+                }
+                * {
+                  -webkit-print-color-adjust: exact !important;
+                  print-color-adjust: exact !important;
+                }
               }
             </style>
           </head>
           <body>
             <div class="container">
-              <div class="print-info">
-                <div class="info-grid">
-                  <div class="info-item">
-                    <div class="info-label">Client</div>
-                    <div class="info-value">${reportData.client}</div>
-                  </div>
-                  <div class="info-item">
-                    <div class="info-label">Méthode de paiement</div>
-                    <div class="info-value">${reportData.paymentMethod || 'Toutes'}</div>
-                  </div>
-                  <div class="info-item">
-                    <div class="info-label">Date de début</div>
-                    <div class="info-value">${reportData.startDate || '-'}</div>
-                  </div>
-                  <div class="info-item">
-                    <div class="info-label">Date de fin</div>
-                    <div class="info-value">${reportData.endDate || '-'}</div>
-                  </div>
-                </div>
-              </div>
               <table>
                 <thead>
                   <tr>
@@ -146,7 +111,6 @@ export function PaymentStatePreview({ open, onOpenChange, reportData }: PaymentS
       
       printWindow.document.close();
       printWindow.focus();
-      
       setTimeout(() => {
         printWindow.print();
         printWindow.close();
@@ -155,8 +119,8 @@ export function PaymentStatePreview({ open, onOpenChange, reportData }: PaymentS
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="p-0 border-none bg-transparent shadow-none overflow-hidden">
+    <Dialog open={open} onOpenChange={onOpenChange} modal={false}>
+      <DialogContent className="p-0 border-0 bg-transparent shadow-none overflow-visible">
         <PrintablePaymentReport reportData={reportData} />
       </DialogContent>
     </Dialog>
