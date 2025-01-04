@@ -12,8 +12,16 @@ import { PaymentWidget } from "@/components/suppliers/widgets/PaymentWidget";
 import { SupplierDashboard } from "@/components/suppliers/SupplierDashboard";
 import { toast } from "sonner";
 
+interface WidgetProps {
+  id: string;
+  title: string;
+  icon: any;
+  color: string;
+  component: React.FC;
+}
+
 const Suppliers = () => {
-  const [selectedSupplierId, setSelectedSupplierId] = useState<number>(1); // Default to first supplier
+  const [selectedSupplierId, setSelectedSupplierId] = useState<number>(1);
   const [activeWidget, setActiveWidget] = useState<string | null>(null);
 
   const handleSupplierEdit = (supplier: any) => {
@@ -76,7 +84,7 @@ const Suppliers = () => {
       color: 'text-gray-400',
       component: () => <DocumentsWidget supplierId={selectedSupplierId} />
     }
-  ];
+  ] as const;
 
   return (
     <motion.div
