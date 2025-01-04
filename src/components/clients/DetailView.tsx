@@ -69,6 +69,9 @@ export function DetailView({ open, onOpenChange, data, title }: DetailViewProps)
               th, td { padding: 8px; border: 1px solid #ddd; }
               th { background-color: #f5f5f5; text-align: left; }
               h1 { color: #2563eb; }
+              @media print {
+                .no-print { display: none; }
+              }
             </style>
           </head>
           <body>
@@ -96,7 +99,7 @@ export function DetailView({ open, onOpenChange, data, title }: DetailViewProps)
       <DialogContent className="max-h-[90vh] w-[90vw] max-w-[800px] overflow-y-auto">
         <DialogHeader className="flex flex-row items-center justify-between">
           <div className="flex items-center gap-4">
-            <Button variant="outline" size="icon" onClick={handlePrint}>
+            <Button variant="outline" size="icon" onClick={handlePrint} className="print:hidden">
               <Printer className="h-4 w-4" />
             </Button>
             <DialogTitle className="text-2xl font-bold text-primary">
