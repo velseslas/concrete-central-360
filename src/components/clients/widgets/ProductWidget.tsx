@@ -8,9 +8,9 @@ export function ProductWidget() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <Card className="bg-gradient-to-br from-amber-50 to-orange-50 border-amber-100 shadow-lg hover:shadow-xl transition-all duration-300">
+      <Card className="bg-gradient-to-br from-[#F97316] to-[#0EA5E9] border-0 shadow-lg hover:shadow-xl transition-all duration-300">
         <CardHeader>
-          <CardTitle className="text-amber-800">Produits</CardTitle>
+          <CardTitle className="text-white">Produits</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
@@ -25,11 +25,11 @@ export function ProductWidget() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.1 }}
-                  className="p-4 rounded-lg bg-white/50 border border-amber-100"
+                  className="p-4 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20"
                 >
-                  <h3 className="font-semibold text-amber-900">{product.name}</h3>
-                  <p className="text-sm text-amber-700">{product.price}</p>
-                  <p className="text-sm text-amber-700">{product.stock}</p>
+                  <h3 className="font-semibold text-white">{product.name}</h3>
+                  <p className="text-sm text-white/80">{product.price}</p>
+                  <p className="text-sm text-white/80">{product.stock}</p>
                 </motion.div>
               ))}
             </div>

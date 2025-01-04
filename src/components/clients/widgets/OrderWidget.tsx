@@ -8,9 +8,9 @@ export function OrderWidget() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <Card className="bg-gradient-to-br from-emerald-50 to-teal-50 border-emerald-100 shadow-lg hover:shadow-xl transition-all duration-300">
+      <Card className="bg-gradient-to-br from-[#8B5CF6] to-[#D946EF] border-0 shadow-lg hover:shadow-xl transition-all duration-300">
         <CardHeader>
-          <CardTitle className="text-emerald-800">Commandes</CardTitle>
+          <CardTitle className="text-white">Commandes</CardTitle>
         </CardHeader>
         <CardContent>
           {/* Content will be added later */}
