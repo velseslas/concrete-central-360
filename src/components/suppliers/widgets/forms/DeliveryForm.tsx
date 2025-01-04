@@ -53,7 +53,7 @@ export function DeliveryForm({ open, onOpenChange, deliveryToEdit }: DeliveryFor
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[1000px] w-full max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[1200px] w-full max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
             {deliveryToEdit ? "Modifier la livraison" : "Nouvelle livraison"}
