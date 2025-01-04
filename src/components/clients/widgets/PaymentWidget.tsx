@@ -187,6 +187,15 @@ export function PaymentWidget() {
                 [role="dialog"] button[type="button"] {
                   display: none !important;
                 }
+                @page {
+                  size: 4in auto;
+                  margin: 0;
+                }
+                .print-preview {
+                  width: 384px !important;
+                  margin: 0 auto;
+                  padding: 1rem;
+                }
               }
             `}
           </style>
@@ -199,9 +208,27 @@ export function PaymentWidget() {
               Imprimer
             </Button>
           </DialogHeader>
-          <div className="flex flex-col items-center gap-4 py-4">
-            <div className="w-full aspect-[3/4] bg-gray-100 rounded-lg flex items-center justify-center">
-              <FileText className="h-24 w-24 text-gray-400" />
+          <div className="flex justify-center overflow-auto py-4">
+            <div className="print-preview w-[384px] min-h-[600px] bg-white rounded-lg shadow-lg p-4 space-y-4">
+              <div className="border-b pb-4">
+                <h3 className="text-lg font-bold text-center">Bon de paiement</h3>
+                <p className="text-sm text-gray-600 text-center">Ref: {selectedDocument}</p>
+              </div>
+              <div className="space-y-2">
+                <p className="text-sm"><span className="font-semibold">Client:</span> {selectedClient?.name}</p>
+                <p className="text-sm"><span className="font-semibold">Date:</span> {new Date().toLocaleDateString()}</p>
+                <p className="text-sm"><span className="font-semibold">Montant:</span> {selectedClient?.totalPaid.toLocaleString()} DA</p>
+              </div>
+              <div className="pt-8 space-y-8">
+                <div className="text-center">
+                  <p className="text-sm font-semibold mb-12">Signature du client</p>
+                  <div className="border-t border-gray-300 w-32 mx-auto"></div>
+                </div>
+                <div className="text-center">
+                  <p className="text-sm font-semibold mb-12">Signature de l'entreprise</p>
+                  <div className="border-t border-gray-300 w-32 mx-auto"></div>
+                </div>
+              </div>
             </div>
           </div>
         </DialogContent>
