@@ -9,12 +9,12 @@ interface ClientContactFieldsProps {
 
 export function ClientContactFields({ form }: ClientContactFieldsProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 w-full">
+    <div className="grid grid-cols-4 gap-3 w-full">
       <FormField
         control={form.control}
         name="contact"
         render={({ field }) => (
-          <FormItem className="w-full">
+          <FormItem className="col-span-1">
             <FormLabel>Contact</FormLabel>
             <FormControl>
               <Input 
@@ -32,7 +32,7 @@ export function ClientContactFields({ form }: ClientContactFieldsProps) {
         control={form.control}
         name="telephone"
         render={({ field }) => (
-          <FormItem className="w-full">
+          <FormItem className="col-span-1">
             <FormLabel>Téléphone</FormLabel>
             <FormControl>
               <Input 
@@ -50,7 +50,7 @@ export function ClientContactFields({ form }: ClientContactFieldsProps) {
         control={form.control}
         name="email"
         render={({ field }) => (
-          <FormItem className="w-full">
+          <FormItem className="col-span-2">
             <FormLabel>Email</FormLabel>
             <FormControl>
               <Input 
