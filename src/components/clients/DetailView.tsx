@@ -98,7 +98,7 @@ export function DetailView({ open, onOpenChange, data, title }: DetailViewProps)
           <DialogTitle className="text-2xl font-bold text-primary">
             {title}
           </DialogTitle>
-          <div className="flex items-center -ml-4">
+          <div className="flex items-center -ml-8">
             <Button variant="outline" size="icon" onClick={handlePrint}>
               <Printer className="h-4 w-4" />
             </Button>
