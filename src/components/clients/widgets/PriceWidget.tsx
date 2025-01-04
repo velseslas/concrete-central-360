@@ -4,9 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import { PriceForm } from "../PriceForm";
+import { PriceList } from "./PriceList";
 
 export function PriceWidget() {
   const [showPriceForm, setShowPriceForm] = useState(false);
+
+  const handlePriceEdit = (price: any) => {
+    console.log("Editing price:", price);
+  };
 
   return (
     <motion.div
@@ -35,8 +40,8 @@ export function PriceWidget() {
               </div>
             </div>
             <div className="p-4 rounded-lg bg-gray-700/50">
-              <h3 className="text-lg font-semibold mb-2">Historique des prix</h3>
-              <p className="text-gray-400">Suivi des changements de prix dans le temps</p>
+              <h3 className="text-lg font-semibold mb-2">Liste des Prix</h3>
+              <PriceList onEdit={handlePriceEdit} />
             </div>
           </div>
         </CardContent>
