@@ -4,6 +4,7 @@ import { Plus, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { ExpenseCategoryForm } from "./ExpenseCategoryForm";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
 
 interface ExpenseCategory {
   id: string;
@@ -65,10 +66,14 @@ export function ExpenseCategoryWidget() {
   };
 
   return (
-    <Card>
+    <Card className="backdrop-blur-lg bg-white/10 border-white/20">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-lg font-medium">Catégories</CardTitle>
-        <Button onClick={() => setShowNewCategoryForm(true)} size="sm">
+        <CardTitle className="text-lg font-medium text-white">Catégories</CardTitle>
+        <Button 
+          onClick={() => setShowNewCategoryForm(true)} 
+          size="sm"
+          className="bg-white/10 backdrop-blur-lg border border-white/20 hover:bg-white/20 hover:border-white/30 transition-all duration-300 text-white"
+        >
           <Plus className="mr-2 h-4 w-4" />
           Nouvelle catégorie
         </Button>
@@ -76,37 +81,43 @@ export function ExpenseCategoryWidget() {
       <CardContent>
         <div className="space-y-4">
           {categories.length === 0 ? (
-            <p className="text-sm text-muted-foreground">Aucune catégorie pour le moment</p>
+            <p className="text-white/70">Aucune catégorie pour le moment</p>
           ) : (
             <div className="grid gap-4">
               {categories.map((category) => (
-                <div
+                <motion.div
                   key={category.id}
-                  className="flex items-center justify-between p-3 bg-muted rounded-lg"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
                 >
-                  <div>
-                    <h4 className="font-medium">{category.name}</h4>
-                    <p className="text-sm text-muted-foreground">
-                      {getTypeLabel(category.type)}
-                    </p>
+                  <div className="flex items-center justify-between p-3 bg-white/5 backdrop-blur-sm rounded-lg border border-white/10">
+                    <div>
+                      <h4 className="font-medium text-white">{category.name}</h4>
+                      <p className="text-sm text-white/70">
+                        {getTypeLabel(category.type)}
+                      </p>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleEditCategory(category)}
+                        className="text-white/70 hover:text-white hover:bg-white/10"
+                      >
+                        <Pencil className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDeleteCategory(category.id)}
+                        className="text-white/70 hover:text-white hover:bg-white/10"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
                   </div>
-                  <div className="flex gap-2">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleEditCategory(category)}
-                    >
-                      <Pencil className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleDeleteCategory(category.id)}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           )}
