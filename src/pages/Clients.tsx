@@ -21,71 +21,98 @@ const Clients = () => {
       title: 'Clients',
       icon: Users,
       color: 'text-blue-400',
-      component: ClientListWidget
+      description: 'Gérer la liste des clients et leurs informations'
     },
     {
       id: 'documents',
       title: 'Documents',
       icon: FileText,
       color: 'text-yellow-400',
-      component: AdminDocumentsWidget
+      description: 'Gérer les documents administratifs'
     },
     {
       id: 'chantiers',
       title: 'Chantiers',
       icon: Construction,
       color: 'text-orange-400',
-      component: ProjectWidget
+      description: 'Gérer les projets et chantiers'
     },
     {
       id: 'categories',
       title: 'Catégories',
       icon: Building2,
       color: 'text-green-400',
-      component: ProductCategoryWidget
+      description: 'Gérer les catégories de produits'
     },
     {
       id: 'produits',
       title: 'Produits',
       icon: Package,
       color: 'text-purple-400',
-      component: ProductWidget
+      description: 'Gérer le catalogue des produits'
     },
     {
       id: 'prix',
       title: 'Prix Produits',
       icon: DollarSign,
       color: 'text-yellow-400',
-      component: PriceWidget
+      description: 'Gérer les tarifs et prix'
     },
     {
       id: 'commandes',
       title: 'Commandes',
       icon: ShoppingCart,
       color: 'text-indigo-400',
-      component: OrderWidget
+      description: 'Gérer les commandes clients'
     },
     {
       id: 'rapports',
       title: 'Rapports',
       icon: FileText,
       color: 'text-gray-400',
-      component: ReportsWidget
+      description: 'Consulter les rapports et statistiques'
     },
     {
       id: 'paiements',
       title: 'Paiements',
       icon: CreditCard,
       color: 'text-emerald-400',
-      component: PaymentWidget
+      description: 'Gérer les paiements clients'
     }
   ];
+
+  const getComponent = (id: string) => {
+    switch (id) {
+      case 'clients':
+        return ClientListWidget;
+      case 'documents':
+        return AdminDocumentsWidget;
+      case 'chantiers':
+        return ProjectWidget;
+      case 'categories':
+        return ProductCategoryWidget;
+      case 'produits':
+        return ProductWidget;
+      case 'prix':
+        return PriceWidget;
+      case 'commandes':
+        return OrderWidget;
+      case 'rapports':
+        return ReportsWidget;
+      case 'paiements':
+        return PaymentWidget;
+      default:
+        return null;
+    }
+  };
 
   const renderContent = () => {
     if (activeWidget) {
       const widget = widgets.find(w => w.id === activeWidget);
       if (widget) {
-        const WidgetComponent = widget.component;
+        const WidgetComponent = getComponent(widget.id);
+        if (!WidgetComponent) return null;
+        
         return (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -121,23 +148,32 @@ const Clients = () => {
               key={widget.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ 
+                duration: 0.5,
+                delay: index * 0.1,
+                ease: [0.4, 0, 0.2, 1]
+              }}
             >
               <Card 
-                className="cursor-pointer hover:shadow-lg transition-all duration-200 bg-gray-800/50 backdrop-blur-lg border border-gray-700 hover:bg-gray-800/70"
+                className="relative overflow-hidden cursor-pointer group"
                 onClick={() => setActiveWidget(widget.id)}
               >
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-gray-100">
-                    <IconComponent className={`h-6 w-6 ${widget.color}`} />
+                <div className="absolute inset-0 bg-gradient-to-br from-gray-900/50 to-gray-800/50 backdrop-blur-lg transition-all duration-300 group-hover:backdrop-blur-xl" />
+                <CardHeader className="relative">
+                  <CardTitle className="flex items-center gap-3 text-gray-100">
+                    <div className={`p-2 rounded-lg ${widget.color} bg-opacity-20`}>
+                      <IconComponent className={`h-6 w-6 ${widget.color}`} />
+                    </div>
                     {widget.title}
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="relative">
                   <p className="text-gray-400">
-                    Gérer les {widget.title.toLowerCase()}
+                    {widget.description}
                   </p>
                 </CardContent>
+                <div className="absolute inset-0 ring-1 ring-inset ring-white/10 group-hover:ring-white/20 transition-all duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 via-transparent to-transparent" />
               </Card>
             </motion.div>
           );
@@ -147,32 +183,34 @@ const Clients = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="container mx-auto p-6 space-y-6"
-      >
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="flex flex-col gap-6"
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+      <div className="container mx-auto p-6">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="space-y-6"
         >
-          <div className="flex justify-between items-center">
-            <motion.h1 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400"
-            >
-              Gestion des Clients
-            </motion.h1>
-          </div>
-          {renderContent()}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="flex flex-col gap-6"
+          >
+            <div className="flex justify-between items-center">
+              <motion.h1 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+                className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400"
+              >
+                Gestion des Clients
+              </motion.h1>
+            </div>
+            {renderContent()}
+          </motion.div>
         </motion.div>
-      </motion.div>
+      </div>
     </div>
   );
 };
