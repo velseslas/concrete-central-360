@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Users, Package, CreditCard, FileText, Truck, ShoppingCart, Tag, Euro, Factory } from "lucide-react";
+import { Users, Package, CreditCard, FileText, Truck, ShoppingCart, Tag, Euro, Factory, Settings } from "lucide-react";
 import { motion } from "framer-motion";
 import { SupplierList } from "@/components/suppliers/SupplierList";
 import { ProductWidget } from "@/components/suppliers/widgets/ProductWidget";
@@ -10,6 +10,8 @@ import { DocumentsWidget } from "@/components/suppliers/widgets/DocumentsWidget"
 import { ReportsWidget } from "@/components/suppliers/widgets/ReportsWidget";
 import { PurchaseOrderWidget } from "@/components/suppliers/widgets/PurchaseOrderWidget";
 import { PaymentWidget } from "@/components/suppliers/widgets/PaymentWidget";
+import { TvaWidget } from "@/components/suppliers/widgets/TvaWidget";
+import { CompanyInfoWidget } from "@/components/suppliers/widgets/CompanyInfoWidget";
 import { SupplierDashboard } from "@/components/suppliers/SupplierDashboard";
 
 const Suppliers = () => {
@@ -79,6 +81,20 @@ const Suppliers = () => {
       icon: FileText,
       color: 'text-gray-400',
       component: DocumentsWidget
+    },
+    {
+      id: 'tva',
+      title: 'TVA',
+      icon: Settings,
+      color: 'text-red-400',
+      component: TvaWidget
+    },
+    {
+      id: 'company-info',
+      title: 'Coordonnées société',
+      icon: Settings,
+      color: 'text-yellow-400',
+      component: CompanyInfoWidget
     }
   ];
 
