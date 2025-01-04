@@ -13,7 +13,7 @@ const mockDocuments = [
 ];
 
 export function DocumentsWidget() {
-  const [showUploadForm, setShowUploadForm] = useState(false);
+  const [showUploadDialog, setShowUploadDialog] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [selectedDoc, setSelectedDoc] = useState<{ id: number; title: string } | null>(null);
 
@@ -31,39 +31,53 @@ export function DocumentsWidget() {
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-lg font-medium">Documents Administratifs</CardTitle>
-        <Button onClick={() => setShowUploadForm(true)} size="sm">
+        <Button onClick={() => setShowUploadDialog(true)} size="sm">
           <Plus className="mr-2 h-4 w-4" />
           Nouveau document
         </Button>
       </CardHeader>
       <CardContent>
-        {showUploadForm ? (
-          <DocumentUpload 
-            onUploadSuccess={() => setShowUploadForm(false)}
-          />
-        ) : null}
-
-        <div className="space-y-2 mt-4">
+        <div className="space-y-2">
           {mockDocuments.map((doc) => (
-            <div
+            <motion.div
               key={doc.id}
-              className="flex items-center gap-3 p-3 rounded-lg hover:bg-accent/50 transition-colors cursor-pointer"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex items-center justify-between gap-3 p-3 rounded-lg hover:bg-accent/50 transition-colors cursor-pointer"
               onClick={() => handleDocumentClick(doc)}
             >
-              <FileText className="h-5 w-5 text-muted-foreground" />
-              <span>{doc.title}</span>
-            </div>
+              <div className="flex items-center gap-3">
+                <FileText className="h-5 w-5 text-muted-foreground" />
+                <span>{doc.title}</span>
+              </div>
+            </motion.div>
           ))}
         </div>
       </CardContent>
 
+      {/* Dialog d'upload */}
+      <Dialog open={showUploadDialog} onOpenChange={setShowUploadDialog}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle>Ajouter un nouveau document</DialogTitle>
+          </DialogHeader>
+          <DocumentUpload 
+            onUploadSuccess={() => {
+              setShowUploadDialog(false);
+              console.log("Document uploadé avec succès");
+            }}
+          />
+        </DialogContent>
+      </Dialog>
+
+      {/* Dialog de prévisualisation */}
       <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
         <DialogContent className="max-h-[90vh] w-[90vw] max-w-[800px] overflow-y-auto">
-          <DialogHeader className="flex flex-row items-center space-y-0">
-            <DialogTitle className="text-2xl font-bold text-primary mr-8">
+          <DialogHeader className="flex flex-row items-center justify-between space-y-0">
+            <DialogTitle className="text-2xl font-bold text-primary">
               Aperçu - {selectedDoc?.title}
             </DialogTitle>
-            <Button onClick={handlePrint} variant="outline">
+            <Button onClick={handlePrint} variant="outline" className="ml-auto">
               <Printer className="mr-2 h-4 w-4" />
               Imprimer
             </Button>
