@@ -47,7 +47,30 @@ const Header = () => {
             {getPageTitle(location.pathname)}
           </h2>
           <p className="text-gray-400">
-            {location.pathname === "/invoices" ? "Gestion de la facturation" : "Gérez votre centrale à béton"}
+            {(() => {
+              switch (location.pathname) {
+                case "/":
+                  return "Gestion du tableau de bord";
+                case "/formulations":
+                  return "Gestion des formulations";
+                case "/orders":
+                  return "Gestion des commandes";
+                case "/clients":
+                  return "Gestion des clients";
+                case "/suppliers":
+                  return "Gestion des fournisseurs";
+                case "/vehicles":
+                  return "Gestion des véhicules";
+                case "/expenses":
+                  return "Gestion des dépenses";
+                case "/production":
+                  return "Gestion de la production";
+                case "/invoices":
+                  return "Gestion de la facturation";
+                default:
+                  return "Gestion du tableau de bord";
+              }
+            })()}
           </p>
         </motion.div>
         
