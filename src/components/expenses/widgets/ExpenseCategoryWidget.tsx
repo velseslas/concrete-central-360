@@ -36,23 +36,24 @@ export function ExpenseCategoryWidget() {
     setShowNewCategoryForm(true);
   };
 
+  const handleCreateCategory = (name: string, type: string) => {
+    console.log("Creating new category:", { name, type });
+    const newCategory = {
+      id: Math.random().toString(36).substr(2, 9),
+      name,
+      type
+    };
+    setCategories(prev => [...prev, newCategory]);
+  };
+
   const handleUpdateCategory = (name: string, type: string) => {
-    if (editingCategory) {
-      setCategories(prev => prev.map(cat => 
-        cat.id === editingCategory.id ? { ...cat, name, type } : cat
-      ));
-      toast.success("Catégorie modifiée avec succès");
-    } else {
-      const newCategory = {
-        id: Math.random().toString(36).substr(2, 9),
-        name,
-        type
-      };
-      setCategories(prev => [...prev, newCategory]);
-      toast.success("Catégorie créée avec succès");
-    }
+    if (!editingCategory) return;
+    
+    console.log("Updating category:", { id: editingCategory.id, name, type });
+    setCategories(prev => prev.map(cat => 
+      cat.id === editingCategory.id ? { ...cat, name, type } : cat
+    ));
     setEditingCategory(null);
-    setShowNewCategoryForm(false);
   };
 
   const getTypeLabel = (type: string) => {
@@ -67,11 +68,11 @@ export function ExpenseCategoryWidget() {
   return (
     <Card className="backdrop-blur-lg bg-white/10 border-white/20">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-lg font-medium text-white">Catégories de Dépenses</CardTitle>
+        <CardTitle className="text-lg font-medium text-white">Catégories</CardTitle>
         <Button 
           onClick={() => setShowNewCategoryForm(true)} 
           size="sm"
-          className="bg-white/10 hover:bg-white/20 text-white border border-white/20"
+          className="bg-white/10 backdrop-blur-lg border border-white/20 hover:bg-white/20 hover:border-white/30 transition-all duration-300 text-white"
         >
           <Plus className="mr-2 h-4 w-4" />
           Nouvelle catégorie
@@ -83,21 +84,21 @@ export function ExpenseCategoryWidget() {
             <p className="text-white/70">Aucune catégorie pour le moment</p>
           ) : (
             <div className="grid gap-4">
-              {categories.map((category, index) => (
+              {categories.map((category) => (
                 <motion.div
                   key={category.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                  transition={{ duration: 0.3 }}
                 >
-                  <div className="flex items-center justify-between p-3 bg-white/5 backdrop-blur-lg rounded-lg border border-white/10 hover:bg-white/10 transition-colors group">
+                  <div className="flex items-center justify-between p-3 bg-white/5 backdrop-blur-sm rounded-lg border border-white/10">
                     <div>
                       <h4 className="font-medium text-white">{category.name}</h4>
                       <p className="text-sm text-white/70">
                         {getTypeLabel(category.type)}
                       </p>
                     </div>
-                    <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="flex gap-2">
                       <Button
                         variant="ghost"
                         size="sm"
@@ -121,14 +122,14 @@ export function ExpenseCategoryWidget() {
             </div>
           )}
         </div>
-
-        <ExpenseCategoryForm 
-          open={showNewCategoryForm} 
-          onOpenChange={setShowNewCategoryForm}
-          onSubmit={handleUpdateCategory}
-          initialData={editingCategory}
-        />
       </CardContent>
+
+      <ExpenseCategoryForm 
+        open={showNewCategoryForm} 
+        onOpenChange={setShowNewCategoryForm}
+        onSubmit={editingCategory ? handleUpdateCategory : handleCreateCategory}
+        initialData={editingCategory}
+      />
     </Card>
   );
 }

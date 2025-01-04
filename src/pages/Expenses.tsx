@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { DollarSign, Car, Building2 } from "lucide-react";
 import ExpenseForm from "@/components/expenses/ExpenseForm";
@@ -28,21 +28,21 @@ const Expenses = () => {
       id: 'general',
       title: 'Dépenses Générales',
       icon: DollarSign,
-      color: 'text-blue-400',
+      color: 'text-blue-500',
       description: 'Gérer les dépenses générales de l\'entreprise'
     },
     {
       id: 'mechanical',
       title: 'Dépenses Parc Mécanique',
       icon: Car,
-      color: 'text-green-400',
+      color: 'text-green-500',
       description: 'Gérer les dépenses liées au parc mécanique'
     },
     {
       id: 'concrete',
       title: 'Dépenses Centrale à Béton',
       icon: Building2,
-      color: 'text-purple-400',
+      color: 'text-orange-500',
       description: 'Gérer les dépenses de la centrale à béton'
     }
   ];
@@ -61,16 +61,17 @@ const Expenses = () => {
             >
               ← Retour
             </button>
-            <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
-              {widget.title}
-            </h2>
+            <h2 className="text-2xl font-bold text-white">{widget.title}</h2>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
               <Card className="backdrop-blur-lg bg-white/10 border-white/20">
-                <div className="p-6">
+                <CardHeader>
+                  <CardTitle className="text-white">{widget.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
                   <ExpenseList onEdit={handleEdit} category={widget.id} />
-                </div>
+                </CardContent>
               </Card>
             </div>
             <div>
@@ -84,31 +85,28 @@ const Expenses = () => {
     return (
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {widgets.map((widget, index) => {
+          {widgets.map((widget) => {
             const IconComponent = widget.icon;
             return (
               <motion.div
                 key={widget.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
+                transition={{ duration: 0.3 }}
               >
                 <Card
-                  className="cursor-pointer backdrop-blur-lg bg-gradient-to-br from-white/10 to-white/5 hover:from-white/15 hover:to-white/10 border-white/20 transition-all duration-300 overflow-hidden group"
+                  className="cursor-pointer backdrop-blur-lg bg-white/10 border-white/20 hover:bg-white/20 transition-all duration-300"
                   onClick={() => setActiveWidget(widget.id)}
                 >
-                  <div className="p-6 relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="relative z-10">
-                      <div className="flex items-center gap-2 mb-4">
-                        <IconComponent className={`h-6 w-6 ${widget.color}`} />
-                        <h3 className="text-lg font-semibold text-white">{widget.title}</h3>
-                      </div>
-                      <p className="text-white/70 group-hover:text-white/90 transition-colors">
-                        {widget.description}
-                      </p>
-                    </div>
-                  </div>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2 text-white">
+                      <IconComponent className={`h-6 w-6 ${widget.color}`} />
+                      {widget.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-white/70">{widget.description}</p>
+                  </CardContent>
                 </Card>
               </motion.div>
             );
@@ -152,9 +150,9 @@ const Expenses = () => {
         {renderContent()}
 
         <Drawer open={isOpen} onOpenChange={setIsOpen}>
-          <DrawerContent className="bg-gray-900/95 backdrop-blur-xl border-t border-white/10">
+          <DrawerContent>
             <DrawerHeader>
-              <DrawerTitle className="text-white">
+              <DrawerTitle>
                 {editingExpense ? "Modifier la dépense" : "Ajouter une dépense"}
               </DrawerTitle>
             </DrawerHeader>
