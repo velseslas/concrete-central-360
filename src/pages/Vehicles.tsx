@@ -57,15 +57,15 @@ const Vehicles = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3, delay: index * 0.1 }}
             >
-              <Card className="bg-gray-800/50 backdrop-blur-lg border-gray-700 hover:bg-gray-700/50 hover:border-gray-600 transition-all duration-300">
+              <Card className={`bg-gray-800/50 backdrop-blur-lg border-gray-700 hover:bg-gray-700/50 hover:border-gray-600 transition-all duration-300 ${stat.isPulsing ? 'shadow-[0_0_15px_rgba(239,68,68,0.3)]' : ''}`}>
                 <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
                   <CardTitle className="text-sm font-medium text-gray-300">
                     {stat.title}
                   </CardTitle>
-                  <stat.icon className={`h-5 w-5 ${stat.color} ${stat.isPulsing ? 'animate-pulse' : ''}`} />
+                  <stat.icon className={`h-5 w-5 ${stat.color} ${stat.isPulsing ? 'animate-[pulse_1.5s_ease-in-out_infinite]' : ''}`} />
                 </CardHeader>
                 <CardContent>
-                  <div className={`text-2xl font-bold text-white ${stat.isPulsing ? 'animate-pulse' : ''}`}>
+                  <div className={`text-2xl font-bold ${stat.isPulsing ? 'text-red-400 animate-[pulse_1.5s_ease-in-out_infinite]' : 'text-white'}`}>
                     {stat.value}
                   </div>
                 </CardContent>
