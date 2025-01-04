@@ -11,7 +11,7 @@ interface ClientBasicInfoFieldsProps {
 export function ClientBasicInfoFields({ form }: ClientBasicInfoFieldsProps) {
   return (
     <div className="space-y-6 w-full">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <FormField
           control={form.control}
           name="categorieClient"
@@ -52,8 +52,6 @@ export function ClientBasicInfoFields({ form }: ClientBasicInfoFieldsProps) {
             </FormItem>
           )}
         />
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <FormField
           control={form.control}
           name="nom"

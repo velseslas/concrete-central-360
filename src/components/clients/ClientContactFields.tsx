@@ -9,7 +9,7 @@ interface ClientContactFieldsProps {
 
 export function ClientContactFields({ form }: ClientContactFieldsProps) {
   return (
-    <div className="grid grid-cols-1 gap-6 w-full">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
       <FormField
         control={form.control}
         name="telephone"
@@ -20,7 +20,7 @@ export function ClientContactFields({ form }: ClientContactFieldsProps) {
               <Input 
                 placeholder="Numéro de téléphone" 
                 className="h-12 w-full" 
-                maxLength={8}
+                maxLength={15}
                 {...field} 
               />
             </FormControl>
