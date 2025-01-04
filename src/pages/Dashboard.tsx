@@ -13,17 +13,6 @@ const Dashboard = () => {
           transition={{ duration: 0.5 }}
           className="flex flex-col gap-8"
         >
-          <div className="flex justify-between items-center">
-            <motion.h1 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#0EA5E9] to-[#8B5CF6]"
-            >
-              Tableau de bord
-            </motion.h1>
-          </div>
-
           <div className="grid gap-8">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
