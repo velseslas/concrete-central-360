@@ -29,16 +29,6 @@ export function PriceWidget() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-4 rounded-lg bg-gray-700/50">
-                <h3 className="text-lg font-semibold mb-2">Prix standard</h3>
-                <p className="text-gray-400">Liste des prix standards pour tous les clients</p>
-              </div>
-              <div className="p-4 rounded-lg bg-gray-700/50">
-                <h3 className="text-lg font-semibold mb-2">Prix spéciaux</h3>
-                <p className="text-gray-400">Prix personnalisés pour certains clients</p>
-              </div>
-            </div>
             <div className="p-4 rounded-lg bg-gray-700/50">
               <h3 className="text-lg font-semibold mb-2">Liste des Prix</h3>
               <PriceList onEdit={handlePriceEdit} />
