@@ -11,12 +11,12 @@ interface ClientBasicInfoFieldsProps {
 export function ClientBasicInfoFields({ form }: ClientBasicInfoFieldsProps) {
   return (
     <div className="space-y-3 w-full">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+      <div className="grid grid-cols-4 gap-3">
         <FormField
           control={form.control}
           name="categorieClient"
           render={({ field }) => (
-            <FormItem className="w-full">
+            <FormItem className="col-span-1">
               <FormLabel>Catégorie client</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
@@ -38,7 +38,7 @@ export function ClientBasicInfoFields({ form }: ClientBasicInfoFieldsProps) {
           control={form.control}
           name="raisonSociale"
           render={({ field }) => (
-            <FormItem className="w-full">
+            <FormItem className="col-span-1">
               <FormLabel>Raison sociale</FormLabel>
               <FormControl>
                 <Input 
@@ -56,7 +56,7 @@ export function ClientBasicInfoFields({ form }: ClientBasicInfoFieldsProps) {
           control={form.control}
           name="nom"
           render={({ field }) => (
-            <FormItem className="w-full">
+            <FormItem className="col-span-2">
               <FormLabel>Nom</FormLabel>
               <FormControl>
                 <Input 
