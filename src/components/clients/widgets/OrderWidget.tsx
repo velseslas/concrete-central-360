@@ -75,7 +75,7 @@ export function OrderWidget({ clientId }: OrderWidgetProps) {
               <TableHead>Chantier</TableHead>
               <TableHead>Catégorie</TableHead>
               <TableHead>Produit</TableHead>
-              <TableHead>Volume (m³)</TableHead>
+              <TableHead>Quantité</TableHead>
               <TableHead>Statut</TableHead>
             </TableRow>
           </TableHeader>
