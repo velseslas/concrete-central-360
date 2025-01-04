@@ -19,7 +19,7 @@ export function DetailView({ open, onOpenChange, data, title }: DetailViewProps)
     'raisonSociale',
     'nom',
     'contact',
-    'registreCommerce',
+    'registreCommerce',  // Ajout explicite du champ registreCommerce
     'nif',
     'nis',
     'numeroArticle',
@@ -43,7 +43,7 @@ export function DetailView({ open, onOpenChange, data, title }: DetailViewProps)
       raisonSociale: 'Raison Sociale',
       nom: 'Nom',
       contact: 'Contact',
-      registreCommerce: 'Registre de Commerce',
+      registreCommerce: 'Registre de Commerce',  // Ajout explicite de la traduction
       nif: 'NIF',
       nis: 'NIS',
       numeroArticle: 'Article Imposition',
