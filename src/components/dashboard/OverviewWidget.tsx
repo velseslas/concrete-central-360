@@ -1,5 +1,4 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Activity, ArrowDown, ArrowUp, TrendingUp } from "lucide-react";
 
@@ -91,43 +90,6 @@ export function OverviewWidget() {
               </CardContent>
             </Card>
           ))}
-        </div>
-
-        <div className="mt-6">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Date</TableHead>
-                <TableHead>Production</TableHead>
-                <TableHead>Livraisons</TableHead>
-                <TableHead>Commandes</TableHead>
-                <TableHead>CA</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              <TableRow>
-                <TableCell>20/03/2024</TableCell>
-                <TableCell>150 m³</TableCell>
-                <TableCell>12</TableCell>
-                <TableCell>8</TableCell>
-                <TableCell>450,000 DA</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>19/03/2024</TableCell>
-                <TableCell>180 m³</TableCell>
-                <TableCell>15</TableCell>
-                <TableCell>10</TableCell>
-                <TableCell>520,000 DA</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>18/03/2024</TableCell>
-                <TableCell>165 m³</TableCell>
-                <TableCell>14</TableCell>
-                <TableCell>9</TableCell>
-                <TableCell>480,000 DA</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
         </div>
       </CardContent>
     </Card>
