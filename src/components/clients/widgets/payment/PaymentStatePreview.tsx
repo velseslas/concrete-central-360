@@ -46,47 +46,67 @@ export function PaymentStatePreview({ open, onOpenChange, reportData }: PaymentS
             }
           `}
         </style>
-        <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-          <DialogTitle className="text-2xl font-bold">État des Paiements</DialogTitle>
-          <Button onClick={handlePrint} variant="outline" className="no-print">
-            <Printer className="mr-2 h-4 w-4" />
-            Imprimer
-          </Button>
+        <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4 border-b">
+          <div className="flex items-center justify-between w-full">
+            <DialogTitle className="text-2xl font-bold">État des Paiements</DialogTitle>
+            <Button 
+              onClick={handlePrint} 
+              variant="outline" 
+              className="no-print ml-4 hover:bg-gray-100"
+              size="sm"
+            >
+              <Printer className="mr-2 h-4 w-4" />
+              Imprimer
+            </Button>
+          </div>
         </DialogHeader>
 
-        <div className="space-y-6">
+        <div className="space-y-6 mt-6">
           {/* Informations du rapport */}
-          <div className="bg-gray-50 p-4 rounded-lg space-y-2">
-            <p><span className="font-semibold">Période:</span> du {reportData.startDate} au {reportData.endDate}</p>
-            <p><span className="font-semibold">Client:</span> {reportData.client}</p>
-            <p><span className="font-semibold">Mode de paiement:</span> {reportData.paymentMethod}</p>
+          <div className="bg-gray-50 p-6 rounded-lg space-y-3">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm text-gray-500">Client</p>
+                <p className="font-medium">{reportData.client}</p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Mode de paiement</p>
+                <p className="font-medium">{reportData.paymentMethod}</p>
+              </div>
+              <div className="col-span-2">
+                <p className="text-sm text-gray-500">Période</p>
+                <p className="font-medium">Du {reportData.startDate} au {reportData.endDate}</p>
+              </div>
+            </div>
           </div>
 
           {/* Tableau des paiements */}
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Date</TableHead>
-                <TableHead>Référence</TableHead>
-                <TableHead>Mode</TableHead>
-                <TableHead className="text-right">Montant</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {reportData.payments?.map((payment, index) => (
-                <TableRow key={index}>
-                  <TableCell>{payment.date}</TableCell>
-                  <TableCell>{payment.reference}</TableCell>
-                  <TableCell>{payment.method}</TableCell>
-                  <TableCell className="text-right">{payment.amount.toLocaleString()} DA</TableCell>
+          <div className="rounded-lg border">
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-gray-50">
+                  <TableHead className="font-semibold">Date</TableHead>
+                  <TableHead className="font-semibold">Référence</TableHead>
+                  <TableHead className="font-semibold">Mode</TableHead>
+                  <TableHead className="text-right font-semibold">Montant</TableHead>
                 </TableRow>
-              ))}
-              <TableRow>
-                <TableCell colSpan={3} className="font-bold text-right">Total:</TableCell>
-                <TableCell className="text-right font-bold">{total.toLocaleString()} DA</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {reportData.payments?.map((payment, index) => (
+                  <TableRow key={index}>
+                    <TableCell>{payment.date}</TableCell>
+                    <TableCell>{payment.reference}</TableCell>
+                    <TableCell>{payment.method}</TableCell>
+                    <TableCell className="text-right">{payment.amount.toLocaleString()} DA</TableCell>
+                  </TableRow>
+                ))}
+                <TableRow className="bg-gray-50">
+                  <TableCell colSpan={3} className="font-bold text-right">Total:</TableCell>
+                  <TableCell className="text-right font-bold">{total.toLocaleString()} DA</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
