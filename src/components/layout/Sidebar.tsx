@@ -18,7 +18,6 @@ const Sidebar = () => {
     { to: "/vehicles", icon: Car, label: "Parc roulant" },
     { to: "/expenses", icon: DollarSign, label: "Dépenses" },
     { to: "/invoices", icon: FileSpreadsheet, label: "Factures" },
-    { to: "/orders", icon: FileText, label: "Commandes" },
   ];
 
   return (
