@@ -1,6 +1,4 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Printer } from "lucide-react";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { PrintablePaymentReport } from "./PrintablePaymentReport";
 
 interface PaymentStatePreviewProps {
@@ -158,21 +156,7 @@ export function PaymentStatePreview({ open, onOpenChange, reportData }: PaymentS
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-2 border-b">
-          <div className="flex items-center w-full">
-            <Button 
-              onClick={handlePrint} 
-              variant="outline" 
-              className="ml-4 hover:bg-gray-100"
-              size="sm"
-            >
-              <Printer className="mr-2 h-4 w-4" />
-              Imprimer
-            </Button>
-          </div>
-        </DialogHeader>
-
+      <DialogContent className="p-0 border-none bg-transparent shadow-none overflow-hidden">
         <PrintablePaymentReport reportData={reportData} />
       </DialogContent>
     </Dialog>
