@@ -204,7 +204,7 @@ export function OrderForm({ open, onOpenChange, onSubmit, orderToEdit }: OrderFo
                 name="quantity"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Quantité (m³)</FormLabel>
+                    <FormLabel>Quantité</FormLabel>
                     <FormControl>
                       <Input type="number" className="h-12" {...field} />
                     </FormControl>
