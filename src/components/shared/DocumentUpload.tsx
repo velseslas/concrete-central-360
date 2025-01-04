@@ -2,34 +2,38 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
-import { FileText, Upload } from "lucide-react";
+import { FileText } from "lucide-react";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface DocumentUploadProps {
-  clientId?: number;
   onUploadSuccess?: () => void;
 }
 
 interface FormValues {
+  clientId: string;
   title: string;
-  type: string;
   file: FileList | null;
 }
 
-export function DocumentUpload({ clientId, onUploadSuccess }: DocumentUploadProps) {
+const mockClients = [
+  { id: "1", name: "Entreprise ABC" },
+  { id: "2", name: "Société XYZ" },
+  { id: "3", name: "Company 123" },
+];
+
+export function DocumentUpload({ onUploadSuccess }: DocumentUploadProps) {
   const form = useForm<FormValues>({
     defaultValues: {
+      clientId: "",
       title: "",
-      type: "",
       file: null
     }
   });
 
   const onSubmit = (data: FormValues) => {
     console.log("Form submitted:", data);
-    console.log("Client ID:", clientId);
     
     toast.success("Document téléchargé avec succès");
     form.reset();
@@ -43,6 +47,30 @@ export function DocumentUpload({ clientId, onUploadSuccess }: DocumentUploadProp
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
+          name="clientId"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Client</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Sélectionnez un client" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {mockClients.map((client) => (
+                    <SelectItem key={client.id} value={client.id}>
+                      {client.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
           name="title"
           render={({ field }) => (
             <FormItem>
@@ -50,32 +78,6 @@ export function DocumentUpload({ clientId, onUploadSuccess }: DocumentUploadProp
               <FormControl>
                 <Input placeholder="Entrez le titre du document" {...field} />
               </FormControl>
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="type"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Type de document</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Sélectionnez le type de document" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="registre">Registre de commerce</SelectItem>
-                  <SelectItem value="fiscal">Carte d'identification fiscale</SelectItem>
-                  <SelectItem value="attestation">Attestation d'activité</SelectItem>
-                  <SelectItem value="statuts">Statuts de l'entreprise</SelectItem>
-                  <SelectItem value="certificat">Certificats de qualité</SelectItem>
-                  <SelectItem value="references">Références clients</SelectItem>
-                  <SelectItem value="execution">Attestations de bonne exécution</SelectItem>
-                </SelectContent>
-              </Select>
             </FormItem>
           )}
         />
