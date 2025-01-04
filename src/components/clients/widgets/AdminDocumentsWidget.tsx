@@ -5,6 +5,12 @@ import { DocumentUpload } from "@/components/shared/DocumentUpload";
 import { useState } from "react";
 import { motion } from "framer-motion";
 
+const mockClients = [
+  { id: 1, nom: "Entreprise ABC" },
+  { id: 2, nom: "Société XYZ" },
+  { id: 3, nom: "Company 123" },
+];
+
 export function AdminDocumentsWidget() {
   const [showUploadForm, setShowUploadForm] = useState(false);
 
@@ -34,6 +40,18 @@ export function AdminDocumentsWidget() {
               />
             </div>
           ) : null}
+
+          <div className="space-y-2 mt-4">
+            {mockClients.map((client) => (
+              <div
+                key={client.id}
+                className="flex items-center gap-3 p-3 rounded-lg hover:bg-accent/50 transition-colors cursor-pointer"
+              >
+                <FileText className="h-5 w-5 text-muted-foreground" />
+                <span>{client.nom}</span>
+              </div>
+            ))}
+          </div>
         </CardContent>
       </Card>
     </motion.div>
