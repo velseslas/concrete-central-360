@@ -39,11 +39,10 @@ const Vehicles = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
             { title: "Véhicules Actifs", value: "12", icon: Car, color: "text-green-400" },
             { title: "En Maintenance", value: "3", icon: Settings, color: "text-orange-400" },
-            { title: "Documents à Renouveler", value: "5", icon: FileText, color: "text-blue-400" },
             { title: "Alertes", value: "2", icon: AlertTriangle, color: "text-red-400" },
           ].map((stat, index) => (
             <motion.div
