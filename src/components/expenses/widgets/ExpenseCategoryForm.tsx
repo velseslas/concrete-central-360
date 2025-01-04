@@ -52,7 +52,6 @@ export function ExpenseCategoryForm({
     }
 
     onSubmit(categoryName, expenseType);
-    toast.success(initialData ? "Catégorie modifiée avec succès" : "Catégorie créée avec succès");
     setCategoryName("");
     setExpenseType("");
     onOpenChange(false);
@@ -60,7 +59,7 @@ export function ExpenseCategoryForm({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent className="bg-gray-900/95 backdrop-blur-xl border border-white/10 text-white">
         <DialogHeader>
           <DialogTitle>
             {initialData ? "Modifier la Catégorie" : "Nouvelle Catégorie"}
@@ -72,16 +71,21 @@ export function ExpenseCategoryForm({
               placeholder="Nom de la catégorie"
               value={categoryName}
               onChange={(e) => setCategoryName(e.target.value)}
+              className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
             />
           </div>
           <div className="space-y-2">
             <Select value={expenseType} onValueChange={setExpenseType}>
-              <SelectTrigger>
+              <SelectTrigger className="bg-white/10 border-white/20 text-white">
                 <SelectValue placeholder="Sélectionner le type de dépense" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-gray-900/95 border-white/10">
                 {expenseTypes.map((type) => (
-                  <SelectItem key={type.id} value={type.id}>
+                  <SelectItem 
+                    key={type.id} 
+                    value={type.id}
+                    className="text-white hover:bg-white/10"
+                  >
                     {type.label}
                   </SelectItem>
                 ))}
@@ -89,10 +93,18 @@ export function ExpenseCategoryForm({
             </Select>
           </div>
           <div className="flex justify-end gap-2">
-            <Button variant="outline" type="button" onClick={() => onOpenChange(false)}>
+            <Button 
+              variant="outline" 
+              type="button" 
+              onClick={() => onOpenChange(false)}
+              className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+            >
               Annuler
             </Button>
-            <Button type="submit">
+            <Button 
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-600 text-white"
+            >
               {initialData ? "Modifier" : "Créer"}
             </Button>
           </div>

@@ -65,10 +65,14 @@ export function ExpenseCategoryWidget() {
   };
 
   return (
-    <Card>
+    <Card className="backdrop-blur-lg bg-white/10 border-white/20">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-lg font-medium">Catégories de Dépenses</CardTitle>
-        <Button onClick={() => setShowNewCategoryForm(true)} size="sm">
+        <CardTitle className="text-lg font-medium text-white">Catégories de Dépenses</CardTitle>
+        <Button 
+          onClick={() => setShowNewCategoryForm(true)} 
+          size="sm"
+          className="bg-white/10 hover:bg-white/20 text-white border border-white/20"
+        >
           <Plus className="mr-2 h-4 w-4" />
           Nouvelle catégorie
         </Button>
@@ -76,28 +80,29 @@ export function ExpenseCategoryWidget() {
       <CardContent>
         <div className="space-y-4">
           {categories.length === 0 ? (
-            <p className="text-muted-foreground">Aucune catégorie pour le moment</p>
+            <p className="text-white/70">Aucune catégorie pour le moment</p>
           ) : (
             <div className="grid gap-4">
-              {categories.map((category) => (
+              {categories.map((category, index) => (
                 <motion.div
                   key={category.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
                 >
-                  <div className="flex items-center justify-between p-3 bg-card rounded-lg border">
+                  <div className="flex items-center justify-between p-3 bg-white/5 backdrop-blur-lg rounded-lg border border-white/10 hover:bg-white/10 transition-colors group">
                     <div>
-                      <h4 className="font-medium">{category.name}</h4>
-                      <p className="text-sm text-muted-foreground">
+                      <h4 className="font-medium text-white">{category.name}</h4>
+                      <p className="text-sm text-white/70">
                         {getTypeLabel(category.type)}
                       </p>
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => handleEditCategory(category)}
+                        className="text-white/70 hover:text-white hover:bg-white/10"
                       >
                         <Pencil className="h-4 w-4" />
                       </Button>
@@ -105,6 +110,7 @@ export function ExpenseCategoryWidget() {
                         variant="ghost"
                         size="sm"
                         onClick={() => handleDeleteCategory(category.id)}
+                        className="text-white/70 hover:text-white hover:bg-white/10"
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>
