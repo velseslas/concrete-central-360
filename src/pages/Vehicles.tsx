@@ -22,6 +22,10 @@ const Vehicles = () => {
     }
   ];
 
+  // Nombre d'alertes
+  const alertCount = documentsToRenew.length;
+  const hasAlerts = alertCount > 0;
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white p-6">
       <motion.div
@@ -59,10 +63,10 @@ const Vehicles = () => {
             { title: "En Maintenance", value: "3", icon: Settings, color: "text-orange-400" },
             { 
               title: "Alertes", 
-              value: "2", 
+              value: alertCount.toString(), 
               icon: AlertTriangle, 
               color: "text-red-400",
-              isPulsing: true,
+              isPulsing: hasAlerts,
               isAlert: true
             },
           ].map((stat, index) => (
