@@ -128,12 +128,13 @@ export function PaymentReceipt({ open, onOpenChange, paymentData, clientName, pr
               .print-info {
                 padding-left: 2rem !important;
               }
-              .close-button {
+              [role="dialog"] button[type="button"] {
                 display: none !important;
               }
             }
           `}
         </style>
+        
         <div className="p-6 space-y-6 print-content bg-gradient-to-br from-gray-50 to-white">
           {/* Header */}
           <div className="flex justify-between items-start border-b pb-4">
