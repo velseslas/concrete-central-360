@@ -5,7 +5,6 @@ import { Upload, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { UseFormReturn } from "react-hook-form";
 import { PaymentFormValues } from "./types";
-import { toast } from "sonner";
 import { useState } from "react";
 import { PaymentReceipt } from "./PaymentReceipt";
 
@@ -25,8 +24,7 @@ export function PaymentFormFields({ form, mockClients, mockProjects, handleFileU
   );
 
   const handleGenerateReceipt = () => {
-    const formData = form.getValues();
-    console.log("Generating receipt for payment:", formData);
+    console.log("Generating receipt for payment:", form.getValues());
     setShowReceipt(true);
   };
 
