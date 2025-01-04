@@ -1,10 +1,11 @@
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Upload } from "lucide-react";
+import { Upload, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { UseFormReturn } from "react-hook-form";
 import { PaymentFormValues } from "./types";
+import { toast } from "sonner";
 
 interface PaymentFormFieldsProps {
   form: UseFormReturn<PaymentFormValues>;
@@ -15,9 +16,16 @@ interface PaymentFormFieldsProps {
 
 export function PaymentFormFields({ form, mockClients, mockProjects, handleFileUpload }: PaymentFormFieldsProps) {
   const selectedClientId = form.watch("clientId");
+  const selectedPaymentMethod = form.watch("paymentMethod");
   const filteredProjects = mockProjects.filter(
     project => project.clientId === selectedClientId
   );
+
+  const handleGenerateReceipt = () => {
+    const formData = form.getValues();
+    console.log("Generating receipt for payment:", formData);
+    toast.success("Bon de paiement généré avec succès");
+  };
 
   return (
     <div className="space-y-6">
@@ -159,6 +167,19 @@ export function PaymentFormFields({ form, mockClients, mockProjects, handleFileU
           </Button>
         </div>
       </div>
+
+      {selectedPaymentMethod === "cash" && (
+        <div className="flex justify-center">
+          <Button
+            onClick={handleGenerateReceipt}
+            variant="outline"
+            className="w-full md:w-auto"
+          >
+            <FileText className="mr-2 h-4 w-4" />
+            Générer le bon de paiement
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
