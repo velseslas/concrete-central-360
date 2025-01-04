@@ -5,12 +5,17 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { ProductForm } from "../ProductForm";
 import { ProductList } from "./ProductList";
+import { PriceList } from "./PriceList";
 
 export function ProductWidget() {
   const [showNewProductForm, setShowNewProductForm] = useState(false);
 
   const handleEdit = (product: any) => {
     setShowNewProductForm(true);
+  };
+
+  const handlePriceEdit = (price: any) => {
+    console.log("Editing price:", price);
   };
 
   return (
@@ -42,6 +47,15 @@ export function ProductWidget() {
         </CardHeader>
         <CardContent>
           <ProductList onEdit={handleEdit} />
+        </CardContent>
+      </Card>
+
+      <Card className="border-0 shadow-lg">
+        <CardHeader>
+          <CardTitle>Liste des Prix</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <PriceList onEdit={handlePriceEdit} />
         </CardContent>
       </Card>
 

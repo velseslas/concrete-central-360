@@ -6,7 +6,6 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { PriceList } from "./widgets/PriceList";
 
 const priceFormSchema = z.object({
   client: z.string().min(1, "Le client est requis"),
@@ -38,10 +37,6 @@ export function PriceForm({ open, onOpenChange }: PriceFormProps) {
   const onSubmit = (data: PriceFormValues) => {
     console.log("Price data:", data);
     onOpenChange(false);
-  };
-
-  const handleEdit = (price: any) => {
-    console.log("Editing price:", price);
   };
 
   return (
@@ -176,10 +171,6 @@ export function PriceForm({ open, onOpenChange }: PriceFormProps) {
             </div>
           </form>
         </Form>
-
-        <div className="mt-6">
-          <PriceList onEdit={handleEdit} />
-        </div>
       </DialogContent>
     </Dialog>
   );
