@@ -128,6 +128,9 @@ export function PaymentReceipt({ open, onOpenChange, paymentData, clientName, pr
               .print-info {
                 padding-left: 2rem !important;
               }
+              .close-button {
+                display: none !important;
+              }
             }
           `}
         </style>
