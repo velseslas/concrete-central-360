@@ -69,8 +69,8 @@ const Production = () => {
         >
           <div>
             <motion.h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+              Production
             </motion.h1>
-            <p className="text-gray-400">Gestion de la production</p>
           </div>
           <Button className="bg-gray-800/50 backdrop-blur-lg border border-gray-700 hover:bg-gray-700/50 hover:border-gray-600 transition-all duration-300">
             <ClipboardList className="mr-2 h-4 w-4" />
@@ -78,43 +78,37 @@ const Production = () => {
           </Button>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-        >
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg font-medium">Productions en cours</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>N° Production</TableHead>
-                    <TableHead>Client</TableHead>
-                    <TableHead>Formulation</TableHead>
-                    <TableHead>Volume (m³)</TableHead>
-                    <TableHead>Date de livraison</TableHead>
-                    <TableHead>Statut</TableHead>
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg font-medium">Productions en cours</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>N° Production</TableHead>
+                  <TableHead>Client</TableHead>
+                  <TableHead>Formulation</TableHead>
+                  <TableHead>Volume (m³)</TableHead>
+                  <TableHead>Date de livraison</TableHead>
+                  <TableHead>Statut</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {productionOrders.map((order) => (
+                  <TableRow key={order.id}>
+                    <TableCell className="font-medium">{order.orderNumber}</TableCell>
+                    <TableCell>{order.client}</TableCell>
+                    <TableCell>{order.formulation}</TableCell>
+                    <TableCell>{order.volume}</TableCell>
+                    <TableCell>{order.deliveryDate}</TableCell>
+                    <TableCell>{getStatusBadge(order.status)}</TableCell>
                   </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {productionOrders.map((order) => (
-                    <TableRow key={order.id}>
-                      <TableCell className="font-medium">{order.orderNumber}</TableCell>
-                      <TableCell>{order.client}</TableCell>
-                      <TableCell>{order.formulation}</TableCell>
-                      <TableCell>{order.volume}</TableCell>
-                      <TableCell>{order.deliveryDate}</TableCell>
-                      <TableCell>{getStatusBadge(order.status)}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
-        </motion.div>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
       </motion.div>
     </div>
   );

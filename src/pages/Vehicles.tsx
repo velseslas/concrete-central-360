@@ -36,6 +36,7 @@ const Vehicles = () => {
       >
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+            Véhicules
           </h1>
           <div className="flex gap-2">
             {[

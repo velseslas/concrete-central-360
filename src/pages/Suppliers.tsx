@@ -131,6 +131,7 @@ const Suppliers = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
         >
+          Fournisseurs
         </motion.h1>
         {renderContent()}
       </div>

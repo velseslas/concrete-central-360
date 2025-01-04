@@ -57,6 +57,9 @@ const Formulations = () => {
           transition={{ delay: 0.1 }}
           className="flex justify-end items-center"
         >
+          <motion.h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+            Formulations
+          </motion.h1>
           <Button 
             onClick={() => setOpen(true)}
             className="bg-gray-800/50 backdrop-blur-lg border border-gray-700 hover:bg-gray-700/50 hover:border-gray-600 transition-all duration-300"
