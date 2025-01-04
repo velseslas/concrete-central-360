@@ -105,7 +105,7 @@ export function PaymentReceipt({ open, onOpenChange, paymentData, clientName, pr
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="min-w-[800px] print:!p-0">
+      <DialogContent className="w-[90%] max-w-[800px] h-[90vh] max-h-[800px] overflow-y-auto print:!p-0">
         <style>
           {`
             @media print {
@@ -113,6 +113,7 @@ export function PaymentReceipt({ open, onOpenChange, paymentData, clientName, pr
                 display: none !important;
               }
               @page {
+                size: A4;
                 margin: 20mm;
               }
               .print-content {
@@ -122,17 +123,17 @@ export function PaymentReceipt({ open, onOpenChange, paymentData, clientName, pr
                 color: black !important;
                 background: none !important;
                 -webkit-text-fill-color: black !important;
-                padding-left: 1rem !important;
+                padding-left: 2rem !important;
               }
               .print-info {
-                padding-left: 1rem !important;
+                padding-left: 2rem !important;
               }
             }
           `}
         </style>
-        <div className="p-8 space-y-8 print-content bg-gradient-to-br from-gray-50 to-white">
+        <div className="p-6 space-y-6 print-content bg-gradient-to-br from-gray-50 to-white">
           {/* Header */}
-          <div className="flex justify-between items-start border-b pb-6">
+          <div className="flex justify-between items-start border-b pb-4">
             <div className="space-y-2">
               <h2 className="text-3xl font-bold bg-gradient-to-r from-[#0EA5E9] to-[#8B5CF6] bg-clip-text text-transparent print-title">
                 Bon de Paiement
@@ -153,10 +154,10 @@ export function PaymentReceipt({ open, onOpenChange, paymentData, clientName, pr
           </div>
 
           {/* Content */}
-          <div className="space-y-8">
+          <div className="space-y-6">
             {/* Client Info */}
-            <div className="bg-gray-50 p-6 rounded-lg border border-gray-100">
-              <h3 className="font-semibold text-lg mb-4 text-gray-800">Informations Client</h3>
+            <div className="bg-gray-50 p-5 rounded-lg border border-gray-100">
+              <h3 className="font-semibold text-lg mb-3 text-gray-800">Informations Client</h3>
               <div className="space-y-2">
                 <p className="text-gray-600">Client: <span className="font-medium text-gray-800">{clientName}</span></p>
                 <p className="text-gray-600">Chantier: <span className="font-medium text-gray-800">{projectName}</span></p>
@@ -164,8 +165,8 @@ export function PaymentReceipt({ open, onOpenChange, paymentData, clientName, pr
             </div>
 
             {/* Payment Details */}
-            <div className="bg-blue-50 p-6 rounded-lg border border-blue-100">
-              <h3 className="font-semibold text-lg mb-4 text-gray-800">Détails du Paiement</h3>
+            <div className="bg-blue-50 p-5 rounded-lg border border-blue-100">
+              <h3 className="font-semibold text-lg mb-3 text-gray-800">Détails du Paiement</h3>
               <div className="space-y-3">
                 <div className="flex flex-col">
                   <p className="text-2xl font-bold text-blue-600">
@@ -180,13 +181,13 @@ export function PaymentReceipt({ open, onOpenChange, paymentData, clientName, pr
             </div>
 
             {/* Signatures */}
-            <div className="grid grid-cols-2 gap-12 pt-8 mt-8 border-t border-gray-200">
+            <div className="grid grid-cols-2 gap-8 pt-6 mt-6 border-t border-gray-200">
               <div>
-                <p className="font-semibold text-gray-700 mb-12">Signature du Client</p>
+                <p className="font-semibold text-gray-700 mb-10">Signature du Client</p>
                 <div className="border-t-2 border-gray-300 w-48"></div>
               </div>
               <div>
-                <p className="font-semibold text-gray-700 mb-12">Signature de l'Entreprise</p>
+                <p className="font-semibold text-gray-700 mb-10">Signature de l'Entreprise</p>
                 <div className="border-t-2 border-gray-300 w-48"></div>
               </div>
             </div>
