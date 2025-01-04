@@ -48,10 +48,3 @@
 .card-dashboard {
   @apply rounded-xl border bg-card p-6 text-card-foreground shadow-sm;
 }
-
-/* Amélioration du contraste au survol des liens du menu */
-.flex.items-center.gap-3.px-4.py-3.rounded-xl.text-sm.font-medium:hover {
-  @apply bg-blue-50 text-blue-500;
-  backdrop-filter: blur(8px);
-  transform: translateX(4px);
-}

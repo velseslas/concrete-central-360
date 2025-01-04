@@ -12,24 +12,18 @@ interface FormulationBasicInfoProps {
 export function FormulationBasicInfo({ form }: FormulationBasicInfoProps) {
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
-        Informations de base
-      </h3>
+      <h3 className="text-lg font-semibold text-gray-700">Informations de base</h3>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <FormField
           control={form.control}
           name="nom"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-gray-300">Nom</FormLabel>
+              <FormLabel>Nom</FormLabel>
               <FormControl>
-                <Input 
-                  placeholder="B25" 
-                  {...field} 
-                  className="bg-gray-800/50 border-gray-700 text-white placeholder-gray-400"
-                />
+                <Input placeholder="B25" {...field} />
               </FormControl>
-              <FormMessage className="text-red-400" />
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -38,15 +32,11 @@ export function FormulationBasicInfo({ form }: FormulationBasicInfoProps) {
           name="resistance"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-gray-300">Résistance (MPa)</FormLabel>
+              <FormLabel>Résistance (MPa)</FormLabel>
               <FormControl>
-                <Input 
-                  placeholder="25 MPa" 
-                  {...field} 
-                  className="bg-gray-800/50 border-gray-700 text-white placeholder-gray-400"
-                />
+                <Input placeholder="25 MPa" {...field} />
               </FormControl>
-              <FormMessage className="text-red-400" />
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -55,15 +45,11 @@ export function FormulationBasicInfo({ form }: FormulationBasicInfoProps) {
           name="ciment"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-gray-300">Ciment (kg/m³)</FormLabel>
+              <FormLabel>Ciment (kg/m³)</FormLabel>
               <FormControl>
-                <Input 
-                  placeholder="350 kg/m³" 
-                  {...field} 
-                  className="bg-gray-800/50 border-gray-700 text-white placeholder-gray-400"
-                />
+                <Input placeholder="350 kg/m³" {...field} />
               </FormControl>
-              <FormMessage className="text-red-400" />
+              <FormMessage />
             </FormItem>
           )}
         />

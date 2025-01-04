@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { motion } from "framer-motion";
-import { DollarSign, Car, Building2 } from "lucide-react";
 import ExpenseForm from "@/components/expenses/ExpenseForm";
 import ExpenseList from "@/components/expenses/ExpenseList";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
+import { DollarSign, Car, Building2 } from "lucide-react";
 import { ExpenseCategoryWidget } from "@/components/expenses/widgets/ExpenseCategoryWidget";
 
 const Expenses = () => {
@@ -57,17 +56,17 @@ const Expenses = () => {
           <div className="flex items-center space-x-2">
             <button
               onClick={() => setActiveWidget(null)}
-              className="text-sm text-white/70 hover:text-white transition-colors"
+              className="text-sm text-gray-500 hover:text-gray-700"
             >
               ← Retour
             </button>
-            <h2 className="text-2xl font-bold text-white">{widget.title}</h2>
+            <h2 className="text-2xl font-bold">{widget.title}</h2>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
-              <Card className="backdrop-blur-lg bg-white/10 border-white/20">
+              <Card>
                 <CardHeader>
-                  <CardTitle className="text-white">{widget.title}</CardTitle>
+                  <CardTitle>{widget.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <ExpenseList onEdit={handleEdit} category={widget.id} />
@@ -88,27 +87,21 @@ const Expenses = () => {
           {widgets.map((widget) => {
             const IconComponent = widget.icon;
             return (
-              <motion.div
+              <Card
                 key={widget.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
+                className="cursor-pointer hover:shadow-lg transition-shadow hover:scale-105 transition-all duration-200"
+                onClick={() => setActiveWidget(widget.id)}
               >
-                <Card
-                  className="cursor-pointer backdrop-blur-lg bg-white/10 border-white/20 hover:bg-white/20 transition-all duration-300"
-                  onClick={() => setActiveWidget(widget.id)}
-                >
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-white">
-                      <IconComponent className={`h-6 w-6 ${widget.color}`} />
-                      {widget.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-white/70">{widget.description}</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <IconComponent className={`h-6 w-6 ${widget.color}`} />
+                    {widget.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-600">{widget.description}</p>
+                </CardContent>
+              </Card>
             );
           })}
         </div>
@@ -120,51 +113,34 @@ const Expenses = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="container mx-auto p-6 space-y-6"
-      >
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="flex justify-between items-center"
-        >
-          <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
-            Gestion des Dépenses
-          </h1>
-          {!activeWidget && (
-            <Button 
-              className="bg-white/10 backdrop-blur-lg border border-white/20 hover:bg-white/20 hover:border-white/30 transition-all duration-300 text-white"
-              onClick={() => setIsOpen(true)}
-            >
-              <DollarSign className="mr-2 h-4 w-4" />
-              Ajouter une dépense
-            </Button>
-          )}
-        </motion.div>
+    <div className="container mx-auto p-6 space-y-6">
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-bold text-gray-900">Gestion des Dépenses</h1>
+        {!activeWidget && (
+          <Button onClick={() => setIsOpen(true)} className="hover:scale-105 transition-transform">
+            <DollarSign className="mr-2 h-4 w-4" />
+            Ajouter une dépense
+          </Button>
+        )}
+      </div>
 
-        {renderContent()}
+      {renderContent()}
 
-        <Drawer open={isOpen} onOpenChange={setIsOpen}>
-          <DrawerContent>
-            <DrawerHeader>
-              <DrawerTitle>
-                {editingExpense ? "Modifier la dépense" : "Ajouter une dépense"}
-              </DrawerTitle>
-            </DrawerHeader>
-            <div className="p-4">
-              <ExpenseForm
-                onClose={handleClose}
-                initialData={editingExpense}
-              />
-            </div>
-          </DrawerContent>
-        </Drawer>
-      </motion.div>
+      <Drawer open={isOpen} onOpenChange={setIsOpen}>
+        <DrawerContent>
+          <DrawerHeader>
+            <DrawerTitle>
+              {editingExpense ? "Modifier la dépense" : "Ajouter une dépense"}
+            </DrawerTitle>
+          </DrawerHeader>
+          <div className="p-4">
+            <ExpenseForm
+              onClose={handleClose}
+              initialData={editingExpense}
+            />
+          </div>
+        </DrawerContent>
+      </Drawer>
     </div>
   );
 };

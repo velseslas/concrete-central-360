@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import ProductionChart from "@/components/dashboard/ProductionChart";
 
 interface Production {
   id: string;
@@ -45,7 +46,10 @@ export function ProductionWidget({ clientId }: ProductionWidgetProps) {
       <CardHeader>
         <CardTitle className="text-lg font-medium">Production</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-6">
+        <div className="h-[300px]">
+          <ProductionChart />
+        </div>
         <Table>
           <TableHeader>
             <TableRow>

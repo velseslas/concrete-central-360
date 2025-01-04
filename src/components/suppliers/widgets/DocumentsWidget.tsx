@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { DocumentUpload } from "@/components/shared/DocumentUpload";
+import { DocumentUpload } from "@/components/clients/DocumentUpload";
 
 interface DocumentsWidgetProps {
   supplierId: number;

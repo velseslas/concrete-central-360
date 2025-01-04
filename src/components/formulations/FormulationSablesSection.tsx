@@ -12,24 +12,18 @@ interface FormulationSablesSectionProps {
 export function FormulationSablesSection({ form }: FormulationSablesSectionProps) {
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-semibold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-orange-400">
-        Sables
-      </h3>
+      <h3 className="text-lg font-semibold text-gray-700">Sables</h3>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <FormField
           control={form.control}
           name="sable01"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-gray-300">Sable 0/1 (kg/m³)</FormLabel>
+              <FormLabel>Sable 0/1 (kg/m³)</FormLabel>
               <FormControl>
-                <Input 
-                  placeholder="200 kg/m³" 
-                  {...field} 
-                  className="bg-gray-800/50 border-gray-700 text-white placeholder-gray-400"
-                />
+                <Input placeholder="200 kg/m³" {...field} />
               </FormControl>
-              <FormMessage className="text-red-400" />
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -38,15 +32,11 @@ export function FormulationSablesSection({ form }: FormulationSablesSectionProps
           name="sable03"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-gray-300">Sable 0/3 (kg/m³)</FormLabel>
+              <FormLabel>Sable 0/3 (kg/m³)</FormLabel>
               <FormControl>
-                <Input 
-                  placeholder="300 kg/m³" 
-                  {...field} 
-                  className="bg-gray-800/50 border-gray-700 text-white placeholder-gray-400"
-                />
+                <Input placeholder="300 kg/m³" {...field} />
               </FormControl>
-              <FormMessage className="text-red-400" />
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -55,15 +45,11 @@ export function FormulationSablesSection({ form }: FormulationSablesSectionProps
           name="sable04"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-gray-300">Sable 0/4 (kg/m³)</FormLabel>
+              <FormLabel>Sable 0/4 (kg/m³)</FormLabel>
               <FormControl>
-                <Input 
-                  placeholder="300 kg/m³" 
-                  {...field} 
-                  className="bg-gray-800/50 border-gray-700 text-white placeholder-gray-400"
-                />
+                <Input placeholder="300 kg/m³" {...field} />
               </FormControl>
-              <FormMessage className="text-red-400" />
+              <FormMessage />
             </FormItem>
           )}
         />
