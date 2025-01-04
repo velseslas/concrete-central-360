@@ -99,7 +99,7 @@ export function ClientForm({ clientToEdit, onSuccess }: ClientFormProps) {
   };
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col w-full max-w-[1200px] mx-auto">
       <SheetHeader>
         <SheetTitle className="text-2xl font-bold text-primary">
           {clientToEdit ? "Modifier le client" : "Nouveau client"}
@@ -108,18 +108,12 @@ export function ClientForm({ clientToEdit, onSuccess }: ClientFormProps) {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 flex-1 overflow-y-auto">
           <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
+            <div className="grid grid-cols-1 gap-6">
+              <div className="space-y-6">
                 <ClientBasicInfoFields form={form} />
-                <div className="mt-6">
-                  <ClientContactFields form={form} />
-                </div>
-              </div>
-              <div>
                 <ClientAddressFields form={form} />
-                <div className="mt-6">
-                  <ClientAdminFields form={form} />
-                </div>
+                <ClientContactFields form={form} />
+                <ClientAdminFields form={form} />
               </div>
             </div>
           </div>
