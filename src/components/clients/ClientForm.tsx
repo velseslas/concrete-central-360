@@ -97,7 +97,7 @@ export function ClientForm({ open, onOpenChange, clientToEdit }: ClientFormProps
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[90vh] w-[90vw] max-w-[800px] overflow-y-auto">
+      <DialogContent className="max-h-[90vh] w-[95vw] max-w-[1200px] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-primary">
             {clientToEdit ? "Modifier le client" : "Nouveau client"}
@@ -105,7 +105,7 @@ export function ClientForm({ open, onOpenChange, clientToEdit }: ClientFormProps
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               <ClientBasicInfoFields form={form} />
               <ClientAddressFields form={form} />
               <ClientContactFields form={form} />
