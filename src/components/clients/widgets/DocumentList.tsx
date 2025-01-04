@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
-import { FileText, Printer } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import { FileText } from "lucide-react";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useState } from "react";
 
 interface Document {
@@ -24,11 +23,6 @@ export function DocumentList() {
     setPreviewOpen(true);
   };
 
-  const handlePrint = () => {
-    console.log("Impression du document:", selectedDoc?.title);
-    window.print();
-  };
-
   return (
     <div className="space-y-2">
       {mockDocuments.map((doc) => (
@@ -48,14 +42,6 @@ export function DocumentList() {
 
       <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
         <DialogContent className="max-h-[90vh] w-[90vw] max-w-[800px] overflow-y-auto">
-          <div className="print:hidden">
-            <DialogHeader className="flex flex-row items-center justify-between space-y-0">
-              <Button onClick={handlePrint} variant="outline" className="ml-auto">
-                <Printer className="mr-2 h-4 w-4" />
-                Imprimer
-              </Button>
-            </DialogHeader>
-          </div>
           <div className="flex flex-col items-center gap-4 py-4">
             <div className="w-full aspect-[3/4] bg-gray-100 rounded-lg flex items-center justify-center">
               <FileText className="h-24 w-24 text-gray-400" />
