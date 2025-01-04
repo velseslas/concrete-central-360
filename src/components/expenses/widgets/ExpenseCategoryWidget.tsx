@@ -169,7 +169,7 @@ export function ExpenseCategoryWidget() {
       <ExpenseCategoryForm 
         open={showNewCategoryForm} 
         onOpenChange={setShowNewCategoryForm}
-        onSubmit={editingCategory ? handleUpdateCategory : handleCreateCategory}
+        onSubmit={handleUpdateCategory}
         initialData={editingCategory}
       />
     </Card>
