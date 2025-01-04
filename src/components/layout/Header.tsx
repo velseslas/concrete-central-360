@@ -1,6 +1,5 @@
-import { Bell, Search } from "lucide-react";
+import { Bell } from "lucide-react";
 import { motion } from "framer-motion";
-import { Input } from "@/components/ui/input";
 
 const Header = () => {
   return (
@@ -30,14 +29,6 @@ const Header = () => {
           transition={{ delay: 0.3 }}
           className="flex items-center gap-6"
         >
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
-            <Input 
-              placeholder="Rechercher..." 
-              className="pl-10 w-64 bg-gray-800/50 border-gray-700/50 text-gray-300 placeholder:text-gray-500"
-            />
-          </div>
-
           <button className="relative rounded-full p-2 hover:bg-gray-800/50 transition-colors duration-200">
             <Bell className="h-5 w-5 text-gray-400" />
             <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400"></span>
