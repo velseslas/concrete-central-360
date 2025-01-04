@@ -11,10 +11,11 @@ import { AdminDocumentsWidget } from "@/components/clients/widgets/AdminDocument
 import { ReportsWidget } from "@/components/clients/widgets/ReportsWidget";
 import { OrderWidget } from "@/components/clients/widgets/OrderWidget";
 import { PaymentWidget } from "@/components/clients/widgets/PaymentWidget";
+import { PaymentStateWidget } from "@/components/clients/widgets/PaymentStateWidget";
 
 const Clients = () => {
   const [activeWidget, setActiveWidget] = useState<string | null>(null);
-  const [selectedClientId, setSelectedClientId] = useState<number>(1); // Valeur par défaut
+  const [selectedClientId, setSelectedClientId] = useState<number>(1);
   
   const widgets = [
     {
@@ -79,6 +80,13 @@ const Clients = () => {
       icon: CreditCard,
       color: 'text-emerald-400',
       component: PaymentWidget
+    },
+    {
+      id: 'payment-state',
+      title: 'État des Paiements',
+      icon: FileText,
+      color: 'text-pink-400',
+      component: PaymentStateWidget
     }
   ];
 
