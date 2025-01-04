@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { FileText, Printer } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
