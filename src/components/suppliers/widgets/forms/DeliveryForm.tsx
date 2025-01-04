@@ -51,18 +51,24 @@ export function DeliveryForm({ open, onOpenChange, deliveryToEdit }: DeliveryFor
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[800px] w-full">
+      <DialogContent className="sm:max-w-[1000px] w-full max-h-[80vh]">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
             {deliveryToEdit ? "Modifier la livraison" : "Nouvelle livraison"}
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <div className="space-y-8 px-2">
-              <DeliveryBasicInfo control={form.control} />
-              <DeliverySupplierInfo control={form.control} />
-              <DeliveryQuantityInfo control={form.control} />
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-4">
+              <div>
+                <DeliveryBasicInfo control={form.control} />
+              </div>
+              <div>
+                <DeliverySupplierInfo control={form.control} />
+              </div>
+              <div className="md:col-span-2">
+                <DeliveryQuantityInfo control={form.control} />
+              </div>
             </div>
 
             <div className="flex justify-end space-x-2 pt-4 border-t">
