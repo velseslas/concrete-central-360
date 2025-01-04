@@ -11,7 +11,7 @@ const priceFormSchema = z.object({
   client: z.string().min(1, "Le client est requis"),
   product: z.string().min(1, "Le produit est requis"),
   category: z.string().min(1, "La catégorie est requise"),
-  project: z.string().min(1, "Le projet est requis"),
+  project: z.string().min(1, "Le chantier est requis"),
   price: z.string().min(1, "Le prix est requis"),
 });
 
@@ -79,11 +79,11 @@ export function PriceForm({ open, onOpenChange }: PriceFormProps) {
                   name="project"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-base">Projet</FormLabel>
+                      <FormLabel className="text-base">Chantier</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger className="h-12">
-                            <SelectValue placeholder="Sélectionner un projet" />
+                            <SelectValue placeholder="Sélectionner un chantier" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
