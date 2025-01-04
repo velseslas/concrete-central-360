@@ -21,7 +21,7 @@ export function ClientAdminFields({ form }: ClientAdminFieldsProps) {
                 <Input 
                   placeholder="Registre de Commerce" 
                   className="h-12 w-full" 
-                  maxLength={20}
+                  maxLength={50}
                   {...field} 
                 />
               </FormControl>
@@ -39,7 +39,7 @@ export function ClientAdminFields({ form }: ClientAdminFieldsProps) {
                 <Input 
                   placeholder="NIF" 
                   className="h-12 w-full" 
-                  maxLength={20}
+                  maxLength={50}
                   {...field} 
                 />
               </FormControl>
