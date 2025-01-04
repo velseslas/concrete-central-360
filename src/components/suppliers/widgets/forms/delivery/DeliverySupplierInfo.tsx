@@ -36,6 +36,28 @@ export function DeliverySupplierInfo({ control }: DeliverySupplierInfoProps) {
 
         <FormField
           control={control}
+          name="producer"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Producteur</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Sélectionner un producteur" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="producer1">Producteur 1</SelectItem>
+                  <SelectItem value="producer2">Producteur 2</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={control}
           name="product"
           render={({ field }) => (
             <FormItem>

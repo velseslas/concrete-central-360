@@ -18,6 +18,7 @@ const mockDeliveries = [
     id: 1,
     date: "2024-03-20",
     supplier: "Carrière du Nord",
+    producer: "Lafarge",
     category: "Gravier",
     product: "Gravier 20/40",
     quantity: "30",
@@ -29,6 +30,7 @@ const mockDeliveries = [
     id: 2,
     date: "2024-03-19",
     supplier: "Ciments Algérie",
+    producer: "GICA",
     category: "Ciment",
     product: "CEM II/A",
     quantity: "25",
@@ -57,6 +59,7 @@ export function DeliveryWidget() {
               <TableRow>
                 <TableHead>Date</TableHead>
                 <TableHead>Fournisseur</TableHead>
+                <TableHead>Producteur</TableHead>
                 <TableHead>Catégorie</TableHead>
                 <TableHead>Produit</TableHead>
                 <TableHead>Quantité</TableHead>
@@ -70,6 +73,7 @@ export function DeliveryWidget() {
                 <TableRow key={delivery.id}>
                   <TableCell>{delivery.date}</TableCell>
                   <TableCell>{delivery.supplier}</TableCell>
+                  <TableCell>{delivery.producer}</TableCell>
                   <TableCell>{delivery.category}</TableCell>
                   <TableCell>{delivery.product}</TableCell>
                   <TableCell>{delivery.quantity}</TableCell>
