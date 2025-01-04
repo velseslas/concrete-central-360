@@ -25,6 +25,18 @@ export function PaymentReceipt({ open, onOpenChange, paymentData, clientName, pr
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="min-w-[800px]">
+        <style>
+          {`
+            @media print {
+              .no-print {
+                display: none !important;
+              }
+              @page {
+                margin: 20mm;
+              }
+            }
+          `}
+        </style>
         <div className="p-6 space-y-6">
           <div className="flex justify-between items-start">
             <div>
@@ -32,7 +44,7 @@ export function PaymentReceipt({ open, onOpenChange, paymentData, clientName, pr
               <p className="text-gray-600">Date: {paymentData.paymentDate || 'N/A'}</p>
               <p className="text-gray-600">Référence: {paymentData.reference || 'N/A'}</p>
             </div>
-            <Button variant="outline" onClick={handlePrint}>
+            <Button variant="outline" onClick={handlePrint} className="no-print">
               <Printer className="h-4 w-4 mr-2" />
               Imprimer
             </Button>
