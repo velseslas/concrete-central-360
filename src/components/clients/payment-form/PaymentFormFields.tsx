@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { UseFormReturn } from "react-hook-form";
 import { PaymentFormValues } from "./types";
 import { toast } from "sonner";
+import { useState } from "react";
+import { PaymentReceipt } from "./PaymentReceipt";
 
 interface PaymentFormFieldsProps {
   form: UseFormReturn<PaymentFormValues>;
@@ -15,6 +17,7 @@ interface PaymentFormFieldsProps {
 }
 
 export function PaymentFormFields({ form, mockClients, mockProjects, handleFileUpload }: PaymentFormFieldsProps) {
+  const [showReceipt, setShowReceipt] = useState(false);
   const selectedClientId = form.watch("clientId");
   const selectedPaymentMethod = form.watch("paymentMethod");
   const filteredProjects = mockProjects.filter(
@@ -24,8 +27,11 @@ export function PaymentFormFields({ form, mockClients, mockProjects, handleFileU
   const handleGenerateReceipt = () => {
     const formData = form.getValues();
     console.log("Generating receipt for payment:", formData);
-    toast.success("Bon de paiement généré avec succès");
+    setShowReceipt(true);
   };
+
+  const selectedClient = mockClients.find(client => client.id === selectedClientId);
+  const selectedProject = mockProjects.find(project => project.id === form.watch("projectId"));
 
   return (
     <div className="space-y-6">
@@ -179,6 +185,16 @@ export function PaymentFormFields({ form, mockClients, mockProjects, handleFileU
             Générer le bon de paiement
           </Button>
         </div>
+      )}
+
+      {showReceipt && (
+        <PaymentReceipt
+          open={showReceipt}
+          onOpenChange={setShowReceipt}
+          paymentData={form.getValues()}
+          clientName={selectedClient?.name || ""}
+          projectName={selectedProject?.name || ""}
+        />
       )}
     </div>
   );
