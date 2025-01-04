@@ -18,32 +18,6 @@ export function PrintablePaymentReport({ reportData }: PrintablePaymentReportPro
 
   return (
     <div className="p-4 bg-white">
-      <style>
-        {`
-          @media print {
-            body {
-              margin: 0;
-              padding: 0;
-            }
-            .print-content {
-              width: 100%;
-              height: 100%;
-            }
-            .print-header {
-              margin-bottom: 0.5rem !important;
-            }
-            .print-info {
-              padding: 0.5rem !important;
-              margin-bottom: 0.5rem !important;
-            }
-            td, th {
-              padding: 0.25rem !important;
-              font-size: 0.875rem !important;
-            }
-          }
-        `}
-      </style>
-
       <div className="print-info bg-gray-50 p-3 rounded-lg mb-3">
         <div className="grid grid-cols-2 gap-2">
           <div>

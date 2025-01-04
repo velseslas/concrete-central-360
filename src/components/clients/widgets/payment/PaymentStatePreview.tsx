@@ -34,24 +34,48 @@ export function PaymentStatePreview({ open, onOpenChange, reportData }: PaymentS
                 margin: 10mm;
               }
               body {
+                font-family: Arial, sans-serif;
                 margin: 0;
-                padding: 10mm;
+                padding: 20mm;
               }
               table {
                 width: 100%;
                 border-collapse: collapse;
+                margin-top: 20px;
               }
               th, td {
-                padding: 4px 8px;
-                border: 1px solid #e5e7eb;
+                padding: 8px;
+                border: 1px solid #ddd;
                 text-align: left;
               }
               th {
-                background-color: #f9fafb;
-                font-weight: 600;
+                background-color: #f5f5f5;
+              }
+              .print-info {
+                margin-bottom: 20px;
+                padding: 10px;
+                background-color: #f5f5f5;
+                border-radius: 4px;
               }
               .text-right {
                 text-align: right;
+              }
+              .grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+              }
+              .text-sm {
+                font-size: 0.875rem;
+              }
+              .text-gray-500 {
+                color: #6b7280;
+              }
+              .font-medium {
+                font-weight: 500;
+              }
+              .font-semibold {
+                font-weight: 600;
               }
             </style>
           </head>
