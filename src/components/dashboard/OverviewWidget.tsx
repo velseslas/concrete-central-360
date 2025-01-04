@@ -51,30 +51,30 @@ export function OverviewWidget() {
   const getTrendColor = (status: StatItem["status"]) => {
     switch (status) {
       case "increase":
-        return "bg-emerald-500/80 text-white";
+        return "bg-[#0EA5E9] text-white";
       case "decrease":
-        return "bg-rose-500/80 text-white";
+        return "bg-[#8B5CF6] text-white";
       default:
-        return "bg-blue-500/80 text-white";
+        return "bg-[#D946EF] text-white";
     }
   };
 
   const getCardColor = (index: number) => {
     const colors = [
-      "from-cyan-400 to-blue-500",
-      "from-emerald-400 to-teal-500",
-      "from-violet-400 to-purple-500",
-      "from-amber-400 to-orange-500"
+      "from-[#0EA5E9] to-[#8B5CF6]",
+      "from-[#8B5CF6] to-[#D946EF]",
+      "from-[#D946EF] to-[#F97316]",
+      "from-[#F97316] to-[#0EA5E9]"
     ];
     return colors[index];
   };
 
   return (
-    <Card className="col-span-4 bg-gradient-to-br from-gray-900/50 to-gray-800/50 backdrop-blur-lg border border-gray-700/50">
+    <Card className="col-span-4 bg-gray-800/50 backdrop-blur-lg border border-gray-700/50">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-xl font-bold flex items-center gap-2">
-          <Activity className="h-5 w-5 text-cyan-400" />
-          <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+          <Activity className="h-5 w-5 text-[#0EA5E9]" />
+          <span className="bg-gradient-to-r from-[#0EA5E9] to-[#8B5CF6] bg-clip-text text-transparent">
             Aperçu Général
           </span>
         </CardTitle>
@@ -82,13 +82,10 @@ export function OverviewWidget() {
       <CardContent>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {stats.map((stat, index) => (
-            <Card 
-              key={index} 
-              className={`bg-gradient-to-br ${getCardColor(index)} border-0 shadow-lg hover:shadow-xl transition-all duration-300 group hover:scale-105`}
-            >
+            <Card key={index} className={`bg-gradient-to-br ${getCardColor(index)} border-0 shadow-lg hover:shadow-xl transition-all duration-300`}>
               <CardContent className="p-4">
                 <div className="flex flex-col space-y-2">
-                  <p className="text-sm font-medium text-white/90">
+                  <p className="text-sm font-medium text-white/80">
                     {stat.label}
                   </p>
                   <div className="flex items-center justify-between">
