@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Construction, CheckCircle, Clock } from "lucide-react";
 import { motion } from "framer-motion";
 
 export function ProjectWidget() {
@@ -8,19 +9,28 @@ export function ProjectWidget() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <Card className="bg-gradient-to-br from-[#0EA5E9] to-[#8B5CF6] border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+      <Card className="bg-gradient-to-br from-[#3b82f6] to-[#8b5cf6] border-0 shadow-lg hover:shadow-xl transition-all duration-300">
         <CardHeader>
-          <CardTitle className="text-white">Projets</CardTitle>
+          <CardTitle className="text-white flex items-center gap-2">
+            <Construction className="h-6 w-6" />
+            Projets
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
-                <h3 className="font-semibold mb-2 text-white">Projets en cours</h3>
+                <h3 className="font-semibold mb-2 text-white flex items-center gap-2">
+                  <Clock className="h-5 w-5" />
+                  Projets en cours
+                </h3>
                 <p className="text-2xl font-bold text-white">12</p>
               </div>
               <div className="p-4 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
-                <h3 className="font-semibold mb-2 text-white">Projets terminés</h3>
+                <h3 className="font-semibold mb-2 text-white flex items-center gap-2">
+                  <CheckCircle className="h-5 w-5" />
+                  Projets terminés
+                </h3>
                 <p className="text-2xl font-bold text-white">45</p>
               </div>
             </div>
