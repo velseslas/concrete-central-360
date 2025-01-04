@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { CreditCard, ChevronRight, FileText } from "lucide-react";
+import { CreditCard, ChevronRight, FileText, Plus } from "lucide-react";
 import { motion } from "framer-motion";
 import { PaymentForm } from "../PaymentForm";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -105,6 +105,15 @@ export function PaymentWidget() {
             <CreditCard className="h-6 w-6" />
             Paiements des Clients
           </CardTitle>
+          <Button 
+            variant="secondary" 
+            size="sm" 
+            onClick={() => setShowPaymentForm(true)}
+            className="bg-white/20 hover:bg-white/30 text-white"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Nouveau paiement
+          </Button>
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
