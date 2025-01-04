@@ -6,6 +6,7 @@ import { ClientTable } from "./ClientTable";
 import { Button } from "../ui/button";
 import { UserPlus } from "lucide-react";
 import { motion } from "framer-motion";
+import { DocumentManagementWidget } from "./widgets/DocumentManagementWidget";
 
 const mockClients = [
   {
@@ -70,20 +71,24 @@ const ClientList = () => {
         </Button>
       </motion.div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, delay: 0.2 }}
-        className="bg-white rounded-lg shadow"
-      >
-        <ClientTable
-          clients={mockClients}
-          onEdit={handleEdit}
-          onAddProject={handleAddProject}
-          onDocumentUpload={handleDocumentUpload}
-          onDelete={handleDelete}
-        />
-      </motion.div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.2 }}
+          className="bg-white rounded-lg shadow"
+        >
+          <ClientTable
+            clients={mockClients}
+            onEdit={handleEdit}
+            onAddProject={handleAddProject}
+            onDocumentUpload={handleDocumentUpload}
+            onDelete={handleDelete}
+          />
+        </motion.div>
+
+        <DocumentManagementWidget />
+      </div>
       
       {selectedClient && (
         <>
