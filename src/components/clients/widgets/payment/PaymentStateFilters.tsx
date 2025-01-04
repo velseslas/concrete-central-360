@@ -2,6 +2,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Filter } from "lucide-react";
+import { toast } from "sonner";
 
 interface PaymentStateFiltersProps {
   clients: Array<{ id: string; name: string }>;
@@ -33,6 +34,23 @@ export function PaymentStateFilters({
     { id: "check", label: "Chèque" },
     { id: "transfer", label: "Virement" }
   ];
+
+  const handleGenerateReport = () => {
+    console.log("Generating report with filters:", {
+      client: selectedClient,
+      startDate,
+      endDate,
+      paymentMethod
+    });
+
+    if (!selectedClient || !startDate || !endDate || !paymentMethod) {
+      toast.error("Veuillez remplir tous les champs du filtre");
+      return;
+    }
+
+    onGenerateReport();
+    toast.success("État des paiements généré avec succès");
+  };
 
   return (
     <div className="space-y-4">
@@ -84,7 +102,10 @@ export function PaymentStateFilters({
       </div>
 
       <div className="flex justify-end">
-        <Button onClick={onGenerateReport} className="bg-blue-500 hover:bg-blue-600">
+        <Button 
+          onClick={handleGenerateReport} 
+          className="bg-blue-500 hover:bg-blue-600 text-white"
+        >
           Générer l'état
         </Button>
       </div>
