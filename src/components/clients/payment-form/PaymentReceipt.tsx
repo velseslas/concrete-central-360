@@ -118,6 +118,11 @@ export function PaymentReceipt({ open, onOpenChange, paymentData, clientName, pr
               .print-content {
                 padding: 0 !important;
               }
+              .print-title {
+                color: black !important;
+                background: none !important;
+                -webkit-text-fill-color: black !important;
+              }
             }
           `}
         </style>
@@ -125,7 +130,7 @@ export function PaymentReceipt({ open, onOpenChange, paymentData, clientName, pr
           {/* Header */}
           <div className="flex justify-between items-start border-b pb-6">
             <div className="space-y-2">
-              <h2 className="text-3xl font-bold bg-gradient-to-r from-[#0EA5E9] to-[#8B5CF6] bg-clip-text text-transparent">
+              <h2 className="text-3xl font-bold bg-gradient-to-r from-[#0EA5E9] to-[#8B5CF6] bg-clip-text text-transparent print-title">
                 Bon de Paiement
               </h2>
               <div className="space-y-1">
