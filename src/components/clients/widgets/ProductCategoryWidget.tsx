@@ -1,30 +1,21 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
-import { ProductCategoryList } from "./ProductCategoryList";
-import { useState } from "react";
-import { ProductCategoryForm } from "./ProductCategoryForm";
+import { motion } from "framer-motion";
 
 export function ProductCategoryWidget() {
-  const [showNewCategoryForm, setShowNewCategoryForm] = useState(false);
-
   return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-lg font-medium">Catégories</CardTitle>
-        <Button onClick={() => setShowNewCategoryForm(true)} size="sm">
-          <Plus className="mr-2 h-4 w-4" />
-          Nouvelle catégorie
-        </Button>
-      </CardHeader>
-      <CardContent>
-        <ProductCategoryList />
-      </CardContent>
-
-      <ProductCategoryForm 
-        open={showNewCategoryForm} 
-        onOpenChange={setShowNewCategoryForm} 
-      />
-    </Card>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <Card className="bg-gray-800/50 backdrop-blur-lg border border-gray-700">
+        <CardHeader>
+          <CardTitle>Catégories de Produits</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {/* Content will be added later */}
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 }

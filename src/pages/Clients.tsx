@@ -90,7 +90,7 @@ const Clients = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.3 }}
             className="space-y-4"
           >
             <div className="flex items-center space-x-2">
@@ -104,9 +104,14 @@ const Clients = () => {
                 {widget.title}
               </h2>
             </div>
-            <div className="bg-gray-800/50 backdrop-blur-lg border border-gray-700 rounded-lg p-6">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+              className="bg-gray-800/50 backdrop-blur-lg border border-gray-700 rounded-lg p-6"
+            >
               <WidgetComponent />
-            </div>
+            </motion.div>
           </motion.div>
         );
       }
@@ -129,12 +134,14 @@ const Clients = () => {
               transition={{ duration: 0.3, delay: index * 0.1 }}
             >
               <Card 
-                className="cursor-pointer hover:shadow-lg transition-all duration-200 bg-gray-800/50 backdrop-blur-lg border border-gray-700 hover:bg-gray-800/70"
+                className="cursor-pointer group hover:scale-105 transition-all duration-300 bg-gray-900/50 backdrop-blur-xl border-gray-800 hover:border-gray-700"
                 onClick={() => setActiveWidget(widget.id)}
               >
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-gray-100">
-                    <IconComponent className={`h-6 w-6 ${widget.color}`} />
+                  <CardTitle className="flex items-center gap-3 text-gray-100">
+                    <div className={`p-2 rounded-lg bg-gray-800/50 group-hover:scale-110 transition-transform duration-300 ${widget.color}`}>
+                      <IconComponent className="h-5 w-5" />
+                    </div>
                     {widget.title}
                   </CardTitle>
                 </CardHeader>
