@@ -3,12 +3,12 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Printer } from "lucide-react";
 import { ClientBasicInfoFields } from "./ClientBasicInfoFields";
 import { ClientAddressFields } from "./ClientAddressFields";
 import { ClientContactFields } from "./ClientContactFields";
 import { ClientAdminFields } from "./ClientAdminFields";
+import { SheetHeader, SheetTitle } from "@/components/ui/sheet";
 
 const clientSchema = z.object({
   categorieClient: z.string().min(1, "La catégorie client est requise"),
@@ -29,12 +29,10 @@ const clientSchema = z.object({
 export type ClientFormValues = z.infer<typeof clientSchema>;
 
 interface ClientFormProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
   clientToEdit?: ClientFormValues;
 }
 
-export function ClientForm({ open, onOpenChange, clientToEdit }: ClientFormProps) {
+export function ClientForm({ clientToEdit }: ClientFormProps) {
   const form = useForm<ClientFormValues>({
     resolver: zodResolver(clientSchema),
     defaultValues: clientToEdit || {
@@ -56,7 +54,6 @@ export function ClientForm({ open, onOpenChange, clientToEdit }: ClientFormProps
 
   const onSubmit = (data: ClientFormValues) => {
     console.log("Client data:", data);
-    onOpenChange(false);
   };
 
   const handlePrint = () => {
@@ -96,48 +93,43 @@ export function ClientForm({ open, onOpenChange, clientToEdit }: ClientFormProps
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[90vh] w-[95vw] max-w-[1200px] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-primary">
-            {clientToEdit ? "Modifier le client" : "Nouveau client"}
-          </DialogTitle>
-        </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <div className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <ClientBasicInfoFields form={form} />
-                  <div className="mt-6">
-                    <ClientContactFields form={form} />
-                  </div>
+    <div className="h-full flex flex-col">
+      <SheetHeader>
+        <SheetTitle className="text-2xl font-bold text-primary">
+          {clientToEdit ? "Modifier le client" : "Nouveau client"}
+        </SheetTitle>
+      </SheetHeader>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 flex-1 overflow-y-auto">
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <ClientBasicInfoFields form={form} />
+                <div className="mt-6">
+                  <ClientContactFields form={form} />
                 </div>
-                <div>
-                  <ClientAddressFields form={form} />
-                  <div className="mt-6">
-                    <ClientAdminFields form={form} />
-                  </div>
+              </div>
+              <div>
+                <ClientAddressFields form={form} />
+                <div className="mt-6">
+                  <ClientAdminFields form={form} />
                 </div>
               </div>
             </div>
-            <div className="flex justify-end space-x-2 pt-4 border-t">
-              {clientToEdit && (
-                <Button type="button" variant="outline" onClick={handlePrint}>
-                  <Printer className="mr-2 h-4 w-4" />
-                  Imprimer
-                </Button>
-              )}
-              <Button variant="outline" onClick={() => onOpenChange(false)}>
-                Annuler
+          </div>
+          <div className="flex justify-end space-x-2 pt-4 border-t">
+            {clientToEdit && (
+              <Button type="button" variant="outline" onClick={handlePrint}>
+                <Printer className="mr-2 h-4 w-4" />
+                Imprimer
               </Button>
-              <Button type="submit">
-                {clientToEdit ? "Modifier" : "Créer"}
-              </Button>
-            </div>
-          </form>
-        </Form>
-      </DialogContent>
-    </Dialog>
+            )}
+            <Button type="submit">
+              {clientToEdit ? "Modifier" : "Créer"}
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </div>
   );
 }
