@@ -1,6 +1,5 @@
 import DashboardStats from "@/components/dashboard/DashboardStats";
 import MaterialsTable from "@/components/dashboard/MaterialsTable";
-import ProductionChart from "@/components/dashboard/ProductionChart";
 import { OverviewWidget } from "@/components/dashboard/OverviewWidget";
 import { motion } from "framer-motion";
 
@@ -49,17 +48,6 @@ const Dashboard = () => {
                 </div>
                 <div className="rounded-2xl bg-gray-800/50 backdrop-blur-lg border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300 p-6 shadow-lg hover:shadow-xl">
                   <MaterialsTable />
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-                className="space-y-6"
-              >
-                <div className="rounded-2xl bg-gray-800/50 backdrop-blur-lg border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300 p-6 shadow-lg hover:shadow-xl">
-                  <ProductionChart />
                 </div>
               </motion.div>
             </div>
