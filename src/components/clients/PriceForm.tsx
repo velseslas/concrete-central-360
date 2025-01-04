@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -55,6 +55,7 @@ export function PriceForm({ open, onOpenChange }: PriceFormProps) {
                 name="client"
                 render={({ field }) => (
                   <FormItem>
+                    <FormLabel>Client</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger className="h-12">
@@ -77,6 +78,7 @@ export function PriceForm({ open, onOpenChange }: PriceFormProps) {
                 name="project"
                 render={({ field }) => (
                   <FormItem>
+                    <FormLabel>Chantier</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger className="h-12">
@@ -101,6 +103,7 @@ export function PriceForm({ open, onOpenChange }: PriceFormProps) {
                 name="category"
                 render={({ field }) => (
                   <FormItem>
+                    <FormLabel>Catégorie</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger className="h-12">
@@ -123,6 +126,7 @@ export function PriceForm({ open, onOpenChange }: PriceFormProps) {
                 name="product"
                 render={({ field }) => (
                   <FormItem>
+                    <FormLabel>Produit</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger className="h-12">
@@ -146,6 +150,7 @@ export function PriceForm({ open, onOpenChange }: PriceFormProps) {
               name="price"
               render={({ field }) => (
                 <FormItem>
+                  <FormLabel>Prix</FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="Prix" 
