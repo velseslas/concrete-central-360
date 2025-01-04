@@ -1,4 +1,10 @@
 import { motion } from "framer-motion";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface Material {
   name: string;
@@ -19,7 +25,7 @@ const materials: Material[] = [
   { name: "Gravier 15/25", stock: 13000, capacity: 25000, unit: "kg", lastDelivery: "2024-03-09", status: "warning" },
 ];
 
-const StockCircle = ({ percentage, name }: { percentage: number, name: string }) => {
+const StockCircle = ({ percentage, name, stock, unit }: { percentage: number; name: string; stock: number; unit: string }) => {
   const getColor = (value: number) => {
     if (value >= 70) return "#0EA5E9";
     if (value >= 50) return "#F59E0B";
@@ -32,38 +38,47 @@ const StockCircle = ({ percentage, name }: { percentage: number, name: string })
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <div className="relative w-16 h-16 flex items-center justify-center">
-        <svg className="transform -rotate-90 w-16 h-16">
-          <circle
-            cx="32"
-            cy="32"
-            r="30"
-            stroke="currentColor"
-            strokeWidth="4"
-            fill="transparent"
-            className="text-gray-700/30"
-          />
-          <circle
-            cx="32"
-            cy="32"
-            r="30"
-            stroke={color}
-            strokeWidth="4"
-            fill="transparent"
-            style={{
-              strokeDasharray: circumference,
-              strokeDashoffset: strokeDashoffset,
-              transition: "stroke-dashoffset 0.5s ease",
-            }}
-          />
-        </svg>
-        <span
-          className="absolute text-sm font-medium"
-          style={{ color }}
-        >
-          {Math.round(percentage)}%
-        </span>
-      </div>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <div className="relative w-16 h-16 flex items-center justify-center">
+              <svg className="transform -rotate-90 w-16 h-16">
+                <circle
+                  cx="32"
+                  cy="32"
+                  r="30"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                  fill="transparent"
+                  className="text-gray-700/30"
+                />
+                <circle
+                  cx="32"
+                  cy="32"
+                  r="30"
+                  stroke={color}
+                  strokeWidth="4"
+                  fill="transparent"
+                  style={{
+                    strokeDasharray: circumference,
+                    strokeDashoffset: strokeDashoffset,
+                    transition: "stroke-dashoffset 0.5s ease",
+                  }}
+                />
+              </svg>
+              <span
+                className="absolute text-sm font-medium"
+                style={{ color }}
+              >
+                {Math.round(percentage)}%
+              </span>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p className="text-sm">Stock actuel: {stock.toLocaleString()} {unit}</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
       <span className="text-sm text-gray-300 text-center">{name}</span>
     </div>
   );
@@ -91,6 +106,8 @@ const MaterialsTable = () => {
               <StockCircle 
                 percentage={percentage}
                 name={material.name}
+                stock={material.stock}
+                unit={material.unit}
               />
             </motion.div>
           );
