@@ -93,7 +93,7 @@ const Sidebar = () => {
                       )}
                     >
                       <Icon 
-                        className={isActive ? item.iconColor : `text-gray-400 group-hover:${item.iconColor}`}
+                        className={item.iconColor}
                         size={20}
                       />
                       
