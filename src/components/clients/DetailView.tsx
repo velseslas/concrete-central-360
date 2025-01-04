@@ -2,7 +2,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Printer, X } from "lucide-react";
+import { Printer } from "lucide-react";
 
 interface DetailViewProps {
   open: boolean;
@@ -98,7 +98,7 @@ export function DetailView({ open, onOpenChange, data, title }: DetailViewProps)
           <DialogTitle className="text-2xl font-bold text-primary">
             {title}
           </DialogTitle>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center -ml-4">
             <Button variant="outline" size="icon" onClick={handlePrint}>
               <Printer className="h-4 w-4" />
             </Button>
