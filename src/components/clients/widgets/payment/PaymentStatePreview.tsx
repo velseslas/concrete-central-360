@@ -41,16 +41,28 @@ export function PaymentStatePreview({ open, onOpenChange, reportData }: PaymentS
               }
               @page {
                 size: landscape;
-                margin: 15mm;
+                margin: 10mm;
               }
               body {
                 width: 100%;
                 height: 100%;
               }
+              .bg-gray-50 {
+                padding: 0.75rem !important;
+              }
+              td, th {
+                padding: 0.5rem !important;
+              }
+              .space-y-6 {
+                margin-top: 0.75rem !important;
+              }
+              .grid {
+                gap: 0.5rem !important;
+              }
             }
           `}
         </style>
-        <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4 border-b">
+        <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-2 border-b">
           <div className="flex items-center w-full">
             <DialogTitle className="text-2xl font-bold">État des Paiements</DialogTitle>
             <Button 
@@ -65,10 +77,9 @@ export function PaymentStatePreview({ open, onOpenChange, reportData }: PaymentS
           </div>
         </DialogHeader>
 
-        <div className="space-y-6 mt-6">
-          {/* Informations du rapport */}
-          <div className="bg-gray-50 p-6 rounded-lg space-y-3">
-            <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-4 mt-4">
+          <div className="bg-gray-50 p-4 rounded-lg">
+            <div className="grid grid-cols-2 gap-3">
               <div>
                 <p className="text-sm text-gray-500">Client</p>
                 <p className="font-medium">{reportData.client}</p>
@@ -84,7 +95,6 @@ export function PaymentStatePreview({ open, onOpenChange, reportData }: PaymentS
             </div>
           </div>
 
-          {/* Tableau des paiements */}
           <div className="rounded-lg border">
             <Table>
               <TableHeader>
