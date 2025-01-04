@@ -19,7 +19,7 @@ export function PrintablePaymentReport({ reportData }: PrintablePaymentReportPro
   const total = reportData.payments?.reduce((sum, payment) => sum + payment.amount, 0) || 0;
 
   return (
-    <div className="p-8 bg-white">
+    <div className="p-4 bg-white">
       <style>
         {`
           @media print {
@@ -32,26 +32,26 @@ export function PrintablePaymentReport({ reportData }: PrintablePaymentReportPro
               height: 100%;
             }
             .print-header {
-              margin-bottom: 1rem !important;
+              margin-bottom: 0.5rem !important;
             }
             .print-info {
-              padding: 0.75rem !important;
-              margin-bottom: 1rem !important;
+              padding: 0.5rem !important;
+              margin-bottom: 0.5rem !important;
             }
             td, th {
-              padding: 0.5rem !important;
+              padding: 0.25rem !important;
               font-size: 0.875rem !important;
             }
           }
         `}
       </style>
 
-      <div className="print-header border-b pb-4 mb-6">
-        <h1 className="text-2xl font-bold">État des Paiements</h1>
+      <div className="print-header border-b pb-2 mb-3">
+        <h1 className="text-xl font-bold">État des Paiements</h1>
       </div>
 
-      <div className="print-info bg-gray-50 p-4 rounded-lg mb-6">
-        <div className="grid grid-cols-2 gap-3">
+      <div className="print-info bg-gray-50 p-3 rounded-lg mb-3">
+        <div className="grid grid-cols-2 gap-2">
           <div>
             <p className="text-sm text-gray-500">Client</p>
             <p className="font-medium">{reportData.client}</p>

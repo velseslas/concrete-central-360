@@ -28,24 +28,42 @@ export function PaymentStatePreview({ open, onOpenChange, reportData }: PaymentS
         <html>
           <head>
             <title>État des Paiements - ${reportData.client}</title>
-            <link rel="stylesheet" href="/src/index.css" />
+            <style>
+              @page {
+                size: landscape;
+                margin: 10mm;
+              }
+              body {
+                margin: 0;
+                padding: 10mm;
+              }
+              table {
+                width: 100%;
+                border-collapse: collapse;
+              }
+              th, td {
+                padding: 4px 8px;
+                border: 1px solid #e5e7eb;
+                text-align: left;
+              }
+              th {
+                background-color: #f9fafb;
+                font-weight: 600;
+              }
+              .text-right {
+                text-align: right;
+              }
+            </style>
           </head>
           <body>
-            <div id="print-content"></div>
+            ${PrintablePaymentReport({ reportData }).props.children}
           </body>
         </html>
       `);
       
-      // Render the PrintablePaymentReport component
-      const printContent = printWindow.document.getElementById('print-content');
-      if (printContent) {
-        printContent.innerHTML = `<div>${PrintablePaymentReport({ reportData }).props.children}</div>`;
-      }
-      
       printWindow.document.close();
       printWindow.focus();
       
-      // Wait for styles to load
       setTimeout(() => {
         printWindow.print();
         printWindow.close();
@@ -62,7 +80,7 @@ export function PaymentStatePreview({ open, onOpenChange, reportData }: PaymentS
             <Button 
               onClick={handlePrint} 
               variant="outline" 
-              className="ml-8 hover:bg-gray-100"
+              className="ml-4 hover:bg-gray-100"
               size="sm"
             >
               <Printer className="mr-2 h-4 w-4" />
