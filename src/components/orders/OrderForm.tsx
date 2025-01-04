@@ -86,15 +86,15 @@ export function OrderForm({ open, onOpenChange, onSubmit, orderToEdit }: OrderFo
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-[800px]">
         <DialogHeader>
           <DialogTitle>
             {orderToEdit ? "Modifier la commande" : "Nouvelle commande"}
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-3">
-            <div className="grid grid-cols-2 gap-3">
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+            <div className="grid grid-cols-2 gap-6">
               <FormField
                 control={form.control}
                 name="clientId"
@@ -103,7 +103,7 @@ export function OrderForm({ open, onOpenChange, onSubmit, orderToEdit }: OrderFo
                     <FormLabel>Client</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="h-12">
                           <SelectValue placeholder="Sélectionner un client" />
                         </SelectTrigger>
                       </FormControl>
@@ -128,7 +128,7 @@ export function OrderForm({ open, onOpenChange, onSubmit, orderToEdit }: OrderFo
                     <FormLabel>Chantier</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="h-12">
                           <SelectValue placeholder="Sélectionner un chantier" />
                         </SelectTrigger>
                       </FormControl>
@@ -146,7 +146,7 @@ export function OrderForm({ open, onOpenChange, onSubmit, orderToEdit }: OrderFo
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-6">
               <FormField
                 control={form.control}
                 name="category"
@@ -155,7 +155,7 @@ export function OrderForm({ open, onOpenChange, onSubmit, orderToEdit }: OrderFo
                     <FormLabel>Catégorie</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="h-12">
                           <SelectValue placeholder="Sélectionner une catégorie" />
                         </SelectTrigger>
                       </FormControl>
@@ -180,7 +180,7 @@ export function OrderForm({ open, onOpenChange, onSubmit, orderToEdit }: OrderFo
                     <FormLabel>Produit</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="h-12">
                           <SelectValue placeholder="Sélectionner un produit" />
                         </SelectTrigger>
                       </FormControl>
@@ -198,7 +198,7 @@ export function OrderForm({ open, onOpenChange, onSubmit, orderToEdit }: OrderFo
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-6">
               <FormField
                 control={form.control}
                 name="quantity"
@@ -206,7 +206,7 @@ export function OrderForm({ open, onOpenChange, onSubmit, orderToEdit }: OrderFo
                   <FormItem>
                     <FormLabel>Quantité (m³)</FormLabel>
                     <FormControl>
-                      <Input type="number" {...field} />
+                      <Input type="number" className="h-12" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -220,7 +220,7 @@ export function OrderForm({ open, onOpenChange, onSubmit, orderToEdit }: OrderFo
                   <FormItem>
                     <FormLabel>Date de livraison</FormLabel>
                     <FormControl>
-                      <Input type="date" {...field} />
+                      <Input type="date" className="h-12" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -228,7 +228,7 @@ export function OrderForm({ open, onOpenChange, onSubmit, orderToEdit }: OrderFo
               />
             </div>
 
-            <div className="flex justify-end space-x-2 pt-4">
+            <div className="flex justify-end space-x-2 pt-4 border-t">
               <Button variant="outline" onClick={() => onOpenChange(false)}>
                 Annuler
               </Button>
