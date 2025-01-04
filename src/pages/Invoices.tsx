@@ -79,7 +79,6 @@ const Invoices = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
-                Factures
               </h1>
               <p className="text-gray-400">Gestion de la facturation</p>
             </motion.div>
