@@ -20,7 +20,7 @@ export function ClientContactFields({ form }: ClientContactFieldsProps) {
               <Input 
                 placeholder="Numéro de téléphone" 
                 className="h-12 w-full" 
-                maxLength={10} 
+                maxLength={10}
                 {...field} 
               />
             </FormControl>
