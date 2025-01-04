@@ -7,7 +7,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 const Vehicles = () => {
   const handleEdit = (vehicle: any) => {
     console.log("Editing vehicle:", vehicle);
-    // La logique d'édition sera implémentée plus tard
   };
 
   return (
