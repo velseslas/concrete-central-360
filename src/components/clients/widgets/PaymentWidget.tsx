@@ -13,7 +13,7 @@ import { PaymentStateDialog } from "./payment/PaymentStateDialog";
 
 const mockClients = [
   {
-    id: 1,
+    id: "1", // Changé en string
     name: "Entreprise ABC",
     totalPaid: 15000,
     lastPayment: "2024-03-20",
@@ -42,7 +42,7 @@ const mockClients = [
     ]
   },
   {
-    id: 2,
+    id: "2", // Changé en string
     name: "SARL XYZ",
     totalPaid: 25000,
     lastPayment: "2024-03-19",
@@ -158,7 +158,7 @@ export function PaymentWidget() {
         onOpenChange={setShowReport}
         reportData={reportData}
         filters={{
-          client: mockClients.find(c => c.id.toString() === reportClient)?.name || "",
+          client: mockClients.find(c => c.id === reportClient)?.name || "",
           startDate,
           endDate,
           paymentMethod: paymentMethod === "check" ? "Chèque" : 
