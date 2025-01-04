@@ -180,7 +180,6 @@ const Clients = () => {
               transition={{ duration: 0.3, delay: 0.1 }}
               className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400"
             >
-              Gestion des Clients
             </motion.h1>
           </div>
           {renderContent()}
