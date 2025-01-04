@@ -10,6 +10,8 @@ import { Upload } from "lucide-react";
 import { toast } from "sonner";
 
 const paymentSchema = z.object({
+  clientId: z.string().min(1, "Le client est requis"),
+  projectId: z.string().min(1, "Le chantier est requis"),
   amount: z.string().min(1, "Le montant est requis"),
   paymentMethod: z.string().min(1, "Le mode de paiement est requis"),
   paymentDate: z.string().min(1, "La date de paiement est requise"),
@@ -25,16 +27,35 @@ interface PaymentFormProps {
   paymentToEdit?: PaymentFormValues;
 }
 
+// Données mockées pour l'exemple
+const mockClients = [
+  { id: "1", name: "Client A" },
+  { id: "2", name: "Client B" },
+];
+
+const mockProjects = [
+  { id: "1", name: "Chantier 1", clientId: "1" },
+  { id: "2", name: "Chantier 2", clientId: "1" },
+  { id: "3", name: "Chantier 3", clientId: "2" },
+];
+
 export function PaymentForm({ open, onOpenChange, clientId, paymentToEdit }: PaymentFormProps) {
   const form = useForm<PaymentFormValues>({
     resolver: zodResolver(paymentSchema),
     defaultValues: paymentToEdit || {
+      clientId: clientId.toString(),
+      projectId: "",
       amount: "",
       paymentMethod: "",
       paymentDate: "",
       reference: "",
     },
   });
+
+  const selectedClientId = form.watch("clientId");
+  const filteredProjects = mockProjects.filter(
+    project => project.clientId === selectedClientId
+  );
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -45,7 +66,7 @@ export function PaymentForm({ open, onOpenChange, clientId, paymentToEdit }: Pay
   };
 
   const onSubmit = (data: PaymentFormValues) => {
-    console.log("Payment data:", data, "for client:", clientId);
+    console.log("Payment data:", data);
     toast.success(paymentToEdit ? "Paiement modifié" : "Paiement enregistré");
     onOpenChange(false);
   };
@@ -62,6 +83,56 @@ export function PaymentForm({ open, onOpenChange, clientId, paymentToEdit }: Pay
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
+              name="clientId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Client</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Sélectionner un client" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {mockClients.map((client) => (
+                        <SelectItem key={client.id} value={client.id}>
+                          {client.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="projectId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Chantier</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Sélectionner un chantier" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {filteredProjects.map((project) => (
+                        <SelectItem key={project.id} value={project.id}>
+                          {project.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
               name="amount"
               render={({ field }) => (
                 <FormItem>
@@ -73,6 +144,7 @@ export function PaymentForm({ open, onOpenChange, clientId, paymentToEdit }: Pay
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="paymentMethod"
@@ -95,6 +167,7 @@ export function PaymentForm({ open, onOpenChange, clientId, paymentToEdit }: Pay
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="paymentDate"
@@ -108,6 +181,7 @@ export function PaymentForm({ open, onOpenChange, clientId, paymentToEdit }: Pay
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="reference"
@@ -121,6 +195,7 @@ export function PaymentForm({ open, onOpenChange, clientId, paymentToEdit }: Pay
                 </FormItem>
               )}
             />
+
             <div className="space-y-2">
               <FormLabel>Document justificatif</FormLabel>
               <div className="relative">
@@ -138,6 +213,7 @@ export function PaymentForm({ open, onOpenChange, clientId, paymentToEdit }: Pay
                 </Button>
               </div>
             </div>
+
             <div className="flex justify-end space-x-2 pt-4">
               <Button variant="outline" onClick={() => onOpenChange(false)}>
                 Annuler
