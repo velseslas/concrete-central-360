@@ -105,11 +105,21 @@ export function ClientForm({ open, onOpenChange, clientToEdit }: ClientFormProps
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid grid-cols-1 gap-4">
-              <ClientBasicInfoFields form={form} />
-              <ClientAddressFields form={form} />
-              <ClientContactFields form={form} />
-              <ClientAdminFields form={form} />
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <ClientBasicInfoFields form={form} />
+                  <div className="mt-6">
+                    <ClientContactFields form={form} />
+                  </div>
+                </div>
+                <div>
+                  <ClientAddressFields form={form} />
+                  <div className="mt-6">
+                    <ClientAdminFields form={form} />
+                  </div>
+                </div>
+              </div>
             </div>
             <div className="flex justify-end space-x-2 pt-4 border-t">
               {clientToEdit && (
