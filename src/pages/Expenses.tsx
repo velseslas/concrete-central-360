@@ -133,9 +133,6 @@ const Expenses = () => {
           transition={{ delay: 0.1 }}
           className="flex justify-between items-center"
         >
-          <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
-            Dépenses
-          </h1>
           {!activeWidget && (
             <Button 
               className="bg-white/10 backdrop-blur-lg border border-white/20 hover:bg-white/20 hover:border-white/30 transition-all duration-300 text-white"

@@ -173,16 +173,6 @@ const Clients = () => {
           transition={{ duration: 0.3 }}
           className="flex flex-col gap-6"
         >
-          <div className="flex justify-between items-center">
-            <motion.h1 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3, delay: 0.1 }}
-              className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400"
-            >
-              Clients
-            </motion.h1>
-          </div>
           {renderContent()}
         </motion.div>
       </motion.div>

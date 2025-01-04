@@ -62,14 +62,8 @@ const Orders = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="flex justify-between items-center"
+          className="flex justify-end items-center"
         >
-          <div>
-            <motion.h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
-              Commandes
-            </motion.h1>
-            <p className="text-gray-400">Gestion des commandes clients</p>
-          </div>
           <Button className="bg-gray-800/50 backdrop-blur-lg border border-gray-700 hover:bg-gray-700/50 hover:border-gray-600 transition-all duration-300">
             <Plus className="mr-2 h-4 w-4" />
             Nouvelle commande

@@ -34,10 +34,7 @@ const Vehicles = () => {
         transition={{ duration: 0.5 }}
         className="space-y-6"
       >
-        <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
-            Véhicules
-          </h1>
+        <div className="flex justify-end items-center">
           <div className="flex gap-2">
             {[
               { icon: Settings, label: "Paramètres" },
