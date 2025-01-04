@@ -47,7 +47,7 @@ const Header = () => {
             {getPageTitle(location.pathname)}
           </h2>
           <p className="text-gray-400">
-            Gérez votre centrale à béton
+            {location.pathname === "/invoices" ? "Gestion de la facturation" : "Gérez votre centrale à béton"}
           </p>
         </motion.div>
         
