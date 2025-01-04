@@ -1,6 +1,7 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
 
 interface Material {
   name: string;
@@ -24,9 +25,9 @@ const materials: Material[] = [
 const MaterialsTable = () => {
   const getStatusBadge = (status: Material["status"]) => {
     const config = {
-      normal: { class: "bg-green-100 text-green-800", text: "Normal" },
-      warning: { class: "bg-yellow-100 text-yellow-800", text: "Attention" },
-      critical: { class: "bg-red-100 text-red-800", text: "Critique" }
+      normal: { class: "bg-[#0EA5E9]/20 text-[#0EA5E9] border-[#0EA5E9]/30", text: "Normal" },
+      warning: { class: "bg-yellow-500/20 text-yellow-500 border-yellow-500/30", text: "Attention" },
+      critical: { class: "bg-red-500/20 text-red-500 border-red-500/30", text: "Critique" }
     };
 
     return (
@@ -37,22 +38,27 @@ const MaterialsTable = () => {
   };
 
   return (
-    <div className="overflow-x-auto">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="overflow-x-auto"
+    >
       <Table>
         <TableHeader>
-          <TableRow>
-            <TableHead>Matériau</TableHead>
-            <TableHead>Stock actuel</TableHead>
-            <TableHead>Capacité</TableHead>
-            <TableHead>Niveau</TableHead>
-            <TableHead>Dernière livraison</TableHead>
-            <TableHead>Status</TableHead>
+          <TableRow className="border-gray-700/50">
+            <TableHead className="text-gray-400">Matériau</TableHead>
+            <TableHead className="text-gray-400">Stock actuel</TableHead>
+            <TableHead className="text-gray-400">Capacité</TableHead>
+            <TableHead className="text-gray-400">Niveau</TableHead>
+            <TableHead className="text-gray-400">Dernière livraison</TableHead>
+            <TableHead className="text-gray-400">Status</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {materials.map((material) => {
+          {materials.map((material, index) => {
             const percentage = (material.stock / material.capacity) * 100;
-            let progressColor = "bg-green-500";
+            let progressColor = "bg-[#0EA5E9]";
             if (percentage < 30) {
               progressColor = "bg-red-500";
             } else if (percentage < 50) {
@@ -60,12 +66,18 @@ const MaterialsTable = () => {
             }
 
             return (
-              <TableRow key={material.name} className="hover:bg-gray-50">
-                <TableCell className="font-medium">{material.name}</TableCell>
-                <TableCell>
+              <motion.tr
+                key={material.name}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+                className="hover:bg-gray-800/30 border-gray-700/50"
+              >
+                <TableCell className="font-medium text-gray-200">{material.name}</TableCell>
+                <TableCell className="text-gray-300">
                   {material.stock.toLocaleString()} {material.unit}
                 </TableCell>
-                <TableCell>
+                <TableCell className="text-gray-300">
                   {material.capacity.toLocaleString()} {material.unit}
                 </TableCell>
                 <TableCell className="w-[200px]">
@@ -74,19 +86,21 @@ const MaterialsTable = () => {
                       value={percentage}
                       className={`h-2 ${progressColor}`}
                     />
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm text-gray-400">
                       {Math.round(percentage)}%
                     </span>
                   </div>
                 </TableCell>
-                <TableCell>{new Date(material.lastDelivery).toLocaleDateString()}</TableCell>
+                <TableCell className="text-gray-300">
+                  {new Date(material.lastDelivery).toLocaleDateString()}
+                </TableCell>
                 <TableCell>{getStatusBadge(material.status)}</TableCell>
-              </TableRow>
+              </motion.tr>
             );
           })}
         </TableBody>
       </Table>
-    </div>
+    </motion.div>
   );
 };
 

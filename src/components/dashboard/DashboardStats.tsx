@@ -1,4 +1,5 @@
 import { TrendingUp, Users, Truck, AlertTriangle, DollarSign, Package } from "lucide-react";
+import { motion } from "framer-motion";
 
 const DashboardStats = () => {
   const stats = [
@@ -57,26 +58,37 @@ const DashboardStats = () => {
       {stats.map((stat, index) => {
         const Icon = stat.icon;
         return (
-          <div 
-            key={index} 
-            className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow duration-200"
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: index * 0.1 }}
+            className="bg-gray-800/30 backdrop-blur-sm rounded-xl border border-gray-700/50 p-6 hover:border-gray-600/50 transition-all duration-300 hover:shadow-lg group"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-500">{stat.title}</p>
-                <p className="mt-2 text-2xl font-semibold">{stat.value}</p>
+                <p className="text-sm font-medium text-gray-400">{stat.title}</p>
+                <p className="mt-2 text-2xl font-semibold text-white group-hover:text-[#0EA5E9] transition-colors">
+                  {stat.value}
+                </p>
               </div>
-              <div className={`rounded-full p-3 ${stat.trendUp ? "bg-green-100 text-green-600" : "bg-red-100 text-red-600"}`}>
+              <div className={`rounded-full p-3 ${
+                stat.trendUp 
+                  ? "bg-[#0EA5E9]/10 text-[#0EA5E9] group-hover:bg-[#0EA5E9]/20" 
+                  : "bg-red-500/10 text-red-500 group-hover:bg-red-500/20"
+              } transition-colors`}>
                 <Icon className="h-6 w-6" />
               </div>
             </div>
             <div className="mt-4 flex items-center justify-between">
-              <span className={`text-sm ${stat.trendUp ? "text-green-600" : "text-red-600"}`}>
+              <span className={`text-sm ${
+                stat.trendUp ? "text-[#0EA5E9]" : "text-red-500"
+              }`}>
                 {stat.trend}
               </span>
-              <span className="text-sm text-gray-500">{stat.description}</span>
+              <span className="text-sm text-gray-400">{stat.description}</span>
             </div>
-          </div>
+          </motion.div>
         );
       })}
     </div>
