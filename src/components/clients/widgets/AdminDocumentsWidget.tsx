@@ -108,8 +108,8 @@ export function AdminDocumentsWidget() {
 
       <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
         <DialogContent className="max-h-[90vh] w-[90vw] max-w-[800px] overflow-y-auto">
-          <DialogHeader className="flex flex-row items-center justify-between space-y-0">
-            <DialogTitle className="text-2xl font-bold text-primary">
+          <DialogHeader className="flex flex-row items-center space-y-0">
+            <DialogTitle className="text-2xl font-bold text-primary mr-8">
               Aperçu - {selectedDoc?.title}
             </DialogTitle>
             <Button onClick={handlePrint} variant="outline">
