@@ -1,94 +1,102 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import VehicleForm from "@/components/vehicles/VehicleForm";
+import { Car, FileText, AlertTriangle, Settings, Calendar } from "lucide-react";
 import VehicleList from "@/components/vehicles/VehicleList";
 import DocumentAlerts from "@/components/vehicles/DocumentAlerts";
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const Vehicles = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [editingVehicle, setEditingVehicle] = useState<any>(null);
-
-  const handleEdit = (vehicle: any) => {
-    setEditingVehicle(vehicle);
-    setIsOpen(true);
-  };
-
-  const handleClose = () => {
-    setIsOpen(false);
-    setEditingVehicle(null);
-  };
-
   return (
-    <div className="min-h-screen bg-[#1A1F2C]">
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white p-6">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="container mx-auto p-6 space-y-6"
+        className="space-y-6"
       >
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="flex items-center justify-between"
-        >
-          <div className="space-y-1">
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-[#9b87f5] to-[#D6BCFA] bg-clip-text text-transparent">
-              Parc Roulant
-            </h1>
-            <p className="text-[#7E69AB]">
-              Gestion de votre flotte de véhicules
-            </p>
+        <div className="flex justify-between items-center">
+          <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+            Parc Roulant
+          </h1>
+          <div className="flex gap-2">
+            {[
+              { icon: Settings, label: "Paramètres" },
+              { icon: Calendar, label: "Planning" },
+              { icon: FileText, label: "Documents" },
+            ].map((item, index) => (
+              <motion.button
+                key={item.label}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+                className="p-2 rounded-xl bg-gray-800/50 backdrop-blur-lg border border-gray-700 hover:bg-gray-700/50 hover:border-gray-600 transition-all duration-300"
+              >
+                <item.icon className="h-5 w-5 text-gray-300" />
+              </motion.button>
+            ))}
           </div>
-          
-          <Drawer open={isOpen} onOpenChange={setIsOpen}>
-            <DrawerTrigger asChild>
-              <Button className="bg-[#9b87f5] hover:bg-[#7E69AB] transition-colors">
-                Ajouter un véhicule
-              </Button>
-            </DrawerTrigger>
-            <DrawerContent>
-              <DrawerHeader className="border-b border-[#2A2F3C]">
-                <DrawerTitle>
-                  {editingVehicle ? "Modifier le véhicule" : "Ajouter un véhicule"}
-                </DrawerTitle>
-              </DrawerHeader>
-              <div className="p-4">
-                <VehicleForm
-                  onClose={handleClose}
-                  initialData={editingVehicle}
-                />
-              </div>
-            </DrawerContent>
-          </Drawer>
-        </motion.div>
+        </div>
 
-        <div className="grid gap-6 lg:grid-cols-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            { title: "Véhicules Actifs", value: "12", icon: Car, color: "text-green-400" },
+            { title: "En Maintenance", value: "3", icon: Settings, color: "text-orange-400" },
+            { title: "Documents à Renouveler", value: "5", icon: FileText, color: "text-blue-400" },
+            { title: "Alertes", value: "2", icon: AlertTriangle, color: "text-red-400" },
+          ].map((stat, index) => (
+            <motion.div
+              key={stat.title}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
+            >
+              <Card className="bg-gray-800/50 backdrop-blur-lg border-gray-700 hover:bg-gray-700/50 hover:border-gray-600 transition-all duration-300">
+                <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
+                  <CardTitle className="text-sm font-medium text-gray-300">
+                    {stat.title}
+                  </CardTitle>
+                  <stat.icon className={`h-5 w-5 ${stat.color}`} />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold text-white">{stat.value}</div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
             className="lg:col-span-2"
           >
-            <Card className="border-[#2A2F3C] bg-[#221F26]/80">
-              <div className="p-6">
-                <VehicleList onEdit={handleEdit} />
-              </div>
+            <Card className="bg-gray-800/50 backdrop-blur-lg border-gray-700">
+              <CardHeader>
+                <CardTitle className="text-xl font-semibold text-gray-100">
+                  Liste des Véhicules
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <VehicleList />
+              </CardContent>
             </Card>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
           >
-            <Card className="border-[#2A2F3C] bg-[#221F26]/80">
-              <div className="p-6">
+            <Card className="bg-gray-800/50 backdrop-blur-lg border-gray-700">
+              <CardHeader>
+                <CardTitle className="text-xl font-semibold text-gray-100">
+                  Alertes Documents
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
                 <DocumentAlerts />
-              </div>
+              </CardContent>
             </Card>
           </motion.div>
         </div>
