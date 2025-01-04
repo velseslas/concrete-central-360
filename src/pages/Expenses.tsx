@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import { DollarSign, Car, Building2 } from "lucide-react";
 import ExpenseForm from "@/components/expenses/ExpenseForm";
 import ExpenseList from "@/components/expenses/ExpenseList";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
-import { DollarSign, Car, Building2 } from "lucide-react";
 import { ExpenseCategoryWidget } from "@/components/expenses/widgets/ExpenseCategoryWidget";
 
 const Expenses = () => {
@@ -138,23 +138,23 @@ const Expenses = () => {
           )}
         </motion.div>
 
-      {renderContent()}
+        {renderContent()}
 
-      <Drawer open={isOpen} onOpenChange={setIsOpen}>
-        <DrawerContent>
-          <DrawerHeader>
-            <DrawerTitle>
-              {editingExpense ? "Modifier la dépense" : "Ajouter une dépense"}
-            </DrawerTitle>
-          </DrawerHeader>
-          <div className="p-4">
-            <ExpenseForm
-              onClose={handleClose}
-              initialData={editingExpense}
-            />
-          </div>
-        </DrawerContent>
-      </Drawer>
+        <Drawer open={isOpen} onOpenChange={setIsOpen}>
+          <DrawerContent>
+            <DrawerHeader>
+              <DrawerTitle>
+                {editingExpense ? "Modifier la dépense" : "Ajouter une dépense"}
+              </DrawerTitle>
+            </DrawerHeader>
+            <div className="p-4">
+              <ExpenseForm
+                onClose={handleClose}
+                initialData={editingExpense}
+              />
+            </div>
+          </DrawerContent>
+        </Drawer>
       </motion.div>
     </div>
   );
