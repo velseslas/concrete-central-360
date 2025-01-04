@@ -49,8 +49,9 @@ export function PriceList({ onEdit }: PriceListProps) {
         <TableHeader>
           <TableRow>
             <TableHead>Client</TableHead>
-            <TableHead>Produit</TableHead>
             <TableHead>Chantier</TableHead>
+            <TableHead>Catégorie</TableHead>
+            <TableHead>Produit</TableHead>
             <TableHead>Prix</TableHead>
             <TableHead className="text-right">Actions</TableHead>
           </TableRow>
@@ -59,8 +60,9 @@ export function PriceList({ onEdit }: PriceListProps) {
           {mockPrices.map((price) => (
             <TableRow key={price.id}>
               <TableCell>{price.client}</TableCell>
-              <TableCell>{price.product}</TableCell>
               <TableCell>{price.project}</TableCell>
+              <TableCell>Béton</TableCell>
+              <TableCell>{price.product}</TableCell>
               <TableCell>{price.price.toLocaleString()} DA</TableCell>
               <TableCell className="text-right">
                 <div className="flex justify-end space-x-2">
