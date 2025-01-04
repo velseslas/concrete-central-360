@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Car, FileText, AlertTriangle, Settings, Calendar } from "lucide-react";
 import VehicleList from "@/components/vehicles/VehicleList";
-import DocumentAlerts from "@/components/vehicles/DocumentAlerts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const Vehicles = () => {
@@ -68,42 +67,22 @@ const Vehicles = () => {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="lg:col-span-2"
-          >
-            <Card className="bg-gray-800/50 backdrop-blur-lg border-gray-700">
-              <CardHeader>
-                <CardTitle className="text-xl font-semibold text-gray-100">
-                  Liste des Véhicules
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <VehicleList onEdit={handleEdit} />
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-          >
-            <Card className="bg-gray-800/50 backdrop-blur-lg border-gray-700">
-              <CardHeader>
-                <CardTitle className="text-xl font-semibold text-gray-100">
-                  Alertes Documents
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <DocumentAlerts />
-              </CardContent>
-            </Card>
-          </motion.div>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          <Card className="bg-gray-800/50 backdrop-blur-lg border-gray-700">
+            <CardHeader>
+              <CardTitle className="text-xl font-semibold text-gray-100">
+                Liste des Véhicules
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <VehicleList onEdit={handleEdit} />
+            </CardContent>
+          </Card>
+        </motion.div>
       </motion.div>
     </div>
   );
