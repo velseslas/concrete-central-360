@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { FileText } from "lucide-react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog } from "@/components/ui/dialog";
 import { useState } from "react";
+import { CustomDialogContent } from "./CustomDialogContent";
 
 interface Document {
   id: number;
@@ -41,13 +42,13 @@ export function DocumentList() {
       ))}
 
       <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
-        <DialogContent className="max-h-[90vh] w-[90vw] max-w-[800px] overflow-y-auto">
+        <CustomDialogContent className="max-h-[90vh] w-[90vw] max-w-[800px] overflow-y-auto">
           <div className="flex flex-col items-center gap-4 py-4">
             <div className="w-full aspect-[3/4] bg-gray-100 rounded-lg flex items-center justify-center">
               <FileText className="h-24 w-24 text-gray-400" />
             </div>
           </div>
-        </DialogContent>
+        </CustomDialogContent>
       </Dialog>
     </div>
   );
