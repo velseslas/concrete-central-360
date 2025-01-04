@@ -11,7 +11,7 @@ interface ClientBasicInfoFieldsProps {
 export function ClientBasicInfoFields({ form }: ClientBasicInfoFieldsProps) {
   return (
     <div className="space-y-3 w-full">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         <FormField
           control={form.control}
           name="categorieClient"
@@ -63,24 +63,6 @@ export function ClientBasicInfoFields({ form }: ClientBasicInfoFieldsProps) {
                   placeholder="Nom du client" 
                   className="h-10" 
                   maxLength={100} 
-                  {...field} 
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="contact"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormLabel>Contact</FormLabel>
-              <FormControl>
-                <Input 
-                  placeholder="Nom du contact" 
-                  className="h-10" 
-                  maxLength={30} 
                   {...field} 
                 />
               </FormControl>
