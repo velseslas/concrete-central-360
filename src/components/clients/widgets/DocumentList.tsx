@@ -50,9 +50,6 @@ export function DocumentList() {
         <DialogContent className="max-h-[90vh] w-[90vw] max-w-[800px] overflow-y-auto">
           <div className="print:hidden">
             <DialogHeader className="flex flex-row items-center justify-between space-y-0">
-              <DialogTitle className="text-2xl font-bold text-primary">
-                Aperçu - {selectedDoc?.title}
-              </DialogTitle>
               <Button onClick={handlePrint} variant="outline" className="ml-auto">
                 <Printer className="mr-2 h-4 w-4" />
                 Imprimer
