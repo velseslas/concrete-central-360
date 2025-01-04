@@ -44,7 +44,7 @@ export function DeliveryWidget() {
   const [showNewDeliveryForm, setShowNewDeliveryForm] = useState(false);
 
   return (
-    <Card>
+    <Card className="w-full">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-lg font-medium">Livraisons</CardTitle>
         <Button onClick={() => setShowNewDeliveryForm(true)} size="sm">
@@ -53,33 +53,33 @@ export function DeliveryWidget() {
         </Button>
       </CardHeader>
       <CardContent>
-        <div className="rounded-md border">
+        <div className="rounded-md border overflow-x-auto w-full">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Date</TableHead>
-                <TableHead>Fournisseur</TableHead>
-                <TableHead>Producteur</TableHead>
-                <TableHead>Catégorie</TableHead>
-                <TableHead>Produit</TableHead>
-                <TableHead>Quantité</TableHead>
-                <TableHead>Unité</TableHead>
-                <TableHead>N° Camion</TableHead>
-                <TableHead>N° BL</TableHead>
+                <TableHead className="min-w-[100px]">Date</TableHead>
+                <TableHead className="min-w-[150px]">Fournisseur</TableHead>
+                <TableHead className="min-w-[150px]">Producteur</TableHead>
+                <TableHead className="min-w-[120px]">Catégorie</TableHead>
+                <TableHead className="min-w-[150px]">Produit</TableHead>
+                <TableHead className="min-w-[100px]">Quantité</TableHead>
+                <TableHead className="min-w-[80px]">Unité</TableHead>
+                <TableHead className="min-w-[120px]">N° Camion</TableHead>
+                <TableHead className="min-w-[120px]">N° BL</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {mockDeliveries.map((delivery) => (
                 <TableRow key={delivery.id}>
-                  <TableCell>{delivery.date}</TableCell>
-                  <TableCell>{delivery.supplier}</TableCell>
-                  <TableCell>{delivery.producer}</TableCell>
-                  <TableCell>{delivery.category}</TableCell>
-                  <TableCell>{delivery.product}</TableCell>
-                  <TableCell>{delivery.quantity}</TableCell>
-                  <TableCell>{delivery.unit}</TableCell>
-                  <TableCell>{delivery.vehicleNumber}</TableCell>
-                  <TableCell>{delivery.deliveryNoteNumber}</TableCell>
+                  <TableCell className="whitespace-nowrap">{delivery.date}</TableCell>
+                  <TableCell className="whitespace-nowrap">{delivery.supplier}</TableCell>
+                  <TableCell className="whitespace-nowrap">{delivery.producer}</TableCell>
+                  <TableCell className="whitespace-nowrap">{delivery.category}</TableCell>
+                  <TableCell className="whitespace-nowrap">{delivery.product}</TableCell>
+                  <TableCell className="whitespace-nowrap">{delivery.quantity}</TableCell>
+                  <TableCell className="whitespace-nowrap">{delivery.unit}</TableCell>
+                  <TableCell className="whitespace-nowrap">{delivery.vehicleNumber}</TableCell>
+                  <TableCell className="whitespace-nowrap">{delivery.deliveryNoteNumber}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
