@@ -91,17 +91,17 @@ const Vehicles = () => {
                   </SheetTrigger>
                   <SheetContent>
                     <SheetHeader>
-                      <SheetTitle className="text-lg font-semibold">Documents à Renouveler</SheetTitle>
+                      <SheetTitle className="text-lg font-semibold text-white">Documents à Renouveler</SheetTitle>
                     </SheetHeader>
                     <div className="mt-6 space-y-4">
                       {documentsToRenew.map((doc, index) => (
-                        <div key={index} className="p-4 rounded-lg bg-gray-800/50 border border-gray-700">
+                        <div key={index} className="p-4 rounded-lg bg-gray-800 border border-gray-700">
                           <div className="flex items-center justify-between">
                             <div>
-                              <h3 className="font-medium text-white">{doc.vehicle}</h3>
-                              <p className="text-sm text-gray-400">{doc.document}</p>
+                              <h3 className="font-medium text-[#D6BCFA]">{doc.vehicle}</h3>
+                              <p className="text-sm text-[#0EA5E9]">{doc.document}</p>
                             </div>
-                            <div className="text-red-400 text-sm">
+                            <div className="text-[#F97316] font-medium">
                               Expire le {new Date(doc.expiry).toLocaleDateString()}
                             </div>
                           </div>
