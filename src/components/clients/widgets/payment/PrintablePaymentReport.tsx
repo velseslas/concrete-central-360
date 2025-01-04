@@ -1,5 +1,3 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-
 interface PrintablePaymentReportProps {
   reportData: {
     client: string;
@@ -23,11 +21,11 @@ export function PrintablePaymentReport({ reportData }: PrintablePaymentReportPro
       <style>
         {`
           @media print {
-            @page {
-              size: landscape;
-              margin: 10mm;
-            }
             body {
+              margin: 0;
+              padding: 0;
+            }
+            .print-content {
               width: 100%;
               height: 100%;
             }
@@ -46,10 +44,6 @@ export function PrintablePaymentReport({ reportData }: PrintablePaymentReportPro
         `}
       </style>
 
-      <div className="print-header border-b pb-2 mb-3">
-        <h1 className="text-xl font-bold">État des Paiements</h1>
-      </div>
-
       <div className="print-info bg-gray-50 p-3 rounded-lg mb-3">
         <div className="grid grid-cols-2 gap-2">
           <div>
@@ -57,42 +51,45 @@ export function PrintablePaymentReport({ reportData }: PrintablePaymentReportPro
             <p className="font-medium">{reportData.client}</p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">Mode de paiement</p>
-            <p className="font-medium">{reportData.paymentMethod}</p>
+            <p className="text-sm text-gray-500">Méthode de paiement</p>
+            <p className="font-medium">{reportData.paymentMethod || 'Toutes'}</p>
           </div>
-          <div className="col-span-2">
-            <p className="text-sm text-gray-500">Période</p>
-            <p className="font-medium">Du {reportData.startDate} au {reportData.endDate}</p>
+          <div>
+            <p className="text-sm text-gray-500">Date de début</p>
+            <p className="font-medium">{reportData.startDate || '-'}</p>
+          </div>
+          <div>
+            <p className="text-sm text-gray-500">Date de fin</p>
+            <p className="font-medium">{reportData.endDate || '-'}</p>
           </div>
         </div>
       </div>
 
-      <div className="rounded-lg border">
-        <Table>
-          <TableHeader>
-            <TableRow className="bg-gray-50">
-              <TableHead className="font-semibold">Date</TableHead>
-              <TableHead className="font-semibold">Référence</TableHead>
-              <TableHead className="font-semibold">Mode</TableHead>
-              <TableHead className="text-right font-semibold">Montant</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {reportData.payments?.map((payment, index) => (
-              <TableRow key={index}>
-                <TableCell>{payment.date}</TableCell>
-                <TableCell>{payment.reference}</TableCell>
-                <TableCell>{payment.method}</TableCell>
-                <TableCell className="text-right">{payment.amount.toLocaleString()} DA</TableCell>
-              </TableRow>
-            ))}
-            <TableRow className="bg-gray-50">
-              <TableCell colSpan={3} className="font-bold text-right">Total:</TableCell>
-              <TableCell className="text-right font-bold">{total.toLocaleString()} DA</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </div>
+      <table className="w-full border-collapse">
+        <thead>
+          <tr className="bg-gray-50">
+            <th className="border px-2 py-1 text-left">Date</th>
+            <th className="border px-2 py-1 text-left">Référence</th>
+            <th className="border px-2 py-1 text-right">Montant</th>
+            <th className="border px-2 py-1 text-left">Méthode</th>
+          </tr>
+        </thead>
+        <tbody>
+          {reportData.payments?.map((payment, index) => (
+            <tr key={index}>
+              <td className="border px-2 py-1">{payment.date}</td>
+              <td className="border px-2 py-1">{payment.reference}</td>
+              <td className="border px-2 py-1 text-right">{payment.amount.toLocaleString()} DA</td>
+              <td className="border px-2 py-1">{payment.method}</td>
+            </tr>
+          ))}
+          <tr className="bg-gray-50 font-semibold">
+            <td colSpan={2} className="border px-2 py-1 text-right">Total</td>
+            <td className="border px-2 py-1 text-right">{total.toLocaleString()} DA</td>
+            <td className="border px-2 py-1"></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 }
