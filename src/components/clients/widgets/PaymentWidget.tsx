@@ -1,8 +1,13 @@
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CreditCard, Wallet, History } from "lucide-react";
+import { CreditCard, Wallet, History, Plus } from "lucide-react";
 import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { PaymentForm } from "../PaymentForm";
 
 export function PaymentWidget() {
+  const [showPaymentForm, setShowPaymentForm] = useState(false);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -10,11 +15,20 @@ export function PaymentWidget() {
       transition={{ duration: 0.3 }}
     >
       <Card className="bg-gradient-to-br from-[#ec4899] to-[#8b5cf6] border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-        <CardHeader>
+        <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle className="text-white flex items-center gap-2">
             <CreditCard className="h-6 w-6" />
             Paiements
           </CardTitle>
+          <Button 
+            variant="secondary" 
+            size="sm" 
+            onClick={() => setShowPaymentForm(true)}
+            className="bg-white/20 hover:bg-white/30 text-white border-white/20"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Nouveau paiement
+          </Button>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
@@ -57,6 +71,12 @@ export function PaymentWidget() {
           </div>
         </CardContent>
       </Card>
+
+      <PaymentForm 
+        open={showPaymentForm} 
+        onOpenChange={setShowPaymentForm}
+        clientId={1}
+      />
     </motion.div>
   );
 }
