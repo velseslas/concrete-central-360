@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, Package, CreditCard, FileText, Truck, ShoppingCart, Tag, Euro, Factory } from "lucide-react";
 
 interface WidgetProps {
   id: string;
@@ -34,17 +33,19 @@ export function SupplierDashboard({ widgets, activeWidget, setActiveWidget }: Da
             transition={{ delay: 0.5 + index * 0.1 }}
           >
             <Card 
-              className="cursor-pointer hover:shadow-lg transition-shadow"
+              className="cursor-pointer group hover:scale-105 transition-all duration-300 bg-gray-900/50 backdrop-blur-xl border-gray-800 hover:border-gray-700"
               onClick={() => setActiveWidget(widget.id)}
             >
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <IconComponent className={`h-6 w-6 ${widget.color}`} />
+                <CardTitle className="flex items-center gap-3 text-gray-100">
+                  <div className={`p-2 rounded-lg bg-gray-800/50 group-hover:scale-110 transition-transform duration-300 ${widget.color}`}>
+                    <IconComponent className="h-5 w-5" />
+                  </div>
                   {widget.title}
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-600">
+                <p className="text-gray-400">
                   Gérer les {widget.title.toLowerCase()}
                 </p>
               </CardContent>
