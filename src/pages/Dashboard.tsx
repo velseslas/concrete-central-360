@@ -1,7 +1,6 @@
 import DashboardStats from "@/components/dashboard/DashboardStats";
 import MaterialsTable from "@/components/dashboard/MaterialsTable";
 import ProductionChart from "@/components/dashboard/ProductionChart";
-import StockAlerts from "@/components/dashboard/StockAlerts";
 import { OverviewWidget } from "@/components/dashboard/OverviewWidget";
 import { motion } from "framer-motion";
 
@@ -61,9 +60,6 @@ const Dashboard = () => {
               >
                 <div className="rounded-2xl bg-gray-800/50 backdrop-blur-lg border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300 p-6 shadow-lg hover:shadow-xl">
                   <ProductionChart />
-                </div>
-                <div className="rounded-2xl bg-gray-800/50 backdrop-blur-lg border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300 p-6 shadow-lg hover:shadow-xl">
-                  <StockAlerts />
                 </div>
               </motion.div>
             </div>
