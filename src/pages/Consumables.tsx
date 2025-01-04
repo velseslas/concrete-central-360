@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { motion } from "framer-motion";
 import ConsumablesList from "@/components/consumables/ConsumablesList";
 import ConsumableForm from "@/components/consumables/ConsumableForm";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
@@ -21,14 +22,27 @@ const Consumables = () => {
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Gestion des Consommables</h1>
-          <p className="text-muted-foreground">
-            Suivi des consommations de carburant et autres consommables
-          </p>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="container mx-auto p-6"
+      >
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="mb-6 flex items-center justify-between"
+        >
+          <div>
+            <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+              Gestion des Consommables
+            </h1>
+            <p className="text-gray-400">
+              Suivi des consommations de carburant et autres consommables
+            </p>
+          </div>
         <Drawer open={isOpen} onOpenChange={setIsOpen}>
           <DrawerTrigger asChild>
             <Button>
@@ -50,7 +64,7 @@ const Consumables = () => {
             </div>
           </DrawerContent>
         </Drawer>
-      </div>
+        </motion.div>
 
       <div className="grid gap-6">
         <Card>
@@ -62,6 +76,7 @@ const Consumables = () => {
           </CardContent>
         </Card>
       </div>
+      </motion.div>
     </div>
   );
 };

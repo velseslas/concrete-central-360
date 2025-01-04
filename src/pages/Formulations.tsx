@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { FormulationForm } from "@/components/formulations/FormulationForm";
 import { useToast } from "@/components/ui/use-toast";
+import { motion } from "framer-motion";
 
 const Formulations = () => {
   const [formulations, setFormulations] = useState([
@@ -43,17 +44,30 @@ const Formulations = () => {
   };
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-bold text-primary">Formulations</h1>
-          <p className="text-gray-500 mt-1">Gérez vos formulations de béton</p>
-        </div>
-        <Button onClick={() => setOpen(true)} className="bg-primary hover:bg-primary-600">
-          <Plus className="mr-2 h-4 w-4" />
-          Nouvelle formulation
-        </Button>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="p-6 space-y-6"
+      >
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="flex justify-between items-center"
+        >
+          <div>
+            <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+              Formulations
+            </h1>
+            <p className="text-gray-400">Gérez vos formulations de béton</p>
+          </div>
+          <Button className="bg-gray-800/50 backdrop-blur-lg border border-gray-700 hover:bg-gray-700/50 hover:border-gray-600 transition-all duration-300">
+            <Plus className="mr-2 h-4 w-4" />
+            Nouvelle formulation
+          </Button>
+        </motion.div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="card-dashboard">
@@ -135,6 +149,7 @@ const Formulations = () => {
         onOpenChange={setOpen}
         onSubmit={handleSubmit}
       />
+      </motion.div>
     </div>
   );
 };
