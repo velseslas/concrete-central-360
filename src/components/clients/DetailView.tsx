@@ -93,7 +93,7 @@ export function DetailView({ open, onOpenChange, data, title }: DetailViewProps)
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange} modal={false}>
-      <DialogContent className="max-h-[90vh] w-[90vw] max-w-[800px] overflow-y-auto">
+      <DialogContent className="max-h-[90vh] w-[90vw] max-w-[800px] overflow-y-auto [&>button]:hidden">
         <DialogHeader className="flex flex-row items-center justify-between">
           <DialogTitle className="text-2xl font-bold text-primary">
             {title}
