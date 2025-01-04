@@ -107,16 +107,18 @@ export function AdminDocumentsWidget() {
       </Dialog>
 
       <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
-        <DialogContent className="sm:max-w-[600px]">
+        <DialogContent className="max-h-[90vh] w-[90vw] max-w-[800px] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Aperçu - {selectedDoc?.title}</DialogTitle>
+            <DialogTitle className="text-2xl font-bold text-primary">
+              Aperçu - {selectedDoc?.title}
+            </DialogTitle>
           </DialogHeader>
           <div className="flex flex-col items-center gap-4 py-4">
             <div className="w-full aspect-[3/4] bg-gray-100 rounded-lg flex items-center justify-center">
               <FileText className="h-24 w-24 text-gray-400" />
             </div>
-            <Button onClick={handlePrint} variant="outline">
-              <Printer className="mr-2 h-4 w-4" />
+            <Button onClick={handlePrint} variant="outline" size="lg" className="mt-4">
+              <Printer className="mr-2 h-5 w-5" />
               Imprimer
             </Button>
           </div>
