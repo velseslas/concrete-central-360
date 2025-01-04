@@ -1,10 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Plus, Pencil, Trash2 } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { ExpenseCategoryForm } from "./ExpenseCategoryForm";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 
 interface ExpenseCategory {
   id: string;
@@ -19,10 +21,18 @@ const mockCategories: ExpenseCategory[] = [
   { id: '4', name: 'Fournitures', type: 'general' },
 ];
 
+const expenseTypes = [
+  { id: "general", label: "Dépenses Générales" },
+  { id: "mechanical", label: "Parc Mécanique" },
+  { id: "concrete", label: "Centrale à Béton" }
+];
+
 export function ExpenseCategoryWidget() {
   const [showNewCategoryForm, setShowNewCategoryForm] = useState(false);
   const [categories, setCategories] = useState<ExpenseCategory[]>(mockCategories);
   const [editingCategory, setEditingCategory] = useState<ExpenseCategory | null>(null);
+  const [newCategoryName, setNewCategoryName] = useState("");
+  const [selectedType, setSelectedType] = useState("");
 
   const handleDeleteCategory = (categoryId: string) => {
     console.log("Deleting category:", categoryId);
@@ -36,14 +46,23 @@ export function ExpenseCategoryWidget() {
     setShowNewCategoryForm(true);
   };
 
-  const handleCreateCategory = (name: string, type: string) => {
-    console.log("Creating new category:", { name, type });
+  const handleCreateCategory = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newCategoryName.trim() || !selectedType) {
+      toast.error("Veuillez remplir tous les champs");
+      return;
+    }
+
     const newCategory = {
       id: Math.random().toString(36).substr(2, 9),
-      name,
-      type
+      name: newCategoryName,
+      type: selectedType
     };
+
     setCategories(prev => [...prev, newCategory]);
+    setNewCategoryName("");
+    setSelectedType("");
+    toast.success("Catégorie créée avec succès");
   };
 
   const handleUpdateCategory = (name: string, type: string) => {
@@ -69,16 +88,39 @@ export function ExpenseCategoryWidget() {
     <Card className="backdrop-blur-lg bg-white/10 border-white/20">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-lg font-medium text-white">Catégories</CardTitle>
-        <Button 
-          onClick={() => setShowNewCategoryForm(true)} 
-          size="sm"
-          className="bg-white/10 backdrop-blur-lg border border-white/20 hover:bg-white/20 hover:border-white/30 transition-all duration-300 text-white"
-        >
-          <Plus className="mr-2 h-4 w-4" />
-          Nouvelle catégorie
-        </Button>
       </CardHeader>
       <CardContent>
+        <form onSubmit={handleCreateCategory} className="mb-6 space-y-4">
+          <div className="space-y-2">
+            <Input
+              placeholder="Nom de la catégorie"
+              value={newCategoryName}
+              onChange={(e) => setNewCategoryName(e.target.value)}
+              className="bg-white/5 border-white/10 text-white placeholder:text-white/50"
+            />
+          </div>
+          <div className="space-y-2">
+            <Select value={selectedType} onValueChange={setSelectedType}>
+              <SelectTrigger className="bg-white/5 border-white/10 text-white">
+                <SelectValue placeholder="Sélectionner le type de dépense" />
+              </SelectTrigger>
+              <SelectContent>
+                {expenseTypes.map((type) => (
+                  <SelectItem key={type.id} value={type.id}>
+                    {type.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <Button 
+            type="submit"
+            className="w-full bg-white/10 hover:bg-white/20 text-white border border-white/20"
+          >
+            Ajouter la catégorie
+          </Button>
+        </form>
+
         <div className="space-y-4">
           {categories.length === 0 ? (
             <p className="text-white/70">Aucune catégorie pour le moment</p>
