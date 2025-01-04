@@ -27,7 +27,6 @@ export function PaymentStatePreview({ open, onOpenChange, reportData }: PaymentS
       printWindow.document.write(`
         <html>
           <head>
-            <title>État des Paiements - ${reportData.client}</title>
             <style>
               @page {
                 size: landscape;
@@ -162,7 +161,6 @@ export function PaymentStatePreview({ open, onOpenChange, reportData }: PaymentS
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-2 border-b">
           <div className="flex items-center w-full">
-            <DialogTitle className="text-2xl font-bold">État des Paiements</DialogTitle>
             <Button 
               onClick={handlePrint} 
               variant="outline" 
