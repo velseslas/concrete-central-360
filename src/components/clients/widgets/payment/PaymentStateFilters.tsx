@@ -3,6 +3,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Filter } from "lucide-react";
 import { toast } from "sonner";
+import { useState } from "react";
+import { PaymentStatePreview } from "./PaymentStatePreview";
 
 interface PaymentStateFiltersProps {
   clients: Array<{ id: string; name: string }>;
@@ -29,11 +31,35 @@ export function PaymentStateFilters({
   onPaymentMethodChange,
   onGenerateReport
 }: PaymentStateFiltersProps) {
+  const [showPreview, setShowPreview] = useState(false);
+  
   const paymentMethods = [
     { id: "cash", label: "Espèces" },
     { id: "check", label: "Chèque" },
     { id: "transfer", label: "Virement" }
   ];
+
+  // Mock data for demonstration
+  const mockReportData = {
+    client: clients.find(c => c.id === selectedClient)?.name || "",
+    startDate,
+    endDate,
+    paymentMethod: paymentMethods.find(m => m.id === paymentMethod)?.label || "",
+    payments: [
+      {
+        date: "2024-03-20",
+        reference: "PAY001",
+        amount: 15000,
+        method: "Espèces"
+      },
+      {
+        date: "2024-03-15",
+        reference: "PAY002",
+        amount: 25000,
+        method: "Chèque"
+      }
+    ]
+  };
 
   const handleGenerateReport = () => {
     console.log("Generating report with filters:", {
@@ -49,6 +75,7 @@ export function PaymentStateFilters({
     }
 
     onGenerateReport();
+    setShowPreview(true);
     toast.success("État des paiements généré avec succès");
   };
 
@@ -109,6 +136,12 @@ export function PaymentStateFilters({
           Générer l'état
         </Button>
       </div>
+
+      <PaymentStatePreview
+        open={showPreview}
+        onOpenChange={setShowPreview}
+        reportData={mockReportData}
+      />
     </div>
   );
 }
