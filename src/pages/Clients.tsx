@@ -20,63 +20,63 @@ const Clients = () => {
       id: 'clients',
       title: 'Clients',
       icon: Users,
-      color: 'text-blue-500',
+      color: 'text-blue-400',
       component: ClientListWidget
     },
     {
       id: 'documents',
       title: 'Documents',
       icon: FileText,
-      color: 'text-yellow-500',
+      color: 'text-yellow-400',
       component: AdminDocumentsWidget
     },
     {
       id: 'chantiers',
       title: 'Chantiers',
       icon: Construction,
-      color: 'text-orange-500',
+      color: 'text-orange-400',
       component: ProjectWidget
     },
     {
       id: 'categories',
       title: 'Catégories',
       icon: Building2,
-      color: 'text-green-500',
+      color: 'text-green-400',
       component: ProductCategoryWidget
     },
     {
       id: 'produits',
       title: 'Produits',
       icon: Package,
-      color: 'text-purple-500',
+      color: 'text-purple-400',
       component: ProductWidget
     },
     {
       id: 'prix',
       title: 'Prix Produits',
       icon: DollarSign,
-      color: 'text-yellow-500',
+      color: 'text-yellow-400',
       component: PriceWidget
     },
     {
       id: 'commandes',
       title: 'Commandes',
       icon: ShoppingCart,
-      color: 'text-indigo-500',
+      color: 'text-indigo-400',
       component: OrderWidget
     },
     {
       id: 'rapports',
       title: 'Rapports',
       icon: FileText,
-      color: 'text-gray-500',
+      color: 'text-gray-400',
       component: ReportsWidget
     },
     {
       id: 'paiements',
       title: 'Paiements',
       icon: CreditCard,
-      color: 'text-emerald-500',
+      color: 'text-emerald-400',
       component: PaymentWidget
     }
   ];
@@ -87,18 +87,23 @@ const Clients = () => {
       if (widget) {
         const WidgetComponent = widget.component;
         return (
-          <div className="space-y-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="space-y-4"
+          >
             <div className="flex items-center space-x-2">
               <button 
                 onClick={() => setActiveWidget(null)}
-                className="text-sm text-gray-500 hover:text-gray-700"
+                className="text-sm text-gray-300 hover:text-white transition-colors"
               >
                 ← Retour
               </button>
-              <h2 className="text-2xl font-bold">{widget.title}</h2>
+              <h2 className="text-2xl font-bold text-white">{widget.title}</h2>
             </div>
             <WidgetComponent />
-          </div>
+          </motion.div>
         );
       }
     }
@@ -119,17 +124,17 @@ const Clients = () => {
               transition={{ delay: index * 0.1 }}
             >
               <Card 
-                className="cursor-pointer hover:shadow-lg transition-shadow hover:scale-105 transition-all duration-200"
+                className="cursor-pointer hover:shadow-lg transition-all duration-200 bg-gray-800/50 backdrop-blur-lg border border-gray-700 hover:bg-gray-800/70"
                 onClick={() => setActiveWidget(widget.id)}
               >
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
+                  <CardTitle className="flex items-center gap-2 text-gray-100">
                     <IconComponent className={`h-6 w-6 ${widget.color}`} />
                     {widget.title}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-600">
+                  <p className="text-gray-400">
                     Gérer les {widget.title.toLowerCase()}
                   </p>
                 </CardContent>
@@ -156,9 +161,14 @@ const Clients = () => {
           className="flex flex-col gap-6"
         >
           <div className="flex justify-between items-center">
-            <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+            <motion.h1 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400"
+            >
               Gestion des Clients
-            </h1>
+            </motion.h1>
           </div>
           {renderContent()}
         </motion.div>
