@@ -57,17 +57,17 @@ const Expenses = () => {
           <div className="flex items-center space-x-2">
             <button
               onClick={() => setActiveWidget(null)}
-              className="text-sm text-gray-500 hover:text-gray-700"
+              className="text-sm text-white/70 hover:text-white transition-colors"
             >
               ← Retour
             </button>
-            <h2 className="text-2xl font-bold">{widget.title}</h2>
+            <h2 className="text-2xl font-bold text-white">{widget.title}</h2>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
-              <Card>
+              <Card className="backdrop-blur-lg bg-white/10 border-white/20">
                 <CardHeader>
-                  <CardTitle>{widget.title}</CardTitle>
+                  <CardTitle className="text-white">{widget.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <ExpenseList onEdit={handleEdit} category={widget.id} />
@@ -88,21 +88,27 @@ const Expenses = () => {
           {widgets.map((widget) => {
             const IconComponent = widget.icon;
             return (
-              <Card
+              <motion.div
                 key={widget.id}
-                className="cursor-pointer hover:shadow-lg transition-shadow hover:scale-105 transition-all duration-200"
-                onClick={() => setActiveWidget(widget.id)}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
               >
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <IconComponent className={`h-6 w-6 ${widget.color}`} />
-                    {widget.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600">{widget.description}</p>
-                </CardContent>
-              </Card>
+                <Card
+                  className="cursor-pointer backdrop-blur-lg bg-white/10 border-white/20 hover:bg-white/20 transition-all duration-300"
+                  onClick={() => setActiveWidget(widget.id)}
+                >
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2 text-white">
+                      <IconComponent className={`h-6 w-6 ${widget.color}`} />
+                      {widget.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-white/70">{widget.description}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
             );
           })}
         </div>
@@ -114,7 +120,7 @@ const Expenses = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -131,7 +137,10 @@ const Expenses = () => {
             Gestion des Dépenses
           </h1>
           {!activeWidget && (
-            <Button className="bg-gray-800/50 backdrop-blur-lg border border-gray-700 hover:bg-gray-700/50 hover:border-gray-600 transition-all duration-300">
+            <Button 
+              className="bg-white/10 backdrop-blur-lg border border-white/20 hover:bg-white/20 hover:border-white/30 transition-all duration-300 text-white"
+              onClick={() => setIsOpen(true)}
+            >
               <DollarSign className="mr-2 h-4 w-4" />
               Ajouter une dépense
             </Button>
