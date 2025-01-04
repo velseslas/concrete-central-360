@@ -9,8 +9,8 @@ interface ClientAdminFieldsProps {
 
 export function ClientAdminFields({ form }: ClientAdminFieldsProps) {
   return (
-    <div className="space-y-6 w-full">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="space-y-3 w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         <FormField
           control={form.control}
           name="registreCommerce"
@@ -20,7 +20,7 @@ export function ClientAdminFields({ form }: ClientAdminFieldsProps) {
               <FormControl>
                 <Input 
                   placeholder="Registre de Commerce" 
-                  className="h-12 w-full" 
+                  className="h-10" 
                   maxLength={100}
                   {...field} 
                 />
@@ -38,7 +38,7 @@ export function ClientAdminFields({ form }: ClientAdminFieldsProps) {
               <FormControl>
                 <Input 
                   placeholder="Article Imposition" 
-                  className="h-12 w-full" 
+                  className="h-10" 
                   maxLength={20}
                   {...field} 
                 />
@@ -48,7 +48,7 @@ export function ClientAdminFields({ form }: ClientAdminFieldsProps) {
           )}
         />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         <FormField
           control={form.control}
           name="nif"
@@ -58,7 +58,7 @@ export function ClientAdminFields({ form }: ClientAdminFieldsProps) {
               <FormControl>
                 <Input 
                   placeholder="NIF" 
-                  className="h-12 w-full" 
+                  className="h-10" 
                   maxLength={100}
                   {...field} 
                 />
@@ -76,7 +76,7 @@ export function ClientAdminFields({ form }: ClientAdminFieldsProps) {
               <FormControl>
                 <Input 
                   placeholder="NIS" 
-                  className="h-12 w-full" 
+                  className="h-10" 
                   maxLength={20}
                   {...field} 
                 />

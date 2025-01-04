@@ -100,24 +100,22 @@ export function ClientForm({ clientToEdit, onSuccess }: ClientFormProps) {
 
   return (
     <div className="h-full flex flex-col w-full max-w-[1200px] mx-auto">
-      <SheetHeader>
-        <SheetTitle className="text-2xl font-bold text-primary">
+      <SheetHeader className="mb-2">
+        <SheetTitle className="text-xl font-bold text-primary">
           {clientToEdit ? "Modifier le client" : "Nouveau client"}
         </SheetTitle>
       </SheetHeader>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 flex-1 overflow-y-auto">
-          <div className="space-y-6">
-            <div className="grid grid-cols-1 gap-6">
-              <div className="space-y-6">
-                <ClientBasicInfoFields form={form} />
-                <ClientAddressFields form={form} />
-                <ClientContactFields form={form} />
-                <ClientAdminFields form={form} />
-              </div>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 flex-1">
+          <div className="space-y-3">
+            <div className="grid grid-cols-1 gap-3">
+              <ClientBasicInfoFields form={form} />
+              <ClientAddressFields form={form} />
+              <ClientContactFields form={form} />
+              <ClientAdminFields form={form} />
             </div>
           </div>
-          <div className="flex justify-end space-x-2 pt-4 border-t">
+          <div className="flex justify-end space-x-2 pt-3 border-t">
             {clientToEdit && (
               <Button type="button" variant="outline" onClick={handlePrint}>
                 <Printer className="mr-2 h-4 w-4" />

@@ -10,8 +10,8 @@ interface ClientBasicInfoFieldsProps {
 
 export function ClientBasicInfoFields({ form }: ClientBasicInfoFieldsProps) {
   return (
-    <div className="space-y-6 w-full">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <div className="space-y-3 w-full">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
         <FormField
           control={form.control}
           name="categorieClient"
@@ -20,7 +20,7 @@ export function ClientBasicInfoFields({ form }: ClientBasicInfoFieldsProps) {
               <FormLabel>Catégorie client</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger className="h-12 w-full">
+                  <SelectTrigger className="h-10">
                     <SelectValue placeholder="Sélectionner une catégorie" />
                   </SelectTrigger>
                 </FormControl>
@@ -43,7 +43,7 @@ export function ClientBasicInfoFields({ form }: ClientBasicInfoFieldsProps) {
               <FormControl>
                 <Input 
                   placeholder="Raison sociale" 
-                  className="h-12 w-full" 
+                  className="h-10" 
                   maxLength={100} 
                   {...field} 
                 />
@@ -61,7 +61,7 @@ export function ClientBasicInfoFields({ form }: ClientBasicInfoFieldsProps) {
               <FormControl>
                 <Input 
                   placeholder="Nom du client" 
-                  className="h-12 w-full" 
+                  className="h-10" 
                   maxLength={100} 
                   {...field} 
                 />
@@ -79,7 +79,7 @@ export function ClientBasicInfoFields({ form }: ClientBasicInfoFieldsProps) {
               <FormControl>
                 <Input 
                   placeholder="Nom du contact" 
-                  className="h-12 w-full" 
+                  className="h-10" 
                   maxLength={30} 
                   {...field} 
                 />
