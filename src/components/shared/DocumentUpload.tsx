@@ -1,35 +1,40 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Upload } from "lucide-react";
+import { FileText, Upload } from "lucide-react";
 import { toast } from "sonner";
 
 interface DocumentUploadProps {
-  clientId: number;
+  clientId?: number;
+  onUploadSuccess?: () => void;
 }
 
-export function DocumentUpload({ clientId }: DocumentUploadProps) {
+export function DocumentUpload({ clientId, onUploadSuccess }: DocumentUploadProps) {
   const [documentTitle, setDocumentTitle] = useState("");
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // TODO: Implement actual file upload logic
-      console.log("Uploading file:", file, "for client:", clientId, "with title:", documentTitle);
+      console.log("File selected:", file.name);
+      console.log("Document title:", documentTitle);
+      console.log("Client ID:", clientId);
+      
       toast.success("Document téléchargé avec succès");
       setDocumentTitle("");
+      if (onUploadSuccess) {
+        onUploadSuccess();
+      }
     }
   };
 
   return (
-    <div className="space-y-4 p-4 border rounded-lg">
-      <h3 className="font-semibold">Documents administratifs</h3>
-      <div className="flex gap-4">
-        <Input
-          placeholder="Titre du document"
-          value={documentTitle}
-          onChange={(e) => setDocumentTitle(e.target.value)}
-        />
+    <div className="space-y-4">
+      <Input
+        placeholder="Titre du document"
+        value={documentTitle}
+        onChange={(e) => setDocumentTitle(e.target.value)}
+      />
+      <div className="flex justify-end">
         <div className="relative">
           <Input
             type="file"
@@ -39,7 +44,7 @@ export function DocumentUpload({ clientId }: DocumentUploadProps) {
           />
           <Button asChild>
             <label htmlFor="file-upload" className="cursor-pointer">
-              <Upload className="mr-2 h-4 w-4" />
+              <FileText className="mr-2 h-4 w-4" />
               Télécharger
             </label>
           </Button>

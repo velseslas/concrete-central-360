@@ -1,98 +1,52 @@
-import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
-import { Plus, CreditCard } from "lucide-react";
-import { toast } from "sonner";
-
-interface Payment {
-  id: string;
-  date: string;
-  amount: number;
-  method: "cash" | "check" | "transfer";
-  status: "pending" | "completed" | "failed";
-}
+import { motion } from "framer-motion";
 
 export function PaymentWidget() {
-  const [showPaymentForm, setShowPaymentForm] = useState(false);
-  const [payments] = useState<Payment[]>([
-    {
-      id: "PAY001",
-      date: "2024-03-15",
-      amount: 50000,
-      method: "check",
-      status: "completed"
-    }
-  ]);
-
-  const getStatusBadge = (status: Payment["status"]) => {
-    const statusConfig = {
-      pending: { label: "En attente", className: "bg-yellow-100 text-yellow-800" },
-      completed: { label: "Complété", className: "bg-green-100 text-green-800" },
-      failed: { label: "Échoué", className: "bg-red-100 text-red-800" }
-    };
-
-    const config = statusConfig[status];
-    return (
-      <Badge variant="outline" className={config.className}>
-        {config.label}
-      </Badge>
-    );
-  };
-
-  const getMethodLabel = (method: Payment["method"]) => {
-    const methodLabels = {
-      cash: "Espèces",
-      check: "Chèque",
-      transfer: "Virement"
-    };
-    return methodLabels[method];
-  };
-
-  const handleNewPayment = () => {
-    setShowPaymentForm(true);
-    toast.success("Nouveau paiement ajouté avec succès");
-  };
-
   return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-lg font-medium flex items-center gap-2">
-          <CreditCard className="h-5 w-5" />
-          Paiements Clients
-        </CardTitle>
-        <Button onClick={handleNewPayment} size="sm">
-          <Plus className="mr-2 h-4 w-4" />
-          Nouveau paiement
-        </Button>
-      </CardHeader>
-      <CardContent>
-        <div className="rounded-md border">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>N° Paiement</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Montant</TableHead>
-                <TableHead>Méthode</TableHead>
-                <TableHead>Statut</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {payments.map((payment) => (
-                <TableRow key={payment.id}>
-                  <TableCell className="font-medium">{payment.id}</TableCell>
-                  <TableCell>{payment.date}</TableCell>
-                  <TableCell>{payment.amount.toLocaleString()} DA</TableCell>
-                  <TableCell>{getMethodLabel(payment.method)}</TableCell>
-                  <TableCell>{getStatusBadge(payment.status)}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
-      </CardContent>
-    </Card>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <Card className="bg-gradient-to-br from-[#D946EF] to-[#F97316] border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+        <CardHeader>
+          <CardTitle className="text-white">Paiements</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-4 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
+                <h3 className="text-lg font-semibold mb-2 text-white">Paiements en attente</h3>
+                <p className="text-2xl font-bold text-white">3</p>
+              </div>
+              <div className="p-4 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
+                <h3 className="text-lg font-semibold mb-2 text-white">Total payé</h3>
+                <p className="text-2xl font-bold text-white">15 000 DA</p>
+              </div>
+            </div>
+            <div className="mt-6">
+              <h3 className="text-lg font-semibold mb-4 text-white">Derniers paiements</h3>
+              <div className="space-y-3">
+                {[1, 2, 3].map((_, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                    className="p-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex justify-between items-center"
+                  >
+                    <div>
+                      <p className="font-medium text-white">Facture #{2024001 + index}</p>
+                      <p className="text-sm text-white/80">12/03/2024</p>
+                    </div>
+                    <span className="text-white font-semibold">5 000 DA</span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 }

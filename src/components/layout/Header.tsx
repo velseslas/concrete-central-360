@@ -1,23 +1,56 @@
-import { Bell } from "lucide-react";
+import { Bell, Search } from "lucide-react";
+import { motion } from "framer-motion";
+import { Input } from "@/components/ui/input";
 
 const Header = () => {
   return (
-    <header className="border-b bg-white p-4">
+    <motion.header 
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="border-b border-gray-800/50 bg-gradient-to-r from-gray-900/95 to-gray-800/95 backdrop-blur-xl p-6 shadow-lg sticky top-0 z-50"
+    >
       <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-lg font-semibold">Bienvenue</h2>
-          <p className="text-sm text-gray-500">Gérez votre centrale à béton</p>
-        </div>
-        <div className="flex items-center gap-4">
-          <button className="rounded-full p-2 hover:bg-gray-100">
-            <Bell className="h-5 w-5 text-gray-500" />
-          </button>
-          <div className="h-8 w-8 rounded-full bg-primary text-white flex items-center justify-center">
-            <span className="text-sm font-medium">AB</span>
+        <motion.div 
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.2 }}
+          className="space-y-1"
+        >
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+            Bienvenue
+          </h2>
+          <p className="text-gray-400">
+            Gérez votre centrale à béton
+          </p>
+        </motion.div>
+        
+        <motion.div 
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.3 }}
+          className="flex items-center gap-6"
+        >
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
+            <Input 
+              placeholder="Rechercher..." 
+              className="pl-10 w-64 bg-gray-800/50 border-gray-700/50 text-gray-300 placeholder:text-gray-500"
+            />
           </div>
-        </div>
+
+          <button className="relative rounded-full p-2 hover:bg-gray-800/50 transition-colors duration-200">
+            <Bell className="h-5 w-5 text-gray-400" />
+            <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400"></span>
+          </button>
+          
+          <div className="flex items-center gap-3">
+            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 text-white flex items-center justify-center shadow-lg">
+              <span className="text-sm font-medium">AB</span>
+            </div>
+          </div>
+        </motion.div>
       </div>
-    </header>
+    </motion.header>
   );
 };
 

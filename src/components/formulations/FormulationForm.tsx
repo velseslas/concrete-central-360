@@ -8,6 +8,7 @@ import { FormulationBasicInfo } from "./FormulationBasicInfo";
 import { FormulationSablesSection } from "./FormulationSablesSection";
 import { FormulationGraviersSection } from "./FormulationGraviersSection";
 import { FormulationAdditionalSection } from "./FormulationAdditionalSection";
+import { motion } from "framer-motion";
 
 const formulationSchema = z.object({
   nom: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
@@ -51,22 +52,71 @@ export function FormulationForm({ open, onOpenChange, onSubmit }: FormulationFor
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[800px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[800px] max-h-[90vh] overflow-y-auto bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 backdrop-blur-xl border border-gray-700/50 text-white shadow-2xl">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-primary">Nouvelle formulation</DialogTitle>
+          <DialogTitle className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+            Nouvelle formulation
+          </DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <FormulationBasicInfo form={form} />
-            <FormulationSablesSection form={form} />
-            <FormulationGraviersSection form={form} />
-            <FormulationAdditionalSection form={form} />
-            <div className="flex justify-end space-x-2 pt-4 border-t">
-              <Button variant="outline" onClick={() => onOpenChange(false)}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 p-6"
+            >
+              <FormulationBasicInfo form={form} />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 p-6"
+            >
+              <FormulationSablesSection form={form} />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 p-6"
+            >
+              <FormulationGraviersSection form={form} />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 p-6"
+            >
+              <FormulationAdditionalSection form={form} />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="flex justify-end space-x-3 pt-6 border-t border-gray-700/50"
+            >
+              <Button 
+                type="button"
+                variant="outline" 
+                onClick={() => onOpenChange(false)}
+                className="bg-gray-800/50 hover:bg-gray-700/50 border-gray-700/50 hover:border-gray-600/50 text-white transition-all duration-200"
+              >
                 Annuler
               </Button>
-              <Button type="submit">Créer</Button>
-            </div>
+              <Button 
+                type="submit"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 transition-all duration-200"
+              >
+                Créer
+              </Button>
+            </motion.div>
           </form>
         </Form>
       </DialogContent>

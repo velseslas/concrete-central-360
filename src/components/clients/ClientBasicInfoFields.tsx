@@ -10,68 +10,87 @@ interface ClientBasicInfoFieldsProps {
 
 export function ClientBasicInfoFields({ form }: ClientBasicInfoFieldsProps) {
   return (
-    <>
-      <FormField
-        control={form.control}
-        name="categorieClient"
-        render={({ field }) => (
-          <FormItem className="col-span-2">
-            <FormLabel>Catégorie client</FormLabel>
-            <Select onValueChange={field.onChange} defaultValue={field.value}>
+    <div className="space-y-6 w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <FormField
+          control={form.control}
+          name="categorieClient"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>Catégorie client</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger className="h-12 w-full">
+                    <SelectValue placeholder="Sélectionner une catégorie" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="particulier">Particulier</SelectItem>
+                  <SelectItem value="entreprise">Entreprise</SelectItem>
+                  <SelectItem value="administration">Administration</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="raisonSociale"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>Raison sociale</FormLabel>
               <FormControl>
-                <SelectTrigger>
-                  <SelectValue placeholder="Sélectionner une catégorie" />
-                </SelectTrigger>
+                <Input 
+                  placeholder="Raison sociale" 
+                  className="h-12 w-full" 
+                  maxLength={100} 
+                  {...field} 
+                />
               </FormControl>
-              <SelectContent>
-                <SelectItem value="particulier">Particulier</SelectItem>
-                <SelectItem value="entreprise">Entreprise</SelectItem>
-                <SelectItem value="administration">Administration</SelectItem>
-              </SelectContent>
-            </Select>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="raisonSociale"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Raison sociale</FormLabel>
-            <FormControl>
-              <Input placeholder="Raison sociale" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="nom"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Nom</FormLabel>
-            <FormControl>
-              <Input placeholder="Nom du client" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="contact"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Contact</FormLabel>
-            <FormControl>
-              <Input placeholder="Nom du contact" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-    </>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <FormField
+          control={form.control}
+          name="nom"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>Nom</FormLabel>
+              <FormControl>
+                <Input 
+                  placeholder="Nom du client" 
+                  className="h-12 w-full" 
+                  maxLength={100} 
+                  {...field} 
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="contact"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>Contact</FormLabel>
+              <FormControl>
+                <Input 
+                  placeholder="Nom du contact" 
+                  className="h-12 w-full" 
+                  maxLength={30} 
+                  {...field} 
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
+    </div>
   );
 }
