@@ -5,6 +5,11 @@ import DocumentAlerts from "@/components/vehicles/DocumentAlerts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const Vehicles = () => {
+  const handleEdit = (vehicle: any) => {
+    console.log("Editing vehicle:", vehicle);
+    // La logique d'édition sera implémentée plus tard
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white p-6">
       <motion.div
@@ -78,7 +83,7 @@ const Vehicles = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <VehicleList />
+                <VehicleList onEdit={handleEdit} />
               </CardContent>
             </Card>
           </motion.div>
