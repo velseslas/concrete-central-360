@@ -40,7 +40,7 @@ const VehicleList = ({ onEdit }: VehicleListProps) => {
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case "en service":
-        return "bg-green-500/20 text-green-500";
+        return "bg-[#9b87f5]/20 text-[#9b87f5]";
       case "en maintenance":
         return "bg-yellow-500/20 text-yellow-500";
       default:
@@ -57,15 +57,19 @@ const VehicleList = ({ onEdit }: VehicleListProps) => {
   };
 
   return (
-    <div className="rounded-xl overflow-hidden border border-gray-800 bg-gray-900/50 backdrop-blur-xl">
+    <div className="rounded-xl overflow-hidden">
       <Table>
         <TableHeader>
-          <TableRow className="border-gray-800 hover:bg-transparent">
-            <TableHead className="text-gray-400"><Car className="h-4 w-4 inline-block mr-2" />Véhicule</TableHead>
-            <TableHead className="text-gray-400">Immatriculation</TableHead>
-            <TableHead className="text-gray-400">Status</TableHead>
-            <TableHead className="text-gray-400"><Calendar className="h-4 w-4 inline-block mr-2" />Documents</TableHead>
-            <TableHead className="text-gray-400">Actions</TableHead>
+          <TableRow className="border-[#2A2F3C] hover:bg-transparent">
+            <TableHead className="text-[#7E69AB]">
+              <Car className="h-4 w-4 inline-block mr-2" />Véhicule
+            </TableHead>
+            <TableHead className="text-[#7E69AB]">Immatriculation</TableHead>
+            <TableHead className="text-[#7E69AB]">Status</TableHead>
+            <TableHead className="text-[#7E69AB]">
+              <Calendar className="h-4 w-4 inline-block mr-2" />Documents
+            </TableHead>
+            <TableHead className="text-[#7E69AB]">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -75,12 +79,12 @@ const VehicleList = ({ onEdit }: VehicleListProps) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
-              className="border-gray-800 bg-gray-900/30 hover:bg-gray-800/50 transition-colors duration-200"
+              className="border-[#2A2F3C] hover:bg-[#2A2F3C]/50 transition-colors duration-200"
             >
-              <TableCell className="font-medium text-gray-200">
+              <TableCell className="font-medium text-[#D6BCFA]">
                 {vehicle.brand} {vehicle.model}
               </TableCell>
-              <TableCell className="text-gray-300">{vehicle.licensePlate}</TableCell>
+              <TableCell className="text-[#7E69AB]">{vehicle.licensePlate}</TableCell>
               <TableCell>
                 <span className={`px-3 py-1 rounded-full text-sm ${getStatusColor(vehicle.status)}`}>
                   {vehicle.status}
@@ -108,7 +112,7 @@ const VehicleList = ({ onEdit }: VehicleListProps) => {
                     variant="ghost"
                     size="icon"
                     onClick={() => onEdit(vehicle)}
-                    className="hover:bg-blue-500/20 hover:text-blue-500 transition-colors"
+                    className="hover:bg-[#9b87f5]/20 hover:text-[#9b87f5] transition-colors"
                   >
                     <Edit className="h-4 w-4" />
                   </Button>

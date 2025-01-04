@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import VehicleForm from "@/components/vehicles/VehicleForm";
 import VehicleList from "@/components/vehicles/VehicleList";
@@ -22,28 +22,36 @@ const Vehicles = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+    <div className="min-h-screen bg-[#1A1F2C]">
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="container mx-auto p-6"
+        className="container mx-auto p-6 space-y-6"
       >
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="mb-6 flex items-center justify-between"
+          className="flex items-center justify-between"
         >
-          <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
-            Gestion du Parc Roulant
-          </h1>
+          <div className="space-y-1">
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-[#9b87f5] to-[#D6BCFA] bg-clip-text text-transparent">
+              Parc Roulant
+            </h1>
+            <p className="text-[#7E69AB]">
+              Gestion de votre flotte de véhicules
+            </p>
+          </div>
+          
           <Drawer open={isOpen} onOpenChange={setIsOpen}>
             <DrawerTrigger asChild>
-              <Button>Ajouter un véhicule</Button>
+              <Button className="bg-[#9b87f5] hover:bg-[#7E69AB] transition-colors">
+                Ajouter un véhicule
+              </Button>
             </DrawerTrigger>
             <DrawerContent>
-              <DrawerHeader>
+              <DrawerHeader className="border-b border-[#2A2F3C]">
                 <DrawerTitle>
                   {editingVehicle ? "Modifier le véhicule" : "Ajouter un véhicule"}
                 </DrawerTitle>
@@ -58,42 +66,32 @@ const Vehicles = () => {
           </Drawer>
         </motion.div>
 
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="grid gap-6 md:grid-cols-2"
-        >
+        <div className="grid gap-6 lg:grid-cols-3">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
+            transition={{ delay: 0.2 }}
+            className="lg:col-span-2"
           >
-            <Card>
-              <CardHeader>
-                <CardTitle>Liste des Véhicules</CardTitle>
-              </CardHeader>
-              <CardContent>
+            <Card className="border-[#2A2F3C] bg-[#221F26]/80">
+              <div className="p-6">
                 <VehicleList onEdit={handleEdit} />
-              </CardContent>
+              </div>
             </Card>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4 }}
+            transition={{ delay: 0.3 }}
           >
-            <Card>
-              <CardHeader>
-                <CardTitle>Documents à Renouveler</CardTitle>
-              </CardHeader>
-              <CardContent>
+            <Card className="border-[#2A2F3C] bg-[#221F26]/80">
+              <div className="p-6">
                 <DocumentAlerts />
-              </CardContent>
+              </div>
             </Card>
           </motion.div>
-        </motion.div>
+        </div>
       </motion.div>
     </div>
   );
