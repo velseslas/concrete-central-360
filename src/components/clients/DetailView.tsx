@@ -17,9 +17,9 @@ export function DetailView({ open, onOpenChange, data, title }: DetailViewProps)
   const fieldOrder = [
     'categorieClient',
     'raisonSociale',
+    'registreCommerce',
     'nom',
     'contact',
-    'registreCommerce',  // Ajout explicite du champ registreCommerce
     'nif',
     'nis',
     'numeroArticle',
@@ -41,9 +41,9 @@ export function DetailView({ open, onOpenChange, data, title }: DetailViewProps)
     const fieldNameMap: Record<string, string> = {
       categorieClient: 'Catégorie Client',
       raisonSociale: 'Raison Sociale',
+      registreCommerce: 'Registre de Commerce',
       nom: 'Nom',
       contact: 'Contact',
-      registreCommerce: 'Registre de Commerce',  // Ajout explicite de la traduction
       nif: 'NIF',
       nis: 'NIS',
       numeroArticle: 'Article Imposition',
