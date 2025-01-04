@@ -13,24 +13,24 @@ const Sidebar = () => {
     {
       title: "Principal",
       items: [
-        { to: "/", icon: Home, label: "Tableau de bord" },
-        { to: "/clients", icon: Users, label: "Clients" },
+        { to: "/", icon: Home, label: "Tableau de bord", iconColor: "text-blue-500" },
+        { to: "/clients", icon: Users, label: "Clients", iconColor: "text-green-500" },
       ]
     },
     {
       title: "Production",
       items: [
-        { to: "/formulations", icon: TestTube, label: "Formulations" },
-        { to: "/production", icon: Factory, label: "Production" },
+        { to: "/formulations", icon: TestTube, label: "Formulations", iconColor: "text-purple-500" },
+        { to: "/production", icon: Factory, label: "Production", iconColor: "text-orange-500" },
       ]
     },
     {
       title: "Gestion",
       items: [
-        { to: "/suppliers", icon: Truck, label: "Fournisseurs" },
-        { to: "/vehicles", icon: Car, label: "Parc roulant" },
-        { to: "/expenses", icon: DollarSign, label: "Dépenses" },
-        { to: "/invoices", icon: FileSpreadsheet, label: "Factures" },
+        { to: "/suppliers", icon: Truck, label: "Fournisseurs", iconColor: "text-yellow-500" },
+        { to: "/vehicles", icon: Car, label: "Parc roulant", iconColor: "text-red-500" },
+        { to: "/expenses", icon: DollarSign, label: "Dépenses", iconColor: "text-emerald-500" },
+        { to: "/invoices", icon: FileSpreadsheet, label: "Factures", iconColor: "text-indigo-500" },
       ]
     }
   ];
@@ -94,7 +94,7 @@ const Sidebar = () => {
                     >
                       <Icon className={cn(
                         "h-5 w-5 transition-all duration-300 group-hover:scale-110",
-                        isActive ? 'text-purple-400' : 'text-gray-500'
+                        isActive ? item.iconColor : 'text-gray-500 group-hover:' + item.iconColor
                       )} />
                       
                       <span className="transition-colors duration-300">
