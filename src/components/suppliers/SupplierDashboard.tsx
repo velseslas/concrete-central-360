@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-interface WidgetProps {
+export interface WidgetProps {
   id: string;
   title: string;
-  icon: any;
+  icon: React.ComponentType<any>;
   color: string;
-  component: any;
+  component: React.ComponentType<any>;
 }
 
 interface DashboardProps {
@@ -16,6 +16,10 @@ interface DashboardProps {
 }
 
 export function SupplierDashboard({ widgets, activeWidget, setActiveWidget }: DashboardProps) {
+  if (!widgets || widgets.length === 0) {
+    return null;
+  }
+
   return (
     <motion.div 
       initial={{ opacity: 0 }}

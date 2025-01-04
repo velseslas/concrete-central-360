@@ -1,76 +1,62 @@
 import { useState } from "react";
-import { Users, Package, CreditCard, FileText, Truck, ShoppingCart, Tag, Euro, Factory } from "lucide-react";
+import { Users, Package, CreditCard, FileText, Truck, ShoppingCart } from "lucide-react";
 import { motion } from "framer-motion";
 import { SupplierList } from "@/components/suppliers/SupplierList";
 import { ProductWidget } from "@/components/suppliers/widgets/ProductWidget";
 import { PriceWidget } from "@/components/suppliers/widgets/PriceWidget";
-import { ProductCategoryWidget } from "@/components/suppliers/widgets/ProductCategoryWidget";
 import { DeliveryWidget } from "@/components/suppliers/widgets/DeliveryWidget";
 import { DocumentsWidget } from "@/components/suppliers/widgets/DocumentsWidget";
-import { ReportsWidget } from "@/components/suppliers/widgets/ReportsWidget";
 import { PurchaseOrderWidget } from "@/components/suppliers/widgets/PurchaseOrderWidget";
 import { PaymentWidget } from "@/components/suppliers/widgets/PaymentWidget";
-import { SupplierDashboard } from "@/components/suppliers/SupplierDashboard";
+import { SupplierDashboard, WidgetProps } from "@/components/suppliers/SupplierDashboard";
 
 const Suppliers = () => {
   const [activeWidget, setActiveWidget] = useState<string | null>(null);
   const [selectedSupplierId, setSelectedSupplierId] = useState<number | null>(null);
-  
-  const widgets = [
-    {
-      id: 'suppliers',
-      title: 'Fournisseurs',
-      icon: Users,
-      color: 'text-blue-400',
-      component: SupplierList
-    },
-    {
-      id: 'categories',
-      title: 'Catégories',
-      icon: Tag,
-      color: 'text-purple-400',
-      component: ProductCategoryWidget
-    },
+
+  const handleEdit = (supplier: any) => {
+    console.log("Edit supplier:", supplier);
+    setSelectedSupplierId(supplier.id);
+  };
+
+  const handleDelete = (supplierId: number) => {
+    console.log("Delete supplier:", supplierId);
+  };
+
+  const widgets: WidgetProps[] = [
     {
       id: 'products',
       title: 'Produits',
       icon: Package,
-      color: 'text-emerald-400',
+      color: 'text-blue-400',
       component: ProductWidget
     },
     {
-      id: 'prices',
-      title: 'Prix',
-      icon: Euro,
-      color: 'text-amber-400',
-      component: PriceWidget
-    },
-    {
-      id: 'producers',
-      title: 'Producteurs',
-      icon: Factory,
-      color: 'text-orange-400',
-      component: ProductWidget
+      id: 'suppliers',
+      title: 'Fournisseurs',
+      icon: Users,
+      color: 'text-purple-400',
+      component: SupplierList
     },
     {
       id: 'purchase-orders',
       title: 'Bons de commande',
       icon: ShoppingCart,
-      color: 'text-indigo-400',
+      color: 'text-emerald-400',
       component: PurchaseOrderWidget
     },
     {
       id: 'payments',
       title: 'Paiements',
       icon: CreditCard,
-      color: 'text-pink-400',
+      color: 'text-amber-400',
       component: PaymentWidget
     },
     {
       id: 'deliveries',
       title: 'Livraisons',
       icon: Truck,
-      color: 'text-teal-400',
+      color: 'text-indigo-400',
       component: DeliveryWidget
     },
     {
@@ -81,15 +67,6 @@ const Suppliers = () => {
       component: DocumentsWidget
     }
   ];
-
-  const handleEdit = (supplier: any) => {
-    console.log("Edit supplier:", supplier);
-    setSelectedSupplierId(supplier.id);
-  };
-
-  const handleDelete = (supplierId: number) => {
-    console.log("Delete supplier:", supplierId);
-  };
 
   const renderContent = () => {
     if (activeWidget) {
@@ -115,11 +92,11 @@ const Suppliers = () => {
               </h2>
             </div>
             <div className="bg-gray-900/50 backdrop-blur-xl rounded-xl p-6 shadow-xl">
-              <WidgetComponent 
-                supplierId={selectedSupplierId}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-              />
+              {widget.id === 'suppliers' ? (
+                <SupplierList onEdit={handleEdit} onDelete={handleDelete} />
+              ) : (
+                <WidgetComponent supplierId={selectedSupplierId} />
+              )}
             </div>
           </motion.div>
         );
