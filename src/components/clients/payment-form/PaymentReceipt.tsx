@@ -122,6 +122,10 @@ export function PaymentReceipt({ open, onOpenChange, paymentData, clientName, pr
                 color: black !important;
                 background: none !important;
                 -webkit-text-fill-color: black !important;
+                padding-left: 1rem !important;
+              }
+              .print-info {
+                padding-left: 1rem !important;
               }
             }
           `}
@@ -133,7 +137,7 @@ export function PaymentReceipt({ open, onOpenChange, paymentData, clientName, pr
               <h2 className="text-3xl font-bold bg-gradient-to-r from-[#0EA5E9] to-[#8B5CF6] bg-clip-text text-transparent print-title">
                 Bon de Paiement
               </h2>
-              <div className="space-y-1">
+              <div className="space-y-1 print-info">
                 <p className="text-gray-600">Date: <span className="font-medium text-gray-800">{paymentData.paymentDate || 'N/A'}</span></p>
                 <p className="text-gray-600">Référence: <span className="font-medium text-gray-800">{paymentData.reference || 'N/A'}</span></p>
               </div>
