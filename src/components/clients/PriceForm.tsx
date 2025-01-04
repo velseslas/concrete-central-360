@@ -49,98 +49,96 @@ export function PriceForm({ open, onOpenChange }: PriceFormProps) {
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-6">
-                <FormField
-                  control={form.control}
-                  name="client"
-                  render={({ field }) => (
-                    <FormItem>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl>
-                          <SelectTrigger className="h-12">
-                            <SelectValue placeholder="Sélectionner un client" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="client1">Client 1</SelectItem>
-                          <SelectItem value="client2">Client 2</SelectItem>
-                          <SelectItem value="client3">Client 3</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+            <div className="grid grid-cols-2 gap-6">
+              <FormField
+                control={form.control}
+                name="client"
+                render={({ field }) => (
+                  <FormItem>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger className="h-12">
+                          <SelectValue placeholder="Sélectionner un client" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="client1">Client 1</SelectItem>
+                        <SelectItem value="client2">Client 2</SelectItem>
+                        <SelectItem value="client3">Client 3</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-                <FormField
-                  control={form.control}
-                  name="project"
-                  render={({ field }) => (
-                    <FormItem>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl>
-                          <SelectTrigger className="h-12">
-                            <SelectValue placeholder="Sélectionner un chantier" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="project1">Projet 1</SelectItem>
-                          <SelectItem value="project2">Projet 2</SelectItem>
-                          <SelectItem value="project3">Projet 3</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+              <FormField
+                control={form.control}
+                name="project"
+                render={({ field }) => (
+                  <FormItem>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger className="h-12">
+                          <SelectValue placeholder="Sélectionner un chantier" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="project1">Projet 1</SelectItem>
+                        <SelectItem value="project2">Projet 2</SelectItem>
+                        <SelectItem value="project3">Projet 3</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
-              <div className="space-y-6">
-                <FormField
-                  control={form.control}
-                  name="category"
-                  render={({ field }) => (
-                    <FormItem>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl>
-                          <SelectTrigger className="h-12">
-                            <SelectValue placeholder="Sélectionner une catégorie" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="category1">Béton</SelectItem>
-                          <SelectItem value="category2">Pompe</SelectItem>
-                          <SelectItem value="category3">Location</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+            <div className="grid grid-cols-2 gap-6">
+              <FormField
+                control={form.control}
+                name="category"
+                render={({ field }) => (
+                  <FormItem>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger className="h-12">
+                          <SelectValue placeholder="Sélectionner une catégorie" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="category1">Béton</SelectItem>
+                        <SelectItem value="category2">Pompe</SelectItem>
+                        <SelectItem value="category3">Location</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-                <FormField
-                  control={form.control}
-                  name="product"
-                  render={({ field }) => (
-                    <FormItem>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl>
-                          <SelectTrigger className="h-12">
-                            <SelectValue placeholder="Sélectionner un produit" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="product1">Béton B25</SelectItem>
-                          <SelectItem value="product2">Béton B30</SelectItem>
-                          <SelectItem value="product3">Béton B35</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+              <FormField
+                control={form.control}
+                name="product"
+                render={({ field }) => (
+                  <FormItem>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger className="h-12">
+                          <SelectValue placeholder="Sélectionner un produit" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="product1">Béton B25</SelectItem>
+                        <SelectItem value="product2">Béton B30</SelectItem>
+                        <SelectItem value="product3">Béton B35</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
 
             <FormField
