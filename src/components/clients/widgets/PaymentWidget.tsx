@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { CreditCard, ChevronRight, FileText, Filter, Printer } from "lucide-react";
+import { CreditCard, ChevronRight, FileText } from "lucide-react";
 import { motion } from "framer-motion";
 import { PaymentForm } from "../PaymentForm";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { PaymentPreview } from "./PaymentPreview";
 import { toast } from "sonner";
+import { PaymentStateFilters } from "./payment/PaymentStateFilters";
+import { PaymentStateDialog } from "./payment/PaymentStateDialog";
 
 const mockClients = [
   {
@@ -65,15 +65,27 @@ const mockClients = [
   }
 ];
 
-const paymentMethods = [
-  { id: "cash", label: "Espèces" },
-  { id: "check", label: "Chèque" },
-  { id: "transfer", label: "Virement" }
+// Données d'exemple pour le rapport
+const reportData = [
+  {
+    date: "2024-03-20",
+    reference: "PAY001",
+    amount: 150000,
+    method: "Chèque",
+    status: "Payé"
+  },
+  {
+    date: "2024-03-21",
+    reference: "PAY002",
+    amount: 75000,
+    method: "Virement",
+    status: "Payé"
+  }
 ];
 
 export function PaymentWidget() {
-  const [showPaymentForm, setShowPaymentForm] = useState(false);
   const [selectedClient, setSelectedClient] = useState<any>(null);
+  const [showPaymentForm, setShowPaymentForm] = useState(false);
   const [showPaymentDetails, setShowPaymentDetails] = useState(false);
   const [showDocumentPreview, setShowDocumentPreview] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState<string | null>(null);
@@ -112,36 +124,12 @@ export function PaymentWidget() {
     toast.success("État de paiement généré avec succès");
   };
 
-  const handlePrint = () => {
-    window.print();
-    console.log("Printing payment state");
-  };
-
-  // Données d'exemple pour le rapport
-  const reportData = [
-    {
-      date: "2024-03-20",
-      reference: "PAY001",
-      amount: 150000,
-      method: "Chèque",
-      status: "Payé"
-    },
-    {
-      date: "2024-03-21",
-      reference: "PAY002",
-      amount: 75000,
-      method: "Virement",
-      status: "Payé"
-    }
-  ];
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      {/* Section État des Paiements */}
       <Card className="mb-6 bg-white shadow-lg">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -150,117 +138,34 @@ export function PaymentWidget() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 mb-4">
-              <Filter className="h-4 w-4" />
-              <span className="font-medium">Filtres</span>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <Select value={reportClient} onValueChange={setReportClient}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Sélectionner un client" />
-                </SelectTrigger>
-                <SelectContent>
-                  {mockClients.map((client) => (
-                    <SelectItem key={client.id} value={client.id.toString()}>
-                      {client.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-
-              <Input
-                type="date"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-                placeholder="Date début"
-              />
-
-              <Input
-                type="date"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-                placeholder="Date fin"
-              />
-
-              <Select value={paymentMethod} onValueChange={setPaymentMethod}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Mode de paiement" />
-                </SelectTrigger>
-                <SelectContent>
-                  {paymentMethods.map((method) => (
-                    <SelectItem key={method.id} value={method.id}>
-                      {method.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="flex justify-end gap-4">
-              <Button onClick={handleGenerateReport} className="bg-blue-500 hover:bg-blue-600">
-                Générer l'état
-              </Button>
-              {showReport && (
-                <Button onClick={handlePrint} variant="outline" className="flex items-center gap-2">
-                  <Printer className="h-4 w-4" />
-                  Imprimer
-                </Button>
-              )}
-            </div>
-
-            {showReport && (
-              <div className="mt-6 print:mt-0">
-                <div className="mb-6 print:mb-4">
-                  <h2 className="text-xl font-bold mb-2">État des Paiements</h2>
-                  <p className="text-sm text-gray-600">
-                    Période: du {startDate} au {endDate}
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    Client: {mockClients.find(c => c.id.toString() === reportClient)?.name}
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    Mode de paiement: {paymentMethods.find(m => m.id === paymentMethod)?.label}
-                  </p>
-                </div>
-
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Date</TableHead>
-                      <TableHead>Référence</TableHead>
-                      <TableHead>Montant</TableHead>
-                      <TableHead>Mode</TableHead>
-                      <TableHead>Statut</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {reportData.map((payment, index) => (
-                      <TableRow key={index}>
-                        <TableCell>{payment.date}</TableCell>
-                        <TableCell>{payment.reference}</TableCell>
-                        <TableCell>{payment.amount.toLocaleString()} DA</TableCell>
-                        <TableCell>{payment.method}</TableCell>
-                        <TableCell>{payment.status}</TableCell>
-                      </TableRow>
-                    ))}
-                    <TableRow className="font-bold">
-                      <TableCell colSpan={2} className="text-right">Total:</TableCell>
-                      <TableCell>
-                        {reportData.reduce((sum, payment) => sum + payment.amount, 0).toLocaleString()} DA
-                      </TableCell>
-                      <TableCell colSpan={2}></TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </div>
-            )}
-          </div>
+          <PaymentStateFilters 
+            clients={mockClients}
+            selectedClient={reportClient}
+            startDate={startDate}
+            endDate={endDate}
+            paymentMethod={paymentMethod}
+            onClientChange={setReportClient}
+            onStartDateChange={setStartDate}
+            onEndDateChange={setEndDate}
+            onPaymentMethodChange={setPaymentMethod}
+            onGenerateReport={handleGenerateReport}
+          />
         </CardContent>
       </Card>
 
-      {/* Section Paiements des Clients */}
+      <PaymentStateDialog 
+        open={showReport}
+        onOpenChange={setShowReport}
+        reportData={reportData}
+        filters={{
+          client: mockClients.find(c => c.id.toString() === reportClient)?.name || "",
+          startDate,
+          endDate,
+          paymentMethod: paymentMethod === "check" ? "Chèque" : 
+                        paymentMethod === "transfer" ? "Virement" : "Espèces"
+        }}
+      />
+
       <Card className="bg-gradient-to-br from-[#ec4899] to-[#8b5cf6] border-0 shadow-lg hover:shadow-xl transition-all duration-300">
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle className="text-white flex items-center gap-2">
