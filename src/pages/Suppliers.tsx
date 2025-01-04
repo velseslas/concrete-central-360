@@ -32,49 +32,49 @@ const Suppliers = () => {
       title: 'Produits',
       icon: Package,
       color: 'text-blue-400',
-      component: ProductWidget
+      component: () => <ProductWidget supplierId={selectedSupplierId} />
     },
     {
       id: 'categories',
       title: 'Catégories',
       icon: Tag,
       color: 'text-green-400',
-      component: ProductCategoryWidget
+      component: () => <ProductCategoryWidget supplierId={selectedSupplierId} />
     },
     {
       id: 'purchase-orders',
       title: 'Bons de commande',
       icon: ShoppingCart,
       color: 'text-purple-400',
-      component: PurchaseOrderWidget
+      component: () => <PurchaseOrderWidget supplierId={selectedSupplierId} />
     },
     {
       id: 'deliveries',
       title: 'Livraisons',
       icon: Truck,
       color: 'text-orange-400',
-      component: DeliveryWidget
+      component: () => <DeliveryWidget supplierId={selectedSupplierId} />
     },
     {
       id: 'payments',
       title: 'Paiements',
       icon: CreditCard,
       color: 'text-pink-400',
-      component: PaymentWidget
+      component: () => <PaymentWidget supplierId={selectedSupplierId} />
     },
     {
       id: 'reports',
       title: 'Rapports',
       icon: Factory,
       color: 'text-indigo-400',
-      component: ReportsWidget
+      component: () => <ReportsWidget supplierId={selectedSupplierId} />
     },
     {
       id: 'documents',
       title: 'Documents',
       icon: FileText,
       color: 'text-gray-400',
-      component: DocumentsWidget
+      component: () => <DocumentsWidget supplierId={selectedSupplierId} />
     }
   ];
 
@@ -121,13 +121,7 @@ const Suppliers = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            {widget.component && 
-              widget.id === 'documents' ? (
-                <DocumentsWidget supplierId={selectedSupplierId} />
-              ) : (
-                <widget.component />
-              )
-            }
+            {widget.component && <widget.component />}
           </motion.div>
         ))}
       </div>
