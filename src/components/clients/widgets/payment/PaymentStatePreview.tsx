@@ -26,24 +26,15 @@ export function PaymentStatePreview({ open, onOpenChange, reportData }: PaymentS
         <html>
           <head>
             <style>
-              @page {
-                size: landscape;
-                margin: 15mm;
-              }
               body {
-                font-family: Arial, sans-serif;
                 margin: 0;
                 padding: 0;
-              }
-              .container {
-                max-width: 100%;
-                margin: 0 auto;
-                padding: 20px;
+                font-family: Arial, sans-serif;
               }
               table {
                 width: 100%;
                 border-collapse: collapse;
-                margin-top: 16px;
+                margin: 0;
                 font-size: 0.875rem;
               }
               th, td {
@@ -63,48 +54,43 @@ export function PaymentStatePreview({ open, onOpenChange, reportData }: PaymentS
                 font-weight: 600;
               }
               @media print {
+                @page {
+                  size: landscape;
+                  margin: 0;
+                }
                 body {
                   -webkit-print-color-adjust: exact;
                   print-color-adjust: exact;
-                }
-                @page {
-                  margin: 0;
-                }
-                * {
-                  -webkit-print-color-adjust: exact !important;
-                  print-color-adjust: exact !important;
                 }
               }
             </style>
           </head>
           <body>
-            <div class="container">
-              <table>
-                <thead>
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Référence</th>
+                  <th class="text-right">Montant</th>
+                  <th>Méthode</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${reportData.payments?.map(payment => `
                   <tr>
-                    <th>Date</th>
-                    <th>Référence</th>
-                    <th class="text-right">Montant</th>
-                    <th>Méthode</th>
+                    <td>${payment.date}</td>
+                    <td>${payment.reference}</td>
+                    <td class="text-right">${payment.amount.toLocaleString()} DA</td>
+                    <td>${payment.method}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  ${reportData.payments?.map(payment => `
-                    <tr>
-                      <td>${payment.date}</td>
-                      <td>${payment.reference}</td>
-                      <td class="text-right">${payment.amount.toLocaleString()} DA</td>
-                      <td>${payment.method}</td>
-                    </tr>
-                  `).join('')}
-                  <tr class="total-row">
-                    <td colspan="2" class="text-right">Total</td>
-                    <td class="text-right">${reportData.payments?.reduce((sum, payment) => sum + payment.amount, 0).toLocaleString()} DA</td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+                `).join('')}
+                <tr class="total-row">
+                  <td colspan="2" class="text-right">Total</td>
+                  <td class="text-right">${reportData.payments?.reduce((sum, payment) => sum + payment.amount, 0).toLocaleString()} DA</td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
           </body>
         </html>
       `);
@@ -120,8 +106,10 @@ export function PaymentStatePreview({ open, onOpenChange, reportData }: PaymentS
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange} modal={false}>
-      <DialogContent className="p-0 border-0 bg-transparent shadow-none overflow-visible">
-        <PrintablePaymentReport reportData={reportData} />
+      <DialogContent className="p-0 border-0 bg-transparent shadow-none">
+        <div className="print-preview" onClick={handlePrint}>
+          <PrintablePaymentReport reportData={reportData} />
+        </div>
       </DialogContent>
     </Dialog>
   );

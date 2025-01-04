@@ -17,28 +17,7 @@ export function PrintablePaymentReport({ reportData }: PrintablePaymentReportPro
   const total = reportData.payments?.reduce((sum, payment) => sum + payment.amount, 0) || 0;
 
   return (
-    <div className="p-4 bg-white">
-      <div className="print-info bg-gray-50 p-3 rounded-lg mb-3">
-        <div className="grid grid-cols-2 gap-2">
-          <div>
-            <p className="text-sm text-gray-500">Client</p>
-            <p className="font-medium">{reportData.client}</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">Méthode de paiement</p>
-            <p className="font-medium">{reportData.paymentMethod || 'Toutes'}</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">Date de début</p>
-            <p className="font-medium">{reportData.startDate || '-'}</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">Date de fin</p>
-            <p className="font-medium">{reportData.endDate || '-'}</p>
-          </div>
-        </div>
-      </div>
-
+    <div className="bg-white">
       <table className="w-full border-collapse">
         <thead>
           <tr className="bg-gray-50">
