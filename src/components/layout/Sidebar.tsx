@@ -93,10 +93,8 @@ const Sidebar = () => {
                       )}
                     >
                       <Icon 
-                        className={cn(
-                          "h-5 w-5 transition-all duration-300",
-                          isActive ? item.iconColor : `text-gray-500 group-hover:${item.iconColor}`
-                        )} 
+                        className={isActive ? item.iconColor : `text-gray-400 group-hover:${item.iconColor}`}
+                        size={20}
                       />
                       
                       <span className="transition-colors duration-300">
