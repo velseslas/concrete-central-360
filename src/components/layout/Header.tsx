@@ -1,7 +1,7 @@
 import { Bell } from "lucide-react";
 import { motion } from "framer-motion";
 
-const Header = () => {
+export const Header = () => {
   return (
     <motion.header 
       initial={{ opacity: 0, y: -20 }}
@@ -44,5 +44,3 @@ const Header = () => {
     </motion.header>
   );
 };
-
-export default Header;
