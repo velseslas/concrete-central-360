@@ -12,18 +12,24 @@ interface FormulationGraviersSectionProps {
 export function FormulationGraviersSection({ form }: FormulationGraviersSectionProps) {
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-semibold text-gray-700">Graviers</h3>
+      <h3 className="text-lg font-semibold bg-clip-text text-transparent bg-gradient-to-r from-gray-400 to-gray-200">
+        Graviers
+      </h3>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <FormField
           control={form.control}
           name="gravier38"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Gravier 3/8 (kg/m³)</FormLabel>
+              <FormLabel className="text-gray-300">Gravier 3/8 (kg/m³)</FormLabel>
               <FormControl>
-                <Input placeholder="350 kg/m³" {...field} />
+                <Input 
+                  placeholder="350 kg/m³" 
+                  {...field} 
+                  className="bg-gray-800/50 border-gray-700 text-white placeholder-gray-400"
+                />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-400" />
             </FormItem>
           )}
         />
@@ -32,11 +38,15 @@ export function FormulationGraviersSection({ form }: FormulationGraviersSectionP
           name="gravier815"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Gravier 8/15 (kg/m³)</FormLabel>
+              <FormLabel className="text-gray-300">Gravier 8/15 (kg/m³)</FormLabel>
               <FormControl>
-                <Input placeholder="350 kg/m³" {...field} />
+                <Input 
+                  placeholder="350 kg/m³" 
+                  {...field} 
+                  className="bg-gray-800/50 border-gray-700 text-white placeholder-gray-400"
+                />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-400" />
             </FormItem>
           )}
         />
@@ -45,11 +55,15 @@ export function FormulationGraviersSection({ form }: FormulationGraviersSectionP
           name="gravier1525"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Gravier 15/25 (kg/m³)</FormLabel>
+              <FormLabel className="text-gray-300">Gravier 15/25 (kg/m³)</FormLabel>
               <FormControl>
-                <Input placeholder="350 kg/m³" {...field} />
+                <Input 
+                  placeholder="350 kg/m³" 
+                  {...field} 
+                  className="bg-gray-800/50 border-gray-700 text-white placeholder-gray-400"
+                />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-400" />
             </FormItem>
           )}
         />

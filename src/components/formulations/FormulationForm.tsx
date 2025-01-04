@@ -8,6 +8,7 @@ import { FormulationBasicInfo } from "./FormulationBasicInfo";
 import { FormulationSablesSection } from "./FormulationSablesSection";
 import { FormulationGraviersSection } from "./FormulationGraviersSection";
 import { FormulationAdditionalSection } from "./FormulationAdditionalSection";
+import { motion } from "framer-motion";
 
 const formulationSchema = z.object({
   nom: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
@@ -51,22 +52,66 @@ export function FormulationForm({ open, onOpenChange, onSubmit }: FormulationFor
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[800px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[800px] max-h-[90vh] overflow-y-auto bg-gray-900/90 backdrop-blur-lg border border-gray-700 text-white">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-primary">Nouvelle formulation</DialogTitle>
+          <DialogTitle className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+            Nouvelle formulation
+          </DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <FormulationBasicInfo form={form} />
-            <FormulationSablesSection form={form} />
-            <FormulationGraviersSection form={form} />
-            <FormulationAdditionalSection form={form} />
-            <div className="flex justify-end space-x-2 pt-4 border-t">
-              <Button variant="outline" onClick={() => onOpenChange(false)}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+            >
+              <FormulationBasicInfo form={form} />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <FormulationSablesSection form={form} />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <FormulationGraviersSection form={form} />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              <FormulationAdditionalSection form={form} />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="flex justify-end space-x-2 pt-4 border-t border-gray-700"
+            >
+              <Button 
+                variant="outline" 
+                onClick={() => onOpenChange(false)}
+                className="bg-gray-800/50 hover:bg-gray-700/50 border-gray-700 hover:border-gray-600 text-white"
+              >
                 Annuler
               </Button>
-              <Button type="submit">Créer</Button>
-            </div>
+              <Button 
+                type="submit"
+                className="bg-blue-600 hover:bg-blue-700 text-white"
+              >
+                Créer
+              </Button>
+            </motion.div>
           </form>
         </Form>
       </DialogContent>
