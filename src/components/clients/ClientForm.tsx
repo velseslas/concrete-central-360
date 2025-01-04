@@ -130,6 +130,9 @@ export function ClientForm({ clientToEdit, onSuccess }: ClientFormProps) {
                 Imprimer
               </Button>
             )}
+            <Button type="button" variant="outline" onClick={onSuccess}>
+              Annuler
+            </Button>
             <Button type="submit">
               {clientToEdit ? "Modifier" : "Créer"}
             </Button>
