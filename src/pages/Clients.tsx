@@ -100,9 +100,13 @@ const Clients = () => {
               >
                 ← Retour
               </button>
-              <h2 className="text-2xl font-bold text-white">{widget.title}</h2>
+              <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+                {widget.title}
+              </h2>
             </div>
-            <WidgetComponent />
+            <div className="bg-gray-800/50 backdrop-blur-lg border border-gray-700 rounded-lg p-6">
+              <WidgetComponent />
+            </div>
           </motion.div>
         );
       }
@@ -165,7 +169,7 @@ const Clients = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400"
+              className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400"
             >
               Gestion des Clients
             </motion.h1>
