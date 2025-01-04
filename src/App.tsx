@@ -1,4 +1,4 @@
-import { Toaster as Sonner } from "@/components/ui/sonner";
+import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -22,11 +22,11 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <BrowserRouter>
-          <div className="flex h-screen">
+          <div className="flex h-screen bg-gray-900">
             <Sidebar />
             <div className="flex-1 flex flex-col overflow-hidden">
               <Header />
-              <main>
+              <main className="flex-1 overflow-auto">
                 <Routes>
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/formulations" element={<Formulations />} />
@@ -44,7 +44,7 @@ function App() {
           </div>
         </BrowserRouter>
       </TooltipProvider>
-      <Sonner />
+      <Toaster />
     </QueryClientProvider>
   );
 }
