@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { 
   Home, Users, TestTube, Truck, Car, 
-  DollarSign, FileText, Factory, FileSpreadsheet 
+  DollarSign, FileText, Factory, FileSpreadsheet, Settings
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -19,6 +19,7 @@ const Sidebar = () => {
     { to: "/expenses", icon: DollarSign, label: "Dépenses" },
     { to: "/invoices", icon: FileSpreadsheet, label: "Factures" },
     { to: "/orders", icon: FileText, label: "Commandes" },
+    { to: "/settings", icon: Settings, label: "Réglages" },
   ];
 
   return (
