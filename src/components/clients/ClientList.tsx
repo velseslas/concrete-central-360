@@ -6,6 +6,7 @@ import { ClientTable } from "./ClientTable";
 import { Button } from "../ui/button";
 import { UserPlus } from "lucide-react";
 import { motion } from "framer-motion";
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 
 const mockClients = [
   {
@@ -26,8 +27,6 @@ const mockClients = [
 
 const ClientList = () => {
   const [selectedClient, setSelectedClient] = useState<any>(null);
-  const [showEditForm, setShowEditForm] = useState(false);
-  const [showNewForm, setShowNewForm] = useState(false);
   const [showProjectForm, setShowProjectForm] = useState(false);
   const [showDocumentUpload, setShowDocumentUpload] = useState(false);
 
@@ -37,7 +36,6 @@ const ClientList = () => {
 
   const handleEdit = (client: any) => {
     setSelectedClient(client);
-    setShowEditForm(true);
   };
 
   const handleAddProject = (client: any) => {
@@ -64,10 +62,17 @@ const ClientList = () => {
         className="flex justify-between items-center"
       >
         <h2 className="text-2xl font-bold">Liste des clients</h2>
-        <Button onClick={() => setShowNewForm(true)}>
-          <UserPlus className="mr-2 h-4 w-4" />
-          Nouveau client
-        </Button>
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button>
+              <UserPlus className="mr-2 h-4 w-4" />
+              Nouveau client
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="right" className="w-[400px] sm:w-[540px]">
+            <ClientForm />
+          </SheetContent>
+        </Sheet>
       </motion.div>
 
       <motion.div
@@ -87,11 +92,11 @@ const ClientList = () => {
       
       {selectedClient && (
         <>
-          <ClientForm
-            open={showEditForm}
-            onOpenChange={setShowEditForm}
-            clientToEdit={selectedClient}
-          />
+          <Sheet>
+            <SheetContent side="right" className="w-[400px] sm:w-[540px]">
+              <ClientForm clientToEdit={selectedClient} />
+            </SheetContent>
+          </Sheet>
           <ProjectForm
             open={showProjectForm}
             onOpenChange={setShowProjectForm}
@@ -102,11 +107,6 @@ const ClientList = () => {
           )}
         </>
       )}
-
-      <ClientForm
-        open={showNewForm}
-        onOpenChange={setShowNewForm}
-      />
     </motion.div>
   );
 };
