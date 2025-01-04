@@ -1,7 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import { useState } from "react";
+import { PriceForm } from "../PriceForm";
 
 export function PriceWidget() {
+  const [showPriceForm, setShowPriceForm] = useState(false);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -9,8 +15,12 @@ export function PriceWidget() {
       transition={{ duration: 0.3 }}
     >
       <Card className="bg-gray-800/50 backdrop-blur-lg border border-gray-700">
-        <CardHeader>
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle>Prix</CardTitle>
+          <Button onClick={() => setShowPriceForm(true)} size="sm">
+            <Plus className="h-4 w-4 mr-2" />
+            Ajouter un prix
+          </Button>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
@@ -31,6 +41,11 @@ export function PriceWidget() {
           </div>
         </CardContent>
       </Card>
+
+      <PriceForm 
+        open={showPriceForm} 
+        onOpenChange={setShowPriceForm}
+      />
     </motion.div>
   );
 }
