@@ -1,7 +1,18 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Filter } from "lucide-react";
+</lov-replace>
+
+<lov-search>
+      <div className="flex items-center gap-2 mb-4">
+        <Filter className="h-4 w-4" />
+        <span className="font-medium">Filtres</span>
+      </div>
+</lov-search>
+<lov-replace>
+      <div className="mb-4">
+        <span className="font-medium">Filtres</span>
+      </div>
 import { toast } from "sonner";
 import { useState } from "react";
 import { PaymentStatePreview } from "./PaymentStatePreview";
