@@ -65,17 +65,19 @@ export function DocumentList() {
         </DialogContent>
       </Dialog>
 
-      <style jsx global>{`
-        @media print {
-          .print\\:hidden {
-            display: none !important;
+      <style>
+        {`
+          @media print {
+            .print\\:hidden {
+              display: none !important;
+            }
+            [data-radix-popper-content-wrapper] {
+              position: static !important;
+              transform: none !important;
+            }
           }
-          [data-radix-popper-content-wrapper] {
-            position: static !important;
-            transform: none !important;
-          }
-        }
-      `}</style>
+        `}
+      </style>
     </div>
   );
 }
