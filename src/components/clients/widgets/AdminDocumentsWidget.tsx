@@ -8,24 +8,24 @@ export function AdminDocumentsWidget() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <Card className="bg-gray-800/50 backdrop-blur-lg border border-gray-700">
+      <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-100 shadow-lg hover:shadow-xl transition-all duration-300">
         <CardHeader>
-          <CardTitle>Documents Administratifs</CardTitle>
+          <CardTitle className="text-blue-800">Documents Administratifs</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <div className="p-4 rounded-lg bg-gray-700/50">
-              <h3 className="text-lg font-semibold mb-2">Documents requis</h3>
-              <ul className="list-disc list-inside space-y-2 text-gray-300">
+            <div className="p-4 rounded-lg bg-white/50 border border-blue-100">
+              <h3 className="text-lg font-semibold mb-2 text-blue-900">Documents requis</h3>
+              <ul className="list-disc list-inside space-y-2 text-blue-700">
                 <li>Registre de commerce</li>
                 <li>Carte d'identification fiscale</li>
                 <li>Attestation d'activité</li>
                 <li>Statuts de l'entreprise</li>
               </ul>
             </div>
-            <div className="p-4 rounded-lg bg-gray-700/50">
-              <h3 className="text-lg font-semibold mb-2">Documents optionnels</h3>
-              <ul className="list-disc list-inside space-y-2 text-gray-300">
+            <div className="p-4 rounded-lg bg-white/50 border border-blue-100">
+              <h3 className="text-lg font-semibold mb-2 text-blue-900">Documents optionnels</h3>
+              <ul className="list-disc list-inside space-y-2 text-blue-700">
                 <li>Certificats de qualité</li>
                 <li>Références clients</li>
                 <li>Attestations de bonne exécution</li>
