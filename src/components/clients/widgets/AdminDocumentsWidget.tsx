@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus, FileText } from "lucide-react";
+import { Plus, FileText, Printer } from "lucide-react";
 import { DocumentUpload } from "@/components/shared/DocumentUpload";
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -24,10 +24,22 @@ export function AdminDocumentsWidget() {
   const [showUploadForm, setShowUploadForm] = useState(false);
   const [selectedClient, setSelectedClient] = useState<typeof mockClients[0] | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [selectedDoc, setSelectedDoc] = useState<{ id: number; title: string } | null>(null);
 
   const handleClientClick = (client: typeof mockClients[0]) => {
     setSelectedClient(client);
     setDialogOpen(true);
+  };
+
+  const handleDocumentClick = (doc: { id: number; title: string }) => {
+    setSelectedDoc(doc);
+    setPreviewOpen(true);
+  };
+
+  const handlePrint = () => {
+    console.log("Impression du document:", selectedDoc?.title);
+    window.print();
   };
 
   return (
@@ -84,11 +96,29 @@ export function AdminDocumentsWidget() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="flex flex-col items-center gap-2 p-4 rounded-lg hover:bg-accent/50 transition-colors cursor-pointer"
+                onClick={() => handleDocumentClick(doc)}
               >
                 <FileText className="h-12 w-12 text-blue-500" />
                 <span className="text-sm text-center">{doc.title}</span>
               </motion.div>
             ))}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
+        <DialogContent className="sm:max-w-[600px]">
+          <DialogHeader>
+            <DialogTitle>Aperçu - {selectedDoc?.title}</DialogTitle>
+          </DialogHeader>
+          <div className="flex flex-col items-center gap-4 py-4">
+            <div className="w-full aspect-[3/4] bg-gray-100 rounded-lg flex items-center justify-center">
+              <FileText className="h-24 w-24 text-gray-400" />
+            </div>
+            <Button onClick={handlePrint} variant="outline">
+              <Printer className="mr-2 h-4 w-4" />
+              Imprimer
+            </Button>
           </div>
         </DialogContent>
       </Dialog>
