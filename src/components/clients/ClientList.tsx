@@ -98,7 +98,7 @@ const ClientList = () => {
             clientId={selectedClient.id}
           />
           {showDocumentUpload && (
-            <DocumentsWidget clientId={selectedClient.id} />
+            <DocumentsWidget />
           )}
         </>
       )}
