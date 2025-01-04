@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { motion } from "framer-motion";
 import VehicleForm from "@/components/vehicles/VehicleForm";
 import VehicleList from "@/components/vehicles/VehicleList";
 import DocumentAlerts from "@/components/vehicles/DocumentAlerts";
@@ -21,8 +22,18 @@ const Vehicles = () => {
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <div className="mb-6 flex items-center justify-between">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="container mx-auto p-6"
+    >
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+        className="mb-6 flex items-center justify-between"
+      >
         <h1 className="text-2xl font-bold">Gestion du Parc Roulant</h1>
         <Drawer open={isOpen} onOpenChange={setIsOpen}>
           <DrawerTrigger asChild>
@@ -42,28 +53,45 @@ const Vehicles = () => {
             </div>
           </DrawerContent>
         </Drawer>
-      </div>
+      </motion.div>
 
-      <div className="grid gap-6 md:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>Liste des Véhicules</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <VehicleList onEdit={handleEdit} />
-          </CardContent>
-        </Card>
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+        className="grid gap-6 md:grid-cols-2"
+      >
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          <Card>
+            <CardHeader>
+              <CardTitle>Liste des Véhicules</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <VehicleList onEdit={handleEdit} />
+            </CardContent>
+          </Card>
+        </motion.div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Documents à Renouveler</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <DocumentAlerts />
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          <Card>
+            <CardHeader>
+              <CardTitle>Documents à Renouveler</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <DocumentAlerts />
+            </CardContent>
+          </Card>
+        </motion.div>
+      </motion.div>
+    </motion.div>
   );
 };
 

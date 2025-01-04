@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users, FileText, Construction, Building2, Package, DollarSign, ShoppingCart, CreditCard } from "lucide-react";
+import { motion } from "framer-motion";
 import { ClientListWidget } from "@/components/clients/widgets/ClientListWidget";
 import { ProductCategoryWidget } from "@/components/clients/widgets/ProductCategoryWidget";
 import { ProjectWidget } from "@/components/clients/widgets/ProjectWidget";
@@ -103,38 +104,59 @@ const Clients = () => {
     }
 
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {widgets.map((widget) => {
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
+        {widgets.map((widget, index) => {
           const IconComponent = widget.icon;
           return (
-            <Card 
+            <motion.div
               key={widget.id}
-              className="cursor-pointer hover:shadow-lg transition-shadow hover:scale-105 transition-all duration-200"
-              onClick={() => setActiveWidget(widget.id)}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
             >
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <IconComponent className={`h-6 w-6 ${widget.color}`} />
-                  {widget.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600">
-                  Gérer les {widget.title.toLowerCase()}
-                </p>
-              </CardContent>
-            </Card>
+              <Card 
+                className="cursor-pointer hover:shadow-lg transition-shadow hover:scale-105 transition-all duration-200"
+                onClick={() => setActiveWidget(widget.id)}
+              >
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <IconComponent className={`h-6 w-6 ${widget.color}`} />
+                    {widget.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-600">
+                    Gérer les {widget.title.toLowerCase()}
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
           );
         })}
-      </div>
+      </motion.div>
     );
   };
 
   return (
-    <div className="container mx-auto p-6 space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900">Gestion des Clients</h1>
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="container mx-auto p-6 space-y-6"
+    >
+      <motion.h1 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-2xl font-bold text-gray-900"
+      >
+        Gestion des Clients
+      </motion.h1>
       {renderContent()}
-    </div>
+    </motion.div>
   );
 };
 
