@@ -4,11 +4,7 @@ import { DocumentUpload } from "@/components/shared/DocumentUpload";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 
-interface DocumentsWidgetProps {
-  clientId: number;
-}
-
-export function DocumentsWidget({ clientId }: DocumentsWidgetProps) {
+export function DocumentsWidget() {
   const [showUploadForm, setShowUploadForm] = useState(false);
 
   return (
@@ -23,7 +19,6 @@ export function DocumentsWidget({ clientId }: DocumentsWidgetProps) {
       <CardContent>
         {showUploadForm ? (
           <DocumentUpload 
-            clientId={clientId} 
             onUploadSuccess={() => setShowUploadForm(false)}
           />
         ) : null}
