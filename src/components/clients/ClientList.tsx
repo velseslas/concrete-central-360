@@ -5,6 +5,7 @@ import { DocumentsWidget } from "./widgets/DocumentsWidget";
 import { ClientTable } from "./ClientTable";
 import { Button } from "../ui/button";
 import { UserPlus } from "lucide-react";
+import { motion } from "framer-motion";
 
 const mockClients = [
   {
@@ -50,16 +51,31 @@ const ClientList = () => {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      className="space-y-6"
+    >
+      <motion.div 
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.3, delay: 0.1 }}
+        className="flex justify-between items-center"
+      >
         <h2 className="text-2xl font-bold">Liste des clients</h2>
         <Button onClick={() => setShowNewForm(true)}>
           <UserPlus className="mr-2 h-4 w-4" />
           Nouveau client
         </Button>
-      </div>
+      </motion.div>
 
-      <div className="bg-white rounded-lg shadow">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, delay: 0.2 }}
+        className="bg-white rounded-lg shadow"
+      >
         <ClientTable
           clients={mockClients}
           onEdit={handleEdit}
@@ -67,7 +83,7 @@ const ClientList = () => {
           onDocumentUpload={handleDocumentUpload}
           onDelete={handleDelete}
         />
-      </div>
+      </motion.div>
       
       {selectedClient && (
         <>
@@ -91,7 +107,7 @@ const ClientList = () => {
         open={showNewForm}
         onOpenChange={setShowNewForm}
       />
-    </div>
+    </motion.div>
   );
 };
 

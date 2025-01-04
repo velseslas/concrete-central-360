@@ -1,6 +1,7 @@
 import { ClientActions } from "./ClientActions";
 import { useState } from "react";
 import { DetailView } from "./DetailView";
+import { motion } from "framer-motion";
 
 interface ClientTableProps {
   clients: any[];
@@ -40,9 +41,12 @@ export function ClientTable({
             </tr>
           </thead>
           <tbody>
-            {clients.map((client) => (
-              <tr 
-                key={client.id} 
+            {clients.map((client, index) => (
+              <motion.tr
+                key={client.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
                 className="border-b hover:bg-gray-50 cursor-pointer"
                 onClick={() => handleRowClick(client)}
               >
@@ -60,7 +64,7 @@ export function ClientTable({
                     onDelete={onDelete}
                   />
                 </td>
-              </tr>
+              </motion.tr>
             ))}
           </tbody>
         </table>
