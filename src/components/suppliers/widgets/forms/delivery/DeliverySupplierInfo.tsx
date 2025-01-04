@@ -82,12 +82,12 @@ export function DeliverySupplierInfo({ control }: DeliverySupplierInfoProps) {
 
         <FormField
           control={control}
-          name="vehicleNumber"
+          name="deliveryNoteNumber"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Matricule du camion</FormLabel>
+              <FormLabel>Numéro bon de livraison</FormLabel>
               <FormControl>
-                <Input placeholder="Ex: 1234-123-16" {...field} />
+                <Input placeholder="Ex: BL-2024-001" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -96,12 +96,12 @@ export function DeliverySupplierInfo({ control }: DeliverySupplierInfoProps) {
 
         <FormField
           control={control}
-          name="deliveryNoteNumber"
+          name="vehicleNumber"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Numéro bon de livraison</FormLabel>
+              <FormLabel>Matricule du camion</FormLabel>
               <FormControl>
-                <Input placeholder="Ex: BL-2024-001" {...field} />
+                <Input placeholder="Ex: 1234-123-16" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

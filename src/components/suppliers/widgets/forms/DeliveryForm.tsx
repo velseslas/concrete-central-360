@@ -61,16 +61,10 @@ export function DeliveryForm({ open, onOpenChange, deliveryToEdit }: DeliveryFor
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="md:col-span-1">
-                <DeliveryBasicInfo control={form.control} />
-              </div>
-              <div className="md:col-span-2">
-                <DeliverySupplierInfo control={form.control} />
-              </div>
-              <div className="md:col-span-3">
-                <DeliveryQuantityInfo control={form.control} />
-              </div>
+            <div className="grid grid-cols-1 gap-6">
+              <DeliveryBasicInfo control={form.control} />
+              <DeliverySupplierInfo control={form.control} />
+              <DeliveryQuantityInfo control={form.control} />
             </div>
 
             <div className="flex justify-end space-x-2 pt-4 border-t">

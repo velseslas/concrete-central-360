@@ -14,6 +14,20 @@ export function DeliveryBasicInfo({ control }: DeliveryBasicInfoProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <FormField
           control={control}
+          name="date"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Date de livraison</FormLabel>
+              <FormControl>
+                <Input type="date" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={control}
           name="category"
           render={({ field }) => (
             <FormItem>
@@ -30,20 +44,6 @@ export function DeliveryBasicInfo({ control }: DeliveryBasicInfoProps) {
                   <SelectItem value="sable">Sable</SelectItem>
                 </SelectContent>
               </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={control}
-          name="date"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Date de livraison</FormLabel>
-              <FormControl>
-                <Input type="date" {...field} />
-              </FormControl>
               <FormMessage />
             </FormItem>
           )}
