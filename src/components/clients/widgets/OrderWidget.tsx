@@ -12,6 +12,9 @@ interface Order {
   volume: number;
   status: "pending" | "in_progress" | "completed";
   deliveryDate: string;
+  client: string;
+  project: string;
+  category: string;
 }
 
 interface OrderWidgetProps {
@@ -23,10 +26,13 @@ export function OrderWidget({ clientId }: OrderWidgetProps) {
   const [orders] = useState<Order[]>([
     {
       id: "CMD001",
+      deliveryDate: "2024-03-20",
+      client: "Client A",
+      project: "Projet 1",
+      category: "Béton",
       formulation: "B25",
       volume: 30,
       status: "pending",
-      deliveryDate: "2024-03-20",
     }
   ]);
 
@@ -64,9 +70,12 @@ export function OrderWidget({ clientId }: OrderWidgetProps) {
           <TableHeader>
             <TableRow>
               <TableHead>N° Commande</TableHead>
-              <TableHead>Formulation</TableHead>
-              <TableHead>Volume (m³)</TableHead>
               <TableHead>Date de livraison</TableHead>
+              <TableHead>Client</TableHead>
+              <TableHead>Chantier</TableHead>
+              <TableHead>Catégorie</TableHead>
+              <TableHead>Produit</TableHead>
+              <TableHead>Volume (m³)</TableHead>
               <TableHead>Statut</TableHead>
             </TableRow>
           </TableHeader>
@@ -74,9 +83,12 @@ export function OrderWidget({ clientId }: OrderWidgetProps) {
             {orders.map((order) => (
               <TableRow key={order.id}>
                 <TableCell className="font-medium">{order.id}</TableCell>
+                <TableCell>{order.deliveryDate}</TableCell>
+                <TableCell>{order.client}</TableCell>
+                <TableCell>{order.project}</TableCell>
+                <TableCell>{order.category}</TableCell>
                 <TableCell>{order.formulation}</TableCell>
                 <TableCell>{order.volume}</TableCell>
-                <TableCell>{order.deliveryDate}</TableCell>
                 <TableCell>{getStatusBadge(order.status)}</TableCell>
               </TableRow>
             ))}
