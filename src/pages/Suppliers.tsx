@@ -10,17 +10,20 @@ import { ReportsWidget } from "@/components/suppliers/widgets/ReportsWidget";
 import { PurchaseOrderWidget } from "@/components/suppliers/widgets/PurchaseOrderWidget";
 import { PaymentWidget } from "@/components/suppliers/widgets/PaymentWidget";
 import { SupplierDashboard } from "@/components/suppliers/SupplierDashboard";
+import { toast } from "sonner";
 
 const Suppliers = () => {
-  const [selectedSupplierId, setSelectedSupplierId] = useState<string | null>(null);
-  const [showNewSupplierForm, setShowNewSupplierForm] = useState(false);
+  const [selectedSupplierId, setSelectedSupplierId] = useState<number>(1); // Default to first supplier
+  const [activeWidget, setActiveWidget] = useState<string | null>(null);
 
-  const handleSupplierSelect = (id: string) => {
-    setSelectedSupplierId(id);
+  const handleSupplierEdit = (supplier: any) => {
+    console.log("Editing supplier:", supplier);
+    toast.info("Modification du fournisseur en cours...");
   };
 
-  const handleNewSupplier = () => {
-    setShowNewSupplierForm(true);
+  const handleSupplierDelete = (supplierId: number) => {
+    console.log("Deleting supplier:", supplierId);
+    toast.success("Fournisseur supprimé avec succès");
   };
 
   const widgets = [
@@ -91,7 +94,10 @@ const Suppliers = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <SupplierList />
+          <SupplierList 
+            onEdit={handleSupplierEdit}
+            onDelete={handleSupplierDelete}
+          />
         </motion.div>
 
         <motion.div
@@ -99,7 +105,11 @@ const Suppliers = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <SupplierDashboard />
+          <SupplierDashboard 
+            widgets={widgets}
+            activeWidget={activeWidget}
+            setActiveWidget={setActiveWidget}
+          />
         </motion.div>
       </div>
 
@@ -111,7 +121,13 @@ const Suppliers = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            {widget.component && <widget.component />}
+            {widget.component && 
+              widget.id === 'documents' ? (
+                <DocumentsWidget supplierId={selectedSupplierId} />
+              ) : (
+                <widget.component />
+              )
+            }
           </motion.div>
         ))}
       </div>
