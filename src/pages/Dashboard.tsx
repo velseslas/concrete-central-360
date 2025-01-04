@@ -1,7 +1,6 @@
 import DashboardStats from "@/components/dashboard/DashboardStats";
 import MaterialsTable from "@/components/dashboard/MaterialsTable";
 import { OverviewWidget } from "@/components/dashboard/OverviewWidget";
-import StockAlerts from "@/components/dashboard/StockAlerts";
 import { motion } from "framer-motion";
 
 const Dashboard = () => {
@@ -35,7 +34,7 @@ const Dashboard = () => {
               <OverviewWidget />
             </motion.div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -50,20 +49,6 @@ const Dashboard = () => {
                     État des stocks
                   </h2>
                   <MaterialsTable />
-                </div>
-              </motion.div>
-              
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-                className="space-y-8"
-              >
-                <div className="rounded-2xl bg-gray-800/50 backdrop-blur-lg border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300 p-6 shadow-lg hover:shadow-xl">
-                  <h2 className="text-2xl font-semibold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-[#0EA5E9] to-[#8B5CF6]">
-                    Alertes de stock
-                  </h2>
-                  <StockAlerts />
                 </div>
               </motion.div>
             </div>
