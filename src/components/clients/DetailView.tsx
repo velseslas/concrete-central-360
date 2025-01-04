@@ -1,8 +1,6 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { Printer } from "lucide-react";
 
 interface DetailViewProps {
   open: boolean;
@@ -69,9 +67,6 @@ export function DetailView({ open, onOpenChange, data, title }: DetailViewProps)
               th, td { padding: 8px; border: 1px solid #ddd; }
               th { background-color: #f5f5f5; text-align: left; }
               h1 { color: #2563eb; }
-              @media print {
-                .no-print, button { display: none !important; }
-              }
             </style>
           </head>
           <body>
@@ -98,14 +93,9 @@ export function DetailView({ open, onOpenChange, data, title }: DetailViewProps)
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[90vh] w-[90vw] max-w-[800px] overflow-y-auto">
         <DialogHeader className="flex flex-row items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Button variant="outline" size="icon" onClick={handlePrint} className="no-print">
-              <Printer className="h-4 w-4" />
-            </Button>
-            <DialogTitle className="text-2xl font-bold text-primary">
-              {title}
-            </DialogTitle>
-          </div>
+          <DialogTitle className="text-2xl font-bold text-primary">
+            {title}
+          </DialogTitle>
         </DialogHeader>
         <ScrollArea className="max-h-[600px] pr-4">
           <Table>
