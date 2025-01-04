@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Edit, Trash2 } from "lucide-react";
+import { toast } from "sonner";
 
 interface Product {
   id: number;
@@ -24,13 +25,13 @@ const mockProducts: Product[] = [
   {
     id: 1,
     name: "Béton B25",
-    category: "Béton",
+    category: "1",
     description: "Béton standard",
   },
   {
     id: 2,
     name: "Pompe 36m",
-    category: "Pompe",
+    category: "2",
     description: "Pompe à béton",
   },
 ];
@@ -38,6 +39,16 @@ const mockProducts: Product[] = [
 export function ProductList({ onEdit }: ProductListProps) {
   const handleDelete = (productId: number) => {
     console.log("Delete product:", productId);
+    toast.success("Produit supprimé avec succès");
+  };
+
+  const getCategoryName = (categoryId: string) => {
+    const categories = [
+      { id: "1", name: "Béton" },
+      { id: "2", name: "Pompe" },
+      { id: "3", name: "Location" },
+    ];
+    return categories.find(cat => cat.id === categoryId)?.name || categoryId;
   };
 
   return (
@@ -55,7 +66,7 @@ export function ProductList({ onEdit }: ProductListProps) {
           {mockProducts.map((product) => (
             <TableRow key={product.id}>
               <TableCell>{product.name}</TableCell>
-              <TableCell>{product.category}</TableCell>
+              <TableCell>{getCategoryName(product.category)}</TableCell>
               <TableCell>{product.description}</TableCell>
               <TableCell className="text-right">
                 <div className="flex justify-end space-x-2">

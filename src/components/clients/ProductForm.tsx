@@ -19,7 +19,7 @@ type ProductFormValues = z.infer<typeof productSchema>;
 interface ProductFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  productToEdit?: ProductFormValues;
+  productToEdit?: ProductFormValues & { id?: number };
 }
 
 const mockCategories = [
@@ -29,18 +29,21 @@ const mockCategories = [
 ];
 
 export function ProductForm({ open, onOpenChange, productToEdit }: ProductFormProps) {
+  console.log("ProductForm - productToEdit:", productToEdit);
+
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productSchema),
-    defaultValues: productToEdit || {
-      name: "",
-      category: "",
-      description: "",
+    defaultValues: {
+      name: productToEdit?.name || "",
+      category: productToEdit?.category || "",
+      description: productToEdit?.description || "",
     },
   });
 
   const onSubmit = (data: ProductFormValues) => {
     console.log("Product data:", data);
     toast.success(productToEdit ? "Produit modifié avec succès" : "Produit ajouté avec succès");
+    form.reset();
     onOpenChange(false);
   };
 
