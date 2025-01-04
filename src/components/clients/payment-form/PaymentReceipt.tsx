@@ -121,41 +121,64 @@ export function PaymentReceipt({ open, onOpenChange, paymentData, clientName, pr
             }
           `}
         </style>
-        <div className="p-6 space-y-6 print-content">
-          <div className="flex justify-between items-start">
-            <div>
-              <h2 className="text-2xl font-bold mb-6">Bon de Paiement</h2>
-              <p className="text-gray-600">Date: {paymentData.paymentDate || 'N/A'}</p>
-              <p className="text-gray-600">Référence: {paymentData.reference || 'N/A'}</p>
+        <div className="p-8 space-y-8 print-content bg-gradient-to-br from-gray-50 to-white">
+          {/* Header */}
+          <div className="flex justify-between items-start border-b pb-6">
+            <div className="space-y-2">
+              <h2 className="text-3xl font-bold bg-gradient-to-r from-[#0EA5E9] to-[#8B5CF6] bg-clip-text text-transparent">
+                Bon de Paiement
+              </h2>
+              <div className="space-y-1">
+                <p className="text-gray-600">Date: <span className="font-medium text-gray-800">{paymentData.paymentDate || 'N/A'}</span></p>
+                <p className="text-gray-600">Référence: <span className="font-medium text-gray-800">{paymentData.reference || 'N/A'}</span></p>
+              </div>
             </div>
-            <Button variant="outline" onClick={handlePrint} className="no-print">
+            <Button 
+              variant="outline" 
+              onClick={handlePrint} 
+              className="no-print hover:bg-gray-100 transition-colors"
+            >
               <Printer className="h-4 w-4 mr-2" />
               Imprimer
             </Button>
           </div>
 
-          <div className="space-y-4">
-            <div>
-              <h3 className="font-semibold mb-2">Informations Client</h3>
-              <p>Client: {clientName}</p>
-              <p>Chantier: {projectName}</p>
+          {/* Content */}
+          <div className="space-y-8">
+            {/* Client Info */}
+            <div className="bg-gray-50 p-6 rounded-lg border border-gray-100">
+              <h3 className="font-semibold text-lg mb-4 text-gray-800">Informations Client</h3>
+              <div className="space-y-2">
+                <p className="text-gray-600">Client: <span className="font-medium text-gray-800">{clientName}</span></p>
+                <p className="text-gray-600">Chantier: <span className="font-medium text-gray-800">{projectName}</span></p>
+              </div>
             </div>
 
-            <div>
-              <h3 className="font-semibold mb-2">Détails du Paiement</h3>
-              <p>Montant: {amount.toLocaleString('fr-FR')} DA</p>
-              <p className="text-gray-600 italic">Soit: {amountInWords} dinars algériens</p>
-              <p>Mode de paiement: Espèces</p>
+            {/* Payment Details */}
+            <div className="bg-blue-50 p-6 rounded-lg border border-blue-100">
+              <h3 className="font-semibold text-lg mb-4 text-gray-800">Détails du Paiement</h3>
+              <div className="space-y-3">
+                <div className="flex flex-col">
+                  <p className="text-2xl font-bold text-blue-600">
+                    {amount.toLocaleString('fr-FR')} DA
+                  </p>
+                  <p className="text-gray-600 italic">
+                    Soit: {amountInWords} dinars algériens
+                  </p>
+                </div>
+                <p className="text-gray-600">Mode de paiement: <span className="font-medium text-gray-800">Espèces</span></p>
+              </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-8 mt-12">
+            {/* Signatures */}
+            <div className="grid grid-cols-2 gap-12 pt-8 mt-8 border-t border-gray-200">
               <div>
-                <p className="font-semibold mb-8">Signature du Client</p>
-                <div className="border-t border-gray-300 w-48"></div>
+                <p className="font-semibold text-gray-700 mb-12">Signature du Client</p>
+                <div className="border-t-2 border-gray-300 w-48"></div>
               </div>
               <div>
-                <p className="font-semibold mb-8">Signature de l'Entreprise</p>
-                <div className="border-t border-gray-300 w-48"></div>
+                <p className="font-semibold text-gray-700 mb-12">Signature de l'Entreprise</p>
+                <div className="border-t-2 border-gray-300 w-48"></div>
               </div>
             </div>
           </div>
