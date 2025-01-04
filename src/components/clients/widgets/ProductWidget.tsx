@@ -4,15 +4,21 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { ProductForm } from "../ProductForm";
+import { ProductList } from "./ProductList";
 
 export function ProductWidget() {
   const [showNewProductForm, setShowNewProductForm] = useState(false);
+
+  const handleEdit = (product: any) => {
+    setShowNewProductForm(true);
+  };
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
+      className="space-y-6"
     >
       <Card className="bg-gradient-to-br from-[#f97316] to-[#8b5cf6] border-0 shadow-lg hover:shadow-xl transition-all duration-300">
         <CardHeader className="flex flex-row items-center justify-between">
@@ -55,6 +61,15 @@ export function ProductWidget() {
               ))}
             </div>
           </div>
+        </CardContent>
+      </Card>
+
+      <Card className="border-0 shadow-lg">
+        <CardHeader>
+          <CardTitle>Liste des Produits</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ProductList onEdit={handleEdit} />
         </CardContent>
       </Card>
 
