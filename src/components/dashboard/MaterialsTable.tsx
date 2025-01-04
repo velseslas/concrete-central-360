@@ -1,5 +1,4 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 
@@ -21,6 +20,53 @@ const materials: Material[] = [
   { name: "Gravier 8/15", stock: 14000, capacity: 25000, unit: "kg", lastDelivery: "2024-03-10", status: "warning" },
   { name: "Gravier 15/25", stock: 13000, capacity: 25000, unit: "kg", lastDelivery: "2024-03-09", status: "warning" },
 ];
+
+const StockCircle = ({ percentage }: { percentage: number }) => {
+  const getColor = (value: number) => {
+    if (value >= 70) return "#0EA5E9";
+    if (value >= 50) return "#F59E0B";
+    return "#EF4444";
+  };
+
+  const color = getColor(percentage);
+  const circumference = 2 * Math.PI * 30; // radius = 30
+  const strokeDashoffset = circumference - (percentage / 100) * circumference;
+
+  return (
+    <div className="relative w-16 h-16 flex items-center justify-center">
+      <svg className="transform -rotate-90 w-16 h-16">
+        <circle
+          cx="32"
+          cy="32"
+          r="30"
+          stroke="currentColor"
+          strokeWidth="4"
+          fill="transparent"
+          className="text-gray-700/30"
+        />
+        <circle
+          cx="32"
+          cy="32"
+          r="30"
+          stroke={color}
+          strokeWidth="4"
+          fill="transparent"
+          style={{
+            strokeDasharray: circumference,
+            strokeDashoffset: strokeDashoffset,
+            transition: "stroke-dashoffset 0.5s ease",
+          }}
+        />
+      </svg>
+      <span
+        className="absolute text-sm font-medium"
+        style={{ color }}
+      >
+        {Math.round(percentage)}%
+      </span>
+    </div>
+  );
+};
 
 const MaterialsTable = () => {
   const getStatusBadge = (status: Material["status"]) => {
@@ -58,12 +104,6 @@ const MaterialsTable = () => {
         <TableBody>
           {materials.map((material, index) => {
             const percentage = (material.stock / material.capacity) * 100;
-            let progressColor = "bg-[#0EA5E9]";
-            if (percentage < 30) {
-              progressColor = "bg-red-500";
-            } else if (percentage < 50) {
-              progressColor = "bg-yellow-500";
-            }
 
             return (
               <motion.tr
@@ -80,16 +120,8 @@ const MaterialsTable = () => {
                 <TableCell className="text-gray-300">
                   {material.capacity.toLocaleString()} {material.unit}
                 </TableCell>
-                <TableCell className="w-[200px]">
-                  <div className="flex items-center gap-2">
-                    <Progress
-                      value={percentage}
-                      className={`h-2 ${progressColor}`}
-                    />
-                    <span className="text-sm text-gray-400">
-                      {Math.round(percentage)}%
-                    </span>
-                  </div>
+                <TableCell>
+                  <StockCircle percentage={percentage} />
                 </TableCell>
                 <TableCell className="text-gray-300">
                   {new Date(material.lastDelivery).toLocaleDateString()}
