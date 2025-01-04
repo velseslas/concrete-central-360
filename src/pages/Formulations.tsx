@@ -65,7 +65,7 @@ const Formulations = () => {
           </div>
           <Button 
             onClick={() => setOpen(true)}
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 transition-all duration-200"
+            className="bg-gray-800/50 backdrop-blur-lg border border-gray-700 hover:bg-gray-700/50 hover:border-gray-600 transition-all duration-300"
           >
             <Plus className="mr-2 h-4 w-4" />
             Nouvelle formulation

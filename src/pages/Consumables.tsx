@@ -43,39 +43,44 @@ const Consumables = () => {
               Suivi des consommations de carburant et autres consommables
             </p>
           </div>
-        <Drawer open={isOpen} onOpenChange={setIsOpen}>
-          <DrawerTrigger asChild>
-            <Button>
-              <Fuel className="mr-2 h-4 w-4" />
-              Ajouter une consommation
-            </Button>
-          </DrawerTrigger>
-          <DrawerContent>
-            <DrawerHeader>
-              <DrawerTitle>
-                {editingConsumable ? "Modifier la consommation" : "Ajouter une consommation"}
-              </DrawerTitle>
-            </DrawerHeader>
-            <div className="p-4">
-              <ConsumableForm
-                onClose={handleClose}
-                initialData={editingConsumable}
-              />
-            </div>
-          </DrawerContent>
-        </Drawer>
+          <Drawer open={isOpen} onOpenChange={setIsOpen}>
+            <DrawerTrigger asChild>
+              <Button className="bg-gray-800/50 backdrop-blur-lg border border-gray-700 hover:bg-gray-700/50 hover:border-gray-600 transition-all duration-300">
+                <Fuel className="mr-2 h-4 w-4" />
+                Ajouter une consommation
+              </Button>
+            </DrawerTrigger>
+            <DrawerContent className="bg-gray-800/95 backdrop-blur-xl border-t border-gray-700">
+              <DrawerHeader>
+                <DrawerTitle className="text-gray-100">
+                  {editingConsumable ? "Modifier la consommation" : "Ajouter une consommation"}
+                </DrawerTitle>
+              </DrawerHeader>
+              <div className="p-4">
+                <ConsumableForm
+                  onClose={handleClose}
+                  initialData={editingConsumable}
+                />
+              </div>
+            </DrawerContent>
+          </Drawer>
         </motion.div>
 
-      <div className="grid gap-6">
-        <Card>
-          <CardHeader>
-            <CardTitle>Liste des Consommations</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ConsumablesList onEdit={handleEdit} />
-          </CardContent>
-        </Card>
-      </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="grid gap-6"
+        >
+          <Card className="bg-gray-800/50 backdrop-blur-lg border border-gray-700">
+            <CardHeader>
+              <CardTitle className="text-gray-100">Liste des Consommations</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ConsumablesList onEdit={handleEdit} />
+            </CardContent>
+          </Card>
+        </motion.div>
       </motion.div>
     </div>
   );

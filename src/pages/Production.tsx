@@ -73,7 +73,7 @@ const Production = () => {
             </h1>
             <p className="text-gray-400">Gestion de la production</p>
           </div>
-          <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 border-none shadow-lg hover:shadow-xl transition-all duration-300">
+          <Button className="bg-gray-800/50 backdrop-blur-lg border border-gray-700 hover:bg-gray-700/50 hover:border-gray-600 transition-all duration-300">
             <ClipboardList className="mr-2 h-4 w-4" />
             Nouvelle production
           </Button>
