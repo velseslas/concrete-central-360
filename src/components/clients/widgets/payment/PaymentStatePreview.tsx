@@ -40,19 +40,23 @@ export function PaymentStatePreview({ open, onOpenChange, reportData }: PaymentS
                 display: none !important;
               }
               @page {
-                size: A4;
-                margin: 20mm;
+                size: landscape;
+                margin: 15mm;
+              }
+              body {
+                width: 100%;
+                height: 100%;
               }
             }
           `}
         </style>
         <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4 border-b">
-          <div className="flex items-center justify-between w-full">
+          <div className="flex items-center w-full">
             <DialogTitle className="text-2xl font-bold">État des Paiements</DialogTitle>
             <Button 
               onClick={handlePrint} 
               variant="outline" 
-              className="no-print ml-4 hover:bg-gray-100"
+              className="no-print ml-8 hover:bg-gray-100"
               size="sm"
             >
               <Printer className="mr-2 h-4 w-4" />
