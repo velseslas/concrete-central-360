@@ -24,7 +24,7 @@ export function PaymentReceipt({ open, onOpenChange, paymentData, clientName, pr
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="min-w-[800px]">
+      <DialogContent className="min-w-[800px] print:!p-0">
         <style>
           {`
             @media print {
@@ -34,10 +34,13 @@ export function PaymentReceipt({ open, onOpenChange, paymentData, clientName, pr
               @page {
                 margin: 20mm;
               }
+              .print-content {
+                padding: 0 !important;
+              }
             }
           `}
         </style>
-        <div className="p-6 space-y-6">
+        <div className="p-6 space-y-6 print-content">
           <div className="flex justify-between items-start">
             <div>
               <h2 className="text-2xl font-bold mb-6">Bon de Paiement</h2>
