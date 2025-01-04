@@ -85,19 +85,6 @@ const Sidebar = () => {
           );
         })}
       </nav>
-
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
-        className="absolute bottom-4 left-4 right-4"
-      >
-        <div className="p-4 rounded-xl bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20">
-          <p className="text-sm text-gray-400">
-            Version 1.0.0
-          </p>
-        </div>
-      </motion.div>
     </motion.div>
   );
 };
