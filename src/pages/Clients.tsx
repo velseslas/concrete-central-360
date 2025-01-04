@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users, FileText, Construction, Building2, Package, DollarSign, ShoppingCart, CreditCard } from "lucide-react";
 import { motion } from "framer-motion";
 import { ClientListWidget } from "@/components/clients/widgets/ClientListWidget";
@@ -11,7 +10,6 @@ import { AdminDocumentsWidget } from "@/components/clients/widgets/AdminDocument
 import { ReportsWidget } from "@/components/clients/widgets/ReportsWidget";
 import { OrderWidget } from "@/components/clients/widgets/OrderWidget";
 import { PaymentWidget } from "@/components/clients/widgets/PaymentWidget";
-import { PaymentStateWidget } from "@/components/clients/widgets/PaymentStateWidget";
 
 const Clients = () => {
   const [activeWidget, setActiveWidget] = useState<string | null>(null);
@@ -73,13 +71,6 @@ const Clients = () => {
       icon: FileText,
       color: 'text-gray-400',
       component: ReportsWidget
-    },
-    {
-      id: 'payment-state',
-      title: 'État des Paiements',
-      icon: FileText,
-      color: 'text-pink-400',
-      component: PaymentStateWidget
     },
     {
       id: 'paiements',

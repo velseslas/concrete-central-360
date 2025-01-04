@@ -7,9 +7,7 @@ import { motion } from "framer-motion";
 import { PaymentForm } from "../PaymentForm";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { PaymentPreview } from "./PaymentPreview";
-import { toast } from "sonner";
 import { PaymentStateFilters } from "./payment/PaymentStateFilters";
-import { PaymentStateDialog } from "./payment/PaymentStateDialog";
 
 const mockClients = [
   {
@@ -71,6 +69,10 @@ export function PaymentWidget() {
   const [showPaymentDetails, setShowPaymentDetails] = useState(false);
   const [showDocumentPreview, setShowDocumentPreview] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState<string | null>(null);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [filteredClient, setFilteredClient] = useState("");
 
   const handleViewDetails = (client: any) => {
     setSelectedClient(client);
@@ -80,6 +82,15 @@ export function PaymentWidget() {
   const handleDocumentClick = (document: string) => {
     setSelectedDocument(document);
     setShowDocumentPreview(true);
+  };
+
+  const handleGenerateReport = () => {
+    console.log("Filtering payments with:", {
+      client: filteredClient,
+      startDate,
+      endDate,
+      paymentMethod
+    });
   };
 
   return (
@@ -96,38 +107,53 @@ export function PaymentWidget() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            {mockClients.map((client) => (
-              <motion.div
-                key={client.id}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="p-4 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20"
-              >
-                <div className="flex justify-between items-center">
-                  <div>
-                    <h3 className="text-lg font-semibold text-white">{client.name}</h3>
-                    <p className="text-sm text-white/80">
-                      Dernier paiement: {client.lastPayment}
-                    </p>
+          <div className="space-y-6">
+            <PaymentStateFilters
+              clients={mockClients}
+              selectedClient={filteredClient}
+              startDate={startDate}
+              endDate={endDate}
+              paymentMethod={paymentMethod}
+              onClientChange={setFilteredClient}
+              onStartDateChange={setStartDate}
+              onEndDateChange={setEndDate}
+              onPaymentMethodChange={setPaymentMethod}
+              onGenerateReport={handleGenerateReport}
+            />
+
+            <div className="space-y-4">
+              {mockClients.map((client) => (
+                <motion.div
+                  key={client.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="p-4 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20"
+                >
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <h3 className="text-lg font-semibold text-white">{client.name}</h3>
+                      <p className="text-sm text-white/80">
+                        Dernier paiement: {client.lastPayment}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <span className="text-white font-semibold">
+                        Total: {client.totalPaid.toLocaleString()} DA
+                      </span>
+                      <Button 
+                        variant="secondary"
+                        size="sm"
+                        className="bg-white/20 hover:bg-white/30 text-white"
+                        onClick={() => handleViewDetails(client)}
+                      >
+                        Détails
+                        <ChevronRight className="h-4 w-4 ml-2" />
+                      </Button>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <span className="text-white font-semibold">
-                      Total: {client.totalPaid.toLocaleString()} DA
-                    </span>
-                    <Button 
-                      variant="secondary"
-                      size="sm"
-                      className="bg-white/20 hover:bg-white/30 text-white"
-                      onClick={() => handleViewDetails(client)}
-                    >
-                      Détails
-                      <ChevronRight className="h-4 w-4 ml-2" />
-                    </Button>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              ))}
+            </div>
           </div>
         </CardContent>
       </Card>
