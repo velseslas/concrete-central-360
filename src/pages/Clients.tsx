@@ -116,6 +116,7 @@ const Clients = () => {
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
       >
         {widgets.map((widget, index) => {
@@ -125,7 +126,7 @@ const Clients = () => {
               key={widget.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
             >
               <Card 
                 className="cursor-pointer hover:shadow-lg transition-all duration-200 bg-gray-800/50 backdrop-blur-lg border border-gray-700 hover:bg-gray-800/70"
@@ -155,20 +156,20 @@ const Clients = () => {
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.3 }}
         className="container mx-auto p-6 space-y-6"
       >
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
+          transition={{ duration: 0.3 }}
           className="flex flex-col gap-6"
         >
           <div className="flex justify-between items-center">
             <motion.h1 
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
               className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400"
             >
               Gestion des Clients
