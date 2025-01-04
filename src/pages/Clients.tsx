@@ -14,6 +14,7 @@ import { PaymentWidget } from "@/components/clients/widgets/PaymentWidget";
 
 const Clients = () => {
   const [activeWidget, setActiveWidget] = useState<string | null>(null);
+  const [selectedClientId, setSelectedClientId] = useState<number>(1); // Valeur par défaut
   
   const widgets = [
     {
@@ -63,7 +64,7 @@ const Clients = () => {
       title: 'Commandes',
       icon: ShoppingCart,
       color: 'text-indigo-400',
-      component: OrderWidget
+      component: () => <OrderWidget clientId={selectedClientId} />
     },
     {
       id: 'rapports',
