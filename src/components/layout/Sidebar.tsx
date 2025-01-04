@@ -10,8 +10,8 @@ const Sidebar = () => {
   const location = useLocation();
 
   const links = [
-    { to: "/", icon: Home, label: "Tableau de bord" },
-    { to: "/clients", icon: Users, label: "Clients" },
+    { to: "/", icon: Home, label: "" },
+    { to: "/clients", icon: Users, label: "" },
     { to: "/formulations", icon: TestTube, label: "Formulations" },
     { to: "/production", icon: Factory, label: "Production" },
     { to: "/suppliers", icon: Truck, label: "Fournisseurs" },
@@ -68,9 +68,11 @@ const Sidebar = () => {
                   isActive ? 'text-purple-400' : 'text-gray-500'
                 )} />
                 
-                <span className="transition-colors duration-300">
-                  {link.label}
-                </span>
+                {link.label && (
+                  <span className="transition-colors duration-300">
+                    {link.label}
+                  </span>
+                )}
                 
                 {isActive && (
                   <motion.div
