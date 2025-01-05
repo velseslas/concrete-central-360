@@ -36,15 +36,15 @@ export function RollingStockExpenseWidget() {
         <CardHeader>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Car className="h-6 w-6 text-blue-400" />
-              <CardTitle className="text-white">Dépenses Parc Roulant</CardTitle>
+              <Car className="h-4 w-4 text-[#9b87f5]" />
+              <CardTitle className="text-base text-white">Dépenses Parc Roulant</CardTitle>
             </div>
             <Button 
               onClick={() => setShowNewExpenseForm(true)}
               size="sm"
-              className="bg-blue-500 hover:bg-blue-600 transition-colors duration-200"
+              className="bg-[#9b87f5] hover:bg-[#8b77e5] text-xs transition-colors duration-200"
             >
-              <Plus className="mr-2 h-4 w-4" />
+              <Plus className="mr-1 h-3 w-3" />
               Nouvelle dépense
             </Button>
           </div>
@@ -54,11 +54,11 @@ export function RollingStockExpenseWidget() {
             <Table>
               <TableHeader>
                 <TableRow className="border-gray-700 bg-gray-800/50">
-                  <TableHead className="text-gray-300"><Calendar className="h-4 w-4 inline-block mr-2" />Date</TableHead>
-                  <TableHead className="text-gray-300"><Car className="h-4 w-4 inline-block mr-2" />Véhicule</TableHead>
-                  <TableHead className="text-gray-300"><Settings className="h-4 w-4 inline-block mr-2" />Type</TableHead>
-                  <TableHead className="text-gray-300"><DollarSign className="h-4 w-4 inline-block mr-2" />Montant</TableHead>
-                  <TableHead className="text-gray-300">Actions</TableHead>
+                  <TableHead className="text-xs text-[#9b87f5]"><Calendar className="h-3 w-3 inline-block mr-1" />Date</TableHead>
+                  <TableHead className="text-xs text-[#9b87f5]"><Car className="h-3 w-3 inline-block mr-1" />Véhicule</TableHead>
+                  <TableHead className="text-xs text-[#9b87f5]"><Settings className="h-3 w-3 inline-block mr-1" />Type</TableHead>
+                  <TableHead className="text-xs text-[#9b87f5]"><DollarSign className="h-3 w-3 inline-block mr-1" />Montant</TableHead>
+                  <TableHead className="text-xs text-[#9b87f5]">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -70,18 +70,18 @@ export function RollingStockExpenseWidget() {
                     transition={{ duration: 0.3 }}
                     className="border-gray-700 bg-gray-800/30 hover:bg-gray-700/50 transition-colors duration-200"
                   >
-                    <TableCell className="text-gray-300">{new Date(expense.date).toLocaleDateString()}</TableCell>
-                    <TableCell className="text-gray-300">{expense.vehicle}</TableCell>
-                    <TableCell className="text-gray-300">{expense.type}</TableCell>
-                    <TableCell className="text-gray-300">{expense.amount.toLocaleString()} DH</TableCell>
+                    <TableCell className="text-xs text-gray-300">{new Date(expense.date).toLocaleDateString()}</TableCell>
+                    <TableCell className="text-xs text-gray-300">{expense.vehicle}</TableCell>
+                    <TableCell className="text-xs text-gray-300">{expense.type}</TableCell>
+                    <TableCell className="text-xs text-gray-300">{expense.amount.toLocaleString()} DH</TableCell>
                     <TableCell>
                       <div className="flex gap-2">
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="hover:bg-gray-700/50"
+                          className="h-7 w-7 hover:bg-[#9b87f5]/20 hover:text-[#9b87f5]"
                         >
-                          <Settings className="h-4 w-4 text-gray-400" />
+                          <Settings className="h-3 w-3 text-[#9b87f5]" />
                         </Button>
                       </div>
                     </TableCell>
