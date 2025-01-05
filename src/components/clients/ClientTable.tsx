@@ -28,26 +28,26 @@ export function ClientTable({
 
   return (
     <>
-      <div className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 overflow-hidden">
+      <div className="overflow-hidden rounded-lg border border-gray-700/50">
         <table className="w-full text-sm text-left">
-          <thead className="text-xs uppercase bg-gray-900/50 backdrop-blur-xl border-b border-gray-700">
+          <thead className="text-xs uppercase bg-gray-900/70 border-b border-gray-700">
             <tr>
-              <th className="px-6 py-3 text-gray-300">Nom</th>
-              <th className="px-6 py-3 text-gray-300">Raison sociale</th>
-              <th className="px-6 py-3 text-gray-300">Téléphone</th>
-              <th className="px-6 py-3 text-gray-300">Email</th>
-              <th className="px-6 py-3 text-gray-300">Ville</th>
-              <th className="px-6 py-3 text-gray-300">Actions</th>
+              <th className="px-6 py-4 text-gray-300">Nom</th>
+              <th className="px-6 py-4 text-gray-300">Raison sociale</th>
+              <th className="px-6 py-4 text-gray-300">Téléphone</th>
+              <th className="px-6 py-4 text-gray-300">Email</th>
+              <th className="px-6 py-4 text-gray-300">Ville</th>
+              <th className="px-6 py-4 text-gray-300">Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-gray-700/50">
             {clients.map((client, index) => (
               <motion.tr
                 key={client.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
-                className="border-b border-gray-700/50 hover:bg-gray-700/30 backdrop-blur-xl transition-colors cursor-pointer"
+                className="bg-gray-800/50 backdrop-blur-sm hover:bg-gray-700/50 transition-colors cursor-pointer"
                 onClick={() => handleRowClick(client)}
               >
                 <td className="px-6 py-4 text-gray-300">{client.nom}</td>

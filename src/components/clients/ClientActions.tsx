@@ -24,7 +24,7 @@ export function ClientActions({
         onClick={() => onEdit(client)}
         className="hover:bg-gray-700/50"
       >
-        <Edit className="h-4 w-4 text-gray-300" />
+        <Edit className="h-4 w-4 text-blue-400" />
       </Button>
       <Button
         variant="ghost"
@@ -32,7 +32,7 @@ export function ClientActions({
         onClick={() => onAddProject(client)}
         className="hover:bg-gray-700/50"
       >
-        <Building className="h-4 w-4 text-gray-300" />
+        <Building className="h-4 w-4 text-green-400" />
       </Button>
       <Button
         variant="ghost"
@@ -40,7 +40,7 @@ export function ClientActions({
         onClick={() => onDocumentUpload(client)}
         className="hover:bg-gray-700/50"
       >
-        <FileText className="h-4 w-4 text-gray-300" />
+        <FileText className="h-4 w-4 text-yellow-400" />
       </Button>
       <Button
         variant="ghost"
@@ -48,7 +48,7 @@ export function ClientActions({
         onClick={() => onDelete(client.id)}
         className="hover:bg-gray-700/50"
       >
-        <Trash className="h-4 w-4 text-gray-300" />
+        <Trash className="h-4 w-4 text-red-400" />
       </Button>
     </div>
   );
