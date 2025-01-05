@@ -67,8 +67,8 @@ const Suppliers = () => {
       component: DocumentsWidget
     },
     {
-      id: 'production',
-      title: 'Production',
+      id: 'producer',
+      title: 'Producteur',
       icon: Factory,
       color: 'text-blue-400',
       component: ProductionWidget
