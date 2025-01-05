@@ -13,6 +13,7 @@ import Vehicles from "./pages/Vehicles";
 import Expenses from "./pages/Expenses";
 import Production from "./pages/Production";
 import Invoices from "./pages/Invoices";
+import Finance from "./pages/Finance";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,7 @@ function App() {
                   <Route path="/expenses" element={<Expenses />} />
                   <Route path="/production" element={<Production />} />
                   <Route path="/invoices" element={<Invoices />} />
+                  <Route path="/finance" element={<Finance />} />
                 </Routes>
               </main>
             </div>
