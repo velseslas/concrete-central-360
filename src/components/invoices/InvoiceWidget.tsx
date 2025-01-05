@@ -7,6 +7,7 @@ import { InvoiceSheetTitle } from "./sheets/InvoiceSheetTitle";
 import { InvoiceSheetContent } from "./sheets/InvoiceSheetContent";
 import { InvoiceStatsCard } from "./stats/InvoiceStatsCard";
 import { RecoveryRateCard } from "./stats/RecoveryRateCard";
+import { BillingListWidget } from "@/components/finance/widgets/BillingListWidget";
 
 export function InvoiceWidget() {
   const [isOverdueOpen, setIsOverdueOpen] = useState(false);
@@ -103,6 +104,9 @@ export function InvoiceWidget() {
                 onClick={() => setIsPaymentsOpen(true)}
               />
               <RecoveryRateCard rate={recoveryRate} />
+            </div>
+            <div className="mt-6">
+              <BillingListWidget />
             </div>
           </CardContent>
         </Card>
