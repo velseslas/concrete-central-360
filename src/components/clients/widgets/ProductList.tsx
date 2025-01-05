@@ -55,12 +55,12 @@ export function ProductList({ onEdit }: ProductListProps) {
   return (
     <div className="overflow-hidden rounded-lg border border-gray-800">
       <Table>
-        <TableHeader className="bg-gray-900/70 border-b border-gray-800">
+        <TableHeader className="bg-gradient-to-r from-blue-600/80 to-purple-600/80 backdrop-blur-xl border-b border-gray-800">
           <TableRow>
-            <TableHead className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-medium">Nom</TableHead>
-            <TableHead className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-medium">Catégorie</TableHead>
-            <TableHead className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-medium">Description</TableHead>
-            <TableHead className="text-right text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-medium">Actions</TableHead>
+            <TableHead className="text-white font-medium">Nom</TableHead>
+            <TableHead className="text-white font-medium">Catégorie</TableHead>
+            <TableHead className="text-white font-medium">Description</TableHead>
+            <TableHead className="text-right text-white font-medium">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -70,7 +70,7 @@ export function ProductList({ onEdit }: ProductListProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: index * 0.1 }}
-              className="bg-gray-900/30 backdrop-blur-sm hover:bg-gray-800/50 transition-colors"
+              className="bg-gradient-to-r from-gray-900/30 to-gray-800/30 backdrop-blur-xl hover:bg-gray-800/50 transition-colors"
             >
               <TableCell className="text-gray-300">{product.name}</TableCell>
               <TableCell className="text-gray-300">{getCategoryName(product.category)}</TableCell>
