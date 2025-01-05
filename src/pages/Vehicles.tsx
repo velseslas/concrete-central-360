@@ -3,6 +3,7 @@ import { Car, FileText, AlertTriangle, Settings, Calendar } from "lucide-react";
 import VehicleList from "@/components/vehicles/VehicleList";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { VehicleSheetContent } from "@/components/vehicles/VehicleSheetContent";
 
 const Vehicles = () => {
   const handleEdit = (vehicle: any) => {
@@ -47,10 +48,46 @@ const Vehicles = () => {
     { vehicle: "Iveco S-Way", type: "Pneus", duration: "1 heure" }
   ];
 
-  // Nombre d'alertes
   const alertCount = documentsToRenew.length;
   const hasAlerts = alertCount > 0;
   const brokenCount = brokenVehicles.length;
+
+  const stats = [
+    { 
+      title: "Véhicules Actifs", 
+      value: activeVehicles.length, 
+      icon: Car, 
+      color: "text-green-400",
+      items: activeVehicles,
+      type: 'active' as const
+    },
+    { 
+      title: "En Maintenance", 
+      value: maintenanceVehicles.length, 
+      icon: Settings, 
+      color: "text-orange-400",
+      items: maintenanceVehicles,
+      type: 'maintenance' as const
+    },
+    { 
+      title: "Alerte Documents", 
+      value: alertCount, 
+      icon: AlertTriangle, 
+      color: "text-red-400",
+      isPulsing: hasAlerts,
+      items: documentsToRenew,
+      type: 'documents' as const
+    },
+    {
+      title: "Véhicules en Panne",
+      value: brokenCount,
+      icon: Car,
+      color: "text-[#F97316]",
+      isPulsing: brokenCount > 0,
+      items: brokenVehicles,
+      type: 'broken' as const
+    }
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white p-6">
@@ -81,84 +118,7 @@ const Vehicles = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            { 
-              title: "Véhicules Actifs", 
-              value: activeVehicles.length.toString(), 
-              icon: Car, 
-              color: "text-green-400",
-              data: activeVehicles,
-              renderContent: (item: any) => (
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="font-medium text-[#D6BCFA]">{item.vehicle}</h3>
-                    <p className="text-sm text-[#0EA5E9]">{item.status}</p>
-                  </div>
-                  <div className="text-gray-400 font-medium">
-                    {item.location}
-                  </div>
-                </div>
-              )
-            },
-            { 
-              title: "En Maintenance", 
-              value: maintenanceVehicles.length.toString(), 
-              icon: Settings, 
-              color: "text-orange-400",
-              data: maintenanceVehicles,
-              renderContent: (item: any) => (
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="font-medium text-[#D6BCFA]">{item.vehicle}</h3>
-                    <p className="text-sm text-[#0EA5E9]">{item.type}</p>
-                  </div>
-                  <div className="text-orange-400 font-medium">
-                    {item.duration}
-                  </div>
-                </div>
-              )
-            },
-            { 
-              title: "Alerte Documents", 
-              value: alertCount.toString(), 
-              icon: AlertTriangle, 
-              color: "text-red-400",
-              isPulsing: hasAlerts,
-              isAlert: true,
-              data: documentsToRenew,
-              renderContent: (doc: any) => (
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="font-medium text-[#D6BCFA]">{doc.vehicle}</h3>
-                    <p className="text-sm text-[#0EA5E9]">{doc.document}</p>
-                  </div>
-                  <div className="text-[#F97316] font-medium">
-                    Expire le {new Date(doc.expiry).toLocaleDateString()}
-                  </div>
-                </div>
-              )
-            },
-            {
-              title: "Véhicules en Panne",
-              value: brokenCount.toString(),
-              icon: Car,
-              color: "text-[#F97316]",
-              isPulsing: brokenCount > 0,
-              isBreakdown: true,
-              data: brokenVehicles,
-              renderContent: (vehicle: any) => (
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="font-medium text-[#F97316]">{vehicle.vehicle}</h3>
-                    <p className="text-sm text-[#0EA5E9]">{vehicle.issue}</p>
-                  </div>
-                  <div className="text-gray-400 font-medium">
-                    Depuis le {new Date(vehicle.since).toLocaleDateString()}
-                  </div>
-                </div>
-              )
-            }
-          ].map((stat, index) => (
+          {stats.map((stat, index) => (
             <motion.div
               key={stat.title}
               initial={{ opacity: 0, scale: 0.95 }}
@@ -167,7 +127,7 @@ const Vehicles = () => {
             >
               <Sheet>
                 <SheetTrigger asChild>
-                  <Card className={`bg-gray-800/50 backdrop-blur-lg border-gray-700 hover:bg-gray-700/50 hover:border-gray-600 transition-all duration-300 cursor-pointer ${stat.isPulsing ? `shadow-[0_0_15px_rgba(${stat.isAlert ? '239,68,68' : '249,115,22'},0.3)]` : ''}`}>
+                  <Card className={`bg-gray-800/50 backdrop-blur-lg border-gray-700 hover:bg-gray-700/50 hover:border-gray-600 transition-all duration-300 cursor-pointer ${stat.isPulsing ? `shadow-[0_0_15px_rgba(${stat.title === "Alerte Documents" ? '239,68,68' : '249,115,22'},0.3)]` : ''}`}>
                     <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
                       <CardTitle className="text-sm font-medium text-gray-300">
                         {stat.title}
@@ -175,23 +135,20 @@ const Vehicles = () => {
                       <stat.icon className={`h-5 w-5 ${stat.color} ${stat.isPulsing ? 'animate-[pulse_1.5s_ease-in-out_infinite]' : ''}`} />
                     </CardHeader>
                     <CardContent>
-                      <div className={`text-2xl font-bold ${stat.isPulsing ? `text-${stat.isAlert ? 'red' : '[#F97316]'}-400 animate-[pulse_1.5s_ease-in-out_infinite]` : 'text-white'}`}>
+                      <div className={`text-2xl font-bold ${stat.isPulsing ? stat.color : 'text-white'}`}>
                         {stat.value}
                       </div>
                     </CardContent>
                   </Card>
                 </SheetTrigger>
-                <SheetContent>
+                <SheetContent side="right" className="w-full sm:max-w-md bg-gray-900/95 border-gray-800">
                   <SheetHeader>
-                    <SheetTitle className="text-lg font-semibold text-white">{stat.title}</SheetTitle>
+                    <SheetTitle className="text-white flex items-center gap-2">
+                      <stat.icon className={`h-5 w-5 ${stat.color}`} />
+                      {stat.title}
+                    </SheetTitle>
                   </SheetHeader>
-                  <div className="mt-6 space-y-4">
-                    {stat.data.map((item: any, index: number) => (
-                      <div key={index} className="p-4 rounded-lg bg-gray-800 border border-gray-700">
-                        {stat.renderContent(item)}
-                      </div>
-                    ))}
-                  </div>
+                  <VehicleSheetContent items={stat.items} type={stat.type} />
                 </SheetContent>
               </Sheet>
             </motion.div>
