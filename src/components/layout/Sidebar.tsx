@@ -17,7 +17,7 @@ const Sidebar = () => {
     { to: "/suppliers", icon: Truck, label: "Fournisseurs", iconColor: "text-yellow-500" },
     { to: "/vehicles", icon: Car, label: "Parc roulant", iconColor: "text-red-500" },
     { to: "/expenses", icon: DollarSign, label: "Dépenses", iconColor: "text-emerald-500" },
-    { to: "/invoices", icon: FileSpreadsheet, label: "Factures", iconColor: "text-indigo-500" },
+    { to: "/invoices", icon: FileSpreadsheet, label: "Finance", iconColor: "text-indigo-500" },
   ];
 
   return (
