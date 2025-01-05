@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { FileText, DollarSign, Clock, AlertTriangle } from "lucide-react";
+import { FileText, DollarSign, Clock } from "lucide-react";
 
 export function InvoiceWidget() {
   return (
@@ -38,33 +38,6 @@ export function InvoiceWidget() {
                 </h3>
                 <p className="text-2xl font-bold text-white">180,000 DA</p>
                 <p className="text-sm text-gray-400">6 factures</p>
-              </div>
-            </div>
-            
-            <div className="bg-gray-800/50 backdrop-blur-sm rounded-lg border border-gray-700/50 p-4">
-              <h3 className="font-semibold text-gray-300 mb-4 flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-red-400" />
-                Factures urgentes
-              </h3>
-              <div className="space-y-3">
-                {[
-                  { id: "F2024-089", client: "SARL Construct", montant: "85,000 DA", echeance: "5 jours" },
-                  { id: "F2024-092", client: "ETS Batiment", montant: "120,000 DA", echeance: "3 jours" },
-                ].map((facture) => (
-                  <div
-                    key={facture.id}
-                    className="flex justify-between items-center p-3 rounded-lg bg-gray-900/50 hover:bg-gray-700/50 border border-gray-700/50 transition-colors cursor-pointer"
-                  >
-                    <div>
-                      <p className="text-gray-200 font-medium">{facture.id}</p>
-                      <p className="text-sm text-gray-400">{facture.client}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-gray-200 font-medium">{facture.montant}</p>
-                      <p className="text-sm text-red-400">Échéance: {facture.echeance}</p>
-                    </div>
-                  </div>
-                ))}
               </div>
             </div>
           </div>
