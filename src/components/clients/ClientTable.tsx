@@ -30,14 +30,14 @@ export function ClientTable({
     <>
       <div className="overflow-hidden rounded-lg border border-gray-800">
         <table className="w-full text-sm text-left">
-          <thead className="text-xs uppercase bg-gradient-to-r from-blue-600/80 to-purple-600/80 backdrop-blur-xl border-b border-gray-800">
+          <thead className="text-xs uppercase bg-gradient-to-r from-blue-600/10 to-purple-600/10 backdrop-blur-xl border-b border-gray-800">
             <tr>
-              <th className="px-6 py-4 text-white font-medium">Nom</th>
-              <th className="px-6 py-4 text-white font-medium">Raison sociale</th>
-              <th className="px-6 py-4 text-white font-medium">Téléphone</th>
-              <th className="px-6 py-4 text-white font-medium">Email</th>
-              <th className="px-6 py-4 text-white font-medium">Ville</th>
-              <th className="px-6 py-4 text-white font-medium">Actions</th>
+              <th className="px-6 py-4 text-gray-300 font-medium">Nom</th>
+              <th className="px-6 py-4 text-gray-300 font-medium">Raison sociale</th>
+              <th className="px-6 py-4 text-gray-300 font-medium">Téléphone</th>
+              <th className="px-6 py-4 text-gray-300 font-medium">Email</th>
+              <th className="px-6 py-4 text-gray-300 font-medium">Ville</th>
+              <th className="px-6 py-4 text-gray-300 font-medium">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-800">

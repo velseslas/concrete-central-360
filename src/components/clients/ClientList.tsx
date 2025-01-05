@@ -60,11 +60,11 @@ const ClientList = () => {
       transition={{ duration: 0.3 }}
       className="space-y-6"
     >
-      <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl">
+      <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-800 shadow-xl">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
         <CardHeader>
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <CardTitle className="text-white flex items-center gap-2">
+            <CardTitle className="text-gray-100 flex items-center gap-2">
               <UserPlus className="h-6 w-6 text-blue-400" />
               Liste des Clients
             </CardTitle>
