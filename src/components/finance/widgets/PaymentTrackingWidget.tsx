@@ -32,18 +32,18 @@ export function PaymentTrackingWidget() {
               <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50">
                 <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
                   <DollarSign className="h-5 w-5 text-green-400" />
-                  Payé ce mois
+                  Paiements reçus
                 </h3>
                 <p className="text-2xl font-bold text-white">{totalPaid.toLocaleString()} DA</p>
-                <p className="text-sm text-gray-400">9 paiements</p>
+                <p className="text-sm text-gray-400">9 paiements effectués</p>
               </div>
               <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50">
                 <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
                   <Clock className="h-5 w-5 text-yellow-400" />
-                  En attente
+                  Paiements en attente
                 </h3>
                 <p className="text-2xl font-bold text-white">{(totalExpected - totalPaid).toLocaleString()} DA</p>
-                <p className="text-sm text-gray-400">4 paiements</p>
+                <p className="text-sm text-gray-400">4 paiements à venir</p>
               </div>
               <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50">
                 <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">

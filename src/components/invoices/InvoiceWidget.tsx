@@ -1,13 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { FileText, DollarSign, Clock, TrendingUp } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
+import { FileText, DollarSign, Calendar, Calculator } from "lucide-react";
 
 export function InvoiceWidget() {
-  // Exemple de calcul du taux de recouvrement
+  // Exemple de données
   const totalInvoices = 450000;
-  const paidInvoices = 270000;
-  const recoveryRate = (paidInvoices / totalInvoices) * 100;
+  const currentMonthInvoices = 150000;
+  const averagePerInvoice = totalInvoices / 15; // 15 est le nombre total de factures
 
   return (
     <motion.div
@@ -35,25 +34,23 @@ export function InvoiceWidget() {
                   Total facturé
                 </h3>
                 <p className="text-2xl font-bold text-white">{totalInvoices.toLocaleString()} DA</p>
-                <p className="text-sm text-gray-400">15 factures</p>
+                <p className="text-sm text-gray-400">15 factures au total</p>
               </div>
               <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50">
                 <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
-                  <Clock className="h-5 w-5 text-yellow-400" />
-                  Factures payées
+                  <Calendar className="h-5 w-5 text-yellow-400" />
+                  Factures du mois
                 </h3>
-                <p className="text-2xl font-bold text-white">{paidInvoices.toLocaleString()} DA</p>
-                <p className="text-sm text-gray-400">9 factures</p>
+                <p className="text-2xl font-bold text-white">{currentMonthInvoices.toLocaleString()} DA</p>
+                <p className="text-sm text-gray-400">5 factures ce mois</p>
               </div>
               <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50">
                 <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
-                  <TrendingUp className="h-5 w-5 text-blue-400" />
-                  Taux de recouvrement
+                  <Calculator className="h-5 w-5 text-blue-400" />
+                  Moyenne par facture
                 </h3>
-                <div className="space-y-2">
-                  <p className="text-2xl font-bold text-white">{recoveryRate.toFixed(1)}%</p>
-                  <Progress value={recoveryRate} className="h-2" />
-                </div>
+                <p className="text-2xl font-bold text-white">{averagePerInvoice.toLocaleString()} DA</p>
+                <p className="text-sm text-gray-400">Sur toutes les factures</p>
               </div>
             </div>
           </div>
