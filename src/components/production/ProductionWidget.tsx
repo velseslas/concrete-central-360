@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { Package, Calendar, Clock, FileX, TrendingUp } from "lucide-react";
+import { Package, Calendar, Clock, FileX, TrendingUp, TrendingDown } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Sheet, SheetContent, SheetHeader } from "@/components/ui/sheet";
 import { useState } from "react";
@@ -16,10 +16,16 @@ export function ProductionWidget() {
   // Exemple de données
   const totalProduction = 450;
   const dailyProduction = 150;
+  const yesterdayProduction = 180; // Production d'hier
   const inProgressProduction = 130;
   const pendingProduction = 100;
   const cancelledProduction = 70;
+  const yesterdayCancelled = 50; // Annulations d'hier
   const completionRate = (dailyProduction / totalProduction) * 100;
+
+  // Calcul des pourcentages de variation
+  const productionChange = ((dailyProduction - yesterdayProduction) / yesterdayProduction) * 100;
+  const cancelledChange = ((cancelledProduction - yesterdayCancelled) / yesterdayCancelled) * 100;
 
   // Données pour les productions
   const dailyProductionList = [
@@ -70,8 +76,19 @@ export function ProductionWidget() {
                   Production du jour
                 </h3>
                 <p className="text-base font-bold text-white">{dailyProduction} m³</p>
-                <p className="text-sm text-gray-400">{dailyProductionList.length} productions</p>
+                <div className="flex items-center gap-2 mt-1">
+                  {productionChange > 0 ? (
+                    <TrendingUp className="h-4 w-4 text-green-400" />
+                  ) : (
+                    <TrendingDown className="h-4 w-4 text-red-400" />
+                  )}
+                  <p className={`text-sm ${productionChange > 0 ? 'text-green-400' : 'text-red-400'}`}>
+                    {Math.abs(productionChange).toFixed(1)}% vs hier
+                  </p>
+                </div>
+                <p className="text-sm text-gray-400 mt-1">{dailyProductionList.length} productions</p>
               </div>
+
               <div 
                 className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[160px] flex-1 cursor-pointer hover:bg-gray-700/50"
                 onClick={() => setIsInProgressOpen(true)}
@@ -94,6 +111,7 @@ export function ProductionWidget() {
                 <p className="text-base font-bold text-white">{pendingProduction} m³</p>
                 <p className="text-sm text-gray-400">{pendingProductionList.length} productions</p>
               </div>
+
               <div 
                 className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[160px] flex-1 cursor-pointer hover:bg-gray-700/50"
                 onClick={() => setIsCancelledOpen(true)}
@@ -103,8 +121,19 @@ export function ProductionWidget() {
                   Annulées
                 </h3>
                 <p className="text-base font-bold text-white">{cancelledProduction} m³</p>
-                <p className="text-sm text-gray-400">{cancelledProductionList.length} productions</p>
+                <div className="flex items-center gap-2 mt-1">
+                  {cancelledChange > 0 ? (
+                    <TrendingUp className="h-4 w-4 text-red-400" />
+                  ) : (
+                    <TrendingDown className="h-4 w-4 text-green-400" />
+                  )}
+                  <p className={`text-sm ${cancelledChange > 0 ? 'text-red-400' : 'text-green-400'}`}>
+                    {Math.abs(cancelledChange).toFixed(1)}% vs hier
+                  </p>
+                </div>
+                <p className="text-sm text-gray-400 mt-1">{cancelledProductionList.length} productions</p>
               </div>
+
               <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[160px] flex-1">
                 <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2 text-lg">
                   <TrendingUp className="h-5 w-5 text-blue-400" />
