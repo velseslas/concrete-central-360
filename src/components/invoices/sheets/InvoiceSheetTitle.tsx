@@ -9,8 +9,8 @@ interface InvoiceSheetTitleProps {
 
 export function InvoiceSheetTitle({ icon: Icon, title, iconColor }: InvoiceSheetTitleProps) {
   return (
-    <SheetTitle className="text-white flex items-center gap-2 text-lg">
-      <Icon className={`h-5 w-5 ${iconColor}`} />
+    <SheetTitle className="text-white flex items-center gap-2 text-base">
+      <Icon className={`h-4 w-4 ${iconColor}`} />
       {title}
     </SheetTitle>
   );
