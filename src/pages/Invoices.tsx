@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import FacturationWidget from "@/components/invoices/FacturationWidget";
+import { PaymentWidget } from "@/components/finance/PaymentWidget";
 import { useState } from "react";
 import { ChevronDown, FileText } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -36,11 +37,10 @@ const mockInvoices = [
 
 const Invoices = () => {
   const [isExpanded, setIsExpanded] = useState(false);
-
   const totalAmount = mockInvoices.reduce((sum, invoice) => sum + invoice.amount, 0);
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-6 space-y-6">
       <Card 
         className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-700 shadow-xl cursor-pointer hover:shadow-2xl transition-all duration-300"
         onClick={() => setIsExpanded(!isExpanded)}
@@ -79,6 +79,8 @@ const Invoices = () => {
           )}
         </AnimatePresence>
       </Card>
+
+      <PaymentWidget />
     </div>
   );
 };
