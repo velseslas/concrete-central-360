@@ -15,9 +15,9 @@ export function ProductCategoryWidget() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <Card className="bg-gray-800/50 backdrop-blur-lg border border-gray-700">
+      <Card className="bg-gradient-to-br from-[#1E40AF] to-[#7E22CE] border-0 shadow-lg hover:shadow-xl transition-all duration-300">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-lg font-medium">Catégories de Produits</CardTitle>
+          <CardTitle className="text-lg font-medium text-white">Catégories de Produits</CardTitle>
           <Button 
             onClick={() => setShowNewCategoryForm(true)}
             size="sm"

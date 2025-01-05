@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Edit, Trash2 } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface ProductCategory {
   id: number;
@@ -43,35 +44,42 @@ export function ProductCategoryList() {
   };
 
   return (
-    <div className="rounded-md border">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3 }}
+      className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 overflow-hidden"
+    >
       <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[200px]">Nom</TableHead>
-            <TableHead>Description</TableHead>
-            <TableHead className="w-[100px] text-right">Actions</TableHead>
+        <TableHeader className="bg-gray-900/50 backdrop-blur-xl">
+          <TableRow className="border-b border-gray-700 hover:bg-gray-800/50">
+            <TableHead className="text-gray-300">Nom</TableHead>
+            <TableHead className="text-gray-300">Description</TableHead>
+            <TableHead className="text-right text-gray-300">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {mockCategories.map((category) => (
-            <TableRow key={category.id}>
-              <TableCell className="font-medium">{category.name}</TableCell>
-              <TableCell>{category.description}</TableCell>
+            <TableRow key={category.id} className="border-b border-gray-700/50 hover:bg-gray-700/30 transition-colors duration-200">
+              <TableCell className="text-gray-300 font-medium">{category.name}</TableCell>
+              <TableCell className="text-gray-300">{category.description}</TableCell>
               <TableCell>
                 <div className="flex justify-end space-x-2">
                   <Button 
                     variant="ghost" 
                     size="icon"
                     onClick={() => handleEdit(category)}
+                    className="hover:bg-gray-700/50"
                   >
-                    <Edit className="h-4 w-4" />
+                    <Edit className="h-4 w-4 text-gray-300" />
                   </Button>
                   <Button 
                     variant="ghost" 
                     size="icon"
                     onClick={() => handleDelete(category.id)}
+                    className="hover:bg-gray-700/50"
                   >
-                    <Trash2 className="h-4 w-4" />
+                    <Trash2 className="h-4 w-4 text-gray-300" />
                   </Button>
                 </div>
               </TableCell>
@@ -79,6 +87,6 @@ export function ProductCategoryList() {
           ))}
         </TableBody>
       </Table>
-    </div>
+    </motion.div>
   );
 }
