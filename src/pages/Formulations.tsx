@@ -1,175 +1,132 @@
 import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
-import { FormulationForm } from "@/components/formulations/FormulationForm";
-import { useToast } from "@/components/ui/use-toast";
+import { Input } from "@/components/ui/input";
+import { Beaker, Plus, Search, Calendar, ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 
+interface Formulation {
+  id: string;
+  name: string;
+  type: string;
+  resistance: string;
+  status: "active" | "inactive" | "draft";
+  lastModified: string;
+}
+
 const Formulations = () => {
-  const [formulations, setFormulations] = useState([
+  const [formulations] = useState<Formulation[]>([
     {
-      id: 1,
-      nom: "B25",
+      id: "1",
+      name: "B25",
+      type: "Standard",
       resistance: "25 MPa",
-      ciment: "350 kg/m³",
-      sable01: "200 kg/m³",
-      sable03: "300 kg/m³",
-      sable04: "300 kg/m³",
-      gravier38: "350 kg/m³",
-      gravier815: "350 kg/m³",
-      gravier1525: "350 kg/m³",
-      eau: "175 L/m³",
-      adjuvant: "2.5 kg/m³",
-      status: "Active",
+      status: "active",
+      lastModified: "2024-03-20",
+    },
+    {
+      id: "2",
+      name: "B30",
+      type: "Haute Performance",
+      resistance: "30 MPa",
+      status: "draft",
+      lastModified: "2024-03-19",
     },
   ]);
 
-  const [open, setOpen] = useState(false);
-  const { toast } = useToast();
-
-  const handleSubmit = (data: any) => {
-    const newFormulation = {
-      id: formulations.length + 1,
-      ...data,
-      status: "Active",
+  const getStatusBadge = (status: Formulation["status"]) => {
+    const statusConfig = {
+      active: { label: "Active", className: "bg-green-500/20 text-green-400" },
+      inactive: { label: "Inactive", className: "bg-red-500/20 text-red-400" },
+      draft: { label: "Brouillon", className: "bg-yellow-500/20 text-yellow-400" },
     };
 
-    setFormulations([...formulations, newFormulation]);
-    setOpen(false);
-    toast({
-      title: "Formulation créée",
-      description: "La nouvelle formulation a été ajoutée avec succès.",
-    });
+    const config = statusConfig[status];
+    return (
+      <Badge variant="outline" className={config.className}>
+        {config.label}
+      </Badge>
+    );
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white p-6 space-y-6">
       <motion.div 
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="flex justify-between items-center"
-      >
-        <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
-          Formulations de Béton
-        </h1>
-        <Button 
-          onClick={() => setOpen(true)}
-          className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 transition-all duration-200"
-        >
-          <Plus className="mr-2 h-4 w-4" />
-          Nouvelle formulation
-        </Button>
-      </motion.div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 p-6 hover:bg-gray-800/70 transition-all duration-200"
-        >
-          <h3 className="text-lg font-semibold text-gray-300">Total Formulations</h3>
-          <p className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
-            {formulations.length}
-          </p>
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 p-6 hover:bg-gray-800/70 transition-all duration-200"
-        >
-          <h3 className="text-lg font-semibold text-gray-300">Formulations Actives</h3>
-          <p className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-emerald-400">
-            {formulations.filter(f => f.status === "Active").length}
-          </p>
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 p-6 hover:bg-gray-800/70 transition-all duration-200"
-        >
-          <h3 className="text-lg font-semibold text-gray-300">Dernière mise à jour</h3>
-          <p className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
-            Aujourd'hui
-          </p>
-        </motion.div>
-      </div>
-
-      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-        className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 overflow-hidden"
+        transition={{ duration: 0.3 }}
+        className="group"
       >
-        <Table>
-          <TableHeader>
-            <TableRow className="border-b border-gray-700/50">
-              <TableHead className="text-gray-300">Nom</TableHead>
-              <TableHead className="text-gray-300">Résistance</TableHead>
-              <TableHead className="text-gray-300">Ciment</TableHead>
-              <TableHead className="text-center bg-blue-900/20 text-gray-300" colSpan={3}>
-                Sables
-              </TableHead>
-              <TableHead className="text-center bg-gray-700/20 text-gray-300" colSpan={3}>
-                Graviers
-              </TableHead>
-              <TableHead className="text-center bg-green-900/20 text-gray-300" colSpan={2}>
-                Additifs
-              </TableHead>
-              <TableHead className="text-gray-300">Status</TableHead>
-            </TableRow>
-            <TableRow className="border-b border-gray-700/50">
-              <TableHead></TableHead>
-              <TableHead></TableHead>
-              <TableHead></TableHead>
-              <TableHead className="bg-blue-900/20 text-gray-400">0/1</TableHead>
-              <TableHead className="bg-blue-900/20 text-gray-400">0/3</TableHead>
-              <TableHead className="bg-blue-900/20 text-gray-400">0/4</TableHead>
-              <TableHead className="bg-gray-700/20 text-gray-400">3/8</TableHead>
-              <TableHead className="bg-gray-700/20 text-gray-400">8/15</TableHead>
-              <TableHead className="bg-gray-700/20 text-gray-400">15/25</TableHead>
-              <TableHead className="bg-green-900/20 text-gray-400">Eau</TableHead>
-              <TableHead className="bg-green-900/20 text-gray-400">Adjuvant</TableHead>
-              <TableHead></TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {formulations.map((formulation) => (
-              <TableRow 
-                key={formulation.id} 
-                className="border-b border-gray-700/50 hover:bg-gray-700/30 transition-colors duration-200"
-              >
-                <TableCell className="font-medium text-gray-300">{formulation.nom}</TableCell>
-                <TableCell className="text-gray-300">{formulation.resistance}</TableCell>
-                <TableCell className="text-gray-300">{formulation.ciment}</TableCell>
-                <TableCell className="bg-blue-900/10 text-gray-300">{formulation.sable01}</TableCell>
-                <TableCell className="bg-blue-900/10 text-gray-300">{formulation.sable03}</TableCell>
-                <TableCell className="bg-blue-900/10 text-gray-300">{formulation.sable04}</TableCell>
-                <TableCell className="bg-gray-700/10 text-gray-300">{formulation.gravier38}</TableCell>
-                <TableCell className="bg-gray-700/10 text-gray-300">{formulation.gravier815}</TableCell>
-                <TableCell className="bg-gray-700/10 text-gray-300">{formulation.gravier1525}</TableCell>
-                <TableCell className="bg-green-900/10 text-gray-300">{formulation.eau}</TableCell>
-                <TableCell className="bg-green-900/10 text-gray-300">{formulation.adjuvant}</TableCell>
-                <TableCell>
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-500/20 text-green-400 border border-green-500/30">
-                    {formulation.status}
-                  </span>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl group-hover:shadow-2xl transition-all duration-300">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
+          <CardHeader>
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+              <CardTitle className="text-white flex items-center gap-2">
+                <Beaker className="h-6 w-6 text-blue-400" />
+                Formulations de Béton
+              </CardTitle>
+              <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
+                <div className="relative flex-grow md:w-64">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  <Input 
+                    placeholder="Rechercher une formulation..." 
+                    className="pl-9 bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-400"
+                  />
+                </div>
+                <Button variant="outline" size="sm" className="text-white">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Nouvelle Formulation
+                </Button>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {formulations.map((formulation) => (
+                <motion.div
+                  key={formulation.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/50 transition-colors cursor-pointer"
+                >
+                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div>
+                      <h3 className="text-white font-medium flex items-center gap-2">
+                        <Beaker className="h-4 w-4 text-blue-400" />
+                        {formulation.name}
+                      </h3>
+                      <p className="text-gray-400 text-sm">{formulation.type}</p>
+                    </div>
+                    <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
+                      <div className="text-right">
+                        <p className="text-white font-medium">{formulation.resistance}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Calendar className="h-4 w-4 text-blue-400" />
+                        <span className="text-sm text-gray-300">
+                          {formulation.lastModified}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {getStatusBadge(formulation.status)}
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 hover:bg-blue-500/20"
+                        >
+                          <ArrowUpRight className="h-4 w-4 text-blue-400" />
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
       </motion.div>
-
-      <FormulationForm 
-        open={open} 
-        onOpenChange={setOpen}
-        onSubmit={handleSubmit}
-      />
     </div>
   );
 };
