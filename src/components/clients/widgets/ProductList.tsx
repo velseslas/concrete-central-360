@@ -53,14 +53,16 @@ export function ProductList({ onEdit }: ProductListProps) {
   };
 
   return (
-    <div className="overflow-hidden rounded-lg border border-gray-800">
+    <div className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 overflow-hidden">
       <Table>
-        <TableHeader className="bg-gradient-to-r from-blue-600/80 to-purple-600/80 backdrop-blur-xl border-b border-gray-800">
-          <TableRow>
-            <TableHead className="text-white font-medium">Nom</TableHead>
-            <TableHead className="text-white font-medium">Catégorie</TableHead>
-            <TableHead className="text-white font-medium">Description</TableHead>
-            <TableHead className="text-right text-white font-medium">Actions</TableHead>
+        <TableHeader className="bg-gradient-to-r from-blue-600/80 to-purple-600/80 backdrop-blur-xl">
+          <TableRow className="border-b border-gray-700 hover:bg-gray-800/50">
+            <TableHead className="text-gray-300">Client</TableHead>
+            <TableHead className="text-gray-300">Chantier</TableHead>
+            <TableHead className="text-gray-300">Catégorie</TableHead>
+            <TableHead className="text-gray-300">Produit</TableHead>
+            <TableHead className="text-gray-300">Prix</TableHead>
+            <TableHead className="text-right text-gray-300">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -70,23 +72,23 @@ export function ProductList({ onEdit }: ProductListProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: index * 0.1 }}
-              className="bg-gradient-to-r from-gray-900/30 to-gray-800/30 backdrop-blur-xl hover:bg-gray-800/50 transition-colors"
+              className="bg-gradient-to-r from-gray-900/30 to-gray-800/30 backdrop-blur-xl hover:bg-gray-700/30 transition-colors duration-200"
             >
               <TableCell className="text-gray-300">{product.name}</TableCell>
               <TableCell className="text-gray-300">{getCategoryName(product.category)}</TableCell>
               <TableCell className="text-gray-300">{product.description}</TableCell>
               <TableCell className="text-right">
                 <div className="flex justify-end space-x-2">
-                  <Button
-                    variant="ghost"
+                  <Button 
+                    variant="ghost" 
                     size="icon"
                     onClick={() => onEdit?.(product)}
                     className="hover:bg-gray-700/50"
                   >
                     <Edit className="h-4 w-4 text-gray-300" />
                   </Button>
-                  <Button
-                    variant="ghost"
+                  <Button 
+                    variant="ghost" 
                     size="icon"
                     onClick={() => handleDelete(product.id)}
                     className="hover:bg-gray-700/50"

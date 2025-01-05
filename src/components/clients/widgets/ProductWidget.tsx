@@ -1,5 +1,4 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Package } from "lucide-react";
 import { motion } from "framer-motion";
 import { ProductList } from "./ProductList";
 
