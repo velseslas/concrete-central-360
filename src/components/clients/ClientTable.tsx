@@ -30,14 +30,14 @@ export function ClientTable({
     <>
       <div className="overflow-hidden rounded-lg border border-gray-800">
         <table className="w-full text-sm text-left">
-          <thead className="text-xs uppercase bg-gray-900/70 border-b border-gray-800">
+          <thead className="text-xs uppercase bg-gradient-to-r from-blue-600/80 to-purple-600/80 backdrop-blur-xl border-b border-gray-800">
             <tr>
-              <th className="px-6 py-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-medium">Nom</th>
-              <th className="px-6 py-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-medium">Raison sociale</th>
-              <th className="px-6 py-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-medium">Téléphone</th>
-              <th className="px-6 py-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-medium">Email</th>
-              <th className="px-6 py-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-medium">Ville</th>
-              <th className="px-6 py-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-medium">Actions</th>
+              <th className="px-6 py-4 text-white font-medium">Nom</th>
+              <th className="px-6 py-4 text-white font-medium">Raison sociale</th>
+              <th className="px-6 py-4 text-white font-medium">Téléphone</th>
+              <th className="px-6 py-4 text-white font-medium">Email</th>
+              <th className="px-6 py-4 text-white font-medium">Ville</th>
+              <th className="px-6 py-4 text-white font-medium">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-800">
@@ -47,7 +47,7 @@ export function ClientTable({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
-                className="bg-gray-900/30 backdrop-blur-sm hover:bg-gray-800/50 transition-colors cursor-pointer"
+                className="bg-gradient-to-r from-gray-900/30 to-gray-800/30 backdrop-blur-xl hover:bg-gray-800/50 transition-colors cursor-pointer"
                 onClick={() => handleRowClick(client)}
               >
                 <td className="px-6 py-4 text-gray-300">{client.nom}</td>

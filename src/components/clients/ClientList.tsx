@@ -63,10 +63,10 @@ const ClientList = () => {
         transition={{ duration: 0.3, delay: 0.1 }}
         className="flex justify-between items-center"
       >
-        <h2 className="text-2xl font-bold">Liste des clients</h2>
+        <h2 className="text-2xl font-bold text-white">Liste des clients</h2>
         <Dialog open={isNewClientDialogOpen} onOpenChange={setIsNewClientDialogOpen}>
           <DialogTrigger asChild>
-            <Button>
+            <Button className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600">
               <UserPlus className="mr-2 h-4 w-4" />
               Nouveau client
             </Button>
@@ -81,7 +81,7 @@ const ClientList = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.2 }}
-        className="bg-white rounded-lg shadow"
+        className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 rounded-lg shadow-xl border border-gray-800 backdrop-blur-xl"
       >
         <ClientTable
           clients={mockClients}
