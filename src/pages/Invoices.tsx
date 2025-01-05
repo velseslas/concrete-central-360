@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { FileText, DollarSign, CreditCard } from "lucide-react";
 import { motion } from "framer-motion";
+import InvoiceWidget from "@/components/invoices/InvoiceWidget";
 
 interface Invoice {
   id: string;
@@ -120,6 +121,17 @@ const Invoices = () => {
                 <div className="text-2xl font-bold text-white">15 000 DA</div>
               </CardContent>
             </Card>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+          >
+            {invoices.map((invoice) => (
+              <InvoiceWidget key={invoice.id} invoice={invoice} />
+            ))}
           </motion.div>
 
           <motion.div
