@@ -6,33 +6,32 @@ import { PaymentTrackingWidget } from "@/components/finance/widgets/PaymentTrack
 
 const Invoices = () => {
   return (
-    <div className="container mx-auto p-6 space-y-6">
+    <div className="container mx-auto p-6">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
-        className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        className="space-y-6"
       >
-        <InvoiceWidget />
-        <PaymentTrackingWidget />
-      </motion.div>
+        {/* Section principale avec les statistiques */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <InvoiceWidget />
+          </div>
+          <div>
+            <PaymentTrackingWidget />
+          </div>
+        </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, delay: 0.1 }}
-        className="grid grid-cols-1 gap-6"
-      >
-        <FacturationWidget />
-      </motion.div>
+        {/* Section des factures */}
+        <div className="grid grid-cols-1 gap-6">
+          <BillingListWidget />
+        </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, delay: 0.2 }}
-        className="grid grid-cols-1 gap-6"
-      >
-        <BillingListWidget />
+        {/* Section des statistiques détaillées */}
+        <div className="grid grid-cols-1 gap-6">
+          <FacturationWidget />
+        </div>
       </motion.div>
     </div>
   );
