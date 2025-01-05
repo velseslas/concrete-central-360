@@ -1,10 +1,9 @@
 import { motion } from "framer-motion";
-import { Car, FileText, AlertTriangle, Settings, Calendar, Factory } from "lucide-react";
+import { Car, FileText, AlertTriangle, Settings, Calendar } from "lucide-react";
 import VehicleList from "@/components/vehicles/VehicleList";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { VehicleSheetContent } from "@/components/vehicles/VehicleSheetContent";
-import { ProductionWidget } from "@/components/clients/widgets/ProductionWidget";
 
 const Vehicles = () => {
   const handleEdit = (vehicle: any) => {
@@ -87,14 +86,6 @@ const Vehicles = () => {
       isPulsing: brokenCount > 0,
       items: brokenVehicles,
       type: 'broken' as const
-    },
-    {
-      title: "Production",
-      value: 1,
-      icon: Factory,
-      color: "text-blue-400",
-      items: [],
-      type: 'production' as const
     }
   ];
 
@@ -126,7 +117,7 @@ const Vehicles = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, index) => (
             <motion.div
               key={stat.title}
@@ -157,11 +148,7 @@ const Vehicles = () => {
                       {stat.title}
                     </SheetTitle>
                   </SheetHeader>
-                  {stat.type === 'production' ? (
-                    <ProductionWidget clientId={1} />
-                  ) : (
-                    <VehicleSheetContent items={stat.items} type={stat.type} />
-                  )}
+                  <VehicleSheetContent items={stat.items} type={stat.type} />
                 </SheetContent>
               </Sheet>
             </motion.div>

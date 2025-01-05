@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Users, Package, CreditCard, FileText, Truck, ShoppingCart } from "lucide-react";
+import { Users, Package, CreditCard, FileText, Truck, ShoppingCart, Factory } from "lucide-react";
 import { motion } from "framer-motion";
 import { SupplierList } from "@/components/suppliers/SupplierList";
 import { ProductWidget } from "@/components/suppliers/widgets/ProductWidget";
@@ -8,6 +8,7 @@ import { DeliveryWidget } from "@/components/suppliers/widgets/DeliveryWidget";
 import { DocumentsWidget } from "@/components/suppliers/widgets/DocumentsWidget";
 import { PurchaseOrderWidget } from "@/components/suppliers/widgets/PurchaseOrderWidget";
 import { PaymentWidget } from "@/components/suppliers/widgets/PaymentWidget";
+import { ProductionWidget } from "@/components/clients/widgets/ProductionWidget";
 import { SupplierDashboard, WidgetProps } from "@/components/suppliers/SupplierDashboard";
 
 const Suppliers = () => {
@@ -65,6 +66,13 @@ const Suppliers = () => {
       icon: FileText,
       color: 'text-gray-400',
       component: DocumentsWidget
+    },
+    {
+      id: 'production',
+      title: 'Production',
+      icon: Factory,
+      color: 'text-blue-400',
+      component: ProductionWidget
     }
   ];
 
