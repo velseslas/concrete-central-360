@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { InvoiceWidget } from "@/components/invoices/InvoiceWidget";
-import { BillingListWidget } from "@/components/finance/widgets/BillingListWidget";
 
 const Invoices = () => {
   return (
@@ -14,11 +13,6 @@ const Invoices = () => {
         {/* Section principale avec les statistiques */}
         <div className="grid grid-cols-1 gap-8">
           <InvoiceWidget />
-        </div>
-
-        {/* Liste des factures */}
-        <div className="grid grid-cols-1 gap-8">
-          <BillingListWidget />
         </div>
       </motion.div>
     </div>
