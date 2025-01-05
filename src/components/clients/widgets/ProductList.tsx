@@ -64,7 +64,10 @@ export function ProductList({ onEdit }: ProductListProps) {
         </TableHeader>
         <TableBody>
           {mockProducts.map((product) => (
-            <TableRow key={product.id} className="border-b border-gray-700/50 hover:bg-gray-700/30 transition-colors duration-200">
+            <TableRow 
+              key={product.id} 
+              className="border-b border-gray-700/50 hover:bg-gray-700/30 transition-colors duration-200"
+            >
               <TableCell className="text-gray-300">{product.name}</TableCell>
               <TableCell className="text-gray-300">{getCategoryName(product.category)}</TableCell>
               <TableCell className="text-gray-300">{product.description}</TableCell>
