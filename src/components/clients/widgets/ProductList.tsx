@@ -53,54 +53,44 @@ export function ProductList({ onEdit }: ProductListProps) {
   };
 
   return (
-    <div className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 overflow-hidden">
-      <Table>
-        <TableHeader className="bg-gradient-to-r from-blue-600/80 to-purple-600/80 backdrop-blur-xl">
-          <TableRow className="border-b border-gray-700 hover:bg-gray-800/50">
-            <TableHead className="text-gray-300">Client</TableHead>
-            <TableHead className="text-gray-300">Chantier</TableHead>
-            <TableHead className="text-gray-300">Catégorie</TableHead>
-            <TableHead className="text-gray-300">Produit</TableHead>
-            <TableHead className="text-gray-300">Prix</TableHead>
-            <TableHead className="text-right text-gray-300">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {mockProducts.map((product, index) => (
-            <motion.tr
-              key={product.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
-              className="bg-gradient-to-r from-gray-900/30 to-gray-800/30 backdrop-blur-xl hover:bg-gray-700/30 transition-colors duration-200"
-            >
-              <TableCell className="text-gray-300">{product.name}</TableCell>
-              <TableCell className="text-gray-300">{getCategoryName(product.category)}</TableCell>
-              <TableCell className="text-gray-300">{product.description}</TableCell>
-              <TableCell className="text-right">
-                <div className="flex justify-end space-x-2">
-                  <Button 
-                    variant="ghost" 
-                    size="icon"
-                    onClick={() => onEdit?.(product)}
-                    className="hover:bg-gray-700/50"
-                  >
-                    <Edit className="h-4 w-4 text-gray-300" />
-                  </Button>
-                  <Button 
-                    variant="ghost" 
-                    size="icon"
-                    onClick={() => handleDelete(product.id)}
-                    className="hover:bg-gray-700/50"
-                  >
-                    <Trash2 className="h-4 w-4 text-gray-300" />
-                  </Button>
-                </div>
-              </TableCell>
-            </motion.tr>
-          ))}
-        </TableBody>
-      </Table>
+    <div className="space-y-4">
+      {mockProducts.map((product, index) => (
+        <motion.div
+          key={product.id}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: index * 0.1 }}
+          className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/50 transition-colors cursor-pointer"
+        >
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+              <h3 className="text-white font-medium">{product.name}</h3>
+              <p className="text-gray-400 text-sm">{getCategoryName(product.category)}</p>
+            </div>
+            <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
+              <p className="text-gray-400 text-sm">{product.description}</p>
+              <div className="flex gap-2">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => onEdit?.(product)}
+                  className="hover:bg-gray-700/50"
+                >
+                  <Edit className="h-4 w-4 text-gray-300" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => handleDelete(product.id)}
+                  className="hover:bg-gray-700/50"
+                >
+                  <Trash2 className="h-4 w-4 text-gray-300" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      ))}
     </div>
   );
 }
