@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import FacturationWidget from "@/components/invoices/FacturationWidget";
+import { FacturationWidget } from "@/components/invoices/FacturationWidget";
 import { useState } from "react";
 import { FileText, DollarSign, CreditCard, Clock } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -94,7 +94,7 @@ const Invoices = () => {
                     exit={{ opacity: 0, height: 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <FacturationWidget invoices={mockInvoices} />
+                    <FacturationWidget />
                   </motion.div>
                 )}
               </AnimatePresence>
