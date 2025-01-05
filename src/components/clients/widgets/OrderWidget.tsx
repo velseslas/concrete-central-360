@@ -5,6 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Plus } from "lucide-react";
 import { OrderForm } from "@/components/orders/OrderForm";
+import { motion } from "framer-motion";
 
 interface Order {
   id: string;
@@ -38,9 +39,9 @@ export function OrderWidget({ clientId }: OrderWidgetProps) {
 
   const getStatusBadge = (status: Order["status"]) => {
     const statusConfig = {
-      pending: { label: "En attente", className: "bg-yellow-100 text-yellow-800" },
-      in_progress: { label: "En cours", className: "bg-blue-100 text-blue-800" },
-      completed: { label: "Terminée", className: "bg-green-100 text-green-800" },
+      pending: { label: "En attente", className: "bg-yellow-500/20 text-yellow-400" },
+      in_progress: { label: "En cours", className: "bg-blue-500/20 text-blue-400" },
+      completed: { label: "Terminée", className: "bg-green-500/20 text-green-400" },
     };
 
     const config = statusConfig[status];
@@ -57,50 +58,66 @@ export function OrderWidget({ clientId }: OrderWidgetProps) {
   };
 
   return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-lg font-medium">Commandes</CardTitle>
-        <Button onClick={() => setShowOrderForm(true)} size="sm">
-          <Plus className="mr-2 h-4 w-4" />
-          Nouvelle commande
-        </Button>
-      </CardHeader>
-      <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>N° Commande</TableHead>
-              <TableHead>Date de livraison</TableHead>
-              <TableHead>Client</TableHead>
-              <TableHead>Chantier</TableHead>
-              <TableHead>Catégorie</TableHead>
-              <TableHead>Produit</TableHead>
-              <TableHead>Quantité</TableHead>
-              <TableHead>Statut</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {orders.map((order) => (
-              <TableRow key={order.id}>
-                <TableCell className="font-medium">{order.id}</TableCell>
-                <TableCell>{order.deliveryDate}</TableCell>
-                <TableCell>{order.client}</TableCell>
-                <TableCell>{order.project}</TableCell>
-                <TableCell>{order.category}</TableCell>
-                <TableCell>{order.formulation}</TableCell>
-                <TableCell>{order.volume}</TableCell>
-                <TableCell>{getStatusBadge(order.status)}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </CardContent>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      className="group"
+    >
+      <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl group-hover:shadow-2xl transition-all duration-300">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-white flex items-center gap-2">Commandes</CardTitle>
+          <Button 
+            onClick={() => setShowOrderForm(true)} 
+            size="sm"
+            className="bg-blue-600 hover:bg-blue-700 text-white"
+          >
+            <Plus className="mr-2 h-4 w-4" />
+            Nouvelle commande
+          </Button>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50">
+              <Table>
+                <TableHeader>
+                  <TableRow className="hover:bg-gray-800/50">
+                    <TableHead className="text-gray-300">N° Commande</TableHead>
+                    <TableHead className="text-gray-300">Date de livraison</TableHead>
+                    <TableHead className="text-gray-300">Client</TableHead>
+                    <TableHead className="text-gray-300">Chantier</TableHead>
+                    <TableHead className="text-gray-300">Catégorie</TableHead>
+                    <TableHead className="text-gray-300">Produit</TableHead>
+                    <TableHead className="text-gray-300">Quantité</TableHead>
+                    <TableHead className="text-gray-300">Statut</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {orders.map((order) => (
+                    <TableRow key={order.id} className="hover:bg-gray-700/50">
+                      <TableCell className="font-medium text-blue-400">{order.id}</TableCell>
+                      <TableCell className="text-gray-300">{order.deliveryDate}</TableCell>
+                      <TableCell className="text-gray-300">{order.client}</TableCell>
+                      <TableCell className="text-gray-300">{order.project}</TableCell>
+                      <TableCell className="text-gray-300">{order.category}</TableCell>
+                      <TableCell className="text-gray-300">{order.formulation}</TableCell>
+                      <TableCell className="text-gray-300">{order.volume}</TableCell>
+                      <TableCell>{getStatusBadge(order.status)}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       <OrderForm
         open={showOrderForm}
         onOpenChange={setShowOrderForm}
         onSubmit={handleSubmit}
       />
-    </Card>
+    </motion.div>
   );
 }
