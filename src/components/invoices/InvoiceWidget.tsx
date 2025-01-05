@@ -44,10 +44,10 @@ export function InvoiceWidget() {
   ];
 
   const overdueInvoicesList = [
-    { id: "FAC-001", client: "Client A", amount: 45000, dueDate: "2024-02-15" },
-    { id: "FAC-002", client: "Client B", amount: 35000, dueDate: "2024-02-10" },
-    { id: "FAC-003", client: "Client C", amount: 28000, dueDate: "2024-02-05" },
-    { id: "FAC-004", client: "Client D", amount: 22000, dueDate: "2024-01-30" },
+    { id: "FAC-001", client: "Client A", amount: 45000, date: "2024-02-15", dueDate: "2024-02-15" },
+    { id: "FAC-002", client: "Client B", amount: 35000, date: "2024-02-10", dueDate: "2024-02-10" },
+    { id: "FAC-003", client: "Client C", amount: 28000, date: "2024-02-05", dueDate: "2024-02-05" },
+    { id: "FAC-004", client: "Client D", amount: 22000, date: "2024-01-30", dueDate: "2024-01-30" },
   ];
 
   return (
@@ -78,7 +78,7 @@ export function InvoiceWidget() {
                   <DollarSign className="h-5 w-5 text-green-400" />
                   Total facturé
                 </h3>
-                <p className="text-xl font-bold text-white">{totalInvoices.toLocaleString()} DA</p>
+                <p className="text-base font-bold text-white">{totalInvoices.toLocaleString()} DA</p>
                 <p className="text-sm text-gray-400">15 factures au total</p>
               </div>
               <div 
@@ -89,7 +89,7 @@ export function InvoiceWidget() {
                   <Calendar className="h-5 w-5 text-yellow-400" />
                   Factures du mois
                 </h3>
-                <p className="text-xl font-bold text-white">{currentMonthInvoices.toLocaleString()} DA</p>
+                <p className="text-base font-bold text-white">{currentMonthInvoices.toLocaleString()} DA</p>
                 <p className="text-sm text-gray-400">5 factures ce mois</p>
               </div>
               <div 
@@ -100,7 +100,7 @@ export function InvoiceWidget() {
                   <Clock className={`h-5 w-5 text-red-400 ${hasOverdueInvoices ? 'animate-[pulse_1.5s_ease-in-out_infinite]' : ''}`} />
                   Factures en souffrance
                 </h3>
-                <p className={`text-xl font-bold ${hasOverdueInvoices ? 'text-red-400 animate-[pulse_1.5s_ease-in-out_infinite]' : 'text-white'}`}>
+                <p className={`text-base font-bold ${hasOverdueInvoices ? 'text-red-400 animate-[pulse_1.5s_ease-in-out_infinite]' : 'text-white'}`}>
                   {overdueInvoices.toLocaleString()} DA
                 </p>
                 <p className="text-sm text-gray-400">4 factures impayées</p>
@@ -113,7 +113,7 @@ export function InvoiceWidget() {
                   <DollarSign className="h-5 w-5 text-green-400" />
                   Paiements reçus
                 </h3>
-                <p className="text-xl font-bold text-white">{totalPaid.toLocaleString()} DA</p>
+                <p className="text-base font-bold text-white">{totalPaid.toLocaleString()} DA</p>
                 <p className="text-sm text-gray-400">9 paiements effectués</p>
               </div>
               <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[160px] flex-1">
@@ -122,7 +122,7 @@ export function InvoiceWidget() {
                   Taux de recouvrement
                 </h3>
                 <div className="space-y-2">
-                  <p className="text-xl font-bold text-white">{recoveryRate.toFixed(1)}%</p>
+                  <p className="text-base font-bold text-white">{recoveryRate.toFixed(1)}%</p>
                   <Progress value={recoveryRate} className="h-2" />
                 </div>
               </div>
