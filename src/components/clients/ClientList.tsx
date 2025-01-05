@@ -4,10 +4,12 @@ import { ProjectForm } from "../projects/ProjectForm";
 import { DocumentsWidget } from "./widgets/DocumentsWidget";
 import { ClientTable } from "./ClientTable";
 import { Button } from "../ui/button";
-import { UserPlus } from "lucide-react";
+import { UserPlus, Search } from "lucide-react";
 import { motion } from "framer-motion";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import { Sheet, SheetContent } from "../ui/sheet";
+import { Input } from "../ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
 const mockClients = [
   {
@@ -31,6 +33,7 @@ const ClientList = () => {
   const [showProjectForm, setShowProjectForm] = useState(false);
   const [showDocumentUpload, setShowDocumentUpload] = useState(false);
   const [isNewClientDialogOpen, setIsNewClientDialogOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleDelete = (clientId: number) => {
     console.log("Deleting client:", clientId);
@@ -57,45 +60,60 @@ const ClientList = () => {
       transition={{ duration: 0.3 }}
       className="space-y-6"
     >
-      <motion.div 
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.3, delay: 0.1 }}
-        className="flex justify-between items-center"
-      >
-        <h2 className="text-2xl font-bold text-white">Liste des clients</h2>
-        <Dialog open={isNewClientDialogOpen} onOpenChange={setIsNewClientDialogOpen}>
-          <DialogTrigger asChild>
-            <Button className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600">
-              <UserPlus className="mr-2 h-4 w-4" />
-              Nouveau client
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-[800px] max-h-[90vh] overflow-y-auto">
-            <ClientForm onSuccess={() => setIsNewClientDialogOpen(false)} />
-          </DialogContent>
-        </Dialog>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, delay: 0.2 }}
-        className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 rounded-lg shadow-xl border border-gray-800 backdrop-blur-xl"
-      >
-        <ClientTable
-          clients={mockClients}
-          onEdit={handleEdit}
-          onAddProject={handleAddProject}
-          onDocumentUpload={handleDocumentUpload}
-          onDelete={handleDelete}
-        />
-      </motion.div>
+      <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
+        <CardHeader>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <CardTitle className="text-white flex items-center gap-2">
+              <UserPlus className="h-6 w-6 text-blue-400" />
+              Liste des Clients
+            </CardTitle>
+            <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
+              <div className="relative flex-grow md:w-64">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Input 
+                  placeholder="Rechercher un client..." 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-9 bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-400"
+                />
+              </div>
+              <Dialog open={isNewClientDialogOpen} onOpenChange={setIsNewClientDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600">
+                    <UserPlus className="mr-2 h-4 w-4" />
+                    Nouveau client
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-[800px] max-h-[90vh] overflow-y-auto bg-gray-900 border-gray-800">
+                  <ClientForm onSuccess={() => setIsNewClientDialogOpen(false)} />
+                </DialogContent>
+              </Dialog>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.2 }}
+            className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 rounded-lg shadow-xl border border-gray-800 backdrop-blur-xl"
+          >
+            <ClientTable
+              clients={mockClients}
+              onEdit={handleEdit}
+              onAddProject={handleAddProject}
+              onDocumentUpload={handleDocumentUpload}
+              onDelete={handleDelete}
+            />
+          </motion.div>
+        </CardContent>
+      </Card>
       
       {selectedClient && (
         <>
           <Sheet>
-            <SheetContent side="right" className="w-[400px] sm:w-[540px]">
+            <SheetContent side="right" className="w-[400px] sm:w-[540px] bg-gray-900 border-gray-800">
               <ClientForm clientToEdit={selectedClient} />
             </SheetContent>
           </Sheet>
