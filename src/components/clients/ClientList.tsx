@@ -60,12 +60,12 @@ const ClientList = () => {
       transition={{ duration: 0.3 }}
       className="space-y-6"
     >
-      <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-800 shadow-xl">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
+      <Card className="relative overflow-hidden bg-gradient-to-br from-purple-500/5 via-blue-500/5 to-purple-500/5 border-gray-700/50 shadow-xl">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-blue-500/5 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
         <CardHeader>
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <CardTitle className="text-gray-100 flex items-center gap-2">
-              <UserPlus className="h-6 w-6 text-blue-400" />
+            <CardTitle className="text-white flex items-center gap-2">
+              <UserPlus className="h-6 w-6 text-purple-400" />
               Liste des Clients
             </CardTitle>
             <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
@@ -75,17 +75,17 @@ const ClientList = () => {
                   placeholder="Rechercher un client..." 
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-9 bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-400"
+                  className="pl-9 bg-gray-800/30 border-gray-700/50 text-white placeholder-gray-400"
                 />
               </div>
               <Dialog open={isNewClientDialogOpen} onOpenChange={setIsNewClientDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white">
+                  <Button className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white">
                     <UserPlus className="mr-2 h-4 w-4" />
                     Nouveau client
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-[800px] max-h-[90vh] overflow-y-auto bg-gray-900 border-gray-800">
+                <DialogContent className="max-w-[800px] max-h-[90vh] overflow-y-auto bg-gray-900/95 border-gray-700/50">
                   <ClientForm onSuccess={() => setIsNewClientDialogOpen(false)} />
                 </DialogContent>
               </Dialog>
@@ -97,7 +97,7 @@ const ClientList = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.2 }}
-            className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 rounded-lg shadow-xl border border-gray-800 backdrop-blur-xl"
+            className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 rounded-lg shadow-xl border border-gray-700/50 backdrop-blur-xl"
           >
             <ClientTable
               clients={mockClients}
@@ -113,7 +113,7 @@ const ClientList = () => {
       {selectedClient && (
         <>
           <Sheet>
-            <SheetContent side="right" className="w-[400px] sm:w-[540px] bg-gray-900 border-gray-800">
+            <SheetContent side="right" className="w-[400px] sm:w-[540px] bg-gray-900/95 border-gray-700/50">
               <ClientForm clientToEdit={selectedClient} />
             </SheetContent>
           </Sheet>

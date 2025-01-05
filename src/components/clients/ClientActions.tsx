@@ -22,25 +22,25 @@ export function ClientActions({
         variant="ghost"
         size="icon"
         onClick={() => onEdit(client)}
-        className="hover:bg-blue-500/20 transition-colors"
+        className="hover:bg-purple-500/20 transition-colors"
       >
-        <Edit className="h-4 w-4 text-blue-400" />
+        <Edit className="h-4 w-4 text-purple-400" />
       </Button>
       <Button
         variant="ghost"
         size="icon"
         onClick={() => onAddProject(client)}
-        className="hover:bg-green-500/20 transition-colors"
+        className="hover:bg-blue-500/20 transition-colors"
       >
-        <Building className="h-4 w-4 text-green-400" />
+        <Building className="h-4 w-4 text-blue-400" />
       </Button>
       <Button
         variant="ghost"
         size="icon"
         onClick={() => onDocumentUpload(client)}
-        className="hover:bg-yellow-500/20 transition-colors"
+        className="hover:bg-indigo-500/20 transition-colors"
       >
-        <FileText className="h-4 w-4 text-yellow-400" />
+        <FileText className="h-4 w-4 text-indigo-400" />
       </Button>
       <Button
         variant="ghost"
