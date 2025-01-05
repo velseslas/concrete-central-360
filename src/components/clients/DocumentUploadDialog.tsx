@@ -67,7 +67,7 @@ export function DocumentUploadDialog() {
               />
               {form.formState.errors.title && (
                 <p className="text-sm text-red-400">
-                  {form.formState.errors.title.message}
+                  {String(form.formState.errors.title.message)}
                 </p>
               )}
             </div>
@@ -96,7 +96,7 @@ export function DocumentUploadDialog() {
                 </label>
                 {form.formState.errors.file && (
                   <p className="text-sm text-red-400 mt-1">
-                    {form.formState.errors.file.message}
+                    {String(form.formState.errors.file.message)}
                   </p>
                 )}
               </div>
