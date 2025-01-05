@@ -30,7 +30,7 @@ export function InvoiceWidget() {
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
               <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50">
                 <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
                   <DollarSign className="h-5 w-5 text-green-400" />
@@ -55,8 +55,6 @@ export function InvoiceWidget() {
                 <p className="text-2xl font-bold text-white">{overdueInvoices.toLocaleString()} DA</p>
                 <p className="text-sm text-gray-400">4 factures impayées</p>
               </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50">
                 <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
                   <DollarSign className="h-5 w-5 text-green-400" />
