@@ -52,7 +52,7 @@ export function ProductList({ onEdit }: ProductListProps) {
   };
 
   return (
-    <div className="rounded-md border border-gray-700/50">
+    <div className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 overflow-hidden">
       <Table>
         <TableHeader className="bg-gray-900/50 backdrop-blur-xl">
           <TableRow className="border-b border-gray-700 hover:bg-gray-800/50">
@@ -64,7 +64,7 @@ export function ProductList({ onEdit }: ProductListProps) {
         </TableHeader>
         <TableBody>
           {mockProducts.map((product) => (
-            <TableRow key={product.id} className="border-b border-gray-700/50 hover:bg-gray-800/50 backdrop-blur-xl transition-colors">
+            <TableRow key={product.id} className="border-b border-gray-700/50 hover:bg-gray-700/30 transition-colors duration-200">
               <TableCell className="text-gray-300">{product.name}</TableCell>
               <TableCell className="text-gray-300">{getCategoryName(product.category)}</TableCell>
               <TableCell className="text-gray-300">{product.description}</TableCell>

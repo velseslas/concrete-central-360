@@ -44,41 +44,43 @@ export function PriceList({ onEdit }: PriceListProps) {
   };
 
   return (
-    <div className="rounded-md border">
+    <div className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 overflow-hidden">
       <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Client</TableHead>
-            <TableHead>Chantier</TableHead>
-            <TableHead>Catégorie</TableHead>
-            <TableHead>Produit</TableHead>
-            <TableHead>Prix</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
+        <TableHeader className="bg-gray-900/50 backdrop-blur-xl">
+          <TableRow className="border-b border-gray-700 hover:bg-gray-800/50">
+            <TableHead className="text-gray-300">Client</TableHead>
+            <TableHead className="text-gray-300">Chantier</TableHead>
+            <TableHead className="text-gray-300">Catégorie</TableHead>
+            <TableHead className="text-gray-300">Produit</TableHead>
+            <TableHead className="text-gray-300">Prix</TableHead>
+            <TableHead className="text-right text-gray-300">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {mockPrices.map((price) => (
-            <TableRow key={price.id}>
-              <TableCell>{price.client}</TableCell>
-              <TableCell>{price.project}</TableCell>
-              <TableCell>Béton</TableCell>
-              <TableCell>{price.product}</TableCell>
-              <TableCell>{price.price.toLocaleString()} DA</TableCell>
+            <TableRow key={price.id} className="border-b border-gray-700/50 hover:bg-gray-700/30 transition-colors duration-200">
+              <TableCell className="text-gray-300">{price.client}</TableCell>
+              <TableCell className="text-gray-300">{price.project}</TableCell>
+              <TableCell className="text-gray-300">Béton</TableCell>
+              <TableCell className="text-gray-300">{price.product}</TableCell>
+              <TableCell className="text-gray-300">{price.price.toLocaleString()} DA</TableCell>
               <TableCell className="text-right">
                 <div className="flex justify-end space-x-2">
                   <Button 
                     variant="ghost" 
                     size="icon"
                     onClick={() => onEdit(price)}
+                    className="hover:bg-gray-700/50"
                   >
-                    <Edit className="h-4 w-4" />
+                    <Edit className="h-4 w-4 text-gray-300" />
                   </Button>
                   <Button 
                     variant="ghost" 
                     size="icon"
                     onClick={() => handleDelete(price.id)}
+                    className="hover:bg-gray-700/50"
                   >
-                    <Trash2 className="h-4 w-4" />
+                    <Trash2 className="h-4 w-4 text-gray-300" />
                   </Button>
                 </div>
               </TableCell>

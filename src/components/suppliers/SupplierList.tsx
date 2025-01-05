@@ -38,10 +38,10 @@ const mockSuppliers = [
 
 export function SupplierList({ onEdit, onDelete }: SupplierListProps) {
   return (
-    <div className="rounded-md border border-gray-700/50">
+    <div className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 overflow-hidden">
       <Table>
         <TableHeader className="bg-gray-900/50 backdrop-blur-xl">
-          <TableRow className="border-b border-gray-700">
+          <TableRow className="border-b border-gray-700 hover:bg-gray-800/50">
             <TableHead className="text-gray-300">Nom</TableHead>
             <TableHead className="text-gray-300">Catégorie</TableHead>
             <TableHead className="text-gray-300">Type de service</TableHead>
@@ -53,7 +53,7 @@ export function SupplierList({ onEdit, onDelete }: SupplierListProps) {
         </TableHeader>
         <TableBody>
           {mockSuppliers.map((supplier) => (
-            <TableRow key={supplier.id} className="border-b border-gray-700/50 hover:bg-gray-800/50 backdrop-blur-xl transition-colors">
+            <TableRow key={supplier.id} className="border-b border-gray-700/50 hover:bg-gray-700/30 transition-colors duration-200">
               <TableCell className="text-gray-300">{supplier.nom}</TableCell>
               <TableCell className="text-gray-300">{supplier.categorieSupplier}</TableCell>
               <TableCell className="text-gray-300">{supplier.typeService}</TableCell>
@@ -62,16 +62,16 @@ export function SupplierList({ onEdit, onDelete }: SupplierListProps) {
               <TableCell className="text-gray-300">{supplier.email}</TableCell>
               <TableCell className="text-right">
                 <div className="flex justify-end space-x-2">
-                  <Button
-                    variant="ghost"
+                  <Button 
+                    variant="ghost" 
                     size="icon"
                     onClick={() => onEdit(supplier)}
                     className="hover:bg-gray-700/50"
                   >
                     <Edit className="h-4 w-4 text-gray-300" />
                   </Button>
-                  <Button
-                    variant="ghost"
+                  <Button 
+                    variant="ghost" 
                     size="icon"
                     onClick={() => onDelete(supplier.id)}
                     className="hover:bg-gray-700/50"

@@ -35,10 +35,10 @@ const ConsumablesList = ({ onEdit }: ConsumablesListProps) => {
   };
 
   return (
-    <div className="rounded-md border border-gray-700/50">
+    <div className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 overflow-hidden">
       <Table>
         <TableHeader className="bg-gray-900/50 backdrop-blur-xl">
-          <TableRow className="border-b border-gray-700">
+          <TableRow className="border-b border-gray-700 hover:bg-gray-800/50">
             <TableHead className="text-gray-300">Date</TableHead>
             <TableHead className="text-gray-300">Type</TableHead>
             <TableHead className="text-gray-300">Véhicule/Équipement</TableHead>
@@ -49,7 +49,7 @@ const ConsumablesList = ({ onEdit }: ConsumablesListProps) => {
         </TableHeader>
         <TableBody>
           {mockConsumables.map((consumable) => (
-            <TableRow key={consumable.id} className="border-b border-gray-700/50 hover:bg-gray-800/50 backdrop-blur-xl transition-colors">
+            <TableRow key={consumable.id} className="border-b border-gray-700/50 hover:bg-gray-700/30 transition-colors duration-200">
               <TableCell className="text-gray-300">{new Date(consumable.date).toLocaleDateString()}</TableCell>
               <TableCell className="text-gray-300">{consumable.type}</TableCell>
               <TableCell className="text-gray-300">{consumable.vehicle}</TableCell>
