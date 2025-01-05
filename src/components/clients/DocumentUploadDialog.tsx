@@ -17,7 +17,12 @@ const documentSchema = z.object({
 
 type DocumentFormValues = z.infer<typeof documentSchema>;
 
-export function DocumentUploadDialog() {
+interface DocumentUploadDialogProps {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}
+
+export function DocumentUploadDialog({ open, onOpenChange }: DocumentUploadDialogProps) {
   const [isUploading, setIsUploading] = useState(false);
 
   const form = useForm<DocumentFormValues>({
@@ -33,6 +38,9 @@ export function DocumentUploadDialog() {
     try {
       console.log("Document data:", data);
       toast.success("Document téléchargé avec succès");
+      if (onOpenChange) {
+        onOpenChange(false);
+      }
     } catch (error) {
       console.error("Erreur lors du téléchargement:", error);
       toast.error("Erreur lors du téléchargement du document");
