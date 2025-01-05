@@ -95,7 +95,7 @@ export function InvoiceWidget() {
                 onClick={() => hasOverdueInvoices && setIsOverdueOpen(true)}
               >
                 <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2 text-lg">
-                  <Clock className={`h-5 w-5 text-red-400 ${hasOverdueInvoices ? 'animate-[pulse_1.5s_ease-in-out_infinite]' : ''}`} />
+                  <Clock className={hasOverdueInvoices ? 'h-5 w-5 text-red-400 animate-[pulse_1.5s_ease-in-out_infinite]' : 'h-5 w-5 text-gray-400'} />
                   Factures en souffrance
                 </h3>
                 <p className={`text-base font-bold ${hasOverdueInvoices ? 'text-red-400 animate-[pulse_1.5s_ease-in-out_infinite]' : 'text-white'}`}>
