@@ -64,14 +64,14 @@ export function OrderWidget({ clientId }: OrderWidgetProps) {
       transition={{ duration: 0.3 }}
       className="group"
     >
-      <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl group-hover:shadow-2xl transition-all duration-300">
+      <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-800 shadow-xl group-hover:shadow-2xl transition-all duration-300">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-white flex items-center gap-2">Commandes</CardTitle>
+        <CardHeader className="border-b border-gray-800">
+          <CardTitle className="text-gray-100 font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">Commandes</CardTitle>
           <Button 
             onClick={() => setShowOrderForm(true)} 
             size="sm"
-            className="bg-blue-600 hover:bg-blue-700 text-white"
+            className="bg-blue-600 hover:bg-blue-700 text-white absolute top-4 right-4"
           >
             <Plus className="mr-2 h-4 w-4" />
             Nouvelle commande
@@ -79,7 +79,7 @@ export function OrderWidget({ clientId }: OrderWidgetProps) {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <div className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50">
+            <div className="rounded-lg bg-gray-900/50 backdrop-blur-sm border border-gray-700/50">
               <Table>
                 <TableHeader>
                   <TableRow className="hover:bg-gray-800/50">
