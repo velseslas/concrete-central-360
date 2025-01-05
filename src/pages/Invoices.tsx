@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { InvoiceWidget } from "@/components/invoices/InvoiceWidget";
 import { BillingListWidget } from "@/components/finance/widgets/BillingListWidget";
 import { DailyExpenseWidget } from "@/components/finance/widgets/DailyExpenseWidget";
+import { GlobalExpenseWidget } from "@/components/finance/widgets/GlobalExpenseWidget";
 
 const Invoices = () => {
   return (
@@ -20,6 +21,11 @@ const Invoices = () => {
         {/* Liste des factures */}
         <div className="grid grid-cols-1 gap-8">
           <BillingListWidget />
+        </div>
+
+        {/* Dépenses Globales */}
+        <div className="grid grid-cols-1 gap-8">
+          <GlobalExpenseWidget />
         </div>
 
         {/* Dépenses du jour */}
