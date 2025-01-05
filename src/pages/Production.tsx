@@ -3,6 +3,9 @@ import { ProductionWidget } from "@/components/production/ProductionWidget";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { FileText, Search, Plus } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 const Production = () => {
   // Données de production pour l'exemple
@@ -63,37 +66,66 @@ const Production = () => {
 
         {/* Liste des productions */}
         <div className="grid grid-cols-1 gap-8">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg font-medium">Liste des Productions</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>N° Production</TableHead>
-                    <TableHead>Date</TableHead>
-                    <TableHead>Client</TableHead>
-                    <TableHead>Formulation</TableHead>
-                    <TableHead>Volume (m³)</TableHead>
-                    <TableHead>Statut</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="group"
+          >
+            <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl group-hover:shadow-2xl transition-all duration-300">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
+              <CardHeader>
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                  <CardTitle className="text-white flex items-center gap-2">
+                    <FileText className="h-6 w-6 text-blue-400" />
+                    Liste des Productions
+                  </CardTitle>
+                  <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
+                    <div className="relative flex-grow md:w-64">
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                      <Input 
+                        placeholder="Rechercher une production..." 
+                        className="pl-9 bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-400"
+                      />
+                    </div>
+                    <Button variant="outline" size="sm" className="text-white">
+                      <Plus className="h-4 w-4 mr-2" />
+                      Nouvelle Production
+                    </Button>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
                   {productions.map((production) => (
-                    <TableRow key={production.id}>
-                      <TableCell className="font-medium">{production.id}</TableCell>
-                      <TableCell>{production.date}</TableCell>
-                      <TableCell>{production.client}</TableCell>
-                      <TableCell>{production.formulation}</TableCell>
-                      <TableCell>{production.volume}</TableCell>
-                      <TableCell>{getStatusBadge(production.status)}</TableCell>
-                    </TableRow>
+                    <div
+                      key={production.id}
+                      className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/50 transition-colors cursor-pointer"
+                    >
+                      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                          <h3 className="text-white font-medium flex items-center gap-2">
+                            <FileText className="h-4 w-4 text-blue-400" />
+                            {production.id}
+                          </h3>
+                          <p className="text-gray-400 text-sm">{production.client}</p>
+                        </div>
+                        <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
+                          <div className="text-right">
+                            <p className="text-white font-medium">{production.volume} m³</p>
+                            <p className="text-gray-400 text-sm">{production.date}</p>
+                          </div>
+                          <div>
+                            {getStatusBadge(production.status)}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
         </div>
       </motion.div>
     </div>
