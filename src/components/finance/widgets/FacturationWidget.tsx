@@ -1,12 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { motion } from "framer-motion";
-import { Receipt, X } from "lucide-react";
-import { CashFlowWidget } from "../CashFlowWidget";
-import { ExpensesWidget } from "../ExpensesWidget";
-import { TransactionsWidget } from "../TransactionsWidget";
-import { FinanceStats } from "../FinanceStats";
-import { Button } from "@/components/ui/button";
+import { Receipt } from "lucide-react";
+import { BillingListWidget } from "./BillingListWidget";
 
 export function FacturationWidget() {
   return (
@@ -27,7 +23,7 @@ export function FacturationWidget() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-400">Cliquez pour voir tous les détails financiers</p>
+              <p className="text-gray-400">Cliquez pour voir la liste des factures</p>
             </CardContent>
           </Card>
         </motion.div>
@@ -37,16 +33,11 @@ export function FacturationWidget() {
         <DialogHeader>
           <DialogTitle className="text-xl font-bold text-white flex items-center gap-2">
             <Receipt className="h-6 w-6 text-blue-400" />
-            Détails de Facturation
+            Liste des Factures
           </DialogTitle>
         </DialogHeader>
         <div className="space-y-6 p-4">
-          <div className="grid grid-cols-1 gap-6">
-            <FinanceStats />
-            <CashFlowWidget />
-            <ExpensesWidget />
-            <TransactionsWidget />
-          </div>
+          <BillingListWidget />
         </div>
       </DialogContent>
     </Dialog>
