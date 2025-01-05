@@ -85,7 +85,7 @@ export function RollingStockExpenseWidget() {
                 <AlertTriangle className="h-5 w-5 text-[#F97316]" />
                 Véhicules en panne
               </h3>
-              <p className="text-base font-bold text-[#F97316]">{brokenVehicles.length}</p>
+              <p className="text-base font-bold text-[#F97316] animate-pulse">{brokenVehicles.length}</p>
               <p className="text-sm text-gray-400">Nécessitent une intervention</p>
             </div>
           </div>
@@ -109,7 +109,7 @@ export function RollingStockExpenseWidget() {
                   <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
                     <div className="text-right">
                       <p className="text-gray-400 text-sm">En panne depuis:</p>
-                      <p className="text-white font-medium">
+                      <p className="text-white font-medium animate-pulse">
                         {new Date(vehicle.since).toLocaleDateString()}
                       </p>
                     </div>
