@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { 
   Home, Users, TestTube, Truck, Car, 
-  DollarSign, FileSpreadsheet, Factory 
+  DollarSign, FileSpreadsheet, Factory, X 
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -25,8 +25,15 @@ const Sidebar = () => {
       initial={{ x: -250 }}
       animate={{ x: 0 }}
       transition={{ type: "spring", stiffness: 100 }}
-      className="min-h-screen w-64 bg-gradient-to-b from-gray-900 to-gray-800 backdrop-blur-xl p-4 border-r border-gray-800/50 shadow-xl"
+      className="min-h-screen w-64 bg-gradient-to-b from-gray-900 to-gray-800 backdrop-blur-xl p-4 border-r border-gray-800/50 shadow-xl relative"
     >
+      <button 
+        className="absolute top-4 right-4 p-1 rounded-lg hover:bg-gray-700/50 transition-colors"
+        onClick={() => document.querySelector('.sidebar')?.classList.toggle('hidden')}
+      >
+        <X className="h-4 w-4 text-gray-400" />
+      </button>
+
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
