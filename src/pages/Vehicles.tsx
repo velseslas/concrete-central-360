@@ -35,6 +35,18 @@ const Vehicles = () => {
     }
   ];
 
+  const activeVehicles = [
+    { vehicle: "Mercedes Actros", status: "En mission", location: "Casablanca" },
+    { vehicle: "Volvo FH16", status: "En route", location: "Rabat" },
+    { vehicle: "MAN TGX", status: "Disponible", location: "Dépôt" }
+  ];
+
+  const maintenanceVehicles = [
+    { vehicle: "Renault T460", type: "Vidange", duration: "2 heures" },
+    { vehicle: "DAF XF", type: "Révision", duration: "4 heures" },
+    { vehicle: "Iveco S-Way", type: "Pneus", duration: "1 heure" }
+  ];
+
   // Nombre d'alertes
   const alertCount = documentsToRenew.length;
   const hasAlerts = alertCount > 0;
@@ -70,15 +82,61 @@ const Vehicles = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
-            { title: "Véhicules Actifs", value: "12", icon: Car, color: "text-green-400" },
-            { title: "En Maintenance", value: "3", icon: Settings, color: "text-orange-400" },
+            { 
+              title: "Véhicules Actifs", 
+              value: activeVehicles.length.toString(), 
+              icon: Car, 
+              color: "text-green-400",
+              data: activeVehicles,
+              renderContent: (item: any) => (
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="font-medium text-[#D6BCFA]">{item.vehicle}</h3>
+                    <p className="text-sm text-[#0EA5E9]">{item.status}</p>
+                  </div>
+                  <div className="text-gray-400 font-medium">
+                    {item.location}
+                  </div>
+                </div>
+              )
+            },
+            { 
+              title: "En Maintenance", 
+              value: maintenanceVehicles.length.toString(), 
+              icon: Settings, 
+              color: "text-orange-400",
+              data: maintenanceVehicles,
+              renderContent: (item: any) => (
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="font-medium text-[#D6BCFA]">{item.vehicle}</h3>
+                    <p className="text-sm text-[#0EA5E9]">{item.type}</p>
+                  </div>
+                  <div className="text-orange-400 font-medium">
+                    {item.duration}
+                  </div>
+                </div>
+              )
+            },
             { 
               title: "Alerte Documents", 
               value: alertCount.toString(), 
               icon: AlertTriangle, 
               color: "text-red-400",
               isPulsing: hasAlerts,
-              isAlert: true
+              isAlert: true,
+              data: documentsToRenew,
+              renderContent: (doc: any) => (
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="font-medium text-[#D6BCFA]">{doc.vehicle}</h3>
+                    <p className="text-sm text-[#0EA5E9]">{doc.document}</p>
+                  </div>
+                  <div className="text-[#F97316] font-medium">
+                    Expire le {new Date(doc.expiry).toLocaleDateString()}
+                  </div>
+                </div>
+              )
             },
             {
               title: "Véhicules en Panne",
@@ -86,7 +144,19 @@ const Vehicles = () => {
               icon: Car,
               color: "text-[#F97316]",
               isPulsing: brokenCount > 0,
-              isBreakdown: true
+              isBreakdown: true,
+              data: brokenVehicles,
+              renderContent: (vehicle: any) => (
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="font-medium text-[#F97316]">{vehicle.vehicle}</h3>
+                    <p className="text-sm text-[#0EA5E9]">{vehicle.issue}</p>
+                  </div>
+                  <div className="text-gray-400 font-medium">
+                    Depuis le {new Date(vehicle.since).toLocaleDateString()}
+                  </div>
+                </div>
+              )
             }
           ].map((stat, index) => (
             <motion.div
@@ -95,97 +165,35 @@ const Vehicles = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3, delay: index * 0.1 }}
             >
-              {stat.isAlert ? (
-                <Sheet>
-                  <SheetTrigger asChild>
-                    <Card className={`bg-gray-800/50 backdrop-blur-lg border-gray-700 hover:bg-gray-700/50 hover:border-gray-600 transition-all duration-300 cursor-pointer ${stat.isPulsing ? 'shadow-[0_0_15px_rgba(239,68,68,0.3)]' : ''}`}>
-                      <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-                        <CardTitle className="text-sm font-medium text-gray-300">
-                          {stat.title}
-                        </CardTitle>
-                        <stat.icon className={`h-5 w-5 ${stat.color} ${stat.isPulsing ? 'animate-[pulse_1.5s_ease-in-out_infinite]' : ''}`} />
-                      </CardHeader>
-                      <CardContent>
-                        <div className={`text-2xl font-bold ${stat.isPulsing ? 'text-red-400 animate-[pulse_1.5s_ease-in-out_infinite]' : 'text-white'}`}>
-                          {stat.value}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </SheetTrigger>
-                  <SheetContent>
-                    <SheetHeader>
-                      <SheetTitle className="text-lg font-semibold text-white">Documents à Renouveler</SheetTitle>
-                    </SheetHeader>
-                    <div className="mt-6 space-y-4">
-                      {documentsToRenew.map((doc, index) => (
-                        <div key={index} className="p-4 rounded-lg bg-gray-800 border border-gray-700">
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <h3 className="font-medium text-[#D6BCFA]">{doc.vehicle}</h3>
-                              <p className="text-sm text-[#0EA5E9]">{doc.document}</p>
-                            </div>
-                            <div className="text-[#F97316] font-medium">
-                              Expire le {new Date(doc.expiry).toLocaleDateString()}
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </SheetContent>
-                </Sheet>
-              ) : stat.isBreakdown ? (
-                <Sheet>
-                  <SheetTrigger asChild>
-                    <Card className={`bg-gray-800/50 backdrop-blur-lg border-gray-700 hover:bg-gray-700/50 hover:border-gray-600 transition-all duration-300 cursor-pointer ${stat.isPulsing ? 'shadow-[0_0_15px_rgba(249,115,22,0.3)]' : ''}`}>
-                      <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-                        <CardTitle className="text-sm font-medium text-gray-300">
-                          {stat.title}
-                        </CardTitle>
-                        <stat.icon className={`h-5 w-5 ${stat.color} ${stat.isPulsing ? 'animate-[pulse_1.5s_ease-in-out_infinite]' : ''}`} />
-                      </CardHeader>
-                      <CardContent>
-                        <div className={`text-2xl font-bold ${stat.isPulsing ? 'text-[#F97316] animate-[pulse_1.5s_ease-in-out_infinite]' : 'text-white'}`}>
-                          {stat.value}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </SheetTrigger>
-                  <SheetContent>
-                    <SheetHeader>
-                      <SheetTitle className="text-lg font-semibold text-white">Véhicules en Panne</SheetTitle>
-                    </SheetHeader>
-                    <div className="mt-6 space-y-4">
-                      {brokenVehicles.map((vehicle, index) => (
-                        <div key={index} className="p-4 rounded-lg bg-gray-800 border border-gray-700">
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <h3 className="font-medium text-[#F97316]">{vehicle.vehicle}</h3>
-                              <p className="text-sm text-[#0EA5E9]">{vehicle.issue}</p>
-                            </div>
-                            <div className="text-gray-400 font-medium">
-                              Depuis le {new Date(vehicle.since).toLocaleDateString()}
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </SheetContent>
-                </Sheet>
-              ) : (
-                <Card className="bg-gray-800/50 backdrop-blur-lg border-gray-700 hover:bg-gray-700/50 hover:border-gray-600 transition-all duration-300">
-                  <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-                    <CardTitle className="text-sm font-medium text-gray-300">
-                      {stat.title}
-                    </CardTitle>
-                    <stat.icon className={`h-5 w-5 ${stat.color}`} />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold text-white">
-                      {stat.value}
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Card className={`bg-gray-800/50 backdrop-blur-lg border-gray-700 hover:bg-gray-700/50 hover:border-gray-600 transition-all duration-300 cursor-pointer ${stat.isPulsing ? `shadow-[0_0_15px_rgba(${stat.isAlert ? '239,68,68' : '249,115,22'},0.3)]` : ''}`}>
+                    <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
+                      <CardTitle className="text-sm font-medium text-gray-300">
+                        {stat.title}
+                      </CardTitle>
+                      <stat.icon className={`h-5 w-5 ${stat.color} ${stat.isPulsing ? 'animate-[pulse_1.5s_ease-in-out_infinite]' : ''}`} />
+                    </CardHeader>
+                    <CardContent>
+                      <div className={`text-2xl font-bold ${stat.isPulsing ? `text-${stat.isAlert ? 'red' : '[#F97316]'}-400 animate-[pulse_1.5s_ease-in-out_infinite]` : 'text-white'}`}>
+                        {stat.value}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </SheetTrigger>
+                <SheetContent>
+                  <SheetHeader>
+                    <SheetTitle className="text-lg font-semibold text-white">{stat.title}</SheetTitle>
+                  </SheetHeader>
+                  <div className="mt-6 space-y-4">
+                    {stat.data.map((item: any, index: number) => (
+                      <div key={index} className="p-4 rounded-lg bg-gray-800 border border-gray-700">
+                        {stat.renderContent(item)}
+                      </div>
+                    ))}
+                  </div>
+                </SheetContent>
+              </Sheet>
             </motion.div>
           ))}
         </div>
