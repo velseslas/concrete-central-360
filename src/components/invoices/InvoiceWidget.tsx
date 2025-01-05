@@ -29,49 +29,47 @@ export function InvoiceWidget() {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-              <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50">
-                <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
-                  <DollarSign className="h-5 w-5 text-green-400" />
-                  Total facturé
-                </h3>
-                <p className="text-2xl font-bold text-white">{totalInvoices.toLocaleString()} DA</p>
-                <p className="text-sm text-gray-400">15 factures au total</p>
-              </div>
-              <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50">
-                <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
-                  <Calendar className="h-5 w-5 text-yellow-400" />
-                  Factures du mois
-                </h3>
-                <p className="text-2xl font-bold text-white">{currentMonthInvoices.toLocaleString()} DA</p>
-                <p className="text-sm text-gray-400">5 factures ce mois</p>
-              </div>
-              <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50">
-                <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
-                  <Clock className="h-5 w-5 text-yellow-400" />
-                  Factures en souffrance
-                </h3>
-                <p className="text-2xl font-bold text-white">{overdueInvoices.toLocaleString()} DA</p>
-                <p className="text-sm text-gray-400">4 factures impayées</p>
-              </div>
-              <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50">
-                <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
-                  <DollarSign className="h-5 w-5 text-green-400" />
-                  Paiements reçus
-                </h3>
-                <p className="text-2xl font-bold text-white">{totalPaid.toLocaleString()} DA</p>
-                <p className="text-sm text-gray-400">9 paiements effectués</p>
-              </div>
-              <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50">
-                <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
-                  <TrendingUp className="h-5 w-5 text-blue-400" />
-                  Taux de recouvrement
-                </h3>
-                <div className="space-y-2">
-                  <p className="text-2xl font-bold text-white">{recoveryRate.toFixed(1)}%</p>
-                  <Progress value={recoveryRate} className="h-2" />
-                </div>
+          <div className="flex flex-nowrap overflow-x-auto gap-4 pb-2">
+            <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[200px] flex-1">
+              <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
+                <DollarSign className="h-5 w-5 text-green-400" />
+                Total facturé
+              </h3>
+              <p className="text-2xl font-bold text-white">{totalInvoices.toLocaleString()} DA</p>
+              <p className="text-sm text-gray-400">15 factures au total</p>
+            </div>
+            <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[200px] flex-1">
+              <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
+                <Calendar className="h-5 w-5 text-yellow-400" />
+                Factures du mois
+              </h3>
+              <p className="text-2xl font-bold text-white">{currentMonthInvoices.toLocaleString()} DA</p>
+              <p className="text-sm text-gray-400">5 factures ce mois</p>
+            </div>
+            <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[200px] flex-1">
+              <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
+                <Clock className="h-5 w-5 text-yellow-400" />
+                Factures en souffrance
+              </h3>
+              <p className="text-2xl font-bold text-white">{overdueInvoices.toLocaleString()} DA</p>
+              <p className="text-sm text-gray-400">4 factures impayées</p>
+            </div>
+            <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[200px] flex-1">
+              <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
+                <DollarSign className="h-5 w-5 text-green-400" />
+                Paiements reçus
+              </h3>
+              <p className="text-2xl font-bold text-white">{totalPaid.toLocaleString()} DA</p>
+              <p className="text-sm text-gray-400">9 paiements effectués</p>
+            </div>
+            <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[200px] flex-1">
+              <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
+                <TrendingUp className="h-5 w-5 text-blue-400" />
+                Taux de recouvrement
+              </h3>
+              <div className="space-y-2">
+                <p className="text-2xl font-bold text-white">{recoveryRate.toFixed(1)}%</p>
+                <Progress value={recoveryRate} className="h-2" />
               </div>
             </div>
           </div>
