@@ -7,7 +7,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Edit, Trash2 } from "lucide-react";
+import { Edit, FileText, Plus, Search, Trash2 } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { motion } from "framer-motion";
 
 interface Price {
   id: number;
@@ -44,38 +46,50 @@ export function PriceList({ onEdit }: PriceListProps) {
   };
 
   return (
-    <div className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 overflow-hidden">
-      <Table>
-        <TableHeader className="bg-gray-900/50 backdrop-blur-xl">
-          <TableRow className="border-b border-gray-700 hover:bg-gray-800/50">
-            <TableHead className="text-gray-300">Client</TableHead>
-            <TableHead className="text-gray-300">Chantier</TableHead>
-            <TableHead className="text-gray-300">Catégorie</TableHead>
-            <TableHead className="text-gray-300">Produit</TableHead>
-            <TableHead className="text-gray-300">Prix</TableHead>
-            <TableHead className="text-right text-gray-300">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {mockPrices.map((price) => (
-            <TableRow key={price.id} className="border-b border-gray-700/50 hover:bg-gray-700/30 transition-colors duration-200">
-              <TableCell className="text-gray-300">{price.client}</TableCell>
-              <TableCell className="text-gray-300">{price.project}</TableCell>
-              <TableCell className="text-gray-300">Béton</TableCell>
-              <TableCell className="text-gray-300">{price.product}</TableCell>
-              <TableCell className="text-gray-300">{price.price.toLocaleString()} DA</TableCell>
-              <TableCell className="text-right">
-                <div className="flex justify-end space-x-2">
-                  <Button 
-                    variant="ghost" 
+    <div className="space-y-4">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div className="relative flex-grow md:w-64">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+          <Input 
+            placeholder="Rechercher un prix..." 
+            className="pl-9 bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-400"
+          />
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        {mockPrices.map((price) => (
+          <motion.div
+            key={price.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/50 transition-colors cursor-pointer"
+          >
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+              <div>
+                <h3 className="text-white font-medium flex items-center gap-2">
+                  <FileText className="h-4 w-4 text-blue-400" />
+                  {price.client}
+                </h3>
+                <p className="text-gray-400 text-sm">{price.project}</p>
+              </div>
+              <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
+                <div>
+                  <p className="text-white font-medium">{price.product}</p>
+                  <p className="text-gray-400 text-sm">{price.price.toLocaleString()} DA</p>
+                </div>
+                <div className="flex gap-2">
+                  <Button
+                    variant="ghost"
                     size="icon"
                     onClick={() => onEdit(price)}
                     className="hover:bg-gray-700/50"
                   >
                     <Edit className="h-4 w-4 text-gray-300" />
                   </Button>
-                  <Button 
-                    variant="ghost" 
+                  <Button
+                    variant="ghost"
                     size="icon"
                     onClick={() => handleDelete(price.id)}
                     className="hover:bg-gray-700/50"
@@ -83,11 +97,11 @@ export function PriceList({ onEdit }: PriceListProps) {
                     <Trash2 className="h-4 w-4 text-gray-300" />
                   </Button>
                 </div>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
     </div>
   );
 }
