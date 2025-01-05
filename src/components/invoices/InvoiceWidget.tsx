@@ -40,10 +40,10 @@ export function InvoiceWidget() {
               <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50">
                 <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
                   <Clock className="h-5 w-5 text-yellow-400" />
-                  En attente
+                  Factures payées
                 </h3>
-                <p className="text-2xl font-bold text-white">{(totalInvoices - paidInvoices).toLocaleString()} DA</p>
-                <p className="text-sm text-gray-400">6 factures</p>
+                <p className="text-2xl font-bold text-white">{paidInvoices.toLocaleString()} DA</p>
+                <p className="text-sm text-gray-400">9 factures</p>
               </div>
               <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50">
                 <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
