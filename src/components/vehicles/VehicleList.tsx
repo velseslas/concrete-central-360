@@ -1,137 +1,101 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { Edit, Trash, Car, Calendar, FileWarning } from "lucide-react";
-import { toast } from "sonner";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import { Car, Plus, Search, Settings, Calendar, FileText } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
-interface VehicleListProps {
-  onEdit: (vehicle: any) => void;
-}
-
-const mockVehicles = [
-  {
-    id: 1,
-    brand: "Mercedes",
-    model: "Actros",
-    licensePlate: "123 ABC 16",
-    insuranceExpiry: "2024-12-31",
-    technicalControlExpiry: "2024-06-30",
-    circulationPermitExpiry: "2024-12-31",
-    status: "En service",
-  },
-  {
-    id: 2,
-    brand: "Volvo",
-    model: "FH16",
-    licensePlate: "456 DEF 16",
-    insuranceExpiry: "2024-11-30",
-    technicalControlExpiry: "2024-05-31",
-    circulationPermitExpiry: "2024-11-30",
-    status: "En maintenance",
-  },
-];
-
-const VehicleList = ({ onEdit }: VehicleListProps) => {
-  const handleDelete = (id: number) => {
-    console.log("Deleting vehicle:", id);
-    toast.success("Véhicule supprimé avec succès");
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status.toLowerCase()) {
-      case "en service":
-        return "bg-[#9b87f5]/20 text-[#9b87f5]";
-      case "en maintenance":
-        return "bg-yellow-500/20 text-yellow-500";
-      default:
-        return "bg-gray-500/20 text-gray-500";
-    }
-  };
-
-  const isDocumentExpiringSoon = (date: string) => {
-    const expiryDate = new Date(date);
-    const today = new Date();
-    const diffTime = expiryDate.getTime() - today.getTime();
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays <= 30;
-  };
-
+export function VehicleList() {
   return (
-    <div className="rounded-xl overflow-hidden">
-      <Table>
-        <TableHeader>
-          <TableRow className="border-[#2A2F3C] hover:bg-transparent">
-            <TableHead className="text-[#7E69AB]">
-              <Car className="h-4 w-4 inline-block mr-2" />Véhicule
-            </TableHead>
-            <TableHead className="text-[#7E69AB]">Immatriculation</TableHead>
-            <TableHead className="text-[#7E69AB]">Status</TableHead>
-            <TableHead className="text-[#7E69AB]">
-              <Calendar className="h-4 w-4 inline-block mr-2" />Documents
-            </TableHead>
-            <TableHead className="text-[#7E69AB]">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {mockVehicles.map((vehicle) => (
-            <motion.tr
-              key={vehicle.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className="border-[#2A2F3C] hover:bg-[#2A2F3C]/50 transition-colors duration-200"
-            >
-              <TableCell className="font-medium text-[#D6BCFA]">
-                {vehicle.brand} {vehicle.model}
-              </TableCell>
-              <TableCell className="text-[#7E69AB]">{vehicle.licensePlate}</TableCell>
-              <TableCell>
-                <span className={`px-3 py-1 rounded-full text-sm ${getStatusColor(vehicle.status)}`}>
-                  {vehicle.status}
-                </span>
-              </TableCell>
-              <TableCell>
-                <div className="flex items-center gap-2">
-                  {isDocumentExpiringSoon(vehicle.insuranceExpiry) && (
-                    <div className="flex items-center text-yellow-500">
-                      <FileWarning className="h-4 w-4 mr-1" />
-                      <span className="text-sm">Assurance</span>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      className="group"
+    >
+      <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl group-hover:shadow-2xl transition-all duration-300">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
+        <CardHeader>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <CardTitle className="text-white flex items-center gap-2">
+              <Car className="h-6 w-6 text-[#9b87f5]" />
+              Liste des Véhicules
+            </CardTitle>
+            <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
+              <div className="relative flex-grow md:w-64">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Input 
+                  placeholder="Rechercher un véhicule..." 
+                  className="pl-9 bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-400"
+                />
+              </div>
+              <Button variant="outline" size="sm" className="text-white">
+                <Plus className="h-4 w-4 mr-2" />
+                Nouveau Véhicule
+              </Button>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {[
+              { id: "VEH-001", marque: "Mercedes", modele: "Actros", immatriculation: "123 ABC 16", status: "En service", prochainControle: "15/04/2024" },
+              { id: "VEH-002", marque: "Volvo", modele: "FH16", immatriculation: "456 DEF 16", status: "En maintenance", prochainControle: "20/04/2024" },
+              { id: "VEH-003", marque: "Scania", modele: "R500", immatriculation: "789 GHI 16", status: "En service", prochainControle: "25/04/2024" },
+              { id: "VEH-004", marque: "MAN", modele: "TGX", immatriculation: "012 JKL 16", status: "En panne", prochainControle: "30/04/2024" },
+            ].map((vehicule) => (
+              <div
+                key={vehicule.id}
+                className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/50 transition-colors cursor-pointer"
+              >
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                  <div>
+                    <h3 className="text-white font-medium flex items-center gap-2">
+                      <Car className="h-4 w-4 text-[#9b87f5]" />
+                      {vehicule.marque} {vehicule.modele}
+                    </h3>
+                    <p className="text-gray-400 text-sm">{vehicule.immatriculation}</p>
+                  </div>
+                  <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
+                    <div className="flex items-center gap-2">
+                      <Calendar className="h-4 w-4 text-[#9b87f5]" />
+                      <span className="text-sm text-gray-300">
+                        Prochain contrôle: {vehicule.prochainControle}
+                      </span>
                     </div>
-                  )}
-                  {isDocumentExpiringSoon(vehicle.technicalControlExpiry) && (
-                    <div className="flex items-center text-yellow-500">
-                      <FileWarning className="h-4 w-4 mr-1" />
-                      <span className="text-sm">Contrôle technique</span>
+                    <div>
+                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                        vehicule.status === "En service" ? "bg-green-500/20 text-green-400" :
+                        vehicule.status === "En panne" ? "bg-red-500/20 text-red-400" :
+                        "bg-yellow-500/20 text-yellow-400"
+                      }`}>
+                        {vehicule.status}
+                      </span>
                     </div>
-                  )}
+                    <div className="flex gap-2">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8 hover:bg-[#9b87f5]/20"
+                      >
+                        <Settings className="h-4 w-4 text-[#9b87f5]" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8 hover:bg-[#9b87f5]/20"
+                      >
+                        <FileText className="h-4 w-4 text-[#9b87f5]" />
+                      </Button>
+                    </div>
+                  </div>
                 </div>
-              </TableCell>
-              <TableCell>
-                <div className="flex gap-2">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => onEdit(vehicle)}
-                    className="hover:bg-[#9b87f5]/20 hover:text-[#9b87f5] transition-colors"
-                  >
-                    <Edit className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleDelete(vehicle.id)}
-                    className="hover:bg-red-500/20 hover:text-red-500 transition-colors"
-                  >
-                    <Trash className="h-4 w-4" />
-                  </Button>
-                </div>
-              </TableCell>
-            </motion.tr>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
-};
+}
 
 export default VehicleList;
