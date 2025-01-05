@@ -31,7 +31,7 @@ const Sidebar = () => {
         className="absolute top-4 right-4 p-1 rounded-lg hover:bg-gray-700/50 transition-colors"
         onClick={() => document.querySelector('.sidebar')?.classList.toggle('hidden')}
       >
-        <X className="h-4 w-4 text-gray-400" />
+        <X className="h-4 w-4 text-indigo-500" />
       </button>
 
       <motion.div 
