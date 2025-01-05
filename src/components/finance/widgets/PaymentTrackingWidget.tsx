@@ -15,31 +15,26 @@ export function PaymentTrackingWidget() {
         <CardHeader>
           <CardTitle className="text-white flex items-center gap-2">
             <CreditCard className="h-6 w-6 text-blue-400" />
-            Suivi des Paiements
+            État des Paiements
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="space-y-4">
             <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50">
               <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
                 <DollarSign className="h-5 w-5 text-green-400" />
-                Payé
+                Payé ce mois
               </h3>
-              <p className="text-2xl font-bold text-white">1.2M DA</p>
+              <p className="text-2xl font-bold text-white">320,000 DA</p>
+              <p className="text-sm text-gray-400">9 paiements</p>
             </div>
             <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50">
               <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
                 <Clock className="h-5 w-5 text-yellow-400" />
                 En attente
               </h3>
-              <p className="text-2xl font-bold text-white">450K DA</p>
-            </div>
-            <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50">
-              <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
-                <DollarSign className="h-5 w-5 text-red-400" />
-                En retard
-              </h3>
-              <p className="text-2xl font-bold text-white">180K DA</p>
+              <p className="text-2xl font-bold text-white">130,000 DA</p>
+              <p className="text-sm text-gray-400">4 paiements</p>
             </div>
           </div>
         </CardContent>

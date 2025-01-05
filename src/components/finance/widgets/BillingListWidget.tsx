@@ -1,7 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { FileText, Plus } from "lucide-react";
+import { FileText, Plus, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export function BillingListWidget() {
   return (
@@ -14,32 +15,61 @@ export function BillingListWidget() {
       <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl group-hover:shadow-2xl transition-all duration-300">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
         <CardHeader>
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <CardTitle className="text-white flex items-center gap-2">
               <FileText className="h-6 w-6 text-blue-400" />
               Liste des Factures
             </CardTitle>
-            <Button variant="outline" size="sm" className="text-white">
-              <Plus className="h-4 w-4 mr-2" />
-              Nouvelle Facture
-            </Button>
+            <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
+              <div className="relative flex-grow md:w-64">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Input 
+                  placeholder="Rechercher une facture..." 
+                  className="pl-9 bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-400"
+                />
+              </div>
+              <Button variant="outline" size="sm" className="text-white">
+                <Plus className="h-4 w-4 mr-2" />
+                Nouvelle Facture
+              </Button>
+            </div>
           </div>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {[1, 2, 3].map((_, index) => (
+            {[
+              { id: "F2024-095", client: "EURL Construction Plus", montant: "250,000 DA", date: "15/03/2024", statut: "En attente" },
+              { id: "F2024-094", client: "SPA Bâtiment Pro", montant: "180,000 DA", date: "14/03/2024", statut: "Payée" },
+              { id: "F2024-093", client: "SARL Travaux Publics", montant: "320,000 DA", date: "13/03/2024", statut: "En attente" },
+              { id: "F2024-092", client: "ETS Batiment", montant: "120,000 DA", date: "12/03/2024", statut: "En retard" },
+              { id: "F2024-091", client: "SARL BTP Services", montant: "95,000 DA", date: "11/03/2024", statut: "Payée" },
+            ].map((facture) => (
               <div
-                key={index}
+                key={facture.id}
                 className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/50 transition-colors cursor-pointer"
               >
-                <div className="flex justify-between items-center">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                   <div>
-                    <h3 className="text-white font-medium">Facture #{2024001 + index}</h3>
-                    <p className="text-gray-400 text-sm">Client {index + 1}</p>
+                    <h3 className="text-white font-medium flex items-center gap-2">
+                      <FileText className="h-4 w-4 text-blue-400" />
+                      {facture.id}
+                    </h3>
+                    <p className="text-gray-400 text-sm">{facture.client}</p>
                   </div>
-                  <div className="text-right">
-                    <p className="text-white font-medium">150,000 DA</p>
-                    <p className="text-gray-400 text-sm">20/03/2024</p>
+                  <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
+                    <div className="text-right">
+                      <p className="text-white font-medium">{facture.montant}</p>
+                      <p className="text-gray-400 text-sm">{facture.date}</p>
+                    </div>
+                    <div>
+                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                        facture.statut === "Payée" ? "bg-green-500/20 text-green-400" :
+                        facture.statut === "En retard" ? "bg-red-500/20 text-red-400" :
+                        "bg-yellow-500/20 text-yellow-400"
+                      }`}>
+                        {facture.statut}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
