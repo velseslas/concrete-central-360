@@ -61,7 +61,7 @@ export function RollingStockExpenseWidget() {
                 <DollarSign className="h-5 w-5 text-green-400" />
                 Total dépenses
               </h3>
-              <p className="text-base font-bold text-white">45,000 DH</p>
+              <p className="text-base font-bold text-white animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]">45,000 DH</p>
               <p className="text-sm text-gray-400">15 dépenses au total</p>
             </div>
             <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[160px] flex-1 cursor-pointer hover:bg-gray-700/50">
@@ -69,7 +69,7 @@ export function RollingStockExpenseWidget() {
                 <Calendar className="h-5 w-5 text-yellow-400" />
                 Dépenses du mois
               </h3>
-              <p className="text-base font-bold text-white">15,000 DH</p>
+              <p className="text-base font-bold text-white animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]">15,000 DH</p>
               <p className="text-sm text-gray-400">5 dépenses ce mois</p>
             </div>
             <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[160px] flex-1">
@@ -77,15 +77,15 @@ export function RollingStockExpenseWidget() {
                 <Car className="h-5 w-5 text-[#9b87f5]" />
                 Véhicules actifs
               </h3>
-              <p className="text-base font-bold text-white">12</p>
+              <p className="text-base font-bold text-white animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]">12</p>
               <p className="text-sm text-gray-400">En service</p>
             </div>
-            <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[160px] flex-1">
+            <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border-2 border-red-500/50 min-w-[160px] flex-1">
               <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2 text-lg">
                 <AlertTriangle className="h-5 w-5 text-red-400" />
                 Véhicules en panne
               </h3>
-              <p className="text-base font-bold text-white">{brokenVehicles.length}</p>
+              <p className="text-base font-bold text-red-400 animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]">{brokenVehicles.length}</p>
               <p className="text-sm text-gray-400">Nécessitent une intervention</p>
             </div>
           </div>
@@ -96,7 +96,7 @@ export function RollingStockExpenseWidget() {
                 key={index}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-red-700/50 hover:bg-gray-700/50 transition-colors cursor-pointer"
+                className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border-2 border-red-500/50 hover:bg-gray-700/50 transition-colors cursor-pointer"
               >
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                   <div>
@@ -109,7 +109,9 @@ export function RollingStockExpenseWidget() {
                   <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
                     <div className="text-right">
                       <p className="text-gray-400 text-sm">En panne depuis:</p>
-                      <p className="text-white font-medium">{new Date(vehicle.since).toLocaleDateString()}</p>
+                      <p className="text-white font-medium animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]">
+                        {new Date(vehicle.since).toLocaleDateString()}
+                      </p>
                     </div>
                     <Button
                       variant="ghost"
@@ -140,7 +142,9 @@ export function RollingStockExpenseWidget() {
                   </div>
                   <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
                     <div className="text-right">
-                      <p className="text-white font-medium">{expense.amount.toLocaleString()} DH</p>
+                      <p className="text-white font-medium animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]">
+                        {expense.amount.toLocaleString()} DH
+                      </p>
                       <p className="text-gray-400 text-sm">{new Date(expense.date).toLocaleDateString()}</p>
                     </div>
                     <Button
