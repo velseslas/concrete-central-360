@@ -1,5 +1,8 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import FacturationWidget from "@/components/invoices/FacturationWidget";
+import { useState } from "react";
+import { ChevronDown, FileText } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const mockInvoices = [
   {
@@ -32,16 +35,50 @@ const mockInvoices = [
 ];
 
 const Invoices = () => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const totalAmount = mockInvoices.reduce((sum, invoice) => sum + invoice.amount, 0);
+
   return (
-    <div className="container mx-auto p-6 space-y-6">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="grid gap-6"
+    <div className="container mx-auto p-6">
+      <Card 
+        className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-700 shadow-xl cursor-pointer hover:shadow-2xl transition-all duration-300"
+        onClick={() => setIsExpanded(!isExpanded)}
       >
-        <FacturationWidget invoices={mockInvoices} />
-      </motion.div>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <FileText className="h-6 w-6 text-blue-400" />
+              <CardTitle className="text-white">Gestion des Factures</CardTitle>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="text-white">
+                <span className="text-gray-400 mr-2">Total:</span>
+                {totalAmount.toLocaleString()} DA
+              </div>
+              <ChevronDown 
+                className={`h-6 w-6 text-blue-400 transition-transform duration-300 ${
+                  isExpanded ? 'rotate-180' : ''
+                }`} 
+              />
+            </div>
+          </div>
+        </CardHeader>
+        <AnimatePresence>
+          {isExpanded && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <CardContent className="pt-0">
+                <FacturationWidget invoices={mockInvoices} />
+              </CardContent>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </Card>
     </div>
   );
 };
