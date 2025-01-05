@@ -10,7 +10,7 @@ import { AdminDocumentsWidget } from "@/components/clients/widgets/AdminDocument
 import { ReportsWidget } from "@/components/clients/widgets/ReportsWidget";
 import { OrderWidget } from "@/components/clients/widgets/OrderWidget";
 import { PaymentWidget } from "@/components/finance/PaymentWidget";
-import { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Card, CardHeader, CardFooter, CardTitle, CardContent } from "@/components/ui/card";
 
 const Clients = () => {
   const [showClientForm, setShowClientForm] = useState(false);
@@ -47,7 +47,7 @@ const Clients = () => {
       <DocumentsWidget />
       <AdminDocumentsWidget />
       <ReportsWidget />
-      <OrderWidget clientId="default" />
+      <OrderWidget clientId={1} />
       <PaymentWidget />
     </div>
   );

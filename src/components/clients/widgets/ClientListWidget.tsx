@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import ClientList from "../ClientList";
+import { ClientList } from "../ClientList";
 import { motion } from "framer-motion";
 
 export function ClientListWidget() {
