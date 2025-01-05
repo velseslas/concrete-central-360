@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { 
   Home, Users, TestTube, Truck, Car, 
-  DollarSign, FileSpreadsheet, Factory, CreditCard, FileText
+  DollarSign, FileSpreadsheet, Factory 
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -17,12 +17,7 @@ const Sidebar = () => {
     { to: "/suppliers", icon: Truck, label: "Fournisseurs", iconColor: "text-yellow-500" },
     { to: "/vehicles", icon: Car, label: "Parc roulant", iconColor: "text-red-500" },
     { to: "/expenses", icon: DollarSign, label: "Dépenses", iconColor: "text-emerald-500" },
-    { to: "/invoices", icon: FileSpreadsheet, label: "Finance", iconColor: "text-indigo-500", 
-      subItems: [
-        { to: "/invoices/payments", icon: CreditCard, label: "Paiements", iconColor: "text-blue-400" },
-        { to: "/invoices/billing", icon: FileText, label: "Facturation", iconColor: "text-purple-400" }
-      ]
-    },
+    { to: "/invoices", icon: FileSpreadsheet, label: "Finance", iconColor: "text-indigo-500" },
   ];
 
   return (
@@ -86,36 +81,6 @@ const Sidebar = () => {
                   />
                 )}
               </Link>
-
-              {/* Sous-menus pour la section Finance */}
-              {item.subItems && isActive && (
-                <div className="ml-6 mt-2 space-y-1">
-                  {item.subItems.map((subItem) => {
-                    const SubIcon = subItem.icon;
-                    const isSubActive = location.pathname === subItem.to;
-
-                    return (
-                      <Link
-                        key={subItem.to}
-                        to={subItem.to}
-                        className={cn(
-                          "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium",
-                          "transition-all duration-200",
-                          isSubActive
-                            ? 'text-white bg-gray-800/50'
-                            : 'text-gray-400 hover:text-white hover:bg-gray-800/30'
-                        )}
-                      >
-                        <SubIcon 
-                          className={subItem.iconColor}
-                          size={16}
-                        />
-                        {subItem.label}
-                      </Link>
-                    );
-                  })}
-                </div>
-              )}
             </motion.div>
           );
         })}

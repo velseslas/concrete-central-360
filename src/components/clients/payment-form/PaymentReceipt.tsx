@@ -1,4 +1,3 @@
-// Copie exacte du contenu de src/components/clients/payment-form/PaymentReceipt.tsx
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Printer } from "lucide-react";
@@ -202,4 +201,3 @@ export function PaymentReceipt({ open, onOpenChange, paymentData, clientName, pr
     </Dialog>
   );
 }
-
