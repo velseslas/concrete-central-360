@@ -52,37 +52,39 @@ export function ProductList({ onEdit }: ProductListProps) {
   };
 
   return (
-    <div className="rounded-md border">
+    <div className="rounded-md border border-gray-700/50">
       <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Nom</TableHead>
-            <TableHead>Catégorie</TableHead>
-            <TableHead>Description</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
+        <TableHeader className="bg-gray-900/50 backdrop-blur-xl">
+          <TableRow className="border-b border-gray-700 hover:bg-gray-800/50">
+            <TableHead className="text-gray-300">Nom</TableHead>
+            <TableHead className="text-gray-300">Catégorie</TableHead>
+            <TableHead className="text-gray-300">Description</TableHead>
+            <TableHead className="text-right text-gray-300">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {mockProducts.map((product) => (
-            <TableRow key={product.id}>
-              <TableCell>{product.name}</TableCell>
-              <TableCell>{getCategoryName(product.category)}</TableCell>
-              <TableCell>{product.description}</TableCell>
+            <TableRow key={product.id} className="border-b border-gray-700/50 hover:bg-gray-800/50 backdrop-blur-xl transition-colors">
+              <TableCell className="text-gray-300">{product.name}</TableCell>
+              <TableCell className="text-gray-300">{getCategoryName(product.category)}</TableCell>
+              <TableCell className="text-gray-300">{product.description}</TableCell>
               <TableCell className="text-right">
                 <div className="flex justify-end space-x-2">
                   <Button 
                     variant="ghost" 
                     size="icon"
                     onClick={() => onEdit(product)}
+                    className="hover:bg-gray-700/50"
                   >
-                    <Edit className="h-4 w-4" />
+                    <Edit className="h-4 w-4 text-gray-300" />
                   </Button>
                   <Button 
                     variant="ghost" 
                     size="icon"
                     onClick={() => handleDelete(product.id)}
+                    className="hover:bg-gray-700/50"
                   >
-                    <Trash2 className="h-4 w-4" />
+                    <Trash2 className="h-4 w-4 text-gray-300" />
                   </Button>
                 </div>
               </TableCell>

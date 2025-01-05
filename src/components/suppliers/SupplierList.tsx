@@ -38,43 +38,47 @@ const mockSuppliers = [
 
 export function SupplierList({ onEdit, onDelete }: SupplierListProps) {
   return (
-    <div className="rounded-md border">
+    <div className="rounded-md border border-gray-700/50">
       <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Nom</TableHead>
-            <TableHead>Catégorie</TableHead>
-            <TableHead>Type de service</TableHead>
-            <TableHead>Catégorie de produit</TableHead>
-            <TableHead>Téléphone</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
+        <TableHeader className="bg-gray-900/50 backdrop-blur-xl">
+          <TableRow className="border-b border-gray-700">
+            <TableHead className="text-gray-300">Nom</TableHead>
+            <TableHead className="text-gray-300">Catégorie</TableHead>
+            <TableHead className="text-gray-300">Type de service</TableHead>
+            <TableHead className="text-gray-300">Catégorie de produit</TableHead>
+            <TableHead className="text-gray-300">Téléphone</TableHead>
+            <TableHead className="text-gray-300">Email</TableHead>
+            <TableHead className="text-right text-gray-300">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {mockSuppliers.map((supplier) => (
-            <TableRow key={supplier.id}>
-              <TableCell>{supplier.nom}</TableCell>
-              <TableCell>{supplier.categorieSupplier}</TableCell>
-              <TableCell>{supplier.typeService}</TableCell>
-              <TableCell>{supplier.categorieProduit}</TableCell>
-              <TableCell>{supplier.telephone}</TableCell>
-              <TableCell>{supplier.email}</TableCell>
-              <TableCell className="text-right space-x-2">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => onEdit(supplier)}
-                >
-                  <Edit className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => onDelete(supplier.id)}
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
+            <TableRow key={supplier.id} className="border-b border-gray-700/50 hover:bg-gray-800/50 backdrop-blur-xl transition-colors">
+              <TableCell className="text-gray-300">{supplier.nom}</TableCell>
+              <TableCell className="text-gray-300">{supplier.categorieSupplier}</TableCell>
+              <TableCell className="text-gray-300">{supplier.typeService}</TableCell>
+              <TableCell className="text-gray-300">{supplier.categorieProduit}</TableCell>
+              <TableCell className="text-gray-300">{supplier.telephone}</TableCell>
+              <TableCell className="text-gray-300">{supplier.email}</TableCell>
+              <TableCell className="text-right">
+                <div className="flex justify-end space-x-2">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => onEdit(supplier)}
+                    className="hover:bg-gray-700/50"
+                  >
+                    <Edit className="h-4 w-4 text-gray-300" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => onDelete(supplier.id)}
+                    className="hover:bg-gray-700/50"
+                  >
+                    <Trash2 className="h-4 w-4 text-gray-300" />
+                  </Button>
+                </div>
               </TableCell>
             </TableRow>
           ))}

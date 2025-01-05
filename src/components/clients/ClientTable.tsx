@@ -29,15 +29,15 @@ export function ClientTable({
   return (
     <>
       <div className="overflow-x-auto">
-        <table className="w-full text-sm text-left text-gray-500">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+        <table className="w-full text-sm text-left">
+          <thead className="text-xs uppercase bg-gray-900/50 backdrop-blur-xl border-b border-gray-700">
             <tr>
-              <th className="px-6 py-3">Nom</th>
-              <th className="px-6 py-3">Raison sociale</th>
-              <th className="px-6 py-3">Téléphone</th>
-              <th className="px-6 py-3">Email</th>
-              <th className="px-6 py-3">Ville</th>
-              <th className="px-6 py-3">Actions</th>
+              <th className="px-6 py-3 text-gray-300">Nom</th>
+              <th className="px-6 py-3 text-gray-300">Raison sociale</th>
+              <th className="px-6 py-3 text-gray-300">Téléphone</th>
+              <th className="px-6 py-3 text-gray-300">Email</th>
+              <th className="px-6 py-3 text-gray-300">Ville</th>
+              <th className="px-6 py-3 text-gray-300">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -47,14 +47,14 @@ export function ClientTable({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
-                className="border-b hover:bg-gray-50 cursor-pointer"
+                className="border-b border-gray-700/50 hover:bg-gray-800/50 backdrop-blur-xl transition-colors cursor-pointer"
                 onClick={() => handleRowClick(client)}
               >
-                <td className="px-6 py-4">{client.nom}</td>
-                <td className="px-6 py-4">{client.raisonSociale}</td>
-                <td className="px-6 py-4">{client.telephone}</td>
-                <td className="px-6 py-4">{client.email}</td>
-                <td className="px-6 py-4">{client.ville}</td>
+                <td className="px-6 py-4 text-gray-300">{client.nom}</td>
+                <td className="px-6 py-4 text-gray-300">{client.raisonSociale}</td>
+                <td className="px-6 py-4 text-gray-300">{client.telephone}</td>
+                <td className="px-6 py-4 text-gray-300">{client.email}</td>
+                <td className="px-6 py-4 text-gray-300">{client.ville}</td>
                 <td className="px-6 py-4" onClick={(e) => e.stopPropagation()}>
                   <ClientActions
                     client={client}
