@@ -68,7 +68,7 @@ export function PriceList({ onEdit }: PriceListProps) {
           >
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
               <div>
-                <h3 className="font-medium flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+                <h3 className="text-white font-medium flex items-center gap-2">
                   <FileText className="h-4 w-4 text-blue-400" />
                   {price.client}
                 </h3>
@@ -76,9 +76,7 @@ export function PriceList({ onEdit }: PriceListProps) {
               </div>
               <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
                 <div>
-                  <p className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
-                    {price.product}
-                  </p>
+                  <p className="text-white font-medium">{price.product}</p>
                   <p className="text-gray-400 text-sm">{price.price.toLocaleString()} DA</p>
                 </div>
                 <div className="flex gap-2">
