@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus, Car, Settings, Calendar, DollarSign } from "lucide-react";
+import { Plus, Car, Settings, Calendar, DollarSign, AlertTriangle } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { motion } from "framer-motion";
 
@@ -24,6 +24,19 @@ export function RollingStockExpenseWidget() {
       type: "Entretien",
       amount: 2500,
     },
+  ];
+
+  const brokenVehicles = [
+    {
+      vehicle: "Scania R500",
+      issue: "Problème de transmission",
+      since: "2024-03-15"
+    },
+    {
+      vehicle: "MAN TGX",
+      issue: "Panne moteur",
+      since: "2024-03-18"
+    }
   ];
 
   return (
@@ -69,15 +82,47 @@ export function RollingStockExpenseWidget() {
             </div>
             <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[160px] flex-1">
               <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2 text-lg">
-                <Settings className="h-5 w-5 text-blue-400" />
-                En maintenance
+                <AlertTriangle className="h-5 w-5 text-red-400" />
+                Véhicules en panne
               </h3>
-              <p className="text-base font-bold text-white">3</p>
-              <p className="text-sm text-gray-400">Véhicules en réparation</p>
+              <p className="text-base font-bold text-white">{brokenVehicles.length}</p>
+              <p className="text-sm text-gray-400">Nécessitent une intervention</p>
             </div>
           </div>
           
           <div className="mt-6 space-y-4">
+            {brokenVehicles.map((vehicle, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-red-700/50 hover:bg-gray-700/50 transition-colors cursor-pointer"
+              >
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                  <div>
+                    <h3 className="text-white font-medium flex items-center gap-2">
+                      <AlertTriangle className="h-4 w-4 text-red-400" />
+                      {vehicle.vehicle}
+                    </h3>
+                    <p className="text-red-400 text-sm">{vehicle.issue}</p>
+                  </div>
+                  <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
+                    <div className="text-right">
+                      <p className="text-gray-400 text-sm">En panne depuis:</p>
+                      <p className="text-white font-medium">{new Date(vehicle.since).toLocaleDateString()}</p>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 hover:bg-red-500/20"
+                    >
+                      <Settings className="h-4 w-4 text-red-400" />
+                    </Button>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+
             {expenses.map((expense) => (
               <motion.div
                 key={expense.id}
