@@ -2,6 +2,7 @@ import { FinanceStats } from "@/components/finance/FinanceStats";
 import { TransactionsWidget } from "@/components/finance/TransactionsWidget";
 import { CashFlowWidget } from "@/components/finance/CashFlowWidget";
 import { ExpensesWidget } from "@/components/finance/ExpensesWidget";
+import { PaymentWidget } from "@/components/finance/PaymentWidget";
 
 export default function Finance() {
   return (
@@ -14,6 +15,8 @@ export default function Finance() {
         <TransactionsWidget />
         <CashFlowWidget />
       </div>
+      
+      <PaymentWidget />
       
       <ExpensesWidget />
     </div>

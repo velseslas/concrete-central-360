@@ -4,22 +4,21 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { PaymentFormFields } from "./payment-form/PaymentFormFields";
-import { PaymentFormValues, paymentSchema } from "./payment-form/types";
-import { mockClients, mockProjects } from "./payment-form/mockData";
+import { PaymentFormFields } from "./payment/PaymentFormFields";
+import { PaymentFormValues, paymentSchema } from "./payment/types";
+import { mockClients, mockProjects } from "./payment/mockData";
 
 interface PaymentFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  clientId: number;
   paymentToEdit?: PaymentFormValues;
 }
 
-export function PaymentForm({ open, onOpenChange, clientId, paymentToEdit }: PaymentFormProps) {
+export function PaymentForm({ open, onOpenChange, paymentToEdit }: PaymentFormProps) {
   const form = useForm<PaymentFormValues>({
     resolver: zodResolver(paymentSchema),
     defaultValues: paymentToEdit || {
-      clientId: clientId.toString(),
+      clientId: "",
       projectId: "",
       amount: "",
       paymentMethod: "",
