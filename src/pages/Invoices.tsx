@@ -29,7 +29,7 @@ const mockInvoices = [
     date: "2024-03-22",
     paymentMethod: "cash"
   }
-] as const;
+];
 
 const Invoices = () => {
   return (
