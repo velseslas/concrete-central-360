@@ -1,11 +1,11 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { Package, Calendar, Clock, FileX, TrendingUp, TrendingDown } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetHeader } from "@/components/ui/sheet";
 import { useState } from "react";
 import { ProductionSheetTitle } from "./sheets/ProductionSheetTitle";
 import { ProductionSheetContent } from "./sheets/ProductionSheetContent";
+import { ProductionStats } from "./stats/ProductionStats";
+import { Calendar, Package, Clock, FileX } from "lucide-react";
 
 export function ProductionWidget() {
   const [isDailyOpen, setIsDailyOpen] = useState(false);
@@ -16,16 +16,11 @@ export function ProductionWidget() {
   // Exemple de données
   const totalProduction = 450;
   const dailyProduction = 150;
-  const yesterdayProduction = 180; // Production d'hier
+  const yesterdayProduction = 180;
   const inProgressProduction = 130;
   const pendingProduction = 100;
   const cancelledProduction = 70;
-  const yesterdayCancelled = 50; // Annulations d'hier
-  const completionRate = (dailyProduction / totalProduction) * 100;
-
-  // Calcul des pourcentages de variation
-  const productionChange = ((dailyProduction - yesterdayProduction) / yesterdayProduction) * 100;
-  const cancelledChange = ((cancelledProduction - yesterdayCancelled) / yesterdayCancelled) * 100;
+  const yesterdayCancelled = 50;
 
   // Données pour les productions
   const dailyProductionList = [
@@ -59,97 +54,30 @@ export function ProductionWidget() {
       >
         <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl group-hover:shadow-2xl transition-all duration-300">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
-          <CardHeader className="py-3">
-            <div className="flex justify-between items-center">
-              <CardTitle className="text-white flex items-center gap-2 text-xl font-bold">
-              </CardTitle>
-            </div>
-          </CardHeader>
+          <CardHeader className="py-3" />
           <CardContent className="py-2">
-            <div className="flex flex-nowrap overflow-x-auto gap-3 pb-2">
-              <div 
-                className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[160px] flex-1 cursor-pointer hover:bg-gray-700/50"
-                onClick={() => setIsDailyOpen(true)}
-              >
-                <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2 text-lg">
-                  <Calendar className="h-5 w-5 text-green-400" />
-                  Production du jour
-                </h3>
-                <p className="text-base font-bold text-white">{dailyProduction} m³</p>
-                <div className="flex items-center gap-2 mt-1">
-                  {productionChange > 0 ? (
-                    <TrendingUp className="h-4 w-4 text-green-400" />
-                  ) : (
-                    <TrendingDown className="h-4 w-4 text-red-400" />
-                  )}
-                  <p className={`text-sm ${productionChange > 0 ? 'text-green-400' : 'text-red-400'}`}>
-                    {Math.abs(productionChange).toFixed(1)}% vs hier
-                  </p>
-                </div>
-                <p className="text-sm text-gray-400 mt-1">{dailyProductionList.length} productions</p>
-              </div>
-
-              <div 
-                className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[160px] flex-1 cursor-pointer hover:bg-gray-700/50"
-                onClick={() => setIsInProgressOpen(true)}
-              >
-                <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2 text-lg">
-                  <Package className="h-5 w-5 text-yellow-400" />
-                  En cours
-                </h3>
-                <p className="text-base font-bold text-white">{inProgressProduction} m³</p>
-                <p className="text-sm text-gray-400">{inProgressProductionList.length} productions</p>
-              </div>
-              <div 
-                className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[160px] flex-1 cursor-pointer hover:bg-gray-700/50"
-                onClick={() => setIsPendingOpen(true)}
-              >
-                <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2 text-lg">
-                  <Clock className="h-5 w-5 text-blue-400" />
-                  En attente
-                </h3>
-                <p className="text-base font-bold text-white">{pendingProduction} m³</p>
-                <p className="text-sm text-gray-400">{pendingProductionList.length} productions</p>
-              </div>
-
-              <div 
-                className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[160px] flex-1 cursor-pointer hover:bg-gray-700/50"
-                onClick={() => setIsCancelledOpen(true)}
-              >
-                <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2 text-lg">
-                  <FileX className="h-5 w-5 text-red-400" />
-                  Annulées
-                </h3>
-                <p className="text-base font-bold text-white">{cancelledProduction} m³</p>
-                <div className="flex items-center gap-2 mt-1">
-                  {cancelledChange > 0 ? (
-                    <TrendingUp className="h-4 w-4 text-red-400" />
-                  ) : (
-                    <TrendingDown className="h-4 w-4 text-green-400" />
-                  )}
-                  <p className={`text-sm ${cancelledChange > 0 ? 'text-red-400' : 'text-green-400'}`}>
-                    {Math.abs(cancelledChange).toFixed(1)}% vs hier
-                  </p>
-                </div>
-                <p className="text-sm text-gray-400 mt-1">{cancelledProductionList.length} productions</p>
-              </div>
-
-              <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[160px] flex-1">
-                <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2 text-lg">
-                  <TrendingUp className="h-5 w-5 text-blue-400" />
-                  Taux de réalisation
-                </h3>
-                <div className="space-y-2">
-                  <p className="text-base font-bold text-white">{completionRate.toFixed(1)}%</p>
-                  <Progress value={completionRate} className="h-2" />
-                </div>
-              </div>
-            </div>
+            <ProductionStats
+              dailyProduction={dailyProduction}
+              yesterdayProduction={yesterdayProduction}
+              inProgressProduction={inProgressProduction}
+              pendingProduction={pendingProduction}
+              cancelledProduction={cancelledProduction}
+              yesterdayCancelled={yesterdayCancelled}
+              totalProduction={totalProduction}
+              dailyProductionList={dailyProductionList}
+              inProgressProductionList={inProgressProductionList}
+              pendingProductionList={pendingProductionList}
+              cancelledProductionList={cancelledProductionList}
+              onDailyClick={() => setIsDailyOpen(true)}
+              onInProgressClick={() => setIsInProgressOpen(true)}
+              onPendingClick={() => setIsPendingOpen(true)}
+              onCancelledClick={() => setIsCancelledOpen(true)}
+            />
           </CardContent>
         </Card>
       </motion.div>
 
-      {/* Sheet pour la production du jour */}
+      {/* Sheets */}
       <Sheet open={isDailyOpen} onOpenChange={setIsDailyOpen}>
         <SheetContent side="right" className="w-full sm:w-[540px] bg-gray-900 border-gray-800 text-white">
           <SheetHeader>
@@ -163,7 +91,6 @@ export function ProductionWidget() {
         </SheetContent>
       </Sheet>
 
-      {/* Sheet pour les productions en cours */}
       <Sheet open={isInProgressOpen} onOpenChange={setIsInProgressOpen}>
         <SheetContent side="right" className="w-full sm:w-[540px] bg-gray-900 border-gray-800 text-white">
           <SheetHeader>
@@ -177,7 +104,6 @@ export function ProductionWidget() {
         </SheetContent>
       </Sheet>
 
-      {/* Sheet pour les productions en attente */}
       <Sheet open={isPendingOpen} onOpenChange={setIsPendingOpen}>
         <SheetContent side="right" className="w-full sm:w-[540px] bg-gray-900 border-gray-800 text-white">
           <SheetHeader>
@@ -191,7 +117,6 @@ export function ProductionWidget() {
         </SheetContent>
       </Sheet>
 
-      {/* Sheet pour les productions annulées */}
       <Sheet open={isCancelledOpen} onOpenChange={setIsCancelledOpen}>
         <SheetContent side="right" className="w-full sm:w-[540px] bg-gray-900 border-gray-800 text-white">
           <SheetHeader>
