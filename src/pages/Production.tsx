@@ -1,7 +1,7 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { motion } from "framer-motion";
 import { Package, Loader, Clock, XCircle } from "lucide-react";
 
 interface ProductionItem {
