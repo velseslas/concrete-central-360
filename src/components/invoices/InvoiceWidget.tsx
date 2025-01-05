@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { FileText, DollarSign, Calendar, Clock, TrendingUp } from "lucide-react";
+import { DollarSign, Calendar, Clock, TrendingUp } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Sheet, SheetContent, SheetHeader } from "@/components/ui/sheet";
 import { useState } from "react";
@@ -63,7 +63,6 @@ export function InvoiceWidget() {
           <CardHeader className="py-3">
             <div className="flex justify-between items-center">
               <CardTitle className="text-white flex items-center gap-2 text-xl font-bold">
-                <FileText className="h-6 w-6 text-blue-400" />
               </CardTitle>
             </div>
           </CardHeader>
