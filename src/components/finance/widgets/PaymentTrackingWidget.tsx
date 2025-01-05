@@ -1,8 +1,14 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { CreditCard, DollarSign, Clock } from "lucide-react";
+import { CreditCard, DollarSign, Clock, TrendingUp } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
 
 export function PaymentTrackingWidget() {
+  // Exemple de données
+  const totalExpected = 450000;
+  const totalPaid = 320000;
+  const recoveryRate = (totalPaid / totalExpected) * 100;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -25,16 +31,28 @@ export function PaymentTrackingWidget() {
                 <DollarSign className="h-5 w-5 text-green-400" />
                 Payé ce mois
               </h3>
-              <p className="text-2xl font-bold text-white">320,000 DA</p>
+              <p className="text-2xl font-bold text-white">{totalPaid.toLocaleString()} DA</p>
               <p className="text-sm text-gray-400">9 paiements</p>
             </div>
+            
             <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50">
               <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
                 <Clock className="h-5 w-5 text-yellow-400" />
                 En attente
               </h3>
-              <p className="text-2xl font-bold text-white">130,000 DA</p>
+              <p className="text-2xl font-bold text-white">{(totalExpected - totalPaid).toLocaleString()} DA</p>
               <p className="text-sm text-gray-400">4 paiements</p>
+            </div>
+
+            <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50">
+              <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
+                <TrendingUp className="h-5 w-5 text-blue-400" />
+                Progression des paiements
+              </h3>
+              <div className="space-y-2">
+                <p className="text-2xl font-bold text-white">{recoveryRate.toFixed(1)}%</p>
+                <Progress value={recoveryRate} className="h-2" />
+              </div>
             </div>
           </div>
         </CardContent>

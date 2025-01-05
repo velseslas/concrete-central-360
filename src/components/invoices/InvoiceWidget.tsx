@@ -1,8 +1,14 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { FileText, DollarSign, Clock } from "lucide-react";
+import { FileText, DollarSign, Clock, TrendingUp } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
 
 export function InvoiceWidget() {
+  // Exemple de calcul du taux de recouvrement
+  const totalInvoices = 450000;
+  const paidInvoices = 270000;
+  const recoveryRate = (paidInvoices / totalInvoices) * 100;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -22,13 +28,13 @@ export function InvoiceWidget() {
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50">
                 <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
                   <DollarSign className="h-5 w-5 text-green-400" />
-                  Factures du mois
+                  Total facturé
                 </h3>
-                <p className="text-2xl font-bold text-white">450,000 DA</p>
+                <p className="text-2xl font-bold text-white">{totalInvoices.toLocaleString()} DA</p>
                 <p className="text-sm text-gray-400">15 factures</p>
               </div>
               <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50">
@@ -36,8 +42,18 @@ export function InvoiceWidget() {
                   <Clock className="h-5 w-5 text-yellow-400" />
                   En attente
                 </h3>
-                <p className="text-2xl font-bold text-white">180,000 DA</p>
+                <p className="text-2xl font-bold text-white">{(totalInvoices - paidInvoices).toLocaleString()} DA</p>
                 <p className="text-sm text-gray-400">6 factures</p>
+              </div>
+              <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50">
+                <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
+                  <TrendingUp className="h-5 w-5 text-blue-400" />
+                  Taux de recouvrement
+                </h3>
+                <div className="space-y-2">
+                  <p className="text-2xl font-bold text-white">{recoveryRate.toFixed(1)}%</p>
+                  <Progress value={recoveryRate} className="h-2" />
+                </div>
               </div>
             </div>
           </div>
