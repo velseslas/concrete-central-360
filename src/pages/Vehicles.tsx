@@ -51,6 +51,7 @@ const Vehicles = () => {
   const alertCount = documentsToRenew.length;
   const hasAlerts = alertCount > 0;
   const brokenCount = brokenVehicles.length;
+  const maintenanceCount = maintenanceVehicles.length;
 
   const stats = [
     { 
@@ -63,12 +64,12 @@ const Vehicles = () => {
     },
     { 
       title: "En Maintenance", 
-      value: maintenanceVehicles.length, 
+      value: maintenanceCount, 
       icon: Settings, 
       color: "text-orange-400",
       items: maintenanceVehicles,
       type: 'maintenance' as const,
-      isPulsing: true
+      isPulsing: maintenanceCount > 0
     },
     { 
       title: "Alerte Documents", 
@@ -128,7 +129,9 @@ const Vehicles = () => {
             >
               <Sheet>
                 <SheetTrigger asChild>
-                  <Card className={`bg-gray-800/50 backdrop-blur-lg border-gray-700 hover:bg-gray-700/50 hover:border-gray-600 transition-all duration-300 cursor-pointer ${stat.isPulsing ? `shadow-[0_0_15px_rgba(239,68,68,0.3)]` : ''} border-gray-700`}>
+                  <Card className={`bg-gray-800/50 backdrop-blur-lg border-gray-700 hover:bg-gray-700/50 hover:border-gray-600 transition-all duration-300 cursor-pointer ${
+                    stat.isPulsing ? 'shadow-[0_0_15px_rgba(239,68,68,0.3)]' : ''
+                  }`}>
                     <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
                       <CardTitle className="text-sm font-medium text-gray-300">
                         {stat.title}
@@ -142,15 +145,7 @@ const Vehicles = () => {
                     </CardContent>
                   </Card>
                 </SheetTrigger>
-                <SheetContent side="right" className="w-full sm:max-w-md bg-gray-900/95 border-gray-800">
-                  <SheetHeader>
-                    <SheetTitle className="text-white flex items-center gap-2">
-                      <stat.icon className={`h-5 w-5 ${stat.color}`} />
-                      {stat.title}
-                    </SheetTitle>
-                  </SheetHeader>
-                  <VehicleSheetContent items={stat.items} type={stat.type} />
-                </SheetContent>
+                <VehicleSheetContent items={stat.items} type={stat.type} />
               </Sheet>
             </motion.div>
           ))}
