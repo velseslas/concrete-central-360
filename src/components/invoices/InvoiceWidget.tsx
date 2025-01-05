@@ -64,7 +64,6 @@ export function InvoiceWidget() {
             <div className="flex justify-between items-center">
               <CardTitle className="text-white flex items-center gap-2 text-xl font-bold">
                 <FileText className="h-6 w-6 text-blue-400" />
-                Aperçu des Factures
               </CardTitle>
             </div>
           </CardHeader>
