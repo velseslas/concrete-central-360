@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
 
 const projectSchema = z.object({
   clientId: z.string().min(1, "Veuillez sélectionner un client"),
@@ -42,9 +43,11 @@ export function ProjectFormDialog({ open, onOpenChange, clients }: ProjectFormDi
   };
 
   return (
-    <DialogContent className="sm:max-w-[500px]">
+    <DialogContent className="sm:max-w-[500px] bg-gray-900/95 backdrop-blur-xl border-gray-800">
       <DialogHeader>
-        <DialogTitle>Nouveau Chantier</DialogTitle>
+        <DialogTitle className="text-xl font-bold text-gray-100">
+          Nouveau Chantier
+        </DialogTitle>
       </DialogHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -53,22 +56,26 @@ export function ProjectFormDialog({ open, onOpenChange, clients }: ProjectFormDi
             name="clientId"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Client</FormLabel>
+                <FormLabel className="text-gray-200">Client</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger className="bg-gray-800/50 border-gray-700 text-gray-200">
                       <SelectValue placeholder="Sélectionner un client" />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent>
+                  <SelectContent className="bg-gray-800 border-gray-700">
                     {clients.map((client) => (
-                      <SelectItem key={client.id} value={client.id}>
+                      <SelectItem 
+                        key={client.id} 
+                        value={client.id}
+                        className="text-gray-200 focus:bg-gray-700 focus:text-gray-100"
+                      >
                         {client.name}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
-                <FormMessage />
+                <FormMessage className="text-red-400" />
               </FormItem>
             )}
           />
@@ -77,11 +84,15 @@ export function ProjectFormDialog({ open, onOpenChange, clients }: ProjectFormDi
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nom du chantier</FormLabel>
+                <FormLabel className="text-gray-200">Nom du chantier</FormLabel>
                 <FormControl>
-                  <Input placeholder="Nom du chantier" {...field} />
+                  <Input 
+                    placeholder="Nom du chantier" 
+                    className="bg-gray-800/50 border-gray-700 text-gray-200 placeholder:text-gray-500"
+                    {...field} 
+                  />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-red-400" />
               </FormItem>
             )}
           />
@@ -90,11 +101,15 @@ export function ProjectFormDialog({ open, onOpenChange, clients }: ProjectFormDi
             name="address"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Adresse du chantier</FormLabel>
+                <FormLabel className="text-gray-200">Adresse du chantier</FormLabel>
                 <FormControl>
-                  <Input placeholder="Adresse" {...field} />
+                  <Input 
+                    placeholder="Adresse" 
+                    className="bg-gray-800/50 border-gray-700 text-gray-200 placeholder:text-gray-500"
+                    {...field} 
+                  />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-red-400" />
               </FormItem>
             )}
           />
@@ -103,19 +118,34 @@ export function ProjectFormDialog({ open, onOpenChange, clients }: ProjectFormDi
             name="concreteQuantity"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Quantité de béton (M3)</FormLabel>
+                <FormLabel className="text-gray-200">Quantité de béton (M3)</FormLabel>
                 <FormControl>
-                  <Input type="number" placeholder="Quantité en M3" {...field} />
+                  <Input 
+                    type="number" 
+                    placeholder="Quantité en M3" 
+                    className="bg-gray-800/50 border-gray-700 text-gray-200 placeholder:text-gray-500"
+                    {...field} 
+                  />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-red-400" />
               </FormItem>
             )}
           />
-          <div className="flex justify-end space-x-2 pt-4">
-            <Button variant="outline" onClick={() => onOpenChange(false)}>
+          <div className="flex justify-end space-x-2 pt-4 border-t border-gray-800">
+            <Button 
+              type="button" 
+              variant="outline" 
+              onClick={() => onOpenChange(false)}
+              className="bg-gray-800/50 hover:bg-gray-700/50 text-gray-200 border-gray-700"
+            >
               Annuler
             </Button>
-            <Button type="submit">Créer</Button>
+            <Button 
+              type="submit"
+              className="bg-blue-600 hover:bg-blue-700 text-white"
+            >
+              Créer
+            </Button>
           </div>
         </form>
       </Form>

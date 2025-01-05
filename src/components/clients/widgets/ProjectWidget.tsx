@@ -29,16 +29,19 @@ export function ProjectWidget() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <Card className="bg-gradient-to-br from-[#3b82f6] to-[#8b5cf6] border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+      <Card className="bg-gradient-to-br from-gray-900/50 to-gray-800/50 border-gray-800 shadow-lg backdrop-blur-xl">
         <CardHeader>
           <div className="flex justify-between items-center">
-            <CardTitle className="text-white flex items-center gap-2">
-              <Construction className="h-6 w-6" />
+            <CardTitle className="text-gray-100 flex items-center gap-2">
+              <Construction className="h-6 w-6 text-blue-400" />
               Chantiers
             </CardTitle>
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>
-                <Button variant="secondary" className="bg-white/20 hover:bg-white/30 text-white border-white/20">
+                <Button 
+                  variant="outline" 
+                  className="bg-gray-800/50 hover:bg-gray-700/50 text-gray-100 border-gray-700"
+                >
                   Nouveau Chantier
                 </Button>
               </DialogTrigger>
@@ -51,22 +54,32 @@ export function ProjectWidget() {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
+          <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-4 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
-                <h3 className="font-semibold mb-2 text-white flex items-center gap-2">
-                  <Clock className="h-5 w-5" />
+              <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: 0.1 }}
+                className="p-4 rounded-lg bg-gray-800/30 backdrop-blur-sm border border-gray-700/50"
+              >
+                <h3 className="font-semibold mb-2 text-gray-200 flex items-center gap-2">
+                  <Clock className="h-5 w-5 text-blue-400" />
                   Chantiers en cours
                 </h3>
-                <p className="text-2xl font-bold text-white">12</p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
-                <h3 className="font-semibold mb-2 text-white flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5" />
+                <p className="text-2xl font-bold text-gray-100">12</p>
+              </motion.div>
+              <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: 0.2 }}
+                className="p-4 rounded-lg bg-gray-800/30 backdrop-blur-sm border border-gray-700/50"
+              >
+                <h3 className="font-semibold mb-2 text-gray-200 flex items-center gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-400" />
                   Chantiers terminés
                 </h3>
-                <p className="text-2xl font-bold text-white">45</p>
-              </div>
+                <p className="text-2xl font-bold text-gray-100">45</p>
+              </motion.div>
             </div>
             <ProjectListSection projects={mockProjects} />
           </div>
