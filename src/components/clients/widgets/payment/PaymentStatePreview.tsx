@@ -23,49 +23,72 @@ export function PaymentStatePreview({ open, onOpenChange, reportData }: PaymentS
     const printWindow = window.open('', '_blank');
     if (printWindow) {
       printWindow.document.write(`
+        <!DOCTYPE html>
         <html>
           <head>
+            <title>État des paiements</title>
             <style>
               body {
-                margin: 0;
-                padding: 0;
+                margin: 20px;
                 font-family: Arial, sans-serif;
+                background: white;
+                color: black;
               }
               table {
                 width: 100%;
                 border-collapse: collapse;
-                margin: 0;
-                font-size: 0.875rem;
+                margin-bottom: 20px;
               }
               th, td {
-                border: 1px solid #e5e7eb;
-                padding: 8px 12px;
+                padding: 12px;
                 text-align: left;
+                border: 1px solid #ddd;
               }
               th {
-                background-color: #f9fafb;
-                font-weight: 600;
+                background-color: #f8f9fa;
+                font-weight: bold;
               }
               .text-right {
                 text-align: right;
               }
               .total-row {
-                background-color: #f9fafb;
-                font-weight: 600;
+                background-color: #f8f9fa;
+                font-weight: bold;
+              }
+              .header {
+                margin-bottom: 20px;
+              }
+              .header h1 {
+                color: #1a1a1a;
+                font-size: 24px;
+                margin-bottom: 10px;
+              }
+              .header p {
+                color: #666;
+                margin: 5px 0;
               }
               @media print {
-                @page {
-                  size: landscape;
-                  margin: 0;
-                }
                 body {
                   -webkit-print-color-adjust: exact;
                   print-color-adjust: exact;
+                }
+                table {
+                  page-break-inside: auto;
+                }
+                tr {
+                  page-break-inside: avoid;
+                  page-break-after: auto;
                 }
               }
             </style>
           </head>
           <body>
+            <div class="header">
+              <h1>État des paiements</h1>
+              <p>Client: ${reportData.client}</p>
+              <p>Période: du ${reportData.startDate} au ${reportData.endDate}</p>
+              ${reportData.paymentMethod ? `<p>Méthode de paiement: ${reportData.paymentMethod}</p>` : ''}
+            </div>
             <table>
               <thead>
                 <tr>
@@ -99,7 +122,6 @@ export function PaymentStatePreview({ open, onOpenChange, reportData }: PaymentS
       printWindow.focus();
       setTimeout(() => {
         printWindow.print();
-        printWindow.close();
       }, 250);
     }
   };
@@ -107,7 +129,7 @@ export function PaymentStatePreview({ open, onOpenChange, reportData }: PaymentS
   return (
     <Dialog open={open} onOpenChange={onOpenChange} modal={false}>
       <DialogContent className="p-0 border-0 bg-transparent shadow-none">
-        <div className="print-preview" onClick={handlePrint}>
+        <div className="print-preview cursor-pointer" onClick={handlePrint}>
           <PrintablePaymentReport reportData={reportData} />
         </div>
       </DialogContent>
