@@ -2,9 +2,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { FileText, DollarSign, Calendar, Clock, TrendingUp } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader } from "@/components/ui/sheet";
 import { useState } from "react";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { InvoiceSheetTitle } from "./sheets/InvoiceSheetTitle";
+import { InvoiceSheetContent } from "./sheets/InvoiceSheetContent";
 
 export function InvoiceWidget() {
   const [isOverdueOpen, setIsOverdueOpen] = useState(false);
@@ -21,7 +22,7 @@ export function InvoiceWidget() {
 
   const hasOverdueInvoices = overdueInvoices > 0;
 
-  // Exemple de données pour les factures
+  // Données pour les factures
   const allInvoices = [
     { id: "FAC-001", client: "Client A", amount: 85000, date: "2024-02-20" },
     { id: "FAC-002", client: "Client B", amount: 65000, date: "2024-02-18" },
@@ -42,7 +43,6 @@ export function InvoiceWidget() {
     { id: "PAY-004", client: "Client D", amount: 92000, date: "2024-02-09" },
   ];
 
-  // Exemple de données pour les factures en souffrance
   const overdueInvoicesList = [
     { id: "FAC-001", client: "Client A", amount: 45000, dueDate: "2024-02-15" },
     { id: "FAC-002", client: "Client B", amount: 35000, dueDate: "2024-02-10" },
@@ -135,33 +135,13 @@ export function InvoiceWidget() {
       <Sheet open={isTotalOpen} onOpenChange={setIsTotalOpen}>
         <SheetContent side="right" className="w-full sm:w-[540px] bg-gray-900 border-gray-800 text-white">
           <SheetHeader>
-            <SheetTitle className="text-white flex items-center gap-2 text-2xl">
-              <DollarSign className="h-6 w-6 text-green-400" />
-              Total des factures
-            </SheetTitle>
+            <InvoiceSheetTitle 
+              icon={DollarSign}
+              title="Total des factures"
+              iconColor="text-green-400"
+            />
           </SheetHeader>
-          <ScrollArea className="h-[calc(100vh-8rem)] mt-6">
-            <div className="space-y-4">
-              {allInvoices.map((invoice) => (
-                <div 
-                  key={invoice.id}
-                  className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50"
-                >
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <h4 className="font-semibold text-white text-lg">{invoice.client}</h4>
-                      <p className="text-base text-gray-400">Facture #{invoice.id}</p>
-                    </div>
-                    <p className="text-xl font-bold text-green-400">{invoice.amount.toLocaleString()} DA</p>
-                  </div>
-                  <div className="flex justify-between items-center text-base">
-                    <p className="text-gray-400">Date :</p>
-                    <p className="text-gray-300">{new Date(invoice.date).toLocaleDateString()}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </ScrollArea>
+          <InvoiceSheetContent items={allInvoices} type="invoice" />
         </SheetContent>
       </Sheet>
 
@@ -169,33 +149,13 @@ export function InvoiceWidget() {
       <Sheet open={isMonthlyOpen} onOpenChange={setIsMonthlyOpen}>
         <SheetContent side="right" className="w-full sm:w-[540px] bg-gray-900 border-gray-800 text-white">
           <SheetHeader>
-            <SheetTitle className="text-white flex items-center gap-2 text-2xl">
-              <Calendar className="h-6 w-6 text-yellow-400" />
-              Factures du mois
-            </SheetTitle>
+            <InvoiceSheetTitle 
+              icon={Calendar}
+              title="Factures du mois"
+              iconColor="text-yellow-400"
+            />
           </SheetHeader>
-          <ScrollArea className="h-[calc(100vh-8rem)] mt-6">
-            <div className="space-y-4">
-              {monthlyInvoices.map((invoice) => (
-                <div 
-                  key={invoice.id}
-                  className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50"
-                >
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <h4 className="font-semibold text-white text-lg">{invoice.client}</h4>
-                      <p className="text-base text-gray-400">Facture #{invoice.id}</p>
-                    </div>
-                    <p className="text-xl font-bold text-yellow-400">{invoice.amount.toLocaleString()} DA</p>
-                  </div>
-                  <div className="flex justify-between items-center text-base">
-                    <p className="text-gray-400">Date :</p>
-                    <p className="text-gray-300">{new Date(invoice.date).toLocaleDateString()}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </ScrollArea>
+          <InvoiceSheetContent items={monthlyInvoices} type="invoice" />
         </SheetContent>
       </Sheet>
 
@@ -203,33 +163,13 @@ export function InvoiceWidget() {
       <Sheet open={isOverdueOpen} onOpenChange={setIsOverdueOpen}>
         <SheetContent side="right" className="w-full sm:w-[540px] bg-gray-900 border-gray-800 text-white">
           <SheetHeader>
-            <SheetTitle className="text-white flex items-center gap-2 text-2xl">
-              <Clock className="h-6 w-6 text-red-400" />
-              Factures en souffrance
-            </SheetTitle>
+            <InvoiceSheetTitle 
+              icon={Clock}
+              title="Factures en souffrance"
+              iconColor="text-red-400"
+            />
           </SheetHeader>
-          <ScrollArea className="h-[calc(100vh-8rem)] mt-6">
-            <div className="space-y-4">
-              {overdueInvoicesList.map((invoice) => (
-                <div 
-                  key={invoice.id}
-                  className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50"
-                >
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <h4 className="font-semibold text-white text-lg">{invoice.client}</h4>
-                      <p className="text-base text-gray-400">Facture #{invoice.id}</p>
-                    </div>
-                    <p className="text-xl font-bold text-red-400">{invoice.amount.toLocaleString()} DA</p>
-                  </div>
-                  <div className="flex justify-between items-center text-base">
-                    <p className="text-gray-400">Échéance :</p>
-                    <p className="text-red-300">{new Date(invoice.dueDate).toLocaleDateString()}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </ScrollArea>
+          <InvoiceSheetContent items={overdueInvoicesList} type="overdue" />
         </SheetContent>
       </Sheet>
 
@@ -237,33 +177,13 @@ export function InvoiceWidget() {
       <Sheet open={isPaymentsOpen} onOpenChange={setIsPaymentsOpen}>
         <SheetContent side="right" className="w-full sm:w-[540px] bg-gray-900 border-gray-800 text-white">
           <SheetHeader>
-            <SheetTitle className="text-white flex items-center gap-2 text-2xl">
-              <DollarSign className="h-6 w-6 text-green-400" />
-              Paiements reçus
-            </SheetTitle>
+            <InvoiceSheetTitle 
+              icon={DollarSign}
+              title="Paiements reçus"
+              iconColor="text-green-400"
+            />
           </SheetHeader>
-          <ScrollArea className="h-[calc(100vh-8rem)] mt-6">
-            <div className="space-y-4">
-              {payments.map((payment) => (
-                <div 
-                  key={payment.id}
-                  className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50"
-                >
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <h4 className="font-semibold text-white text-lg">{payment.client}</h4>
-                      <p className="text-base text-gray-400">Paiement #{payment.id}</p>
-                    </div>
-                    <p className="text-xl font-bold text-green-400">{payment.amount.toLocaleString()} DA</p>
-                  </div>
-                  <div className="flex justify-between items-center text-base">
-                    <p className="text-gray-400">Date :</p>
-                    <p className="text-gray-300">{new Date(payment.date).toLocaleDateString()}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </ScrollArea>
+          <InvoiceSheetContent items={payments} type="payment" />
         </SheetContent>
       </Sheet>
     </>
