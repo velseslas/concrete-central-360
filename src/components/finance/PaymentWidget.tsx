@@ -2,12 +2,13 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Plus, CreditCard, ChevronRight, FileText } from "lucide-react";
+import { Plus, CreditCard, ChevronRight, FileText, Edit, Trash2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { PaymentForm } from "./PaymentForm";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { PaymentPreview } from "./payment/PaymentPreview";
+import { PaymentPreview } from "@/components/clients/widgets/PaymentPreview";
 import { mockClients } from "./payment/mockData";
+import { toast } from "sonner";
 
 const mockPayments = [
   {
