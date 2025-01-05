@@ -3,14 +3,14 @@ import { BillingListWidget } from "@/components/finance/widgets/BillingListWidge
 import { PaymentTrackingWidget } from "@/components/finance/widgets/PaymentTrackingWidget";
 import { BillingReportsWidget } from "@/components/finance/widgets/BillingReportsWidget";
 import { DailyExpenseWidget } from "@/components/finance/widgets/DailyExpenseWidget";
-import { FacturationWidget } from "@/components/finance/widgets/FacturationWidget";
+import { InvoiceWidget } from "@/components/invoices/InvoiceWidget";
 
 export default function Finance() {
   return (
     <div className="container mx-auto p-6 space-y-6">
       <h1 className="text-2xl font-bold text-gray-100">Finance</h1>
       
-      <FacturationWidget />
+      <InvoiceWidget />
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <BillingListWidget />
