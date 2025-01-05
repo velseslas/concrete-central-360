@@ -80,7 +80,7 @@ export function RollingStockExpenseWidget() {
               <p className="text-base font-bold text-white">12</p>
               <p className="text-sm text-gray-400">En service</p>
             </div>
-            <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border-2 border-[#F97316]/50 min-w-[160px] flex-1">
+            <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border-2 border-[#F97316] min-w-[160px] flex-1">
               <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2 text-lg">
                 <AlertTriangle className="h-5 w-5 text-[#F97316]" />
                 Véhicules en panne
@@ -96,7 +96,7 @@ export function RollingStockExpenseWidget() {
                 key={index}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border-2 border-[#F97316]/50 hover:bg-gray-700/50 transition-colors cursor-pointer"
+                className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border-2 border-[#F97316] hover:bg-gray-700/50 transition-colors cursor-pointer"
               >
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                   <div>
