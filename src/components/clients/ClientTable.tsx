@@ -32,12 +32,12 @@ export function ClientTable({
         <table className="w-full text-sm text-left">
           <thead className="text-xs uppercase bg-gray-900/70 border-b border-gray-800">
             <tr>
-              <th className="px-6 py-4 text-blue-400 font-medium">Nom</th>
-              <th className="px-6 py-4 text-blue-400 font-medium">Raison sociale</th>
-              <th className="px-6 py-4 text-blue-400 font-medium">Téléphone</th>
-              <th className="px-6 py-4 text-blue-400 font-medium">Email</th>
-              <th className="px-6 py-4 text-blue-400 font-medium">Ville</th>
-              <th className="px-6 py-4 text-blue-400 font-medium">Actions</th>
+              <th className="px-6 py-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-medium">Nom</th>
+              <th className="px-6 py-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-medium">Raison sociale</th>
+              <th className="px-6 py-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-medium">Téléphone</th>
+              <th className="px-6 py-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-medium">Email</th>
+              <th className="px-6 py-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-medium">Ville</th>
+              <th className="px-6 py-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-medium">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-800">

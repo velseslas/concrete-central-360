@@ -29,10 +29,10 @@ export function ProjectWidget() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <Card className="bg-gradient-to-br from-gray-900/50 to-gray-800/50 border-gray-800 shadow-lg backdrop-blur-xl">
+      <Card className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-800 shadow-xl backdrop-blur-xl">
         <CardHeader>
           <div className="flex justify-between items-center">
-            <CardTitle className="text-gray-100 flex items-center gap-2">
+            <CardTitle className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 flex items-center gap-2">
               <Construction className="h-6 w-6 text-blue-400" />
               Chantiers
             </CardTitle>
@@ -62,7 +62,7 @@ export function ProjectWidget() {
                 transition={{ duration: 0.3, delay: 0.1 }}
                 className="p-4 rounded-lg bg-gray-800/30 backdrop-blur-sm border border-gray-700/50"
               >
-                <h3 className="font-semibold mb-2 text-gray-200 flex items-center gap-2">
+                <h3 className="font-semibold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 flex items-center gap-2">
                   <Clock className="h-5 w-5 text-blue-400" />
                   Chantiers en cours
                 </h3>
@@ -74,7 +74,7 @@ export function ProjectWidget() {
                 transition={{ duration: 0.3, delay: 0.2 }}
                 className="p-4 rounded-lg bg-gray-800/30 backdrop-blur-sm border border-gray-700/50"
               >
-                <h3 className="font-semibold mb-2 text-gray-200 flex items-center gap-2">
+                <h3 className="font-semibold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 flex items-center gap-2">
                   <CheckCircle className="h-5 w-5 text-green-400" />
                   Chantiers terminés
                 </h3>

@@ -25,17 +25,17 @@ export function DocumentList() {
   };
 
   return (
-    <div className="space-y-2 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 p-4">
+    <div className="space-y-2 rounded-lg bg-gray-900/50 backdrop-blur-sm border border-gray-800 p-4">
       {mockDocuments.map((doc) => (
         <motion.div
           key={doc.id}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center justify-between gap-3 p-3 rounded-lg hover:bg-gray-700/30 transition-colors cursor-pointer border border-gray-700/50"
+          className="flex items-center justify-between gap-3 p-3 rounded-lg hover:bg-gray-800/50 transition-colors cursor-pointer border border-gray-700/50"
           onClick={() => handleDocumentClick(doc)}
         >
           <div className="flex items-center gap-3">
-            <FileText className="h-5 w-5 text-gray-300" />
+            <FileText className="h-5 w-5 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400" />
             <span className="text-gray-300">{doc.title}</span>
           </div>
         </motion.div>
