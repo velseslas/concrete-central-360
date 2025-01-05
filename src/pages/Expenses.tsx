@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { DollarSign, Car, Building2, Globe } from "lucide-react";
+import { DollarSign, Car, Building2, Globe, ListFilter } from "lucide-react";
 import ExpenseForm from "@/components/expenses/ExpenseForm";
 import ExpenseList from "@/components/expenses/ExpenseList";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
@@ -30,6 +30,13 @@ const Expenses = () => {
       icon: Globe,
       color: 'text-purple-500',
       description: 'Vue globale des dépenses'
+    },
+    {
+      id: 'categories',
+      title: 'Catégories',
+      icon: ListFilter,
+      color: 'text-yellow-500',
+      description: 'Gestion des catégories de dépenses'
     },
     {
       id: 'general',
