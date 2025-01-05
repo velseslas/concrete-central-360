@@ -2,6 +2,7 @@ import { FinanceStats } from "@/components/finance/FinanceStats";
 import { BillingListWidget } from "@/components/finance/widgets/BillingListWidget";
 import { PaymentTrackingWidget } from "@/components/finance/widgets/PaymentTrackingWidget";
 import { BillingReportsWidget } from "@/components/finance/widgets/BillingReportsWidget";
+import { DailyExpenseWidget } from "@/components/finance/widgets/DailyExpenseWidget";
 
 export default function Finance() {
   return (
@@ -16,6 +17,8 @@ export default function Finance() {
       </div>
       
       <BillingReportsWidget />
+      
+      <DailyExpenseWidget />
     </div>
   );
 }
