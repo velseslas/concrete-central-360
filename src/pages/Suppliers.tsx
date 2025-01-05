@@ -3,7 +3,6 @@ import { Users, Package, CreditCard, FileText, Truck, ShoppingCart, Factory } fr
 import { motion } from "framer-motion";
 import { SupplierList } from "@/components/suppliers/SupplierList";
 import { ProductWidget } from "@/components/suppliers/widgets/ProductWidget";
-import { PriceWidget } from "@/components/suppliers/widgets/PriceWidget";
 import { DeliveryWidget } from "@/components/suppliers/widgets/DeliveryWidget";
 import { DocumentsWidget } from "@/components/suppliers/widgets/DocumentsWidget";
 import { PurchaseOrderWidget } from "@/components/suppliers/widgets/PurchaseOrderWidget";
