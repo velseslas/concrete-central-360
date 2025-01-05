@@ -26,7 +26,7 @@ const mockClients = [
   },
 ];
 
-const ClientList = () => {
+export const ClientList = () => {
   const [selectedClient, setSelectedClient] = useState<any>(null);
   const [showProjectForm, setShowProjectForm] = useState(false);
   const [showDocumentUpload, setShowDocumentUpload] = useState(false);
@@ -96,7 +96,7 @@ const ClientList = () => {
         <>
           <Sheet>
             <SheetContent side="right" className="w-[400px] sm:w-[540px]">
-              <ClientForm clientToEdit={selectedClient} />
+              <ClientForm clientToEdit={selectedClient} onSuccess={() => setSelectedClient(null)} />
             </SheetContent>
           </Sheet>
           <ProjectForm
@@ -112,5 +112,3 @@ const ClientList = () => {
     </motion.div>
   );
 };
-
-export default ClientList;

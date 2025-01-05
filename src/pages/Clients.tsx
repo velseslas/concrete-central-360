@@ -39,7 +39,7 @@ const Clients = () => {
       </Card>
 
       {showClientForm && (
-        <ClientForm onClose={() => setShowClientForm(false)} />
+        <ClientForm onSuccess={() => setShowClientForm(false)} />
       )}
 
       <BusinessTypeWidget />
@@ -47,7 +47,7 @@ const Clients = () => {
       <DocumentsWidget />
       <AdminDocumentsWidget />
       <ReportsWidget />
-      <OrderWidget />
+      <OrderWidget clientId="default" />
       <PaymentWidget />
     </div>
   );
