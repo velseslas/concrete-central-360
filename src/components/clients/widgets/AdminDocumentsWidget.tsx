@@ -49,45 +49,58 @@ export function AdminDocumentsWidget() {
       transition={{ duration: 0.3 }}
       className="space-y-6"
     >
-      <Card>
+      <Card className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-lg font-medium flex items-center gap-2">
-            <FileText className="h-5 w-5" />
+          <CardTitle className="text-lg font-medium text-white flex items-center gap-2">
+            <FileText className="h-5 w-5 text-blue-400" />
             Gestion des Documents
           </CardTitle>
-          <Button onClick={() => setShowUploadForm(true)} size="sm">
+          <Button 
+            onClick={() => setShowUploadForm(true)} 
+            size="sm"
+            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 border-0"
+          >
             <Plus className="mr-2 h-4 w-4" />
             Nouveau document
           </Button>
         </CardHeader>
         <CardContent>
           {showUploadForm ? (
-            <div className="mb-6">
+            <motion.div 
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-6 p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50"
+            >
               <DocumentUpload 
                 onUploadSuccess={() => setShowUploadForm(false)}
               />
-            </div>
+            </motion.div>
           ) : null}
 
           <div className="space-y-2 mt-4">
             {mockClients.map((client) => (
-              <div
+              <motion.div
                 key={client.id}
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-accent/50 transition-colors cursor-pointer"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                whileHover={{ scale: 1.01 }}
+                className="flex items-center gap-3 p-3 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/50 transition-all cursor-pointer"
                 onClick={() => handleClientClick(client)}
               >
-                <FileText className="h-5 w-5 text-muted-foreground" />
-                <span>{client.nom}</span>
-              </div>
+                <FileText className="h-5 w-5 text-blue-400" />
+                <span className="text-gray-200">{client.nom}</span>
+              </motion.div>
             ))}
           </div>
         </CardContent>
       </Card>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[425px] bg-gray-900 border-gray-800">
           <DialogHeader>
-            <DialogTitle>{selectedClient?.nom}</DialogTitle>
+            <DialogTitle className="text-xl font-bold text-white">
+              {selectedClient?.nom}
+            </DialogTitle>
           </DialogHeader>
           <div className="grid grid-cols-2 gap-4 py-4">
             {selectedClient?.documents.map((doc) => (
@@ -95,11 +108,12 @@ export function AdminDocumentsWidget() {
                 key={doc.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex flex-col items-center gap-2 p-4 rounded-lg hover:bg-accent/50 transition-colors cursor-pointer"
+                whileHover={{ scale: 1.05 }}
+                className="flex flex-col items-center gap-2 p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/50 transition-all cursor-pointer"
                 onClick={() => handleDocumentClick(doc)}
               >
-                <FileText className="h-12 w-12 text-blue-500" />
-                <span className="text-sm text-center">{doc.title}</span>
+                <FileText className="h-12 w-12 text-blue-400" />
+                <span className="text-sm text-center text-gray-200">{doc.title}</span>
               </motion.div>
             ))}
           </div>
@@ -107,19 +121,23 @@ export function AdminDocumentsWidget() {
       </Dialog>
 
       <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
-        <DialogContent className="max-h-[90vh] w-[90vw] max-w-[800px] overflow-y-auto">
-          <DialogHeader className="flex flex-row items-center space-y-0">
-            <DialogTitle className="text-2xl font-bold text-primary mr-8">
+        <DialogContent className="max-h-[90vh] w-[90vw] max-w-[800px] overflow-y-auto bg-gray-900 border-gray-800">
+          <DialogHeader className="flex flex-row items-center justify-between space-y-0">
+            <DialogTitle className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
               Aperçu - {selectedDoc?.title}
             </DialogTitle>
-            <Button onClick={handlePrint} variant="outline">
+            <Button 
+              onClick={handlePrint} 
+              variant="outline"
+              className="border-gray-700 hover:bg-gray-800 text-gray-200"
+            >
               <Printer className="mr-2 h-4 w-4" />
               Imprimer
             </Button>
           </DialogHeader>
           <div className="flex flex-col items-center gap-4 py-4">
-            <div className="w-full aspect-[3/4] bg-gray-100 rounded-lg flex items-center justify-center">
-              <FileText className="h-24 w-24 text-gray-400" />
+            <div className="w-full aspect-[3/4] bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-lg flex items-center justify-center">
+              <FileText className="h-24 w-24 text-gray-600" />
             </div>
           </div>
         </DialogContent>
