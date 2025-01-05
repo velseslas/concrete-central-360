@@ -3,7 +3,7 @@ import { Car, FileText, AlertTriangle, Settings, Calendar } from "lucide-react";
 import VehicleList from "@/components/vehicles/VehicleList";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { VehicleSheetContent } from "@/components/vehicles/VehicleSheetContent";
+import VehicleSheetContent from "@/components/vehicles/VehicleSheetContent";
 
 const Vehicles = () => {
   const handleEdit = (vehicle: any) => {
@@ -168,3 +168,4 @@ const Vehicles = () => {
 };
 
 export default Vehicles;
+
