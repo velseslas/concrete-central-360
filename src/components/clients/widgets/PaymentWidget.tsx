@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { CreditCard, ChevronRight, FileText, Plus } from "lucide-react";
+import { CreditCard, Plus } from "lucide-react";
 import { motion } from "framer-motion";
 import { PaymentForm } from "../PaymentForm";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { PaymentPreview } from "./PaymentPreview";
-import { PaymentStateFilters } from "./payment/PaymentStateFilters";
+import { PaymentList } from "./payment/PaymentList";
+import { PaymentFilters } from "./payment/PaymentFilters";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { FileText } from "lucide-react";
 
 const mockClients = [
   {
@@ -16,27 +18,9 @@ const mockClients = [
     totalPaid: 15000,
     lastPayment: "2024-03-20",
     payments: [
-      { 
-        id: 1, 
-        amount: 5000, 
-        date: "2024-03-20", 
-        reference: "PAY001",
-        document: "Facture_PAY001.pdf"
-      },
-      { 
-        id: 2, 
-        amount: 5000, 
-        date: "2024-03-15", 
-        reference: "PAY002",
-        document: "Facture_PAY002.pdf"
-      },
-      { 
-        id: 3, 
-        amount: 5000, 
-        date: "2024-03-10", 
-        reference: "PAY003",
-        document: "Facture_PAY003.pdf"
-      },
+      { id: 1, amount: 5000, date: "2024-03-20", reference: "PAY001", document: "Facture_PAY001.pdf" },
+      { id: 2, amount: 5000, date: "2024-03-15", reference: "PAY002", document: "Facture_PAY002.pdf" },
+      { id: 3, amount: 5000, date: "2024-03-10", reference: "PAY003", document: "Facture_PAY003.pdf" },
     ]
   },
   {
@@ -45,20 +29,8 @@ const mockClients = [
     totalPaid: 25000,
     lastPayment: "2024-03-19",
     payments: [
-      { 
-        id: 4, 
-        amount: 10000, 
-        date: "2024-03-19", 
-        reference: "PAY004",
-        document: "Facture_PAY004.pdf"
-      },
-      { 
-        id: 5, 
-        amount: 15000, 
-        date: "2024-03-14", 
-        reference: "PAY005",
-        document: "Facture_PAY005.pdf"
-      },
+      { id: 4, amount: 10000, date: "2024-03-19", reference: "PAY004", document: "Facture_PAY004.pdf" },
+      { id: 5, amount: 15000, date: "2024-03-14", reference: "PAY005", document: "Facture_PAY005.pdf" },
     ]
   }
 ];
@@ -117,9 +89,9 @@ export function PaymentWidget() {
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
-            <PaymentStateFilters
+            <PaymentFilters
               clients={mockClients}
-              selectedClient={filteredClient}
+              filteredClient={filteredClient}
               startDate={startDate}
               endDate={endDate}
               paymentMethod={paymentMethod}
@@ -130,39 +102,10 @@ export function PaymentWidget() {
               onGenerateReport={handleGenerateReport}
             />
 
-            <div className="space-y-4">
-              {mockClients.map((client) => (
-                <motion.div
-                  key={client.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  className="p-4 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20"
-                >
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <h3 className="text-lg font-semibold text-white">{client.name}</h3>
-                      <p className="text-sm text-white/80">
-                        Dernier paiement: {client.lastPayment}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <span className="text-white font-semibold">
-                        Total: {client.totalPaid.toLocaleString()} DA
-                      </span>
-                      <Button 
-                        variant="secondary"
-                        size="sm"
-                        className="bg-white/20 hover:bg-white/30 text-white"
-                        onClick={() => handleViewDetails(client)}
-                      >
-                        Détails
-                        <ChevronRight className="h-4 w-4 ml-2" />
-                      </Button>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+            <PaymentList
+              clients={mockClients}
+              onViewDetails={handleViewDetails}
+            />
           </div>
         </CardContent>
       </Card>
