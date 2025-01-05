@@ -27,7 +27,7 @@ export function ProductCategoryForm({ open, onOpenChange }: ProductCategoryFormP
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-gray-900/95 backdrop-blur-xl border border-gray-700">
+      <DialogContent className="bg-gray-900/95 backdrop-blur-xl border border-gray-800">
         <DialogHeader>
           <DialogTitle className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
             Nouvelle Catégorie
@@ -44,7 +44,7 @@ export function ProductCategoryForm({ open, onOpenChange }: ProductCategoryFormP
           </div>
           <Button 
             type="submit"
-            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
+            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0"
           >
             Enregistrer
           </Button>

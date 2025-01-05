@@ -69,17 +69,17 @@ export function ProductCategoryList() {
                     variant="ghost" 
                     size="icon"
                     onClick={() => handleEdit(category)}
-                    className="hover:bg-gray-700/50"
+                    className="hover:bg-gray-700/50 text-gray-300 hover:text-blue-400"
                   >
-                    <Edit className="h-4 w-4 text-gray-300" />
+                    <Edit className="h-4 w-4" />
                   </Button>
                   <Button 
                     variant="ghost" 
                     size="icon"
                     onClick={() => handleDelete(category.id)}
-                    className="hover:bg-gray-700/50"
+                    className="hover:bg-gray-700/50 text-gray-300 hover:text-red-400"
                   >
-                    <Trash2 className="h-4 w-4 text-gray-300" />
+                    <Trash2 className="h-4 w-4" />
                   </Button>
                 </div>
               </TableCell>
