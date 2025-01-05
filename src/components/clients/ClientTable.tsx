@@ -28,7 +28,7 @@ export function ClientTable({
 
   return (
     <>
-      <div className="overflow-x-auto">
+      <div className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 overflow-hidden">
         <table className="w-full text-sm text-left">
           <thead className="text-xs uppercase bg-gray-900/50 backdrop-blur-xl border-b border-gray-700">
             <tr>
@@ -47,7 +47,7 @@ export function ClientTable({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
-                className="border-b border-gray-700/50 hover:bg-gray-800/50 backdrop-blur-xl transition-colors cursor-pointer"
+                className="border-b border-gray-700/50 hover:bg-gray-700/30 backdrop-blur-xl transition-colors cursor-pointer"
                 onClick={() => handleRowClick(client)}
               >
                 <td className="px-6 py-4 text-gray-300">{client.nom}</td>

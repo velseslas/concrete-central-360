@@ -19,32 +19,36 @@ export function ClientActions({
   return (
     <div className="flex space-x-2">
       <Button
-        variant="outline"
-        size="sm"
+        variant="ghost"
+        size="icon"
         onClick={() => onEdit(client)}
+        className="hover:bg-gray-700/50"
       >
-        <Edit className="h-4 w-4" />
+        <Edit className="h-4 w-4 text-gray-300" />
       </Button>
       <Button
-        variant="outline"
-        size="sm"
+        variant="ghost"
+        size="icon"
         onClick={() => onAddProject(client)}
+        className="hover:bg-gray-700/50"
       >
-        <Building className="h-4 w-4" />
+        <Building className="h-4 w-4 text-gray-300" />
       </Button>
       <Button
-        variant="outline"
-        size="sm"
+        variant="ghost"
+        size="icon"
         onClick={() => onDocumentUpload(client)}
+        className="hover:bg-gray-700/50"
       >
-        <FileText className="h-4 w-4" />
+        <FileText className="h-4 w-4 text-gray-300" />
       </Button>
       <Button
-        variant="outline"
-        size="sm"
+        variant="ghost"
+        size="icon"
         onClick={() => onDelete(client.id)}
+        className="hover:bg-gray-700/50"
       >
-        <Trash className="h-4 w-4" />
+        <Trash className="h-4 w-4 text-gray-300" />
       </Button>
     </div>
   );
