@@ -80,7 +80,7 @@ const ClientList = () => {
               </div>
               <Dialog open={isNewClientDialogOpen} onOpenChange={setIsNewClientDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600">
+                  <Button className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white">
                     <UserPlus className="mr-2 h-4 w-4" />
                     Nouveau client
                   </Button>
