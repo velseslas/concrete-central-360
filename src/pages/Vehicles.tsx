@@ -135,7 +135,7 @@ const Vehicles = () => {
                       <stat.icon className={`h-5 w-5 ${stat.color} ${stat.isPulsing ? 'animate-[pulse_1.5s_ease-in-out_infinite]' : ''}`} />
                     </CardHeader>
                     <CardContent>
-                      <div className={`text-2xl font-bold ${stat.isPulsing ? stat.color : 'text-white'}`}>
+                      <div className={`text-2xl font-bold ${stat.isPulsing ? `${stat.color} animate-[pulse_1.5s_ease-in-out_infinite]` : 'text-white'}`}>
                         {stat.value}
                       </div>
                     </CardContent>
@@ -168,4 +168,3 @@ const Vehicles = () => {
 };
 
 export default Vehicles;
-
