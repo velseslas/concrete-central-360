@@ -1,4 +1,5 @@
 import { SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { X } from "lucide-react";
 
 interface VehicleSheetContentProps {
   items: any[];
@@ -111,7 +112,10 @@ const VehicleSheetContent = ({ items, type }: VehicleSheetContentProps) => {
   return (
     <SheetContent side="right" className="w-full sm:max-w-md bg-gray-900/95 border-gray-800">
       <SheetHeader>
-        <SheetTitle className="text-white">{getTitleByType()}</SheetTitle>
+        <div className="flex justify-between items-center">
+          <SheetTitle className="text-white">{getTitleByType()}</SheetTitle>
+          <X className="h-4 w-4 text-white" />
+        </div>
       </SheetHeader>
       <div className="mt-6 space-y-3 max-h-[calc(100vh-8rem)] overflow-y-auto pr-2">
         {renderContent()}
