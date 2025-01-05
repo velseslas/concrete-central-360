@@ -1,12 +1,15 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { FileText, DollarSign, Calendar, Clock } from "lucide-react";
+import { FileText, DollarSign, Calendar, Clock, TrendingUp } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
 
 export function InvoiceWidget() {
   // Exemple de données
   const totalInvoices = 450000;
   const currentMonthInvoices = 150000;
   const overdueInvoices = 130000;
+  const totalPaid = 320000;
+  const recoveryRate = (totalPaid / totalInvoices) * 100;
 
   return (
     <motion.div
@@ -51,6 +54,26 @@ export function InvoiceWidget() {
                 </h3>
                 <p className="text-2xl font-bold text-white">{overdueInvoices.toLocaleString()} DA</p>
                 <p className="text-sm text-gray-400">4 factures impayées</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50">
+                <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
+                  <DollarSign className="h-5 w-5 text-green-400" />
+                  Paiements reçus
+                </h3>
+                <p className="text-2xl font-bold text-white">{totalPaid.toLocaleString()} DA</p>
+                <p className="text-sm text-gray-400">9 paiements effectués</p>
+              </div>
+              <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50">
+                <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
+                  <TrendingUp className="h-5 w-5 text-blue-400" />
+                  Taux de recouvrement
+                </h3>
+                <div className="space-y-2">
+                  <p className="text-2xl font-bold text-white">{recoveryRate.toFixed(1)}%</p>
+                  <Progress value={recoveryRate} className="h-2" />
+                </div>
               </div>
             </div>
           </div>
