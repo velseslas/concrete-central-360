@@ -36,61 +36,61 @@ export function InvoiceWidget() {
       >
         <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl group-hover:shadow-2xl transition-all duration-300">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
-          <CardHeader>
+          <CardHeader className="py-3">
             <div className="flex justify-between items-center">
-              <CardTitle className="text-white flex items-center gap-2">
-                <FileText className="h-6 w-6 text-blue-400" />
+              <CardTitle className="text-white flex items-center gap-2 text-lg">
+                <FileText className="h-5 w-5 text-blue-400" />
                 Aperçu des Factures
               </CardTitle>
             </div>
           </CardHeader>
-          <CardContent>
-            <div className="flex flex-nowrap overflow-x-auto gap-4 pb-2">
-              <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[200px] flex-1">
-                <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
-                  <DollarSign className="h-5 w-5 text-green-400" />
+          <CardContent className="py-2">
+            <div className="flex flex-nowrap overflow-x-auto gap-3 pb-2">
+              <div className="p-3 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[180px] flex-1">
+                <h3 className="font-semibold mb-1 text-gray-300 flex items-center gap-2 text-sm">
+                  <DollarSign className="h-4 w-4 text-green-400" />
                   Total facturé
                 </h3>
-                <p className="text-2xl font-bold text-white">{totalInvoices.toLocaleString()} DA</p>
-                <p className="text-sm text-gray-400">15 factures au total</p>
+                <p className="text-xl font-bold text-white">{totalInvoices.toLocaleString()} DA</p>
+                <p className="text-xs text-gray-400">15 factures au total</p>
               </div>
-              <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[200px] flex-1">
-                <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
-                  <Calendar className="h-5 w-5 text-yellow-400" />
+              <div className="p-3 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[180px] flex-1">
+                <h3 className="font-semibold mb-1 text-gray-300 flex items-center gap-2 text-sm">
+                  <Calendar className="h-4 w-4 text-yellow-400" />
                   Factures du mois
                 </h3>
-                <p className="text-2xl font-bold text-white">{currentMonthInvoices.toLocaleString()} DA</p>
-                <p className="text-sm text-gray-400">5 factures ce mois</p>
+                <p className="text-xl font-bold text-white">{currentMonthInvoices.toLocaleString()} DA</p>
+                <p className="text-xs text-gray-400">5 factures ce mois</p>
               </div>
               <div 
-                className={`p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[200px] flex-1 ${hasOverdueInvoices ? 'shadow-[0_0_15px_rgba(239,68,68,0.3)] cursor-pointer' : ''}`}
+                className={`p-3 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[180px] flex-1 ${hasOverdueInvoices ? 'shadow-[0_0_15px_rgba(239,68,68,0.3)] cursor-pointer' : ''}`}
                 onClick={() => hasOverdueInvoices && setIsOpen(true)}
               >
-                <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
-                  <Clock className={`h-5 w-5 text-red-400 ${hasOverdueInvoices ? 'animate-[pulse_1.5s_ease-in-out_infinite]' : ''}`} />
+                <h3 className="font-semibold mb-1 text-gray-300 flex items-center gap-2 text-sm">
+                  <Clock className={`h-4 w-4 text-red-400 ${hasOverdueInvoices ? 'animate-[pulse_1.5s_ease-in-out_infinite]' : ''}`} />
                   Factures en souffrance
                 </h3>
-                <p className={`text-2xl font-bold ${hasOverdueInvoices ? 'text-red-400 animate-[pulse_1.5s_ease-in-out_infinite]' : 'text-white'}`}>
+                <p className={`text-xl font-bold ${hasOverdueInvoices ? 'text-red-400 animate-[pulse_1.5s_ease-in-out_infinite]' : 'text-white'}`}>
                   {overdueInvoices.toLocaleString()} DA
                 </p>
-                <p className="text-sm text-gray-400">4 factures impayées</p>
+                <p className="text-xs text-gray-400">4 factures impayées</p>
               </div>
-              <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[200px] flex-1">
-                <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
-                  <DollarSign className="h-5 w-5 text-green-400" />
+              <div className="p-3 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[180px] flex-1">
+                <h3 className="font-semibold mb-1 text-gray-300 flex items-center gap-2 text-sm">
+                  <DollarSign className="h-4 w-4 text-green-400" />
                   Paiements reçus
                 </h3>
-                <p className="text-2xl font-bold text-white">{totalPaid.toLocaleString()} DA</p>
-                <p className="text-sm text-gray-400">9 paiements effectués</p>
+                <p className="text-xl font-bold text-white">{totalPaid.toLocaleString()} DA</p>
+                <p className="text-xs text-gray-400">9 paiements effectués</p>
               </div>
-              <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[200px] flex-1">
-                <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
-                  <TrendingUp className="h-5 w-5 text-blue-400" />
+              <div className="p-3 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[180px] flex-1">
+                <h3 className="font-semibold mb-1 text-gray-300 flex items-center gap-2 text-sm">
+                  <TrendingUp className="h-4 w-4 text-blue-400" />
                   Taux de recouvrement
                 </h3>
-                <div className="space-y-2">
-                  <p className="text-2xl font-bold text-white">{recoveryRate.toFixed(1)}%</p>
-                  <Progress value={recoveryRate} className="h-2" />
+                <div className="space-y-1">
+                  <p className="text-xl font-bold text-white">{recoveryRate.toFixed(1)}%</p>
+                  <Progress value={recoveryRate} className="h-1.5" />
                 </div>
               </div>
             </div>
@@ -111,16 +111,16 @@ export function InvoiceWidget() {
               {overdueInvoicesList.map((invoice) => (
                 <div 
                   key={invoice.id}
-                  className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50"
+                  className="p-3 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50"
                 >
                   <div className="flex justify-between items-start mb-2">
                     <div>
-                      <h4 className="font-semibold text-white">{invoice.client}</h4>
-                      <p className="text-sm text-gray-400">Facture #{invoice.id}</p>
+                      <h4 className="font-semibold text-white text-sm">{invoice.client}</h4>
+                      <p className="text-xs text-gray-400">Facture #{invoice.id}</p>
                     </div>
-                    <p className="text-lg font-bold text-red-400">{invoice.amount.toLocaleString()} DA</p>
+                    <p className="text-base font-bold text-red-400">{invoice.amount.toLocaleString()} DA</p>
                   </div>
-                  <div className="flex justify-between items-center text-sm">
+                  <div className="flex justify-between items-center text-xs">
                     <p className="text-gray-400">Échéance :</p>
                     <p className="text-red-300">{new Date(invoice.dueDate).toLocaleDateString()}</p>
                   </div>
