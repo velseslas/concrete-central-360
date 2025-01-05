@@ -38,7 +38,7 @@ export function InvoiceWidget() {
           <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
           <CardHeader className="py-3">
             <div className="flex justify-between items-center">
-              <CardTitle className="text-white flex items-center gap-2 text-2xl font-bold">
+              <CardTitle className="text-white flex items-center gap-2 text-xl font-bold">
                 <FileText className="h-6 w-6 text-blue-400" />
                 Aperçu des Factures
               </CardTitle>
