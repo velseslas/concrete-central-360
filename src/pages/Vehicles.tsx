@@ -67,7 +67,8 @@ const Vehicles = () => {
       icon: Settings, 
       color: "text-orange-400",
       items: maintenanceVehicles,
-      type: 'maintenance' as const
+      type: 'maintenance' as const,
+      isPulsing: true
     },
     { 
       title: "Alerte Documents", 
@@ -138,6 +139,11 @@ const Vehicles = () => {
                       <div className={`text-2xl font-bold ${stat.isPulsing ? `${stat.color} animate-[pulse_1.5s_ease-in-out_infinite]` : 'text-white'}`}>
                         {stat.value}
                       </div>
+                      {stat.change && (
+                        <p className={`text-xs ${stat.change.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
+                          {stat.change} depuis le mois dernier
+                        </p>
+                      )}
                     </CardContent>
                   </Card>
                 </SheetTrigger>
