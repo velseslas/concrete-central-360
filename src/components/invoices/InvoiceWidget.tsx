@@ -11,6 +11,8 @@ export function InvoiceWidget() {
   const totalPaid = 320000;
   const recoveryRate = (totalPaid / totalInvoices) * 100;
 
+  const hasOverdueInvoices = overdueInvoices > 0;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -46,12 +48,14 @@ export function InvoiceWidget() {
               <p className="text-2xl font-bold text-white">{currentMonthInvoices.toLocaleString()} DA</p>
               <p className="text-sm text-gray-400">5 factures ce mois</p>
             </div>
-            <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[200px] flex-1">
+            <div className={`p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[200px] flex-1 ${hasOverdueInvoices ? 'shadow-[0_0_15px_rgba(239,68,68,0.3)]' : ''}`}>
               <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2">
-                <Clock className="h-5 w-5 text-yellow-400" />
+                <Clock className={`h-5 w-5 text-red-400 ${hasOverdueInvoices ? 'animate-[pulse_1.5s_ease-in-out_infinite]' : ''}`} />
                 Factures en souffrance
               </h3>
-              <p className="text-2xl font-bold text-white">{overdueInvoices.toLocaleString()} DA</p>
+              <p className={`text-2xl font-bold ${hasOverdueInvoices ? 'text-red-400 animate-[pulse_1.5s_ease-in-out_infinite]' : 'text-white'}`}>
+                {overdueInvoices.toLocaleString()} DA
+              </p>
               <p className="text-sm text-gray-400">4 factures impayées</p>
             </div>
             <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[200px] flex-1">
