@@ -1,6 +1,6 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { Package, Clock, FileCheck, FileX, Calendar } from "lucide-react";
+import { Package, Calendar, Clock, FileX, TrendingUp } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Sheet, SheetContent, SheetHeader } from "@/components/ui/sheet";
 import { useState } from "react";
@@ -55,6 +55,8 @@ export function ProductionWidget() {
           <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
           <CardHeader className="py-3">
             <div className="flex justify-between items-center">
+              <CardTitle className="text-white flex items-center gap-2 text-xl font-bold">
+              </CardTitle>
             </div>
           </CardHeader>
           <CardContent className="py-2">
@@ -105,7 +107,7 @@ export function ProductionWidget() {
               </div>
               <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 min-w-[160px] flex-1">
                 <h3 className="font-semibold mb-2 text-gray-300 flex items-center gap-2 text-lg">
-                  <FileCheck className="h-5 w-5 text-blue-400" />
+                  <TrendingUp className="h-5 w-5 text-blue-400" />
                   Taux de réalisation
                 </h3>
                 <div className="space-y-2">
