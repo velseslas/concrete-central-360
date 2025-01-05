@@ -83,7 +83,7 @@ const Vehicles = () => {
       title: "Véhicules en Panne",
       value: brokenCount,
       icon: Car,
-      color: "text-[#F97316]",
+      color: "text-red-400",
       isPulsing: brokenCount > 0,
       items: brokenVehicles,
       type: 'broken' as const
@@ -128,7 +128,7 @@ const Vehicles = () => {
             >
               <Sheet>
                 <SheetTrigger asChild>
-                  <Card className={`bg-gray-800/50 backdrop-blur-lg border-gray-700 hover:bg-gray-700/50 hover:border-gray-600 transition-all duration-300 cursor-pointer ${stat.isPulsing ? `shadow-[0_0_15px_rgba(${stat.title === "Alerte Documents" ? '239,68,68' : '249,115,22'},0.3)]` : ''} ${stat.type === 'broken' ? 'border-[#F97316] border-2' : ''}`}>
+                  <Card className={`bg-gray-800/50 backdrop-blur-lg border-gray-700 hover:bg-gray-700/50 hover:border-gray-600 transition-all duration-300 cursor-pointer ${stat.isPulsing ? `shadow-[0_0_15px_rgba(239,68,68,0.3)]` : ''} ${stat.type === 'broken' ? 'border-red-500 border-2' : ''}`}>
                     <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
                       <CardTitle className="text-sm font-medium text-gray-300">
                         {stat.title}
