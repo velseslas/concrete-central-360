@@ -9,6 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Edit, Trash2 } from "lucide-react";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
 
 interface Product {
   id: number;
@@ -18,7 +19,7 @@ interface Product {
 }
 
 interface ProductListProps {
-  onEdit: (product: Product) => void;
+  onEdit?: (product: Product) => void;
 }
 
 const mockProducts: Product[] = [
@@ -52,37 +53,40 @@ export function ProductList({ onEdit }: ProductListProps) {
   };
 
   return (
-    <div className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 overflow-hidden">
+    <div className="overflow-hidden rounded-lg border border-gray-800">
       <Table>
-        <TableHeader className="bg-gray-900/50 backdrop-blur-xl">
-          <TableRow className="border-b border-gray-700 hover:bg-gray-800/50">
-            <TableHead className="text-gray-300">Nom</TableHead>
-            <TableHead className="text-gray-300">Catégorie</TableHead>
-            <TableHead className="text-gray-300">Description</TableHead>
-            <TableHead className="text-right text-gray-300">Actions</TableHead>
+        <TableHeader className="bg-gray-900/70 border-b border-gray-800">
+          <TableRow>
+            <TableHead className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-medium">Nom</TableHead>
+            <TableHead className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-medium">Catégorie</TableHead>
+            <TableHead className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-medium">Description</TableHead>
+            <TableHead className="text-right text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-medium">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {mockProducts.map((product) => (
-            <TableRow 
-              key={product.id} 
-              className="border-b border-gray-700/50 hover:bg-gray-700/30 transition-colors duration-200"
+          {mockProducts.map((product, index) => (
+            <motion.tr
+              key={product.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
+              className="bg-gray-900/30 backdrop-blur-sm hover:bg-gray-800/50 transition-colors"
             >
               <TableCell className="text-gray-300">{product.name}</TableCell>
               <TableCell className="text-gray-300">{getCategoryName(product.category)}</TableCell>
               <TableCell className="text-gray-300">{product.description}</TableCell>
               <TableCell className="text-right">
                 <div className="flex justify-end space-x-2">
-                  <Button 
-                    variant="ghost" 
+                  <Button
+                    variant="ghost"
                     size="icon"
-                    onClick={() => onEdit(product)}
+                    onClick={() => onEdit?.(product)}
                     className="hover:bg-gray-700/50"
                   >
                     <Edit className="h-4 w-4 text-gray-300" />
                   </Button>
-                  <Button 
-                    variant="ghost" 
+                  <Button
+                    variant="ghost"
                     size="icon"
                     onClick={() => handleDelete(product.id)}
                     className="hover:bg-gray-700/50"
@@ -91,7 +95,7 @@ export function ProductList({ onEdit }: ProductListProps) {
                   </Button>
                 </div>
               </TableCell>
-            </TableRow>
+            </motion.tr>
           ))}
         </TableBody>
       </Table>
