@@ -1,7 +1,7 @@
 import { FinanceStats } from "@/components/finance/FinanceStats";
-import { TransactionsWidget } from "@/components/finance/TransactionsWidget";
-import { CashFlowWidget } from "@/components/finance/CashFlowWidget";
-import { ExpensesWidget } from "@/components/finance/ExpensesWidget";
+import { BillingListWidget } from "@/components/finance/widgets/BillingListWidget";
+import { PaymentTrackingWidget } from "@/components/finance/widgets/PaymentTrackingWidget";
+import { BillingReportsWidget } from "@/components/finance/widgets/BillingReportsWidget";
 
 export default function Finance() {
   return (
@@ -10,12 +10,12 @@ export default function Finance() {
       
       <FinanceStats />
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <TransactionsWidget />
-        <CashFlowWidget />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <BillingListWidget />
+        <PaymentTrackingWidget />
       </div>
       
-      <ExpensesWidget />
+      <BillingReportsWidget />
     </div>
   );
 }
