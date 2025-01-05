@@ -19,18 +19,22 @@ export function PriceWidget() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <Card className="bg-gray-800/50 backdrop-blur-lg border border-gray-700">
+      <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-50" />
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>Prix</CardTitle>
-          <Button onClick={() => setShowPriceForm(true)} size="sm">
+          <CardTitle className="text-white flex items-center gap-2">Prix</CardTitle>
+          <Button 
+            onClick={() => setShowPriceForm(true)} 
+            size="sm"
+            className="bg-blue-600 hover:bg-blue-700 text-white"
+          >
             <Plus className="h-4 w-4 mr-2" />
             Ajouter un prix
           </Button>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <div className="p-4 rounded-lg bg-gray-700/50">
-              <h3 className="text-lg font-semibold mb-2">Liste des Prix</h3>
+            <div className="rounded-lg">
               <PriceList onEdit={handlePriceEdit} />
             </div>
           </div>
