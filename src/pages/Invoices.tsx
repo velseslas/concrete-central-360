@@ -1,50 +1,47 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 import FacturationWidget from "@/components/invoices/FacturationWidget";
 
-interface Invoice {
-  id: string;
-  number: string;
-  client: string;
-  amount: number;
-  status: "pending" | "paid" | "overdue";
-  date: string;
-  paymentMethod: "cash" | "bank_transfer" | "check";
-}
+const mockInvoices = [
+  {
+    id: "1",
+    number: "FAC001",
+    client: "Client A",
+    amount: 150000,
+    status: "paid",
+    date: "2024-03-20",
+    paymentMethod: "bank_transfer"
+  },
+  {
+    id: "2",
+    number: "FAC002",
+    client: "Client B",
+    amount: 225000,
+    status: "pending",
+    date: "2024-03-21",
+    paymentMethod: "check"
+  },
+  {
+    id: "3",
+    number: "FAC003",
+    client: "Client C",
+    amount: 180000,
+    status: "overdue",
+    date: "2024-03-22",
+    paymentMethod: "cash"
+  }
+] as const;
 
 const Invoices = () => {
-  const [invoices] = useState<Invoice[]>([
-    {
-      id: "1",
-      number: "FAC001",
-      client: "Client A",
-      amount: 15000,
-      status: "paid",
-      date: "2024-03-20",
-      paymentMethod: "bank_transfer",
-    },
-    {
-      id: "2",
-      number: "FAC002",
-      client: "Client B",
-      amount: 22500,
-      status: "pending",
-      date: "2024-03-21",
-      paymentMethod: "check",
-    },
-  ]);
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
-      <div className="container mx-auto p-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <FacturationWidget invoices={invoices} />
-        </motion.div>
-      </div>
+    <div className="container mx-auto p-6 space-y-6">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="grid gap-6"
+      >
+        <FacturationWidget invoices={mockInvoices} />
+      </motion.div>
     </div>
   );
 };
