@@ -7,7 +7,6 @@ import { motion } from "framer-motion";
 import { PaymentForm } from "../PaymentForm";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { PaymentPreview } from "./PaymentPreview";
-import { PaymentStateFilters } from "./payment/PaymentStateFilters";
 
 const mockClients = [
   {
@@ -69,10 +68,6 @@ export function PaymentWidget() {
   const [showPaymentDetails, setShowPaymentDetails] = useState(false);
   const [showDocumentPreview, setShowDocumentPreview] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState<string | null>(null);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("");
-  const [filteredClient, setFilteredClient] = useState("");
 
   const handleViewDetails = (client: any) => {
     setSelectedClient(client);
@@ -82,15 +77,6 @@ export function PaymentWidget() {
   const handleDocumentClick = (document: string) => {
     setSelectedDocument(document);
     setShowDocumentPreview(true);
-  };
-
-  const handleGenerateReport = () => {
-    console.log("Filtering payments with:", {
-      client: filteredClient,
-      startDate,
-      endDate,
-      paymentMethod
-    });
   };
 
   return (
@@ -117,19 +103,6 @@ export function PaymentWidget() {
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
-            <PaymentStateFilters
-              clients={mockClients}
-              selectedClient={filteredClient}
-              startDate={startDate}
-              endDate={endDate}
-              paymentMethod={paymentMethod}
-              onClientChange={setFilteredClient}
-              onStartDateChange={setStartDate}
-              onEndDateChange={setEndDate}
-              onPaymentMethodChange={setPaymentMethod}
-              onGenerateReport={handleGenerateReport}
-            />
-
             <div className="space-y-4">
               {mockClients.map((client) => (
                 <motion.div
