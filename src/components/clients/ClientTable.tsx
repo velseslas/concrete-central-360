@@ -28,26 +28,26 @@ export function ClientTable({
 
   return (
     <>
-      <div className="overflow-hidden rounded-lg border border-gray-700/50">
+      <div className="overflow-hidden rounded-lg border border-gray-800">
         <table className="w-full text-sm text-left">
-          <thead className="text-xs uppercase bg-gray-900/70 border-b border-gray-700">
+          <thead className="text-xs uppercase bg-gray-900/70 border-b border-gray-800">
             <tr>
-              <th className="px-6 py-4 text-gray-300">Nom</th>
-              <th className="px-6 py-4 text-gray-300">Raison sociale</th>
-              <th className="px-6 py-4 text-gray-300">Téléphone</th>
-              <th className="px-6 py-4 text-gray-300">Email</th>
-              <th className="px-6 py-4 text-gray-300">Ville</th>
-              <th className="px-6 py-4 text-gray-300">Actions</th>
+              <th className="px-6 py-4 text-blue-400 font-medium">Nom</th>
+              <th className="px-6 py-4 text-blue-400 font-medium">Raison sociale</th>
+              <th className="px-6 py-4 text-blue-400 font-medium">Téléphone</th>
+              <th className="px-6 py-4 text-blue-400 font-medium">Email</th>
+              <th className="px-6 py-4 text-blue-400 font-medium">Ville</th>
+              <th className="px-6 py-4 text-blue-400 font-medium">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-700/50">
+          <tbody className="divide-y divide-gray-800">
             {clients.map((client, index) => (
               <motion.tr
                 key={client.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
-                className="bg-gray-800/50 backdrop-blur-sm hover:bg-gray-700/50 transition-colors cursor-pointer"
+                className="bg-gray-900/30 backdrop-blur-sm hover:bg-gray-800/50 transition-colors cursor-pointer"
                 onClick={() => handleRowClick(client)}
               >
                 <td className="px-6 py-4 text-gray-300">{client.nom}</td>

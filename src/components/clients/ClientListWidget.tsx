@@ -9,12 +9,12 @@ export function ClientListWidget() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <Card className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl">
-        <CardHeader>
-          <CardTitle className="text-gray-100">Liste des Clients</CardTitle>
+      <Card className="bg-gradient-to-br from-[#1A1F2C] to-[#2C1A2F] border-gray-800 shadow-xl">
+        <CardHeader className="border-b border-gray-800">
+          <CardTitle className="text-gray-100 font-bold">Liste des Clients</CardTitle>
         </CardHeader>
-        <CardContent className="p-6">
-          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-lg p-4">
+        <CardContent className="p-6 space-y-6">
+          <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg p-4">
             <ClientList />
           </div>
         </CardContent>
