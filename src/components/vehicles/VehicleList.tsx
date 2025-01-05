@@ -4,7 +4,11 @@ import { Car, Plus, Search, Settings, Calendar, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-export function VehicleList() {
+interface VehicleListProps {
+  onEdit?: (vehicle: any) => void;
+}
+
+export function VehicleList({ onEdit }: VehicleListProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -76,6 +80,7 @@ export function VehicleList() {
                         variant="ghost"
                         size="icon"
                         className="h-8 w-8 hover:bg-[#9b87f5]/20"
+                        onClick={() => onEdit?.(vehicule)}
                       >
                         <Settings className="h-4 w-4 text-[#9b87f5]" />
                       </Button>

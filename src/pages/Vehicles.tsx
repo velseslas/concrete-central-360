@@ -135,16 +135,7 @@ const Vehicles = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          <Card className="bg-gray-800/50 backdrop-blur-lg border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-xl font-semibold text-gray-100">
-                Liste des Véhicules
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <VehicleList onEdit={handleEdit} />
-            </CardContent>
-          </Card>
+          <VehicleList onEdit={handleEdit} />
         </motion.div>
       </motion.div>
     </div>
