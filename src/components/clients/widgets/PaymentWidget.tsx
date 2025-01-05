@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CreditCard, Plus } from "lucide-react";
+import { CreditCard, Plus, Search } from "lucide-react";
 import { motion } from "framer-motion";
 import { PaymentForm } from "../PaymentForm";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -10,6 +10,7 @@ import { PaymentList } from "./payment/PaymentList";
 import { PaymentFilters } from "./payment/PaymentFilters";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { FileText } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 const mockClients = [
   {
@@ -45,6 +46,7 @@ export function PaymentWidget() {
   const [endDate, setEndDate] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
   const [filteredClient, setFilteredClient] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleViewDetails = (client: any) => {
     setSelectedClient(client);
@@ -70,69 +72,93 @@ export function PaymentWidget() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
+      className="group"
     >
-      <Card className="bg-gradient-to-br from-[#ec4899] to-[#8b5cf6] border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle className="text-white flex items-center gap-2">
-            <CreditCard className="h-6 w-6" />
-            Paiements des Clients
-          </CardTitle>
-          <Button 
-            variant="secondary" 
-            size="sm" 
-            onClick={() => setShowPaymentForm(true)}
-            className="bg-white/20 hover:bg-white/30 text-white"
-          >
-            <Plus className="h-4 w-4 mr-2" />
-            Nouveau paiement
-          </Button>
+      <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl group-hover:shadow-2xl transition-all duration-300">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
+        <CardHeader>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <CardTitle className="text-white flex items-center gap-2">
+              <CreditCard className="h-6 w-6 text-blue-400" />
+              Liste des Paiements
+            </CardTitle>
+            <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
+              <div className="relative flex-grow md:w-64">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Input 
+                  placeholder="Rechercher un paiement..." 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-9 bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-400"
+                />
+              </div>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => setShowPaymentForm(true)}
+                className="text-white border-gray-700 hover:bg-gray-700/50"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Nouveau Paiement
+              </Button>
+            </div>
+          </div>
         </CardHeader>
         <CardContent>
-          <div className="space-y-6">
-            <PaymentFilters
-              clients={mockClients}
-              filteredClient={filteredClient}
-              startDate={startDate}
-              endDate={endDate}
-              paymentMethod={paymentMethod}
-              onClientChange={setFilteredClient}
-              onStartDateChange={setStartDate}
-              onEndDateChange={setEndDate}
-              onPaymentMethodChange={setPaymentMethod}
-              onGenerateReport={handleGenerateReport}
-            />
-
-            <PaymentList
-              clients={mockClients}
-              onViewDetails={handleViewDetails}
-            />
+          <div className="space-y-4">
+            {mockClients.map((client) => (
+              <motion.div
+                key={client.id}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/50 transition-all duration-300 cursor-pointer"
+                onClick={() => handleViewDetails(client)}
+              >
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                  <div>
+                    <h3 className="text-white font-medium flex items-center gap-2">
+                      <FileText className="h-4 w-4 text-blue-400" />
+                      {client.name}
+                    </h3>
+                    <p className="text-gray-400 text-sm">
+                      Dernier paiement: {client.lastPayment}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <span className="text-white font-medium">
+                      {client.totalPaid.toLocaleString()} DA
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </CardContent>
       </Card>
 
       <Dialog open={showPaymentDetails} onOpenChange={setShowPaymentDetails}>
-        <DialogContent className="max-w-3xl">
+        <DialogContent className="bg-gray-900 text-white border-gray-800">
           <DialogHeader>
-            <DialogTitle className="text-xl font-bold">
+            <DialogTitle className="text-xl font-bold text-white">
               Historique des paiements - {selectedClient?.name}
             </DialogTitle>
           </DialogHeader>
           <div className="mt-4">
             <Table>
               <TableHeader>
-                <TableRow>
-                  <TableHead>Référence</TableHead>
-                  <TableHead>Date</TableHead>
-                  <TableHead className="text-right">Montant</TableHead>
-                  <TableHead className="text-center">Document</TableHead>
+                <TableRow className="border-gray-800">
+                  <TableHead className="text-gray-400">Référence</TableHead>
+                  <TableHead className="text-gray-400">Date</TableHead>
+                  <TableHead className="text-right text-gray-400">Montant</TableHead>
+                  <TableHead className="text-center text-gray-400">Document</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {selectedClient?.payments.map((payment: any) => (
-                  <TableRow key={payment.id}>
-                    <TableCell>{payment.reference}</TableCell>
-                    <TableCell>{payment.date}</TableCell>
-                    <TableCell className="text-right">
+                  <TableRow key={payment.id} className="border-gray-800">
+                    <TableCell className="text-gray-300">{payment.reference}</TableCell>
+                    <TableCell className="text-gray-300">{payment.date}</TableCell>
+                    <TableCell className="text-right text-gray-300">
                       {payment.amount.toLocaleString()} DA
                     </TableCell>
                     <TableCell className="text-center">
@@ -140,6 +166,7 @@ export function PaymentWidget() {
                         variant="ghost"
                         size="sm"
                         onClick={() => handleDocumentClick(payment.document)}
+                        className="text-gray-300 hover:text-white hover:bg-gray-800"
                       >
                         <FileText className="h-4 w-4" />
                       </Button>
