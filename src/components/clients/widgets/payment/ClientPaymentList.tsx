@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 interface ClientPayment {
@@ -23,17 +22,16 @@ interface ClientPaymentListProps {
 }
 
 export function ClientPaymentList({ clients, onViewDetails }: ClientPaymentListProps) {
-  const handleViewDetails = (client: ClientPayment) => {
-    console.log("Viewing details for client:", client);
-    onViewDetails(client);
-  };
-
   return (
     <div className="space-y-4">
       {clients.map((client) => (
         <div
           key={client.id}
-          className="p-4 rounded-lg bg-gray-800/50 hover:bg-gray-800/70 transition-colors"
+          className="p-4 rounded-lg bg-gray-800/50 hover:bg-gray-800/70 transition-colors cursor-pointer"
+          onClick={() => {
+            console.log("Clicking on client:", client.name);
+            onViewDetails(client);
+          }}
         >
           <div className="flex justify-between items-center">
             <div>
@@ -46,14 +44,6 @@ export function ClientPaymentList({ clients, onViewDetails }: ClientPaymentListP
               <p className="text-lg font-bold text-blue-400">
                 {client.totalPaid.toLocaleString()} DA
               </p>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => handleViewDetails(client)}
-                className="text-gray-400 hover:text-white"
-              >
-                Voir détails
-              </Button>
             </div>
           </div>
         </div>
