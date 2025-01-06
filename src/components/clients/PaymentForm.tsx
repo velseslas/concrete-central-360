@@ -7,7 +7,6 @@ import { toast } from "sonner";
 import { PaymentFormFields } from "./payment-form/PaymentFormFields";
 import { PaymentFormValues, paymentSchema } from "./payment-form/types";
 import { mockClients, mockProjects } from "./payment-form/mockData";
-import { PaymentState } from "./payment-form/PaymentState";
 
 interface PaymentFormProps {
   open: boolean;
@@ -50,69 +49,34 @@ export function PaymentForm({ open, onOpenChange, clientId, paymentToEdit }: Pay
     onOpenChange(false);
   };
 
-  // Exemple de données de paiement pour l'état
-  const mockPayments = [
-    {
-      id: 1,
-      date: "2024-03-20",
-      reference: "PAY001",
-      amount: 150000,
-      method: "especes",
-      clientName: "Client A",
-      projectName: "Projet 1"
-    },
-    {
-      id: 2,
-      date: "2024-03-21",
-      reference: "PAY002",
-      amount: 200000,
-      method: "cheque",
-      clientName: "Client B",
-      projectName: "Projet 2"
-    },
-    {
-      id: 3,
-      date: "2024-03-22",
-      reference: "PAY003",
-      amount: 300000,
-      method: "virement",
-      clientName: "Client A",
-      projectName: "Projet 3"
-    }
-  ];
-
   return (
-    <>
-      <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="sm:max-w-[800px]">
-          <DialogHeader>
-            <DialogTitle>
-              {paymentToEdit ? "Modifier le paiement" : "Nouveau paiement"}
-            </DialogTitle>
-          </DialogHeader>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <PaymentFormFields
-                form={form}
-                mockClients={mockClients}
-                mockProjects={mockProjects}
-                handleFileUpload={handleFileUpload}
-              />
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-[800px]">
+        <DialogHeader>
+          <DialogTitle>
+            {paymentToEdit ? "Modifier le paiement" : "Nouveau paiement"}
+          </DialogTitle>
+        </DialogHeader>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <PaymentFormFields
+              form={form}
+              mockClients={mockClients}
+              mockProjects={mockProjects}
+              handleFileUpload={handleFileUpload}
+            />
 
-              <div className="flex justify-end space-x-2">
-                <Button variant="outline" onClick={() => onOpenChange(false)}>
-                  Annuler
-                </Button>
-                <Button type="submit">
-                  {paymentToEdit ? "Modifier" : "Créer"}
-                </Button>
-              </div>
-            </form>
-          </Form>
-        </DialogContent>
-      </Dialog>
-
-      <PaymentState payments={mockPayments} />
-    </>
+            <div className="flex justify-end space-x-2">
+              <Button variant="outline" onClick={() => onOpenChange(false)}>
+                Annuler
+              </Button>
+              <Button type="submit">
+                {paymentToEdit ? "Modifier" : "Créer"}
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
   );
 }
