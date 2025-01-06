@@ -53,6 +53,11 @@ export function PaymentWidget() {
     setShowDocumentPreview(true);
   };
 
+  const handleNewPayment = () => {
+    console.log("Opening payment form");
+    setShowPaymentForm(true);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -70,8 +75,9 @@ export function PaymentWidget() {
             </CardTitle>
             <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
               <Button 
-                onClick={() => setShowPaymentForm(true)}
-                className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white"
+                type="button"
+                onClick={handleNewPayment}
+                className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white cursor-pointer"
               >
                 Nouveau Paiement
               </Button>
