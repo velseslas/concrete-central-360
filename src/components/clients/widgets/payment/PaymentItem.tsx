@@ -39,15 +39,16 @@ export function PaymentItem({ client, onViewDetails }: PaymentItemProps) {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-white hover:bg-white/20 relative ml-[-16px]"
+                  variant="outline"
+                  size="sm"
+                  className="bg-purple-500/10 hover:bg-purple-500/20 border-purple-500/20 text-purple-400 hover:text-purple-300"
                   onClick={(e) => {
                     e.stopPropagation();
                     console.log("Edit button clicked");
                   }}
                 >
-                  <Edit2 className="h-4 w-4 text-white" />
+                  <Edit2 className="h-4 w-4 mr-2" />
+                  Modifier
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
