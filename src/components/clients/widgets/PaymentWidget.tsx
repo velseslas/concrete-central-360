@@ -5,11 +5,7 @@ import { motion } from "framer-motion";
 import { PaymentForm } from "../PaymentForm";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { PaymentPreview } from "./PaymentPreview";
-import { PaymentList } from "./payment/PaymentList";
-import { PaymentFilters } from "./payment/PaymentFilters";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { PaymentHeader } from "./payment/PaymentHeader";
-import { PaymentItem } from "./payment/PaymentItem";
+import { PaymentState } from "../payment-form/PaymentState";
 import { Button } from "@/components/ui/button";
 
 const mockClients = [
@@ -83,6 +79,37 @@ export function PaymentWidget() {
   const [showDocumentPreview, setShowDocumentPreview] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState<string | null>(null);
 
+  // Exemple de données de paiement pour l'état
+  const mockPayments = [
+    {
+      id: 1,
+      date: "2024-03-20",
+      reference: "PAY001",
+      amount: 150000,
+      method: "especes",
+      clientName: "Client A",
+      projectName: "Projet 1"
+    },
+    {
+      id: 2,
+      date: "2024-03-21",
+      reference: "PAY002",
+      amount: 200000,
+      method: "cheque",
+      clientName: "Client B",
+      projectName: "Projet 2"
+    },
+    {
+      id: 3,
+      date: "2024-03-22",
+      reference: "PAY003",
+      amount: 300000,
+      method: "virement",
+      clientName: "Client A",
+      projectName: "Projet 3"
+    }
+  ];
+
   const handleViewDetails = (client: any) => {
     setSelectedClient(client);
     setShowPaymentDetails(true);
@@ -103,7 +130,7 @@ export function PaymentWidget() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="group"
+      className="group space-y-6"
     >
       <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl group-hover:shadow-2xl transition-all duration-300">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
@@ -127,15 +154,38 @@ export function PaymentWidget() {
         <CardContent>
           <div className="space-y-4">
             {mockClients.map((client) => (
-              <PaymentItem
+              <div
                 key={client.id}
-                client={client}
-                onViewDetails={handleViewDetails}
-              />
+                className="p-4 rounded-lg bg-gray-800/50 hover:bg-gray-800/70 transition-colors"
+              >
+                <div className="flex justify-between items-center">
+                  <div>
+                    <h3 className="text-lg font-semibold text-white">{client.name}</h3>
+                    <p className="text-sm text-gray-400">
+                      Dernier paiement: {client.lastPayment}
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-lg font-bold text-blue-400">
+                      {client.totalPaid.toLocaleString()} DA
+                    </p>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleViewDetails(client)}
+                      className="text-gray-400 hover:text-white"
+                    >
+                      Voir détails
+                    </Button>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         </CardContent>
       </Card>
+
+      <PaymentState payments={mockPayments} />
 
       <Dialog open={showPaymentDetails} onOpenChange={setShowPaymentDetails}>
         <DialogContent className="bg-gray-900 text-white border-gray-800">
