@@ -11,6 +11,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { FileText } from "lucide-react";
 import { PaymentHeader } from "./payment/PaymentHeader";
 import { PaymentItem } from "./payment/PaymentItem";
+import { Button } from "@/components/ui/button";
 
 const mockClients = [
   {
