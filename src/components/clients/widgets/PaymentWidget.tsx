@@ -75,9 +75,9 @@ export function PaymentWidget() {
             </CardTitle>
             <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
               <Button 
-                type="button"
                 onClick={handleNewPayment}
-                className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white cursor-pointer"
+                variant="default"
+                className="relative z-10 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white"
               >
                 Nouveau Paiement
               </Button>
