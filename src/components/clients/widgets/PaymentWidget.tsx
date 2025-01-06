@@ -111,6 +111,7 @@ export function PaymentWidget() {
   ];
 
   const handleViewDetails = (client: any) => {
+    console.log("Opening details for client:", client);
     setSelectedClient(client);
     setShowPaymentDetails(true);
   };
