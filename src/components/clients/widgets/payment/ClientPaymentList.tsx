@@ -28,14 +28,14 @@ export function ClientPaymentList({ clients, onViewDetails }: ClientPaymentListP
         <div
           key={client.id}
           onClick={() => {
-            console.log("Client clicked:", client);
+            console.log("Client clicked, opening details for:", client.name);
             onViewDetails(client);
           }}
-          className="p-4 rounded-lg bg-gray-800/50 hover:bg-gray-800/70 transition-colors cursor-pointer"
+          className="p-4 rounded-lg bg-gray-800/50 hover:bg-gray-800/70 transition-colors cursor-pointer group"
         >
           <div className="flex justify-between items-center">
             <div>
-              <h3 className="text-lg font-semibold text-white">{client.name}</h3>
+              <h3 className="text-lg font-semibold text-white group-hover:text-blue-400 transition-colors">{client.name}</h3>
               <p className="text-sm text-gray-400">
                 Dernier paiement: {client.lastPayment}
               </p>
