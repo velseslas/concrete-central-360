@@ -9,18 +9,36 @@ import {
 } from "@/components/ui/tooltip";
 import { PaymentForm } from "../../PaymentForm";
 import { useState } from "react";
+import { PaymentFormValues } from "../../payment-form/types";
 
 interface PaymentItemProps {
   client: {
     id: string;
     name: string;
     lastPayment: string;
+    payments: Array<{
+      id: number;
+      amount: number;
+      date: string;
+      reference: string;
+    }>;
   };
   onViewDetails: (client: any) => void;
 }
 
 export function PaymentItem({ client, onViewDetails }: PaymentItemProps) {
   const [showPaymentForm, setShowPaymentForm] = useState(false);
+
+  // Créer l'objet paymentToEdit avec les données du dernier paiement
+  const lastPayment = client.payments[0];
+  const paymentToEdit: PaymentFormValues = {
+    clientId: client.id,
+    projectId: "", // Nous n'avons pas cette information dans les données actuelles
+    amount: lastPayment.amount.toString(),
+    paymentMethod: "", // Nous n'avons pas cette information dans les données actuelles
+    paymentDate: lastPayment.date,
+    reference: lastPayment.reference,
+  };
 
   return (
     <>
@@ -70,6 +88,7 @@ export function PaymentItem({ client, onViewDetails }: PaymentItemProps) {
         open={showPaymentForm} 
         onOpenChange={setShowPaymentForm}
         clientId={parseInt(client.id)}
+        paymentToEdit={paymentToEdit}
       />
     </>
   );
