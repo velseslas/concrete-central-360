@@ -23,7 +23,7 @@ export function PaymentForm({ open, onOpenChange, clientId, paymentToEdit }: Pay
     defaultValues: {
       clientId: paymentToEdit?.clientId || clientId.toString(),
       projectId: paymentToEdit?.projectId || "",
-      amount: paymentToEdit?.amount || "",
+      amount: paymentToEdit?.amount ? Number(paymentToEdit.amount).toLocaleString() : "",
       paymentMethod: paymentToEdit?.paymentMethod || "",
       paymentDate: paymentToEdit?.paymentDate || "",
       reference: paymentToEdit?.reference || "",
@@ -39,7 +39,12 @@ export function PaymentForm({ open, onOpenChange, clientId, paymentToEdit }: Pay
   };
 
   const onSubmit = (data: PaymentFormValues) => {
-    console.log("Payment data:", data);
+    // Convertir le montant formaté en nombre avant l'envoi
+    const formattedData = {
+      ...data,
+      amount: data.amount ? parseFloat(data.amount.replace(/\s/g, '').replace(/,/g, '')) : 0,
+    };
+    console.log("Payment data:", formattedData);
     toast.success(paymentToEdit ? "Paiement modifié" : "Paiement enregistré");
     onOpenChange(false);
   };

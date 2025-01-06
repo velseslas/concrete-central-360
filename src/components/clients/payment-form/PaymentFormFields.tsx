@@ -23,6 +23,16 @@ export function PaymentFormFields({ form, mockClients, mockProjects, handleFileU
     project => project.clientId === selectedClientId
   );
 
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/[^\d]/g, '');
+    if (value) {
+      const formattedValue = Number(value).toLocaleString();
+      form.setValue('amount', formattedValue);
+    } else {
+      form.setValue('amount', '');
+    }
+  };
+
   const handleGenerateReceipt = () => {
     console.log("Generating receipt for payment:", form.getValues());
     setShowReceipt(true);
@@ -93,7 +103,11 @@ export function PaymentFormFields({ form, mockClients, mockProjects, handleFileU
             <FormItem>
               <FormLabel>Montant</FormLabel>
               <FormControl>
-                <Input type="number" {...field} />
+                <Input 
+                  {...field}
+                  onChange={handleAmountChange}
+                  placeholder="0"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
