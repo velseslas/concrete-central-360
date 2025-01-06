@@ -162,25 +162,31 @@ export function PaymentWidget() {
 
       <PaymentState payments={mockPayments} />
 
-      <PaymentDetails
-        open={showPaymentDetails}
-        onOpenChange={setShowPaymentDetails}
-        selectedClient={selectedClient}
-        onDocumentClick={handleDocumentClick}
-      />
+      {showPaymentDetails && (
+        <PaymentDetails
+          open={showPaymentDetails}
+          onOpenChange={setShowPaymentDetails}
+          selectedClient={selectedClient}
+          onDocumentClick={handleDocumentClick}
+        />
+      )}
 
-      <PaymentPreview
-        open={showDocumentPreview}
-        onOpenChange={setShowDocumentPreview}
-        selectedDocument={selectedDocument}
-        selectedClient={selectedClient}
-      />
+      {showDocumentPreview && (
+        <PaymentPreview
+          open={showDocumentPreview}
+          onOpenChange={setShowDocumentPreview}
+          selectedDocument={selectedDocument}
+          selectedClient={selectedClient}
+        />
+      )}
 
-      <PaymentForm 
-        open={showPaymentForm} 
-        onOpenChange={setShowPaymentForm}
-        clientId={1}
-      />
+      {showPaymentForm && (
+        <PaymentForm 
+          open={showPaymentForm} 
+          onOpenChange={setShowPaymentForm}
+          clientId={1}
+        />
+      )}
     </motion.div>
   );
 }
