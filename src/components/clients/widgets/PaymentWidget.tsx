@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { CreditCard, Plus, Search, Edit2 } from "lucide-react";
+import { CreditCard } from "lucide-react";
 import { motion } from "framer-motion";
 import { PaymentForm } from "../PaymentForm";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -10,13 +9,8 @@ import { PaymentList } from "./payment/PaymentList";
 import { PaymentFilters } from "./payment/PaymentFilters";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { FileText } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { PaymentHeader } from "./payment/PaymentHeader";
+import { PaymentItem } from "./payment/PaymentItem";
 
 const mockClients = [
   {
@@ -64,15 +58,6 @@ export function PaymentWidget() {
     setShowDocumentPreview(true);
   };
 
-  const handleGenerateReport = () => {
-    console.log("Filtering payments with:", {
-      client: filteredClient,
-      startDate,
-      endDate,
-      paymentMethod
-    });
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -88,68 +73,21 @@ export function PaymentWidget() {
               <CreditCard className="h-6 w-6 text-blue-400" />
               Liste des Paiements
             </CardTitle>
-            <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
-              <div className="relative flex-grow md:w-64">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                <Input 
-                  placeholder="Rechercher un paiement..." 
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-9 bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-400"
-                />
-              </div>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={() => setShowPaymentForm(true)}
-                className="text-white border-gray-700 hover:bg-gray-700/50"
-              >
-                <Plus className="h-4 w-4 mr-2" />
-                Nouveau Paiement
-              </Button>
-            </div>
+            <PaymentHeader 
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              onNewPayment={() => setShowPaymentForm(true)}
+            />
           </div>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             {mockClients.map((client) => (
-              <motion.div
+              <PaymentItem
                 key={client.id}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/50 transition-all duration-300 cursor-pointer"
-                onClick={() => handleViewDetails(client)}
-              >
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                  <div>
-                    <h3 className="text-white font-medium flex items-center gap-2">
-                      <FileText className="h-4 w-4 text-blue-400" />
-                      {client.name}
-                    </h3>
-                    <p className="text-gray-400 text-sm">
-                      Dernier paiement: {client.lastPayment}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="text-white hover:bg-white/20"
-                          >
-                            <Edit2 className="h-4 w-4" />
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>Modifier les paiements</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </div>
-                </div>
-              </motion.div>
+                client={client}
+                onViewDetails={handleViewDetails}
+              />
             ))}
           </div>
         </CardContent>
@@ -210,7 +148,6 @@ export function PaymentWidget() {
         onOpenChange={setShowPaymentForm}
         clientId={1}
       />
-
     </motion.div>
   );
 }
