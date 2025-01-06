@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { FileText, Edit2 } from "lucide-react";
+import { Edit2 } from "lucide-react";
 import { motion } from "framer-motion";
 import {
   Tooltip,
@@ -28,21 +28,24 @@ export function PaymentItem({ client, onViewDetails }: PaymentItemProps) {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h3 className="text-white font-medium flex items-center gap-2">
-            <FileText className="h-4 w-4 text-blue-400" />
             {client.name}
           </h3>
           <p className="text-gray-400 text-sm">
             Dernier paiement: {client.lastPayment}
           </p>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="text-white hover:bg-white/20"
+                  className="text-white hover:bg-white/20 relative ml-4"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    console.log("Edit button clicked");
+                  }}
                 >
                   <Edit2 className="h-4 w-4" />
                 </Button>
