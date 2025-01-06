@@ -19,9 +19,33 @@ const mockClients = [
     totalPaid: 15000,
     lastPayment: "2024-03-20",
     payments: [
-      { id: 1, amount: 5000, date: "2024-03-20", reference: "PAY001", document: "Facture_PAY001.pdf" },
-      { id: 2, amount: 5000, date: "2024-03-15", reference: "PAY002", document: "Facture_PAY002.pdf" },
-      { id: 3, amount: 5000, date: "2024-03-10", reference: "PAY003", document: "Facture_PAY003.pdf" },
+      { 
+        id: 1, 
+        amount: 5000, 
+        date: "2024-03-20", 
+        reference: "PAY001", 
+        document: "Facture_PAY001.pdf",
+        paymentMethod: "virement",
+        projectId: "PRJ001"
+      },
+      { 
+        id: 2, 
+        amount: 5000, 
+        date: "2024-03-15", 
+        reference: "PAY002", 
+        document: "Facture_PAY002.pdf",
+        paymentMethod: "cheque",
+        projectId: "PRJ002"
+      },
+      { 
+        id: 3, 
+        amount: 5000, 
+        date: "2024-03-10", 
+        reference: "PAY003", 
+        document: "Facture_PAY003.pdf",
+        paymentMethod: "especes",
+        projectId: "PRJ001"
+      },
     ]
   },
   {
@@ -30,8 +54,24 @@ const mockClients = [
     totalPaid: 25000,
     lastPayment: "2024-03-19",
     payments: [
-      { id: 4, amount: 10000, date: "2024-03-19", reference: "PAY004", document: "Facture_PAY004.pdf" },
-      { id: 5, amount: 15000, date: "2024-03-14", reference: "PAY005", document: "Facture_PAY005.pdf" },
+      { 
+        id: 4, 
+        amount: 10000, 
+        date: "2024-03-19", 
+        reference: "PAY004", 
+        document: "Facture_PAY004.pdf",
+        paymentMethod: "virement",
+        projectId: "PRJ003"
+      },
+      { 
+        id: 5, 
+        amount: 15000, 
+        date: "2024-03-14", 
+        reference: "PAY005", 
+        document: "Facture_PAY005.pdf",
+        paymentMethod: "cheque",
+        projectId: "PRJ003"
+      },
     ]
   }
 ];

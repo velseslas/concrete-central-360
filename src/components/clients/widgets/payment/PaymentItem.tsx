@@ -21,6 +21,8 @@ interface PaymentItemProps {
       amount: number;
       date: string;
       reference: string;
+      paymentMethod: string;
+      projectId: string;
     }>;
   };
   onViewDetails: (client: any) => void;
@@ -33,9 +35,9 @@ export function PaymentItem({ client, onViewDetails }: PaymentItemProps) {
   const lastPayment = client.payments[0];
   const paymentToEdit: PaymentFormValues = {
     clientId: client.id,
-    projectId: "", // Nous n'avons pas cette information dans les données actuelles
+    projectId: lastPayment.projectId,
     amount: lastPayment.amount.toString(),
-    paymentMethod: "", // Nous n'avons pas cette information dans les données actuelles
+    paymentMethod: lastPayment.paymentMethod,
     paymentDate: lastPayment.date,
     reference: lastPayment.reference,
   };
@@ -68,6 +70,7 @@ export function PaymentItem({ client, onViewDetails }: PaymentItemProps) {
                     onClick={(e) => {
                       e.stopPropagation();
                       console.log("Opening payment form for client:", client.name);
+                      console.log("Payment data to edit:", paymentToEdit);
                       setShowPaymentForm(true);
                     }}
                   >
