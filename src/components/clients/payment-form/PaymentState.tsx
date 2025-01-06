@@ -25,8 +25,8 @@ export function PaymentState({ payments }: PaymentStateProps) {
   const [endDate, setEndDate] = useState<string>("");
   const [showPreview, setShowPreview] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
-  const [selectedClient, setSelectedClient] = useState<string>("");
-  const [selectedMethod, setSelectedMethod] = useState<string>("");
+  const [selectedClient, setSelectedClient] = useState<string>("all");
+  const [selectedMethod, setSelectedMethod] = useState<string>("all");
 
   const handleGenerateReport = () => {
     console.log("Generating payment state with filters:", {
@@ -42,8 +42,8 @@ export function PaymentState({ payments }: PaymentStateProps) {
   const filteredPayments = payments.filter(payment => {
     const dateInRange = (!startDate || payment.date >= startDate) && 
                        (!endDate || payment.date <= endDate);
-    const clientMatch = !selectedClient || payment.clientName === selectedClient;
-    const methodMatch = !selectedMethod || payment.method === selectedMethod;
+    const clientMatch = selectedClient === "all" || payment.clientName === selectedClient;
+    const methodMatch = selectedMethod === "all" || payment.method === selectedMethod;
     return dateInRange && clientMatch && methodMatch;
   });
 
@@ -96,7 +96,7 @@ export function PaymentState({ payments }: PaymentStateProps) {
                 <SelectValue placeholder="Sélectionner un client" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Tous les clients</SelectItem>
+                <SelectItem value="all">Tous les clients</SelectItem>
                 <SelectItem value="Client A">Client A</SelectItem>
                 <SelectItem value="Client B">Client B</SelectItem>
               </SelectContent>
@@ -107,7 +107,7 @@ export function PaymentState({ payments }: PaymentStateProps) {
                 <SelectValue placeholder="Mode de paiement" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Tous les modes</SelectItem>
+                <SelectItem value="all">Tous les modes</SelectItem>
                 <SelectItem value="especes">Espèces</SelectItem>
                 <SelectItem value="cheque">Chèque</SelectItem>
                 <SelectItem value="virement">Virement</SelectItem>
