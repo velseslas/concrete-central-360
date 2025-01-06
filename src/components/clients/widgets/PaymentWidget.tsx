@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CreditCard, Plus, Search } from "lucide-react";
+import { CreditCard, Plus, Search, Edit2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { PaymentForm } from "../PaymentForm";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -11,6 +11,12 @@ import { PaymentFilters } from "./payment/PaymentFilters";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { FileText } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const mockClients = [
   {
@@ -125,9 +131,22 @@ export function PaymentWidget() {
                     </p>
                   </div>
                   <div className="flex items-center gap-4">
-                    <span className="text-white font-medium">
-                      {client.totalPaid.toLocaleString()} DA
-                    </span>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="text-white hover:bg-white/20"
+                          >
+                            <Edit2 className="h-4 w-4" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Modifier les paiements</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   </div>
                 </div>
               </motion.div>
@@ -191,6 +210,7 @@ export function PaymentWidget() {
         onOpenChange={setShowPaymentForm}
         clientId={1}
       />
+
     </motion.div>
   );
 }
