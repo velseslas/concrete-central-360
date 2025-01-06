@@ -20,13 +20,13 @@ export function PaymentForm({ open, onOpenChange, clientId, paymentToEdit }: Pay
 
   const form = useForm<PaymentFormValues>({
     resolver: zodResolver(paymentSchema),
-    defaultValues: paymentToEdit || {
-      clientId: clientId.toString(),
-      projectId: "",
-      amount: "",
-      paymentMethod: "",
-      paymentDate: "",
-      reference: "",
+    defaultValues: {
+      clientId: paymentToEdit?.clientId || clientId.toString(),
+      projectId: paymentToEdit?.projectId || "",
+      amount: paymentToEdit?.amount || "",
+      paymentMethod: paymentToEdit?.paymentMethod || "",
+      paymentDate: paymentToEdit?.paymentDate || "",
+      reference: paymentToEdit?.reference || "",
     },
   });
 
