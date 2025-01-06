@@ -27,11 +27,11 @@ export function ClientPaymentList({ clients, onViewDetails }: ClientPaymentListP
       {clients.map((client) => (
         <div
           key={client.id}
-          className="p-4 rounded-lg bg-gray-800/50 hover:bg-gray-800/70 transition-colors cursor-pointer"
           onClick={() => {
-            console.log("Clicking on client:", client.name);
+            console.log("Client clicked:", client);
             onViewDetails(client);
           }}
+          className="p-4 rounded-lg bg-gray-800/50 hover:bg-gray-800/70 transition-colors cursor-pointer"
         >
           <div className="flex justify-between items-center">
             <div>
