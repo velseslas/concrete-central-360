@@ -1,10 +1,10 @@
 export const mockClients = [
-  { id: "1", name: "Client A" },
-  { id: "2", name: "Client B" },
+  { id: "1", name: "Entreprise ABC" },
+  { id: "2", name: "SARL XYZ" },
 ];
 
 export const mockProjects = [
-  { id: "1", name: "Chantier 1", clientId: "1" },
-  { id: "2", name: "Chantier 2", clientId: "1" },
-  { id: "3", name: "Chantier 3", clientId: "2" },
+  { id: "PRJ001", name: "Chantier 1", clientId: "1" },
+  { id: "PRJ002", name: "Chantier 2", clientId: "1" },
+  { id: "PRJ003", name: "Chantier 3", clientId: "2" },
 ];

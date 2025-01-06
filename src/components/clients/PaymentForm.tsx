@@ -16,6 +16,8 @@ interface PaymentFormProps {
 }
 
 export function PaymentForm({ open, onOpenChange, clientId, paymentToEdit }: PaymentFormProps) {
+  console.log("Opening form with payment data:", paymentToEdit);
+
   const form = useForm<PaymentFormValues>({
     resolver: zodResolver(paymentSchema),
     defaultValues: paymentToEdit || {
