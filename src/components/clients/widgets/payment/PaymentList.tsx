@@ -1,6 +1,12 @@
 import { motion } from "framer-motion";
-import { CreditCard, ChevronRight, FileText } from "lucide-react";
+import { Edit2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface PaymentListProps {
   clients: Array<{
@@ -37,18 +43,23 @@ export function PaymentList({ clients, onViewDetails }: PaymentListProps) {
               </p>
             </div>
             <div className="flex items-center gap-4">
-              <span className="text-white font-semibold">
-                Total: {client.totalPaid.toLocaleString()} DA
-              </span>
-              <Button 
-                variant="secondary"
-                size="sm"
-                className="bg-white/20 hover:bg-white/30 text-white"
-                onClick={() => onViewDetails(client)}
-              >
-                Détails
-                <ChevronRight className="h-4 w-4 ml-2" />
-              </Button>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button 
+                      variant="ghost" 
+                      size="icon"
+                      className="text-white hover:bg-white/20"
+                      onClick={() => onViewDetails(client)}
+                    >
+                      <Edit2 className="h-4 w-4" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Modifier les paiements</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </div>
           </div>
         </motion.div>
