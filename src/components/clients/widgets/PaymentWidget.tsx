@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CreditCard, FileText } from "lucide-react";
+import { DollarSign } from "lucide-react";
 import { motion } from "framer-motion";
 import { PaymentForm } from "../PaymentForm";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -69,8 +69,8 @@ export function PaymentWidget() {
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
         <CardHeader>
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <CardTitle className="text-white flex items-center gap-2">
-              <CreditCard className="h-6 w-6 text-blue-400" />
+            <CardTitle className="text-white flex items-center gap-4">
+              <DollarSign className="h-6 w-6 text-blue-400 ml-2" />
               Liste des Paiements
             </CardTitle>
             <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
