@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { PaymentFormFields } from "./payment-form/PaymentFormFields";
 import { PaymentFormValues, paymentSchema } from "./payment-form/types";
 import { mockClients, mockProjects } from "./payment-form/mockData";
+import { PaymentState } from "./payment-form/PaymentState";
 
 interface PaymentFormProps {
   open: boolean;
