@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Edit2 } from "lucide-react";
+import { FileEdit } from "lucide-react";
 import { motion } from "framer-motion";
 import {
   Tooltip,
@@ -47,7 +47,7 @@ export function PaymentItem({ client, onViewDetails }: PaymentItemProps) {
                     console.log("Edit button clicked");
                   }}
                 >
-                  <Edit2 className="h-4 w-4 mr-2" />
+                  <FileEdit className="h-4 w-4 mr-2" />
                   Modifier
                 </Button>
               </TooltipTrigger>
