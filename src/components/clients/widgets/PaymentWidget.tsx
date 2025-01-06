@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CreditCard } from "lucide-react";
+import { CreditCard, FileText } from "lucide-react";
 import { motion } from "framer-motion";
 import { PaymentForm } from "../PaymentForm";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -8,7 +8,6 @@ import { PaymentPreview } from "./PaymentPreview";
 import { PaymentList } from "./payment/PaymentList";
 import { PaymentFilters } from "./payment/PaymentFilters";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { FileText } from "lucide-react";
 import { PaymentHeader } from "./payment/PaymentHeader";
 import { PaymentItem } from "./payment/PaymentItem";
 import { Button } from "@/components/ui/button";
