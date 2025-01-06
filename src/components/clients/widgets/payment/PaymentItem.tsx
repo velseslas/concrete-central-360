@@ -41,7 +41,7 @@ export function PaymentItem({ client, onViewDetails }: PaymentItemProps) {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="text-white hover:bg-white/20 relative ml-4"
+                  className="text-white hover:bg-white/20 relative mr-2"
                   onClick={(e) => {
                     e.stopPropagation();
                     console.log("Edit button clicked");
