@@ -73,11 +73,14 @@ export function PaymentWidget() {
               <CreditCard className="h-6 w-6 text-blue-400" />
               Liste des Paiements
             </CardTitle>
-            <PaymentHeader 
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
-              onNewPayment={() => setShowPaymentForm(true)}
-            />
+            <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
+              <Button 
+                onClick={() => setShowPaymentForm(true)}
+                className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white"
+              >
+                Nouveau Paiement
+              </Button>
+            </div>
           </div>
         </CardHeader>
         <CardContent>
