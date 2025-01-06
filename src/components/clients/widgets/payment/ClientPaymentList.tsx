@@ -29,8 +29,10 @@ export function ClientPaymentList({ clients, onViewDetails }: ClientPaymentListP
   const [showDetails, setShowDetails] = useState(false);
 
   const handleViewDetails = (client: ClientPayment) => {
+    console.log("Viewing details for client:", client);
     setSelectedClient(client);
     setShowDetails(true);
+    onViewDetails(client);
   };
 
   return (
