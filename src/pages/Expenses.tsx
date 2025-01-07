@@ -2,11 +2,13 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { DollarSign, Car, Building2, Globe, ListFilter } from "lucide-react";
+import { DollarSign, Car, Building2, Globe, ListFilter, Plus } from "lucide-react";
 import ExpenseForm from "@/components/expenses/ExpenseForm";
 import ExpenseList from "@/components/expenses/ExpenseList";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
 import { ExpenseCategoryWidget } from "@/components/expenses/widgets/ExpenseCategoryWidget";
+import { RollingStockExpenseWidget } from "@/components/expenses/widgets/RollingStockExpenseWidget";
+import { ConcreteExpenseWidget } from "@/components/expenses/widgets/ConcreteExpenseWidget";
 
 const Expenses = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,10 +28,10 @@ const Expenses = () => {
   const widgets = [
     {
       id: 'global',
-      title: 'Globale',
+      title: 'Vue Globale',
       icon: Globe,
       color: 'text-purple-500',
-      description: 'Vue globale des dépenses'
+      description: 'Aperçu global des dépenses'
     },
     {
       id: 'categories',
@@ -39,27 +41,42 @@ const Expenses = () => {
       description: 'Gestion des catégories de dépenses'
     },
     {
-      id: 'general',
-      title: 'Dépenses Générales',
-      icon: DollarSign,
-      color: 'text-blue-500',
-      description: 'Gérer les dépenses générales de l\'entreprise'
-    },
-    {
       id: 'mechanical',
-      title: 'Dépenses Parc Mécanique',
+      title: 'Parc Roulant',
       icon: Car,
-      color: 'text-green-500',
-      description: 'Gérer les dépenses liées au parc mécanique'
+      color: 'text-blue-500',
+      description: 'Dépenses liées au parc roulant'
     },
     {
       id: 'concrete',
-      title: 'Dépenses Centrale à Béton',
+      title: 'Centrale à Béton',
       icon: Building2,
       color: 'text-orange-500',
-      description: 'Gérer les dépenses de la centrale à béton'
+      description: 'Dépenses de la centrale à béton'
     }
   ];
+
+  const renderWidget = (widgetId: string) => {
+    switch (widgetId) {
+      case 'categories':
+        return <ExpenseCategoryWidget />;
+      case 'mechanical':
+        return <RollingStockExpenseWidget />;
+      case 'concrete':
+        return <ConcreteExpenseWidget />;
+      default:
+        return (
+          <Card className="backdrop-blur-lg bg-white/10 border-white/20">
+            <CardHeader>
+              <CardTitle className="text-white">Liste des dépenses</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ExpenseList onEdit={handleEdit} category="general" />
+            </CardContent>
+          </Card>
+        );
+    }
+  };
 
   const renderContent = () => {
     if (activeWidget) {
@@ -77,58 +94,41 @@ const Expenses = () => {
             </button>
             <h2 className="text-2xl font-bold text-white">{widget.title}</h2>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2">
-              <Card className="backdrop-blur-lg bg-white/10 border-white/20">
-                <CardHeader>
-                  <CardTitle className="text-white">{widget.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ExpenseList onEdit={handleEdit} category={widget.id} />
-                </CardContent>
-              </Card>
-            </div>
-            <div>
-              <ExpenseCategoryWidget />
-            </div>
+          <div className="grid grid-cols-1 gap-6">
+            {renderWidget(activeWidget)}
           </div>
         </div>
       );
     }
 
     return (
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {widgets.map((widget) => {
-            const IconComponent = widget.icon;
-            return (
-              <motion.div
-                key={widget.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {widgets.map((widget) => {
+          const IconComponent = widget.icon;
+          return (
+            <motion.div
+              key={widget.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Card
+                className="cursor-pointer backdrop-blur-lg bg-white/10 border-white/20 hover:bg-white/20 transition-all duration-300"
+                onClick={() => setActiveWidget(widget.id)}
               >
-                <Card
-                  className="cursor-pointer backdrop-blur-lg bg-white/10 border-white/20 hover:bg-white/20 transition-all duration-300"
-                  onClick={() => setActiveWidget(widget.id)}
-                >
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-white">
-                      <IconComponent className={`h-6 w-6 ${widget.color}`} />
-                      {widget.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-white/70">{widget.description}</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            );
-          })}
-        </div>
-        <div className="lg:col-span-1">
-          <ExpenseCategoryWidget />
-        </div>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-white">
+                    <IconComponent className={`h-6 w-6 ${widget.color}`} />
+                    {widget.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-white/70">{widget.description}</p>
+                </CardContent>
+              </Card>
+            </motion.div>
+          );
+        })}
       </div>
     );
   };
@@ -152,7 +152,7 @@ const Expenses = () => {
               className="bg-white/10 backdrop-blur-lg border border-white/20 hover:bg-white/20 hover:border-white/30 transition-all duration-300 text-white"
               onClick={() => setIsOpen(true)}
             >
-              <DollarSign className="mr-2 h-4 w-4" />
+              <Plus className="mr-2 h-4 w-4" />
               Ajouter une dépense
             </Button>
           )}
