@@ -82,7 +82,7 @@ export function PaymentState({ payments }: PaymentStateProps) {
                 variant="outline" 
                 onClick={() => setShowDetails(true)}
                 size="sm"
-                className="hover:bg-gray-700 hover:text-white transition-colors"
+                className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 transition-colors"
               >
                 Voir les détails
               </Button>
