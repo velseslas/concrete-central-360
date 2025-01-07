@@ -93,13 +93,10 @@ export function BillingListWidget() {
               Gestion des Factures
             </CardTitle>
             <Button 
-              onClick={() => {
-                console.log("Clic sur le bouton Nouvelle Facture");
-                handleCreateInvoice();
-              }}
+              onClick={handleCreateInvoice}
               variant="outline" 
               size="lg"
-              className="text-white bg-gray-800/50 border-gray-700/50 hover:bg-gray-700/50 px-6"
+              className="text-white bg-gray-800/50 border-gray-700/50 hover:bg-gray-700/50 px-6 cursor-pointer"
             >
               <Plus className="h-5 w-5 mr-2" />
               Nouvelle Facture
@@ -150,12 +147,10 @@ export function BillingListWidget() {
         onStatusChange={handleStatusChange}
       />
 
-      {showCreateDialog && (
-        <CreateInvoiceDialog
-          open={showCreateDialog}
-          onOpenChange={setShowCreateDialog}
-        />
-      )}
+      <CreateInvoiceDialog
+        open={showCreateDialog}
+        onOpenChange={setShowCreateDialog}
+      />
     </motion.div>
   );
 }
