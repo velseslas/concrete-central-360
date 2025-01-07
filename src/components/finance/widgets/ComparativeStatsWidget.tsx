@@ -59,14 +59,19 @@ export function ComparativeStatsWidget() {
                   labelStyle={{
                     color: '#E5E7EB'
                   }}
-                  itemStyle={{
-                    color: '#E5E7EB'
+                  formatter={(value: number, name: string) => {
+                    const color = name === 'Mois Actuel' ? '#0EA5E9' : '#F97316';
+                    return [
+                      <span style={{ color }}>
+                        {value.toLocaleString()} DA
+                      </span>,
+                      ''
+                    ];
                   }}
-                  formatter={(value: number) => [`${value.toLocaleString()} DA`, '']}
                 />
                 <Legend />
-                <Bar dataKey="Mois Actuel" fill="#0EA5E9" /> {/* Ocean Blue */}
-                <Bar dataKey="Mois Précédent" fill="#F97316" /> {/* Bright Orange */}
+                <Bar dataKey="Mois Actuel" fill="#0EA5E9" />
+                <Bar dataKey="Mois Précédent" fill="#F97316" />
               </BarChart>
             </ResponsiveContainer>
           </div>
