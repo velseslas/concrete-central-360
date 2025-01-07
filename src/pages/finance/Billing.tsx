@@ -3,6 +3,7 @@ import { BillingListWidget } from "@/components/finance/widgets/BillingListWidge
 import { BillingReportsWidget } from "@/components/finance/widgets/BillingReportsWidget";
 import { BillingStatsWidget } from "@/components/finance/widgets/BillingStatsWidget";
 import { BillingPaymentsWidget } from "@/components/finance/widgets/BillingPaymentsWidget";
+import { InvoiceWidget } from "@/components/finance/widgets/InvoiceWidget";
 
 export default function Billing() {
   return (
@@ -19,12 +20,21 @@ export default function Billing() {
           <BillingStatsWidget />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Liste des factures */}
+        <div className="grid grid-cols-1 gap-6">
+          {/* Widget de Facturation Principal */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
+          >
+            <InvoiceWidget />
+          </motion.div>
+
+          {/* Liste des factures */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
           >
             <BillingListWidget />
           </motion.div>
