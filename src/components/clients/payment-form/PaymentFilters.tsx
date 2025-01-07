@@ -102,25 +102,29 @@ export function PaymentFilters({
           <Label htmlFor="payment-method" className="text-sm font-medium text-gray-200">
             Mode de paiement
           </Label>
-          <div className="flex items-center gap-4">
-            <Select value={selectedMethod} onValueChange={setSelectedMethod}>
-              <SelectTrigger id="payment-method" className="bg-gray-800 border-gray-700">
-                <SelectValue placeholder="Mode de paiement" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Tous les modes</SelectItem>
-                <SelectItem value="especes">Espèces</SelectItem>
-                <SelectItem value="cheque">Chèque</SelectItem>
-                <SelectItem value="virement">Virement</SelectItem>
-              </SelectContent>
-            </Select>
-            <Button 
-              onClick={onGenerateReport} 
-              className="bg-blue-500 hover:bg-blue-600 whitespace-nowrap"
-            >
-              Générer l'état
-            </Button>
-          </div>
+          <Select value={selectedMethod} onValueChange={setSelectedMethod}>
+            <SelectTrigger id="payment-method" className="bg-gray-800 border-gray-700">
+              <SelectValue placeholder="Mode de paiement" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Tous les modes</SelectItem>
+              <SelectItem value="especes">Espèces</SelectItem>
+              <SelectItem value="cheque">Chèque</SelectItem>
+              <SelectItem value="virement">Virement</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2">
+          <Label className="text-sm font-medium text-gray-200 invisible">
+            Action
+          </Label>
+          <Button 
+            onClick={onGenerateReport} 
+            className="bg-blue-500 hover:bg-blue-600 w-full"
+          >
+            Générer l'état
+          </Button>
         </div>
       </div>
     </div>
