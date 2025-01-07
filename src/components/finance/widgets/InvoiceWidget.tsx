@@ -22,6 +22,8 @@ export function InvoiceWidget() {
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
+  console.log("État du dialogue de création:", showCreateDialog);
+
   const mockInvoices: Invoice[] = [
     { id: "FA-2024-001", client: "EURL Construction Plus", amount: "150,000 DA", date: "2024-03-15", status: "unpaid" },
     { id: "FA-2024-002", client: "SPA Bâtiment Pro", amount: "280,000 DA", date: "2024-03-14", status: "paid" },
@@ -42,6 +44,11 @@ export function InvoiceWidget() {
 
   const handleDownloadInvoice = () => {
     toast.success("Téléchargement de la facture " + selectedInvoice?.id);
+  };
+
+  const handleCreateClick = () => {
+    console.log("Tentative d'ouverture du dialogue de création");
+    setShowCreateDialog(true);
   };
 
   const filteredInvoices = mockInvoices.filter(invoice => 
@@ -75,7 +82,7 @@ export function InvoiceWidget() {
                 />
               </div>
               <Button 
-                onClick={() => setShowCreateDialog(true)}
+                onClick={handleCreateClick}
                 className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-md flex items-center gap-2 transition-colors duration-200"
               >
                 <Plus className="h-4 w-4" />
