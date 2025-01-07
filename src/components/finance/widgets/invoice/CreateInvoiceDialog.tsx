@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { FileText } from "lucide-react";
-import { toast } from "sonner";
+import { useToast } from "@/hooks/use-toast";
 
 interface CreateInvoiceDialogProps {
   open: boolean;
@@ -18,10 +18,20 @@ export function CreateInvoiceDialog({ open, onOpenChange }: CreateInvoiceDialogP
     date: new Date().toISOString().split('T')[0],
   });
 
+  const { toast } = useToast();
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Nouvelle facture:", formData);
-    toast.success("Facture créée avec succès");
+    toast({
+      title: "Succès",
+      description: "Facture créée avec succès"
+    });
+    setFormData({
+      client: "",
+      amount: "",
+      date: new Date().toISOString().split('T')[0],
+    });
     onOpenChange(false);
   };
 
