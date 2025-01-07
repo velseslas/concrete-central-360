@@ -5,7 +5,6 @@ import { Calendar } from "lucide-react";
 import { PaymentStatePreview } from "./PaymentStatePreview";
 import { PaymentStateDetailsDialog } from "./PaymentStateDetailsDialog";
 import { PaymentFilters } from "./PaymentFilters";
-import { PaymentSummary } from "./PaymentSummary";
 
 interface PaymentStateProps {
   payments: Array<{
@@ -59,31 +58,42 @@ export function PaymentState({ payments }: PaymentStateProps) {
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
-          <PaymentFilters
-            periodType={periodType}
-            setPeriodType={setPeriodType}
-            startDate={startDate}
-            setStartDate={setStartDate}
-            endDate={endDate}
-            setEndDate={setEndDate}
-            selectedClient={selectedClient}
-            setSelectedClient={setSelectedClient}
-            selectedMethod={selectedMethod}
-            setSelectedMethod={setSelectedMethod}
-          />
+          <div className="space-y-6">
+            <PaymentFilters
+              periodType={periodType}
+              setPeriodType={setPeriodType}
+              startDate={startDate}
+              setStartDate={setStartDate}
+              endDate={endDate}
+              setEndDate={setEndDate}
+              selectedClient={selectedClient}
+              setSelectedClient={setSelectedClient}
+              selectedMethod={selectedMethod}
+              setSelectedMethod={setSelectedMethod}
+            />
 
-          <PaymentSummary 
-            totalAmount={totalAmount}
-            onShowDetails={() => setShowDetails(true)}
-          />
-
-          <div className="flex justify-end mt-6">
-            <Button 
-              onClick={handleGenerateReport} 
-              className="w-full md:w-auto bg-blue-500 hover:bg-blue-600"
-            >
-              Générer l'état
-            </Button>
+            <div className="flex items-center justify-between gap-4 px-4 py-3 bg-gray-800/50 rounded-lg border border-gray-700/50">
+              <div className="flex items-center gap-4">
+                <span className="text-sm text-gray-400">Total:</span>
+                <span className="text-lg font-semibold text-blue-400">
+                  {totalAmount.toLocaleString()} DA
+                </span>
+                <Button 
+                  variant="outline" 
+                  onClick={() => setShowDetails(true)}
+                  size="sm"
+                  className="hover:bg-gray-700 hover:text-white transition-colors"
+                >
+                  Voir les détails
+                </Button>
+              </div>
+              <Button 
+                onClick={handleGenerateReport} 
+                className="bg-blue-500 hover:bg-blue-600"
+              >
+                Générer l'état
+              </Button>
+            </div>
           </div>
         </div>
 
