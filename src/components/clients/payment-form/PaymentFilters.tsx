@@ -102,7 +102,7 @@ export function PaymentFilters({
           <Label htmlFor="payment-method" className="text-sm font-medium text-gray-200">
             Mode de paiement
           </Label>
-          <div className="flex gap-2">
+          <div className="flex justify-between gap-2">
             <Select value={selectedMethod} onValueChange={setSelectedMethod}>
               <SelectTrigger id="payment-method" className="bg-gray-800 border-gray-700 w-full">
                 <SelectValue placeholder="Mode de paiement" />
@@ -116,7 +116,7 @@ export function PaymentFilters({
             </Select>
             <Button 
               onClick={onGenerateReport} 
-              className="bg-blue-500 hover:bg-blue-600 whitespace-nowrap"
+              className="bg-blue-500 hover:bg-blue-600 whitespace-nowrap ml-auto"
             >
               Générer l'état
             </Button>
