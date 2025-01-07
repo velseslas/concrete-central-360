@@ -56,6 +56,12 @@ export function ComparativeStatsWidget() {
                     border: '1px solid #374151',
                     borderRadius: '0.375rem'
                   }}
+                  labelStyle={{
+                    color: '#E5E7EB'
+                  }}
+                  itemStyle={{
+                    color: '#E5E7EB'
+                  }}
                   formatter={(value: number) => [`${value.toLocaleString()} DA`, '']}
                 />
                 <Legend />
