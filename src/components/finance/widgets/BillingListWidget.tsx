@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { FileText, Plus, Search } from "lucide-react";
+import { FileText, Plus } from "lucide-react";
 import { InvoiceDetailsDialog } from "./invoice/InvoiceDetailsDialog";
 import { CreateInvoiceDialog } from "./invoice/CreateInvoiceDialog";
+import { useToast } from "@/hooks/use-toast";
 
 interface Invoice {
   id: string;
@@ -19,7 +19,7 @@ export function BillingListWidget() {
   const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
   const [showDetails, setShowDetails] = useState(false);
   const [showCreateDialog, setShowCreateDialog] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const { toast } = useToast();
 
   const mockInvoices: Invoice[] = [
     { id: "FA-2024-001", client: "EURL Construction Plus", amount: "150,000 DA", date: "2024-03-15", status: "pending" },
@@ -44,15 +44,13 @@ export function BillingListWidget() {
         validated: "Facture validée"
       };
 
-      toast.success(`Facture ${selectedInvoice.id} : ${statusMessages[newStatus]}`);
+      toast({
+        title: `Facture ${selectedInvoice.id}`,
+        description: statusMessages[newStatus]
+      });
       setSelectedInvoice({ ...selectedInvoice, status: newStatus });
     }
   };
-
-  const filteredInvoices = mockInvoices.filter(invoice => 
-    invoice.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    invoice.client.toLowerCase().includes(searchQuery.toLowerCase())
-  );
 
   const getStatusColor = (status: Invoice["status"]) => {
     const colors = {
@@ -89,31 +87,20 @@ export function BillingListWidget() {
               <FileText className="h-6 w-6 text-blue-400" />
               Gestion des Factures
             </CardTitle>
-            <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
-              <div className="relative flex-grow md:w-64">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                <Input 
-                  placeholder="Rechercher une facture..." 
-                  className="pl-9 bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-400"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </div>
-              <Button 
-                onClick={() => setShowCreateDialog(true)}
-                variant="outline" 
-                size="lg"
-                className="text-white bg-gray-800/50 border-gray-700/50 hover:bg-gray-700/50 px-6"
-              >
-                <Plus className="h-5 w-5 mr-2" />
-                Nouvelle Facture
-              </Button>
-            </div>
+            <Button 
+              onClick={() => setShowCreateDialog(true)}
+              variant="outline" 
+              size="lg"
+              className="text-white bg-gray-800/50 border-gray-700/50 hover:bg-gray-700/50 px-6"
+            >
+              <Plus className="h-5 w-5 mr-2" />
+              Nouvelle Facture
+            </Button>
           </div>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {filteredInvoices.map((invoice) => (
+            {mockInvoices.map((invoice) => (
               <motion.div
                 key={invoice.id}
                 initial={{ opacity: 0, y: 20 }}
