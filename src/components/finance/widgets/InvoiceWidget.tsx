@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { FileText, Plus, Search, DollarSign, Clock } from "lucide-react";
+import { FileText, Plus, Search, DollarSign, Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -166,21 +166,21 @@ export function InvoiceWidget() {
                 </span>
               </div>
             </div>
-            <div className="flex justify-end gap-2">
+            <div className="flex justify-end gap-3 pt-4">
               <Button
-                variant="secondary"
+                variant="outline"
                 onClick={handleDownloadInvoice}
-                className="bg-gradient-to-r from-purple-500/10 to-blue-500/10 hover:from-purple-500/20 hover:to-blue-500/20 text-white border border-purple-500/20 hover:border-purple-500/30"
+                className="bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-700 hover:to-gray-800 text-white border-gray-700 hover:border-gray-600 transition-all duration-200 shadow-lg hover:shadow-xl"
               >
-                <DollarSign className="h-4 w-4 mr-2" />
+                <DollarSign className="h-4 w-4 mr-2 text-blue-400" />
                 Télécharger
               </Button>
               <Button
                 variant="default"
                 onClick={handlePrintInvoice}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-200"
               >
-                <FileText className="h-4 w-4 mr-2" />
+                <Printer className="h-4 w-4 mr-2" />
                 Imprimer
               </Button>
             </div>
