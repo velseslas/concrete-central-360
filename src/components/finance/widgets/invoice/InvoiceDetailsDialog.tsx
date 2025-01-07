@@ -74,7 +74,6 @@ export function InvoiceDetailsDialog({
                   <SelectItem value="pending">En attente</SelectItem>
                   <SelectItem value="paid">Payée</SelectItem>
                   <SelectItem value="overdue">En retard</SelectItem>
-                  <SelectItem value="validated">Validée</SelectItem>
                 </SelectContent>
               </Select>
             </div>
