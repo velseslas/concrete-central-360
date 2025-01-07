@@ -36,7 +36,7 @@ export function BillingListWidget() {
   };
 
   const handleCreateInvoice = () => {
-    console.log("Tentative d'ouverture du dialogue de création");
+    console.log("Ouverture du dialogue de création de facture");
     setShowCreateDialog(true);
   };
 
@@ -96,7 +96,7 @@ export function BillingListWidget() {
               onClick={handleCreateInvoice}
               variant="outline" 
               size="lg"
-              className="text-white bg-gray-800/50 border-gray-700/50 hover:bg-gray-700/50 px-6 cursor-pointer"
+              className="text-white bg-gray-800/50 border-gray-700/50 hover:bg-gray-700/50 hover:bg-opacity-75 px-6 cursor-pointer"
             >
               <Plus className="h-5 w-5 mr-2" />
               Nouvelle Facture
