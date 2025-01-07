@@ -4,8 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { FileText } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { Invoice } from "@/types/invoice";
+import { toast } from "sonner";
 
 interface CreateInvoiceDialogProps {
   open: boolean;
@@ -13,23 +12,20 @@ interface CreateInvoiceDialogProps {
 }
 
 export function CreateInvoiceDialog({ open, onOpenChange }: CreateInvoiceDialogProps) {
-  const [formData, setFormData] = useState<Invoice>({
+  const [formData, setFormData] = useState({
     id: "",
     client: "",
     amount: "",
     date: new Date().toISOString().split('T')[0],
-    status: "unpaid",
+    status: "unpaid" as const,
   });
 
-  const { toast } = useToast();
+  console.log("État du dialogue dans CreateInvoiceDialog:", { open, formData });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Soumission du formulaire:", formData);
-    toast({
-      title: "Succès",
-      description: "Facture créée avec succès"
-    });
+    toast.success("Facture créée avec succès");
     setFormData({
       id: "",
       client: "",
@@ -39,8 +35,6 @@ export function CreateInvoiceDialog({ open, onOpenChange }: CreateInvoiceDialogP
     });
     onOpenChange(false);
   };
-
-  console.log("État du dialogue:", { open });
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -92,15 +86,13 @@ export function CreateInvoiceDialog({ open, onOpenChange }: CreateInvoiceDialogP
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
-              className="bg-gray-800/50 border-gray-700 hover:bg-gray-700 text-white px-6"
-              size="lg"
+              className="bg-gray-800/50 border-gray-700 hover:bg-gray-700 text-white"
             >
               Annuler
             </Button>
             <Button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-600 text-white px-6"
-              size="lg"
+              className="bg-blue-500 hover:bg-blue-600 text-white"
             >
               Créer
             </Button>

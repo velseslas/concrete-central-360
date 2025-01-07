@@ -22,7 +22,7 @@ export function InvoiceWidget() {
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  console.log("État du dialogue de création:", showCreateDialog);
+  console.log("État du dialogue de création dans InvoiceWidget:", showCreateDialog);
 
   const mockInvoices: Invoice[] = [
     { id: "FA-2024-001", client: "EURL Construction Plus", amount: "150,000 DA", date: "2024-03-15", status: "unpaid" },
@@ -33,7 +33,6 @@ export function InvoiceWidget() {
   ];
 
   const handleInvoiceClick = (invoice: Invoice) => {
-    console.log("Facture sélectionnée:", invoice);
     setSelectedInvoice(invoice);
     setShowDetails(true);
   };
