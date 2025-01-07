@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Toaster } from "@/components/ui/sonner";
-import { Header } from "@/components/layout/Header";
+import Header from "@/components/layout/Header";
 import { Sidebar } from "@/components/layout/Sidebar";
 import Dashboard from "@/pages/Dashboard";
 import Clients from "@/pages/Clients";
@@ -12,7 +12,7 @@ import Production from "@/pages/Production";
 import Finance from "@/pages/Finance";
 import ClientPayments from "@/pages/finance/ClientPayments";
 import SupplierPayments from "@/pages/finance/SupplierPayments";
-import Invoices from "@/pages/finance/Invoices";
+import Invoices from "@/pages/Invoices";
 import Reports from "@/pages/finance/Reports";
 
 function App() {
