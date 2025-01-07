@@ -170,7 +170,7 @@ export function BillingListWidget() {
               <Button
                 variant="outline"
                 onClick={handleDownloadInvoice}
-                className="bg-[#9b87f5]/10 hover:bg-[#9b87f5]/20 border-[#9b87f5]/20 hover:border-[#9b87f5]/30 text-[#9b87f5] hover:text-[#7E69AB] transition-all duration-200"
+                className="bg-[#9b87f5]/10 hover:bg-[#9b87f5]/20 border-white text-[#9b87f5] hover:text-[#7E69AB] transition-all duration-200"
               >
                 <DollarSign className="h-4 w-4 mr-2" />
                 Télécharger
@@ -178,7 +178,7 @@ export function BillingListWidget() {
               <Button
                 variant="outline"
                 onClick={handlePrintInvoice}
-                className="bg-[#9b87f5]/10 hover:bg-[#9b87f5]/20 border-[#9b87f5]/20 hover:border-[#9b87f5]/30 text-[#9b87f5] hover:text-[#7E69AB] transition-all duration-200"
+                className="bg-[#9b87f5]/10 hover:bg-[#9b87f5]/20 border-white text-[#9b87f5] hover:text-[#7E69AB] transition-all duration-200"
               >
                 <Printer className="h-4 w-4 mr-2" />
                 Imprimer
