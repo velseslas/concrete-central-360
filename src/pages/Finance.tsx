@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { FinanceOverviewWidget } from "@/components/finance/widgets/FinanceOverviewWidget";
 import { CashFlowWidget } from "@/components/finance/CashFlowWidget";
 import { ExpensesWidget } from "@/components/finance/ExpensesWidget";
+import { ComparativeStatsWidget } from "@/components/finance/widgets/ComparativeStatsWidget";
 
 export default function Finance() {
   return (
@@ -17,14 +18,14 @@ export default function Finance() {
       </motion.div>
 
       <div className="space-y-8">
-        {/* Vue d'ensemble des statistiques */}
         <FinanceOverviewWidget />
-
-        {/* Graphiques principaux */}
+        
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <CashFlowWidget />
           <ExpensesWidget />
         </div>
+
+        <ComparativeStatsWidget />
       </div>
     </div>
   );
