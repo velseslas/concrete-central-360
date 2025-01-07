@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { FinanceOverviewWidget } from "@/components/finance/widgets/FinanceOverviewWidget";
-import { BillingListWidget } from "@/components/finance/widgets/BillingListWidget";
 import { BillingReportsWidget } from "@/components/finance/widgets/BillingReportsWidget";
 import { PaymentTrackingWidget } from "@/components/finance/widgets/PaymentTrackingWidget";
 import { DailyExpenseWidget } from "@/components/finance/widgets/DailyExpenseWidget";
@@ -34,10 +33,9 @@ export default function Finance() {
         {/* Widgets de gestion */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
-            <BillingListWidget />
+            <PaymentTrackingWidget />
           </div>
           <div className="space-y-6">
-            <PaymentTrackingWidget />
             <BillingReportsWidget />
           </div>
         </div>
