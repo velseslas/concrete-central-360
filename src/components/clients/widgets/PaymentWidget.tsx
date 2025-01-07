@@ -3,11 +3,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DollarSign } from "lucide-react";
 import { motion } from "framer-motion";
 import { PaymentForm } from "../PaymentForm";
-import { PaymentPreview } from "./PaymentPreview";
+import { PaymentPreview } from "./payment/PaymentPreview";
 import { PaymentState } from "../payment-form/PaymentState";
 import { Button } from "@/components/ui/button";
 import { ClientPaymentList } from "./payment/ClientPaymentList";
 import { PaymentDetails } from "./payment/PaymentDetails";
+import { PaymentStats } from "./payment/PaymentStats";
+import { PaymentExport } from "./payment/PaymentExport";
 
 const mockClients = [
   {
@@ -131,15 +133,15 @@ export function PaymentWidget() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="group space-y-6"
+      className="space-y-6"
     >
-      <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl group-hover:shadow-2xl transition-all duration-300">
+      <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
         <CardHeader>
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <CardTitle className="text-white flex items-center gap-4">
               <DollarSign className="h-6 w-6 text-blue-400 ml-2" />
-              Liste des Paiements
+              Gestion des Paiements
             </CardTitle>
             <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
               <Button 
@@ -149,14 +151,19 @@ export function PaymentWidget() {
               >
                 Nouveau Paiement
               </Button>
+              <PaymentExport />
             </div>
           </div>
         </CardHeader>
-        <CardContent>
-          <ClientPaymentList 
-            clients={mockClients}
-            onViewDetails={handleViewDetails}
-          />
+        <CardContent className="space-y-6">
+          <PaymentStats />
+          
+          <div className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 rounded-lg shadow-xl border border-gray-700/50 backdrop-blur-xl">
+            <ClientPaymentList 
+              clients={mockClients}
+              onViewDetails={handleViewDetails}
+            />
+          </div>
         </CardContent>
       </Card>
 
