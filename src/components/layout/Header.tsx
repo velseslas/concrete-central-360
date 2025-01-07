@@ -1,7 +1,7 @@
-import { motion } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import { toast } from "sonner";
 import { useState } from "react";
 import { PaymentForm } from "@/components/clients/PaymentForm";
 
@@ -20,6 +20,7 @@ export function Header() {
   const handleNewPayment = () => {
     console.log("Opening new payment form");
     setShowPaymentForm(true);
+    toast.success("Ouverture du formulaire de paiement");
   };
 
   const showNewPaymentButton = location.pathname.includes("/finance/payments");
