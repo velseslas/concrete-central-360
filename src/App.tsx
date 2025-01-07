@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster } from "@/components/ui/sonner";
+import { Sidebar } from "@/components/layout/Sidebar";
 import Dashboard from "./pages/Dashboard";
 import Clients from "./pages/Clients";
 import Finance from "./pages/Finance";
@@ -18,6 +19,7 @@ function App() {
     <BrowserRouter>
       <div className="min-h-screen bg-gray-900">
         <div className="flex">
+          <Sidebar />
           <main className="flex-1">
             <Routes>
               <Route path="/" element={<Dashboard />} />
