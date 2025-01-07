@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { 
   Home, Users, TestTube, Truck, Car, 
   DollarSign, FileSpreadsheet, Factory, Receipt, 
-  CreditCard, Building2, FileText
+  CreditCard, Building2
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -32,11 +32,6 @@ export function Sidebar() {
             { to: "/finance/payments/clients", label: "Clients" },
             { to: "/finance/payments/suppliers", label: "Fournisseurs" }
           ]
-        },
-        { 
-          to: "/finance/invoices", 
-          label: "Facturation",
-          icon: FileText
         },
         {
           to: "/finance/reports",
