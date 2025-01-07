@@ -144,34 +144,33 @@ export function InvoiceDetailsDialog({
   return (
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="bg-gray-900/95 backdrop-blur-xl border border-gray-800 text-white">
+        <DialogContent className="bg-gray-900/95 backdrop-blur-xl border border-gray-800 text-white max-w-4xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <div className="flex items-center justify-between">
-              <DialogTitle className="text-xl font-bold flex items-center gap-2">
-                Détails de la Facture {invoice?.id}
-              </DialogTitle>
+            <DialogTitle className="text-xl font-bold flex items-center gap-2">
+              Détails de la Facture {invoice?.id}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-6">
+            <InvoiceDetails 
+              invoice={invoice} 
+              onStatusChange={onStatusChange} 
+            />
+            <div className="flex justify-end items-center gap-3">
               <Button
                 variant="outline"
-                size="sm"
                 onClick={handleEditClick}
                 className="bg-blue-500/10 hover:bg-blue-500/20 border-blue-500/20 hover:border-blue-500/30 text-blue-400"
               >
                 <Edit2 className="h-4 w-4 mr-2" />
                 Modifier
               </Button>
+              <InvoiceActions 
+                invoice={invoice}
+                isValidateEnabled={isValidateEnabled}
+                onValidate={handleValidateInvoice}
+                onPreviewClick={() => setShowPreview(true)}
+              />
             </div>
-          </DialogHeader>
-          <div className="space-y-4">
-            <InvoiceDetails 
-              invoice={invoice} 
-              onStatusChange={onStatusChange} 
-            />
-            <InvoiceActions 
-              invoice={invoice}
-              isValidateEnabled={isValidateEnabled}
-              onValidate={handleValidateInvoice}
-              onPreviewClick={() => setShowPreview(true)}
-            />
           </div>
         </DialogContent>
       </Dialog>
