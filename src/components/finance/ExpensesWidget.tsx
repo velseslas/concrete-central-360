@@ -40,16 +40,16 @@ export function ExpensesWidget() {
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
-                <Tooltip
+                <Tooltip 
                   contentStyle={{
                     backgroundColor: '#1F2937',
                     border: '1px solid #374151',
                     borderRadius: '0.375rem',
-                    color: '#D6BCFA'
                   }}
+                  itemStyle={{ color: '#D6BCFA' }}
                   formatter={(value: number, name: string) => [
-                    <span style={{ color: '#D6BCFA' }}>{value.toLocaleString()} DA</span>,
-                    <span style={{ color: '#D6BCFA' }}>{name}</span>
+                    `${value.toLocaleString()} DA`,
+                    name
                   ]}
                 />
                 <Legend
