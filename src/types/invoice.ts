@@ -3,5 +3,5 @@ export interface Invoice {
   client: string;
   amount: string;
   date: string;
-  status: "pending" | "paid" | "overdue" | "validated";
+  status: "paid" | "unpaid" | "validated";
 }

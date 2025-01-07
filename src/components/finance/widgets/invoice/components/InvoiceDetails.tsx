@@ -28,9 +28,8 @@ export function InvoiceDetails({ invoice, onStatusChange }: InvoiceDetailsProps)
             <SelectValue placeholder="Changer le statut" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="pending">En attente</SelectItem>
+            <SelectItem value="unpaid">Impayée</SelectItem>
             <SelectItem value="paid">Payée</SelectItem>
-            <SelectItem value="overdue">En retard</SelectItem>
           </SelectContent>
         </Select>
       </div>

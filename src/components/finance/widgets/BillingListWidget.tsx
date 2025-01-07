@@ -15,10 +15,10 @@ export function BillingListWidget() {
   const { toast } = useToast();
 
   const mockInvoices: Invoice[] = [
-    { id: "FA-2024-001", client: "EURL Construction Plus", amount: "150,000 DA", date: "2024-03-15", status: "pending" },
+    { id: "FA-2024-001", client: "EURL Construction Plus", amount: "150,000 DA", date: "2024-03-15", status: "unpaid" },
     { id: "FA-2024-002", client: "SPA Bâtiment Pro", amount: "280,000 DA", date: "2024-03-14", status: "paid" },
-    { id: "FA-2024-003", client: "SARL Travaux Publics", amount: "95,000 DA", date: "2024-03-13", status: "overdue" },
-    { id: "FA-2024-004", client: "ETS Batiment", amount: "120,000 DA", date: "2024-03-12", status: "pending" },
+    { id: "FA-2024-003", client: "SARL Travaux Publics", amount: "95,000 DA", date: "2024-03-13", status: "unpaid" },
+    { id: "FA-2024-004", client: "ETS Batiment", amount: "120,000 DA", date: "2024-03-12", status: "unpaid" },
     { id: "FA-2024-005", client: "SARL BTP Services", amount: "175,000 DA", date: "2024-03-11", status: "paid" },
   ];
 
@@ -36,9 +36,8 @@ export function BillingListWidget() {
   const handleStatusChange = (newStatus: Invoice["status"]) => {
     if (selectedInvoice) {
       const statusMessages = {
-        pending: "En attente de validation",
+        unpaid: "Marquée comme impayée",
         paid: "Marquée comme payée",
-        overdue: "Marquée comme en retard",
         validated: "Facture validée"
       };
 
@@ -52,9 +51,8 @@ export function BillingListWidget() {
 
   const getStatusColor = (status: Invoice["status"]) => {
     const colors = {
-      pending: "bg-yellow-500/20 text-yellow-400",
+      unpaid: "bg-red-500/20 text-red-400",
       paid: "bg-green-500/20 text-green-400",
-      overdue: "bg-red-500/20 text-red-400",
       validated: "bg-blue-500/20 text-blue-400"
     };
     return colors[status];
@@ -62,9 +60,8 @@ export function BillingListWidget() {
 
   const getStatusLabel = (status: Invoice["status"]) => {
     const labels = {
-      pending: "En attente",
+      unpaid: "Impayée",
       paid: "Payée",
-      overdue: "En retard",
       validated: "Validée"
     };
     return labels[status];
