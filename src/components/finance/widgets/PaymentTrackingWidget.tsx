@@ -2,10 +2,12 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { CreditCard, Plus } from "lucide-react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Button } from "@/components/ui/button";
 import { PaymentForm } from "@/components/clients/PaymentForm";
 import { PaymentStateDetailsDialog } from "@/components/clients/payment-form/PaymentStateDetailsDialog";
+import { PaymentTrackingFilters } from "./payment/PaymentTrackingFilters";
+import { PaymentTrackingChart } from "./payment/PaymentTrackingChart";
+import { PaymentTrackingList } from "./payment/PaymentTrackingList";
 import { toast } from "sonner";
 
 const data = [
@@ -74,6 +76,10 @@ const mockPayments = [
 export function PaymentTrackingWidget() {
   const [showPaymentForm, setShowPaymentForm] = useState(false);
   const [showPaymentDetails, setShowPaymentDetails] = useState(false);
+  const [selectedClient, setSelectedClient] = useState("all");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("all");
 
   const handleNewPayment = () => {
     console.log("Opening payment form");
@@ -83,6 +89,16 @@ export function PaymentTrackingWidget() {
   const handleViewDetails = () => {
     console.log("Opening payment details");
     setShowPaymentDetails(true);
+  };
+
+  const handleGenerateReport = () => {
+    console.log("Generating report with filters:", {
+      client: selectedClient,
+      startDate,
+      endDate,
+      paymentMethod
+    });
+    toast.success("Filtres appliqués avec succès");
   };
 
   return (
@@ -110,82 +126,25 @@ export function PaymentTrackingWidget() {
             </Button>
           </div>
         </CardHeader>
-        <CardContent>
-          <div className="h-[300px] w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                data={data}
-                margin={{
-                  top: 5,
-                  right: 30,
-                  left: 20,
-                  bottom: 5,
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                <XAxis dataKey="name" stroke="#9CA3AF" />
-                <YAxis stroke="#9CA3AF" />
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: '#1F2937',
-                    border: '1px solid #374151',
-                  }}
-                  labelStyle={{
-                    color: '#E5E7EB'
-                  }}
-                  formatter={(value: number, name: string) => {
-                    const color = name === 'Mois Actuel' ? '#0EA5E9' : '#F97316';
-                    return [
-                      <span style={{ color }}>
-                        {value.toLocaleString()} DA
-                      </span>,
-                      ''
-                    ];
-                  }}
-                />
-                <Legend />
-                <Bar dataKey="Mois Actuel" fill="#0EA5E9" /> {/* Ocean Blue */}
-                <Bar dataKey="Mois Précédent" fill="#F97316" /> {/* Bright Orange */}
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
+        <CardContent className="space-y-6">
+          <PaymentTrackingFilters
+            selectedClient={selectedClient}
+            startDate={startDate}
+            endDate={endDate}
+            paymentMethod={paymentMethod}
+            onClientChange={setSelectedClient}
+            onStartDateChange={setStartDate}
+            onEndDateChange={setEndDate}
+            onPaymentMethodChange={setPaymentMethod}
+            onGenerateReport={handleGenerateReport}
+          />
 
-          <div className="mt-6 space-y-4">
-            <div className="flex justify-between items-center">
-              <h3 className="text-lg font-semibold text-white">Derniers Paiements</h3>
-              <Button 
-                variant="outline" 
-                onClick={handleViewDetails}
-                size="sm"
-                className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 transition-colors"
-              >
-                Voir les détails
-              </Button>
-            </div>
+          <PaymentTrackingChart data={data} />
 
-            <div className="space-y-2">
-              {mockPayments.slice(0, 3).map((payment) => (
-                <div
-                  key={payment.id}
-                  className="p-4 rounded-lg bg-gray-800/50 hover:bg-gray-800/70 transition-all cursor-pointer group relative"
-                >
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p className="text-sm font-medium text-white">
-                        {payment.clientName} - {payment.projectName}
-                      </p>
-                      <p className="text-xs text-gray-400">
-                        {payment.date} - Réf: {payment.reference}
-                      </p>
-                    </div>
-                    <p className="text-lg font-bold text-blue-400">
-                      {payment.amount.toLocaleString()} DA
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <PaymentTrackingList 
+            payments={mockPayments}
+            onViewDetails={handleViewDetails}
+          />
         </CardContent>
       </Card>
 
@@ -204,10 +163,10 @@ export function PaymentTrackingWidget() {
           payments={mockPayments}
           filters={{
             periodType: "month",
-            startDate: "",
-            endDate: "",
-            client: "all",
-            method: "all"
+            startDate,
+            endDate,
+            client: selectedClient,
+            method: paymentMethod
           }}
         />
       )}
