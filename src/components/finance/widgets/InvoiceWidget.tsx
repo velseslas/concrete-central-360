@@ -170,15 +170,15 @@ export function InvoiceWidget() {
               <Button
                 variant="outline"
                 onClick={handleDownloadInvoice}
-                className="bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-700 hover:to-gray-800 text-white border-gray-700 hover:border-gray-600 transition-all duration-200 shadow-lg hover:shadow-xl"
+                className="bg-primary/10 hover:bg-primary/20 border-primary/20 hover:border-primary/30 text-primary-foreground transition-all duration-200"
               >
-                <DollarSign className="h-4 w-4 mr-2 text-blue-400" />
+                <DollarSign className="h-4 w-4 mr-2" />
                 Télécharger
               </Button>
               <Button
                 variant="default"
                 onClick={handlePrintInvoice}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-200"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-200"
               >
                 <Printer className="h-4 w-4 mr-2" />
                 Imprimer
