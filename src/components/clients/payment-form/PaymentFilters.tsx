@@ -1,8 +1,7 @@
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Select } from "@/components/ui/select";
+import { DatePicker } from "@/components/ui/datepicker";
 
 interface PaymentFiltersProps {
   periodType: string;
@@ -29,99 +28,96 @@ export function PaymentFilters({
   setSelectedClient,
   selectedMethod,
   setSelectedMethod,
-  onGenerateReport
+  onGenerateReport,
 }: PaymentFiltersProps) {
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-2 mb-4">
-        <Filter className="h-4 w-4" />
-        <span className="font-medium">Filtres</span>
-      </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="period-type" className="text-sm font-medium text-gray-200">
-            Type de période
+          <Label htmlFor="period-type" className="text-sm text-gray-400">
+            Période
           </Label>
-          <Select value={periodType} onValueChange={setPeriodType}>
-            <SelectTrigger id="period-type" className="bg-gray-800 border-gray-700">
-              <SelectValue placeholder="Sélectionner la période" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="day">Par jour</SelectItem>
-              <SelectItem value="week">Par semaine</SelectItem>
-              <SelectItem value="month">Par mois</SelectItem>
-              <SelectItem value="year">Par année</SelectItem>
-            </SelectContent>
+          <Select
+            id="period-type"
+            value={periodType}
+            onValueChange={setPeriodType}
+            className="w-full bg-gray-800 border-gray-700 text-white"
+          >
+            <option value="day">Jour</option>
+            <option value="week">Semaine</option>
+            <option value="month">Mois</option>
+            <option value="year">Année</option>
+            <option value="custom">Personnalisé</option>
           </Select>
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="start-date" className="text-sm font-medium text-gray-200">
-            Date de début
-          </Label>
-          <Input
-            id="start-date"
-            type="date"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-            className="bg-gray-800 border-gray-700 text-white w-full"
-          />
-        </div>
+        {periodType === "custom" && (
+          <>
+            <div className="space-y-2">
+              <Label htmlFor="start-date" className="text-sm text-gray-400">
+                Date début
+              </Label>
+              <DatePicker
+                id="start-date"
+                value={startDate}
+                onChange={setStartDate}
+                className="w-full bg-gray-800 border-gray-700 text-white"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="end-date" className="text-sm text-gray-400">
+                Date fin
+              </Label>
+              <DatePicker
+                id="end-date"
+                value={endDate}
+                onChange={setEndDate}
+                className="w-full bg-gray-800 border-gray-700 text-white"
+              />
+            </div>
+          </>
+        )}
 
         <div className="space-y-2">
-          <Label htmlFor="end-date" className="text-sm font-medium text-gray-200">
-            Date de fin
-          </Label>
-          <Input
-            id="end-date"
-            type="date"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-            className="bg-gray-800 border-gray-700 text-white w-full"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="client-select" className="text-sm font-medium text-gray-200">
+          <Label htmlFor="client" className="text-sm text-gray-400">
             Client
           </Label>
-          <Select value={selectedClient} onValueChange={setSelectedClient}>
-            <SelectTrigger id="client-select" className="bg-gray-800 border-gray-700">
-              <SelectValue placeholder="Sélectionner un client" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Tous les clients</SelectItem>
-              <SelectItem value="Client A">Client A</SelectItem>
-              <SelectItem value="Client B">Client B</SelectItem>
-            </SelectContent>
+          <Select
+            id="client"
+            value={selectedClient}
+            onValueChange={setSelectedClient}
+            className="w-full bg-gray-800 border-gray-700 text-white"
+          >
+            <option value="all">Tous les clients</option>
+            <option value="client1">Client 1</option>
+            <option value="client2">Client 2</option>
           </Select>
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="payment-method" className="text-sm font-medium text-gray-200">
+          <Label htmlFor="payment-method" className="text-sm text-gray-400">
             Mode de paiement
           </Label>
-          <Select value={selectedMethod} onValueChange={setSelectedMethod}>
-            <SelectTrigger id="payment-method" className="bg-gray-800 border-gray-700">
-              <SelectValue placeholder="Mode de paiement" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Tous les modes</SelectItem>
-              <SelectItem value="especes">Espèces</SelectItem>
-              <SelectItem value="cheque">Chèque</SelectItem>
-              <SelectItem value="virement">Virement</SelectItem>
-            </SelectContent>
+          <Select
+            id="payment-method"
+            value={selectedMethod}
+            onValueChange={setSelectedMethod}
+            className="w-full bg-gray-800 border-gray-700 text-white"
+          >
+            <option value="all">Tous les modes</option>
+            <option value="cash">Espèces</option>
+            <option value="check">Chèque</option>
+            <option value="transfer">Virement</option>
           </Select>
         </div>
+      </div>
 
-        <div className="space-y-2">
-          <Label className="text-sm font-medium text-gray-200 invisible">
-            Action
-          </Label>
+      <div className="flex justify-end">
+        <div className="w-full md:w-auto">
+          <Label className="sr-only">Actions</Label>
           <Button 
             onClick={onGenerateReport} 
-            className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 transition-colors w-full border border-white/20"
+            className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 transition-colors w-full border border-indigo-400/20"
           >
             Générer l'état
           </Button>
