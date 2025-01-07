@@ -33,14 +33,14 @@ export function PaymentStateDetailsDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl bg-gray-900 text-white border-gray-800">
+      <DialogContent className="max-w-4xl bg-gray-900 text-white border border-gray-800">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold text-white">
             Détails des Paiements
           </DialogTitle>
         </DialogHeader>
         <div className="mt-4">
-          <div className="mb-4 p-4 bg-gray-800 rounded-lg">
+          <div className="mb-4 p-4 bg-gray-800/50 rounded-lg border border-gray-700">
             <h3 className="text-lg font-semibold mb-2">Filtres appliqués</h3>
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
@@ -62,10 +62,10 @@ export function PaymentStateDetailsDialog({
             </div>
           </div>
 
-          <ScrollArea className="h-[400px] rounded-md border border-gray-800">
+          <ScrollArea className="h-[400px] rounded-md border border-gray-700">
             <Table>
               <TableHeader>
-                <TableRow className="bg-gray-800 hover:bg-gray-800">
+                <TableRow className="bg-gray-800 hover:bg-gray-800/90 border-b border-gray-700">
                   <TableHead className="text-white">Date</TableHead>
                   <TableHead className="text-white">Référence</TableHead>
                   <TableHead className="text-white">Client</TableHead>
@@ -74,11 +74,11 @@ export function PaymentStateDetailsDialog({
                   <TableHead className="text-right text-white">Montant</TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody>
+              <TableBody className="bg-gray-900">
                 {payments.map((payment) => (
                   <TableRow
                     key={payment.id}
-                    className="border-gray-800 hover:bg-gray-800"
+                    className="border-b border-gray-800 hover:bg-gray-800/50"
                   >
                     <TableCell className="text-white">{payment.date}</TableCell>
                     <TableCell className="text-white">{payment.reference}</TableCell>
@@ -94,9 +94,9 @@ export function PaymentStateDetailsDialog({
             </Table>
           </ScrollArea>
 
-          <div className="mt-4 p-4 bg-gray-800 rounded-lg">
+          <div className="mt-4 p-4 bg-gray-800/50 rounded-lg border border-gray-700">
             <div className="flex justify-between items-center">
-              <span className="text-lg font-semibold">Total</span>
+              <span className="text-lg font-semibold text-white">Total</span>
               <span className="text-xl font-bold text-blue-400">
                 {totalAmount.toLocaleString()} DA
               </span>
