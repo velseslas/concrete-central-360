@@ -166,19 +166,19 @@ export function BillingListWidget() {
                 </span>
               </div>
             </div>
-            <div className="flex justify-end gap-2">
+            <div className="flex justify-end gap-3 pt-4">
               <Button
                 variant="outline"
                 onClick={handleDownloadInvoice}
-                className="text-white"
+                className="bg-primary/10 hover:bg-primary/20 border-primary/20 hover:border-primary/30 text-primary-foreground transition-all duration-200"
               >
                 <DollarSign className="h-4 w-4 mr-2" />
                 Télécharger
               </Button>
               <Button
-                variant="outline"
+                variant="default"
                 onClick={handlePrintInvoice}
-                className="text-white"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-200"
               >
                 <Printer className="h-4 w-4 mr-2" />
                 Imprimer
