@@ -1,60 +1,65 @@
 import { Button } from "@/components/ui/button";
+import { Check, Eye, Archive } from "lucide-react";
 import { Invoice } from "@/types/invoice";
-import { Check, Download, Eye, Printer } from "lucide-react";
+import { toast } from "sonner";
 
 interface InvoiceActionsProps {
   invoice: Invoice | null;
   isValidateEnabled: boolean;
   onValidate: () => void;
   onPreviewClick: () => void;
-  onPrint: () => void;
-  onDownload: () => void;
 }
 
-export function InvoiceActions({
-  invoice,
-  isValidateEnabled,
+export function InvoiceActions({ 
+  invoice, 
+  isValidateEnabled, 
   onValidate,
-  onPreviewClick,
-  onPrint,
-  onDownload
+  onPreviewClick 
 }: InvoiceActionsProps) {
+  const handleArchive = () => {
+    if (invoice) {
+      toast.success(`La facture ${invoice.id} a été archivée`);
+    }
+  };
+
+  const isArchiveEnabled = invoice?.status === "paid" && !isValidateEnabled;
+
   return (
-    <div className="flex gap-3">
-      {isValidateEnabled && (
-        <Button
-          variant="outline"
-          onClick={onValidate}
-          className="bg-green-500/10 hover:bg-green-500/20 border-green-500/20 hover:border-green-500/30 text-green-400"
-        >
-          <Check className="h-4 w-4 mr-2" />
-          Valider
-        </Button>
-      )}
+    <>
+      <Button
+        variant="outline"
+        onClick={onValidate}
+        disabled={!isValidateEnabled}
+        className={`bg-green-500/10 border-white ${
+          isValidateEnabled 
+            ? 'hover:bg-green-500/20 text-green-400 hover:text-green-300 cursor-pointer' 
+            : 'opacity-50 cursor-not-allowed text-gray-400'
+        }`}
+      >
+        <Check className="h-4 w-4 mr-2" />
+        Valider
+      </Button>
+      <Button
+        variant="outline"
+        onClick={handleArchive}
+        disabled={!isArchiveEnabled}
+        className={`bg-blue-500/10 border-white ${
+          isArchiveEnabled
+            ? 'hover:bg-blue-500/20 text-blue-400 hover:text-blue-300 cursor-pointer'
+            : 'opacity-50 cursor-not-allowed text-gray-400'
+        }`}
+      >
+        <Archive className="h-4 w-4 mr-2" />
+        Archiver
+      </Button>
       <Button
         variant="outline"
         onClick={onPreviewClick}
-        className="bg-purple-500/10 hover:bg-purple-500/20 border-purple-500/20 hover:border-purple-500/30 text-purple-400"
+        className="bg-[#9b87f5]/10 hover:bg-[#9b87f5]/20 border-white text-[#9b87f5] hover:text-[#7E69AB] transition-all duration-200"
       >
         <Eye className="h-4 w-4 mr-2" />
         Aperçu
       </Button>
-      <Button
-        variant="outline"
-        onClick={onDownload}
-        className="bg-primary/10 hover:bg-primary/20 border-primary/20 hover:border-primary/30 text-primary-foreground"
-      >
-        <Download className="h-4 w-4 mr-2" />
-        Télécharger
-      </Button>
-      <Button
-        variant="default"
-        onClick={onPrint}
-        className="bg-primary hover:bg-primary/90 text-primary-foreground"
-      >
-        <Printer className="h-4 w-4 mr-2" />
-        Imprimer
-      </Button>
-    </div>
+    </>
   );
 }
