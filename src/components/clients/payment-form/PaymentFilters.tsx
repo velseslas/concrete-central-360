@@ -1,7 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Select } from "@/components/ui/select";
-import { DatePicker } from "@/components/ui/datepicker";
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 
 interface PaymentFiltersProps {
   periodType: string;
@@ -37,17 +43,17 @@ export function PaymentFilters({
           <Label htmlFor="period-type" className="text-sm text-gray-400">
             Période
           </Label>
-          <Select
-            id="period-type"
-            value={periodType}
-            onValueChange={setPeriodType}
-            className="w-full bg-gray-800 border-gray-700 text-white"
-          >
-            <option value="day">Jour</option>
-            <option value="week">Semaine</option>
-            <option value="month">Mois</option>
-            <option value="year">Année</option>
-            <option value="custom">Personnalisé</option>
+          <Select value={periodType} onValueChange={setPeriodType}>
+            <SelectTrigger className="w-full bg-gray-800 border-gray-700 text-white">
+              <SelectValue placeholder="Sélectionner une période" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="day">Jour</SelectItem>
+              <SelectItem value="week">Semaine</SelectItem>
+              <SelectItem value="month">Mois</SelectItem>
+              <SelectItem value="year">Année</SelectItem>
+              <SelectItem value="custom">Personnalisé</SelectItem>
+            </SelectContent>
           </Select>
         </div>
 
@@ -57,10 +63,11 @@ export function PaymentFilters({
               <Label htmlFor="start-date" className="text-sm text-gray-400">
                 Date début
               </Label>
-              <DatePicker
+              <Input
+                type="date"
                 id="start-date"
                 value={startDate}
-                onChange={setStartDate}
+                onChange={(e) => setStartDate(e.target.value)}
                 className="w-full bg-gray-800 border-gray-700 text-white"
               />
             </div>
@@ -68,10 +75,11 @@ export function PaymentFilters({
               <Label htmlFor="end-date" className="text-sm text-gray-400">
                 Date fin
               </Label>
-              <DatePicker
+              <Input
+                type="date"
                 id="end-date"
                 value={endDate}
-                onChange={setEndDate}
+                onChange={(e) => setEndDate(e.target.value)}
                 className="w-full bg-gray-800 border-gray-700 text-white"
               />
             </div>
@@ -82,15 +90,15 @@ export function PaymentFilters({
           <Label htmlFor="client" className="text-sm text-gray-400">
             Client
           </Label>
-          <Select
-            id="client"
-            value={selectedClient}
-            onValueChange={setSelectedClient}
-            className="w-full bg-gray-800 border-gray-700 text-white"
-          >
-            <option value="all">Tous les clients</option>
-            <option value="client1">Client 1</option>
-            <option value="client2">Client 2</option>
+          <Select value={selectedClient} onValueChange={setSelectedClient}>
+            <SelectTrigger className="w-full bg-gray-800 border-gray-700 text-white">
+              <SelectValue placeholder="Sélectionner un client" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Tous les clients</SelectItem>
+              <SelectItem value="client1">Client 1</SelectItem>
+              <SelectItem value="client2">Client 2</SelectItem>
+            </SelectContent>
           </Select>
         </div>
 
@@ -98,16 +106,16 @@ export function PaymentFilters({
           <Label htmlFor="payment-method" className="text-sm text-gray-400">
             Mode de paiement
           </Label>
-          <Select
-            id="payment-method"
-            value={selectedMethod}
-            onValueChange={setSelectedMethod}
-            className="w-full bg-gray-800 border-gray-700 text-white"
-          >
-            <option value="all">Tous les modes</option>
-            <option value="cash">Espèces</option>
-            <option value="check">Chèque</option>
-            <option value="transfer">Virement</option>
+          <Select value={selectedMethod} onValueChange={setSelectedMethod}>
+            <SelectTrigger className="w-full bg-gray-800 border-gray-700 text-white">
+              <SelectValue placeholder="Sélectionner un mode" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Tous les modes</SelectItem>
+              <SelectItem value="cash">Espèces</SelectItem>
+              <SelectItem value="check">Chèque</SelectItem>
+              <SelectItem value="transfer">Virement</SelectItem>
+            </SelectContent>
           </Select>
         </div>
       </div>
