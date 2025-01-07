@@ -8,8 +8,7 @@ import {
   PieChart,
   Receipt,
   Building2,
-  Factory,
-  FileSpreadsheet
+  Factory
 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { CashFlowWidget } from "@/components/finance/CashFlowWidget";
@@ -20,8 +19,6 @@ import { PaymentTrackingWidget } from "@/components/finance/widgets/PaymentTrack
 import { BillingListWidget } from "@/components/finance/widgets/BillingListWidget";
 import { BillingReportsWidget } from "@/components/finance/widgets/BillingReportsWidget";
 import { DailyExpenseWidget } from "@/components/finance/widgets/DailyExpenseWidget";
-import { InvoiceWidget } from "@/components/invoices/InvoiceWidget";
-import { FacturationWidget } from "@/components/invoices/FacturationWidget";
 
 export default function Finance() {
   const [activeWidget, setActiveWidget] = useState<string | null>(null);
@@ -64,31 +61,24 @@ export default function Finance() {
     },
     {
       id: 'billing',
-      title: 'Liste des Factures',
-      icon: FileText,
+      title: 'Facturation',
+      icon: Receipt,
       color: 'text-emerald-400',
       component: BillingListWidget
     },
     {
-      id: 'billing-reports',
-      title: 'Rapports de Facturation',
-      icon: FileSpreadsheet,
+      id: 'production',
+      title: 'Production',
+      icon: Factory,
       color: 'text-indigo-400',
       component: BillingReportsWidget
     },
     {
-      id: 'invoice-management',
-      title: 'Gestion des Factures',
-      icon: Receipt,
-      color: 'text-cyan-400',
-      component: InvoiceWidget
-    },
-    {
-      id: 'facturation',
-      title: 'Facturation Détaillée',
-      icon: Factory,
-      color: 'text-pink-400',
-      component: FacturationWidget
+      id: 'reports',
+      title: 'Rapports',
+      icon: FileText,
+      color: 'text-gray-400',
+      component: BillingReportsWidget
     }
   ];
 
