@@ -45,9 +45,11 @@ export function ExpensesWidget() {
                     backgroundColor: '#1F2937',
                     border: '1px solid #374151',
                     borderRadius: '0.375rem',
-                    color: '#D6BCFA'  // Nouvelle couleur de texte (Light Purple)
+                    color: '#D6BCFA'  // Couleur du texte (Light Purple)
                   }}
-                  formatter={(value: number) => `${value.toLocaleString()} DA`}
+                  formatter={(value: number) => (
+                    <span style={{ color: '#D6BCFA' }}>{value.toLocaleString()} DA</span>
+                  )}
                 />
                 <Legend
                   formatter={(value) => <span className="text-gray-300">{value}</span>}
