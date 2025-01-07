@@ -73,21 +73,13 @@ export function PaymentFilters({
           <Label htmlFor="end-date" className="text-sm font-medium text-gray-200">
             Date de fin
           </Label>
-          <div className="space-y-2">
-            <Input
-              id="end-date"
-              type="date"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-              className="bg-gray-800 border-gray-700 text-white w-full"
-            />
-            <Button 
-              onClick={onGenerateReport} 
-              className="bg-blue-500 hover:bg-blue-600 w-full"
-            >
-              Générer l'état
-            </Button>
-          </div>
+          <Input
+            id="end-date"
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            className="bg-gray-800 border-gray-700 text-white w-full"
+          />
         </div>
 
         <div className="space-y-2">
@@ -110,17 +102,25 @@ export function PaymentFilters({
           <Label htmlFor="payment-method" className="text-sm font-medium text-gray-200">
             Mode de paiement
           </Label>
-          <Select value={selectedMethod} onValueChange={setSelectedMethod}>
-            <SelectTrigger id="payment-method" className="bg-gray-800 border-gray-700 w-full">
-              <SelectValue placeholder="Mode de paiement" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Tous les modes</SelectItem>
-              <SelectItem value="especes">Espèces</SelectItem>
-              <SelectItem value="cheque">Chèque</SelectItem>
-              <SelectItem value="virement">Virement</SelectItem>
-            </SelectContent>
-          </Select>
+          <div className="flex gap-2">
+            <Select value={selectedMethod} onValueChange={setSelectedMethod}>
+              <SelectTrigger id="payment-method" className="bg-gray-800 border-gray-700 w-full">
+                <SelectValue placeholder="Mode de paiement" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Tous les modes</SelectItem>
+                <SelectItem value="especes">Espèces</SelectItem>
+                <SelectItem value="cheque">Chèque</SelectItem>
+                <SelectItem value="virement">Virement</SelectItem>
+              </SelectContent>
+            </Select>
+            <Button 
+              onClick={onGenerateReport} 
+              className="bg-blue-500 hover:bg-blue-600 whitespace-nowrap"
+            >
+              Générer l'état
+            </Button>
+          </div>
         </div>
       </div>
     </div>
