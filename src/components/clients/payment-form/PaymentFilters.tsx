@@ -32,13 +32,29 @@ export function PaymentFilters({
   onGenerateReport
 }: PaymentFiltersProps) {
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-2 mb-4">
+    <div className="space-y-4">
+      <div className="flex items-center gap-2">
         <Filter className="h-4 w-4" />
         <span className="font-medium">Filtres</span>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="space-y-2">
+          <Label htmlFor="client-select" className="text-sm font-medium text-gray-200">
+            Client
+          </Label>
+          <Select value={selectedClient} onValueChange={setSelectedClient}>
+            <SelectTrigger id="client-select" className="bg-gray-800 border-gray-700">
+              <SelectValue placeholder="Sélectionner un client" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Tous les clients</SelectItem>
+              <SelectItem value="Client A">Client A</SelectItem>
+              <SelectItem value="Client B">Client B</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
         <div className="space-y-2">
           <Label htmlFor="period-type" className="text-sm font-medium text-gray-200">
             Type de période
@@ -52,48 +68,6 @@ export function PaymentFilters({
               <SelectItem value="week">Par semaine</SelectItem>
               <SelectItem value="month">Par mois</SelectItem>
               <SelectItem value="year">Par année</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="start-date" className="text-sm font-medium text-gray-200">
-            Date de début
-          </Label>
-          <Input
-            id="start-date"
-            type="date"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-            className="bg-gray-800 border-gray-700 text-white"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="end-date" className="text-sm font-medium text-gray-200">
-            Date de fin
-          </Label>
-          <Input
-            id="end-date"
-            type="date"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-            className="bg-gray-800 border-gray-700 text-white"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="client-select" className="text-sm font-medium text-gray-200">
-            Client
-          </Label>
-          <Select value={selectedClient} onValueChange={setSelectedClient}>
-            <SelectTrigger id="client-select" className="bg-gray-800 border-gray-700">
-              <SelectValue placeholder="Sélectionner un client" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Tous les clients</SelectItem>
-              <SelectItem value="Client A">Client A</SelectItem>
-              <SelectItem value="Client B">Client B</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -121,6 +95,32 @@ export function PaymentFilters({
               Générer l'état
             </Button>
           </div>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="start-date" className="text-sm font-medium text-gray-200">
+            Date de début
+          </Label>
+          <Input
+            id="start-date"
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            className="bg-gray-800 border-gray-700 text-white"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="end-date" className="text-sm font-medium text-gray-200">
+            Date de fin
+          </Label>
+          <Input
+            id="end-date"
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            className="bg-gray-800 border-gray-700 text-white"
+          />
         </div>
       </div>
     </div>
