@@ -52,6 +52,11 @@ export function BillingListWidget() {
     }
   };
 
+  const handleCreateInvoice = () => {
+    console.log("Ouverture du dialogue de création de facture");
+    setShowCreateDialog(true);
+  };
+
   const getStatusColor = (status: Invoice["status"]) => {
     const colors = {
       pending: "bg-yellow-500/20 text-yellow-400",
@@ -88,7 +93,7 @@ export function BillingListWidget() {
               Gestion des Factures
             </CardTitle>
             <Button 
-              onClick={() => setShowCreateDialog(true)}
+              onClick={handleCreateInvoice}
               variant="outline" 
               size="lg"
               className="text-white bg-gray-800/50 border-gray-700/50 hover:bg-gray-700/50 px-6"
