@@ -81,28 +81,31 @@ export function InvoiceDetailsDialog({
             <div className="flex gap-2">
               <Button
                 variant="outline"
+                size="lg"
                 onClick={handleValidateInvoice}
-                className="bg-green-500/10 hover:bg-green-500/20 border-white text-green-400 hover:text-green-300"
+                className="bg-green-500/10 hover:bg-green-500/20 border-white text-green-400 hover:text-green-300 px-6"
               >
-                <Check className="h-4 w-4 mr-2" />
+                <Check className="h-5 w-5 mr-2" />
                 Valider
               </Button>
             </div>
             <div className="flex gap-2">
               <Button
                 variant="outline"
+                size="lg"
                 onClick={handleDownloadInvoice}
-                className="bg-[#9b87f5]/10 hover:bg-[#9b87f5]/20 border-white text-[#9b87f5] hover:text-[#7E69AB] transition-all duration-200"
+                className="bg-[#9b87f5]/10 hover:bg-[#9b87f5]/20 border-white text-[#9b87f5] hover:text-[#7E69AB] px-6 transition-all duration-200"
               >
-                <DollarSign className="h-4 w-4 mr-2" />
+                <DollarSign className="h-5 w-5 mr-2" />
                 Télécharger
               </Button>
               <Button
                 variant="outline"
+                size="lg"
                 onClick={handlePrintInvoice}
-                className="bg-[#9b87f5]/10 hover:bg-[#9b87f5]/20 border-white text-[#9b87f5] hover:text-[#7E69AB] transition-all duration-200"
+                className="bg-[#9b87f5]/10 hover:bg-[#9b87f5]/20 border-white text-[#9b87f5] hover:text-[#7E69AB] px-6 transition-all duration-200"
               >
-                <Printer className="h-4 w-4 mr-2" />
+                <Printer className="h-5 w-5 mr-2" />
                 Imprimer
               </Button>
             </div>
