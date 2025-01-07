@@ -7,7 +7,7 @@ const expensesData = [
   { name: 'Matériaux', value: 400000, color: '#10B981' },
   { name: 'Main d\'œuvre', value: 300000, color: '#3B82F6' },
   { name: 'Transport', value: 200000, color: '#F59E0B' },
-  { name: 'Équipement', value: 150000, color: '#6366F1' },
+  { name: 'Équipement', value: 150000, color: '#8B5CF6' },
   { name: 'Autres', value: 100000, color: '#EC4899' },
 ];
 
