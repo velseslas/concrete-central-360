@@ -1,8 +1,14 @@
 import { motion } from "framer-motion";
+import { ClientPaymentsWidget } from "@/components/payments/widgets/ClientPaymentsWidget";
+import { SupplierPaymentsWidget } from "@/components/payments/widgets/SupplierPaymentsWidget";
 import { PaymentStatsWidget } from "@/components/payments/widgets/PaymentStatsWidget";
 import { PaymentOverviewWidget } from "@/components/payments/widgets/PaymentOverviewWidget";
 import { PaymentHistoryWidget } from "@/components/payments/widgets/PaymentHistoryWidget";
 import { PaymentReportsWidget } from "@/components/payments/widgets/PaymentReportsWidget";
+import { BillingListWidget } from "@/components/finance/widgets/BillingListWidget";
+import { BillingReportsWidget } from "@/components/finance/widgets/BillingReportsWidget";
+import { PaymentTrackingWidget } from "@/components/finance/widgets/PaymentTrackingWidget";
+import { DailyExpenseWidget } from "@/components/finance/widgets/DailyExpenseWidget";
 
 export default function Finance() {
   return (
@@ -27,6 +33,18 @@ export default function Finance() {
           <PaymentHistoryWidget />
           <PaymentReportsWidget />
         </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <ClientPaymentsWidget />
+        <SupplierPaymentsWidget />
+        <BillingListWidget />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <PaymentTrackingWidget />
+        <BillingReportsWidget />
+        <DailyExpenseWidget />
       </div>
     </div>
   );
