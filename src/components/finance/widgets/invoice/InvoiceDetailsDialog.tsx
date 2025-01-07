@@ -22,6 +22,7 @@ export function InvoiceDetailsDialog({
   onStatusChange 
 }: InvoiceDetailsDialogProps) {
   const [showPreview, setShowPreview] = useState(false);
+  const [isValidated, setIsValidated] = useState(false);
 
   const handlePrintInvoice = async () => {
     const invoiceElement = document.getElementById('invoice-preview');
@@ -124,11 +125,12 @@ export function InvoiceDetailsDialog({
   const handleValidateInvoice = () => {
     if (invoice) {
       onStatusChange("paid");
+      setIsValidated(true);
       toast.success(`La facture ${invoice.id} a été validée avec succès`);
     }
   };
 
-  const isValidateEnabled = invoice?.status === "paid";
+  const isValidateEnabled = invoice?.status === "paid" && !isValidated;
 
   return (
     <>
