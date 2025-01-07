@@ -1,32 +1,184 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { FinanceOverviewWidget } from "@/components/finance/widgets/FinanceOverviewWidget";
+import { 
+  DollarSign, 
+  CreditCard, 
+  FileText, 
+  TrendingUp, 
+  PieChart,
+  Receipt,
+  Building2,
+  Factory
+} from "lucide-react";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { CashFlowWidget } from "@/components/finance/CashFlowWidget";
 import { ExpensesWidget } from "@/components/finance/ExpensesWidget";
-import { ComparativeStatsWidget } from "@/components/finance/widgets/ComparativeStatsWidget";
+import { TransactionsWidget } from "@/components/finance/TransactionsWidget";
+import { FinanceStats } from "@/components/finance/FinanceStats";
+import { PaymentTrackingWidget } from "@/components/finance/widgets/PaymentTrackingWidget";
+import { BillingListWidget } from "@/components/finance/widgets/BillingListWidget";
+import { BillingReportsWidget } from "@/components/finance/widgets/BillingReportsWidget";
+import { DailyExpenseWidget } from "@/components/finance/widgets/DailyExpenseWidget";
 
 export default function Finance() {
+  const [activeWidget, setActiveWidget] = useState<string | null>(null);
+
+  const widgets = [
+    {
+      id: 'cashflow',
+      title: 'Flux de Trésorerie',
+      icon: TrendingUp,
+      color: 'text-green-400',
+      component: CashFlowWidget
+    },
+    {
+      id: 'expenses',
+      title: 'Dépenses',
+      icon: PieChart,
+      color: 'text-red-400',
+      component: ExpensesWidget
+    },
+    {
+      id: 'transactions',
+      title: 'Transactions',
+      icon: DollarSign,
+      color: 'text-blue-400',
+      component: TransactionsWidget
+    },
+    {
+      id: 'client-payments',
+      title: 'Paiements Clients',
+      icon: CreditCard,
+      color: 'text-purple-400',
+      component: PaymentTrackingWidget
+    },
+    {
+      id: 'supplier-payments',
+      title: 'Paiements Fournisseurs',
+      icon: Building2,
+      color: 'text-amber-400',
+      component: DailyExpenseWidget
+    },
+    {
+      id: 'billing',
+      title: 'Facturation',
+      icon: Receipt,
+      color: 'text-emerald-400',
+      component: BillingListWidget
+    },
+    {
+      id: 'production',
+      title: 'Production',
+      icon: Factory,
+      color: 'text-indigo-400',
+      component: BillingReportsWidget
+    },
+    {
+      id: 'reports',
+      title: 'Rapports',
+      icon: FileText,
+      color: 'text-gray-400',
+      component: BillingReportsWidget
+    }
+  ];
+
+  const renderContent = () => {
+    if (activeWidget) {
+      const widget = widgets.find(w => w.id === activeWidget);
+      if (widget) {
+        const WidgetComponent = widget.component;
+        return (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="space-y-4"
+          >
+            <div className="flex items-center space-x-2">
+              <button 
+                onClick={() => setActiveWidget(null)}
+                className="text-sm text-gray-300 hover:text-white transition-colors"
+              >
+                ← Retour
+              </button>
+              <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+                {widget.title}
+              </h2>
+            </div>
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+              className="bg-gray-800/50 backdrop-blur-lg border border-gray-700 rounded-lg p-6"
+            >
+              <WidgetComponent />
+            </motion.div>
+          </motion.div>
+        );
+      }
+    }
+
+    return (
+      <>
+        <FinanceStats />
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6"
+        >
+          {widgets.map((widget, index) => {
+            const IconComponent = widget.icon;
+            return (
+              <motion.div
+                key={widget.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+              >
+                <Card 
+                  className="cursor-pointer group hover:scale-105 transition-all duration-300 bg-gray-900/50 backdrop-blur-xl border-gray-800 hover:border-gray-700"
+                  onClick={() => setActiveWidget(widget.id)}
+                >
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-3 text-gray-100">
+                      <div className={`p-2 rounded-lg bg-gray-800/50 group-hover:scale-110 transition-transform duration-300 ${widget.color}`}>
+                        <IconComponent className="h-5 w-5" />
+                      </div>
+                      {widget.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-400">
+                      Gestion de {widget.title.toLowerCase()}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+      </>
+    );
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 p-6 space-y-8">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="flex items-center justify-between"
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+        className="container mx-auto p-6 space-y-6"
       >
-        <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
-          Finance
-        </h1>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className="flex flex-col gap-6"
+        >
+          {renderContent()}
+        </motion.div>
       </motion.div>
-
-      <div className="space-y-8">
-        <FinanceOverviewWidget />
-        
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <CashFlowWidget />
-          <ExpensesWidget />
-        </div>
-
-        <ComparativeStatsWidget />
-      </div>
     </div>
   );
 }
