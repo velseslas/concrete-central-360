@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DollarSign } from "lucide-react";
 import { motion } from "framer-motion";
 import { PaymentForm } from "../PaymentForm";
-import { PaymentPreview } from "./payment/PaymentPreview";
+import { PaymentPreview } from "./PaymentPreview";
 import { PaymentState } from "../payment-form/PaymentState";
 import { Button } from "@/components/ui/button";
 import { ClientPaymentList } from "./payment/ClientPaymentList";
