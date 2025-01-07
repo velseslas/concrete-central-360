@@ -6,14 +6,7 @@ import { FileText, Plus } from "lucide-react";
 import { InvoiceDetailsDialog } from "./invoice/InvoiceDetailsDialog";
 import { CreateInvoiceDialog } from "./invoice/CreateInvoiceDialog";
 import { useToast } from "@/hooks/use-toast";
-
-interface Invoice {
-  id: string;
-  client: string;
-  amount: string;
-  date: string;
-  status: "pending" | "paid" | "overdue" | "validated";
-}
+import { Invoice } from "@/types/invoice";
 
 export function BillingListWidget() {
   const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);

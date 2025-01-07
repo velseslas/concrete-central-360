@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { FileText } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { Invoice } from "@/types/invoice";
 
 interface CreateInvoiceDialogProps {
   open: boolean;
@@ -12,10 +13,12 @@ interface CreateInvoiceDialogProps {
 }
 
 export function CreateInvoiceDialog({ open, onOpenChange }: CreateInvoiceDialogProps) {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<Invoice>({
+    id: "",
     client: "",
     amount: "",
     date: new Date().toISOString().split('T')[0],
+    status: "pending",
   });
 
   const { toast } = useToast();
@@ -28,9 +31,11 @@ export function CreateInvoiceDialog({ open, onOpenChange }: CreateInvoiceDialogP
       description: "Facture créée avec succès"
     });
     setFormData({
+      id: "",
       client: "",
       amount: "",
       date: new Date().toISOString().split('T')[0],
+      status: "pending",
     });
     onOpenChange(false);
   };

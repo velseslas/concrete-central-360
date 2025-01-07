@@ -4,14 +4,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { DollarSign, Printer, Check, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
-
-interface Invoice {
-  id: string;
-  client: string;
-  amount: string;
-  date: string;
-  status: "pending" | "paid" | "overdue";
-}
+import { Invoice } from "@/types/invoice";
 
 interface InvoiceDetailsDialogProps {
   invoice: Invoice | null;
