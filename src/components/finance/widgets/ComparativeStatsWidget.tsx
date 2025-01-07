@@ -59,8 +59,8 @@ export function ComparativeStatsWidget() {
                   formatter={(value: number) => [`${value.toLocaleString()} DA`, '']}
                 />
                 <Legend />
-                <Bar dataKey="Mois Actuel" fill="#3B82F6" />
-                <Bar dataKey="Mois Précédent" fill="#6366F1" />
+                <Bar dataKey="Mois Actuel" fill="#0EA5E9" /> {/* Ocean Blue */}
+                <Bar dataKey="Mois Précédent" fill="#F97316" /> {/* Bright Orange */}
               </BarChart>
             </ResponsiveContainer>
           </div>
