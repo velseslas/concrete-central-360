@@ -4,8 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { FileText, Plus, Search } from "lucide-react";
-import { toast } from "sonner";
 import { InvoiceDetailsDialog } from "./invoice/InvoiceDetailsDialog";
+import { CreateInvoiceDialog } from "./invoice/CreateInvoiceDialog";
 
 interface Invoice {
   id: string;
@@ -18,6 +18,7 @@ interface Invoice {
 export function BillingListWidget() {
   const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
   const [showDetails, setShowDetails] = useState(false);
+  const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   const mockInvoices: Invoice[] = [
@@ -32,10 +33,6 @@ export function BillingListWidget() {
     console.log("Facture sélectionnée:", invoice);
     setSelectedInvoice(invoice);
     setShowDetails(true);
-  };
-
-  const handleCreateInvoice = () => {
-    toast.info("Création d'une nouvelle facture...");
   };
 
   const handleStatusChange = (newStatus: Invoice["status"]) => {
@@ -103,12 +100,12 @@ export function BillingListWidget() {
                 />
               </div>
               <Button 
-                onClick={handleCreateInvoice}
+                onClick={() => setShowCreateDialog(true)}
                 variant="outline" 
-                size="sm" 
-                className="text-white bg-gray-800/50 border-gray-700/50 hover:bg-gray-700/50"
+                size="lg"
+                className="text-white bg-gray-800/50 border-gray-700/50 hover:bg-gray-700/50 px-6"
               >
-                <Plus className="h-4 w-4 mr-2" />
+                <Plus className="h-5 w-5 mr-2" />
                 Nouvelle Facture
               </Button>
             </div>
@@ -156,6 +153,11 @@ export function BillingListWidget() {
         open={showDetails}
         onOpenChange={setShowDetails}
         onStatusChange={handleStatusChange}
+      />
+
+      <CreateInvoiceDialog
+        open={showCreateDialog}
+        onOpenChange={setShowCreateDialog}
       />
     </motion.div>
   );
