@@ -18,7 +18,7 @@ export function CreateInvoiceDialog({ open, onOpenChange }: CreateInvoiceDialogP
     client: "",
     amount: "",
     date: new Date().toISOString().split('T')[0],
-    status: "pending",
+    status: "unpaid",
   });
 
   const { toast } = useToast();
@@ -35,7 +35,7 @@ export function CreateInvoiceDialog({ open, onOpenChange }: CreateInvoiceDialogP
       client: "",
       amount: "",
       date: new Date().toISOString().split('T')[0],
-      status: "pending",
+      status: "unpaid",
     });
     onOpenChange(false);
   };
