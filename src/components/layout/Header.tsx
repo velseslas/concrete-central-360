@@ -2,7 +2,7 @@ import { Bell } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLocation } from "react-router-dom";
 
-const Header = () => {
+export const Header = () => {
   const location = useLocation();
 
   const getPageTitle = (path: string) => {
@@ -95,5 +95,3 @@ const Header = () => {
     </motion.header>
   );
 };
-
-export default Header;
