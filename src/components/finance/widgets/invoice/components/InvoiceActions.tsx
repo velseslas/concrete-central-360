@@ -23,7 +23,8 @@ export function InvoiceActions({
     }
   };
 
-  const isArchiveEnabled = invoice?.status === "paid" && isValidateEnabled;
+  // La facture doit être payée ET validée pour pouvoir être archivée
+  const isArchiveEnabled = invoice?.status === "paid" && !isValidateEnabled;
 
   return (
     <div className="flex justify-between gap-3 pt-4">
