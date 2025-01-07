@@ -1,6 +1,6 @@
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 interface PaymentStateDetailsDialogProps {
   open: boolean;
@@ -33,10 +33,10 @@ export function PaymentStateDetailsDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[800px] h-[600px]">
+      <DialogContent className="max-w-[90vw] md:max-w-[75vw] lg:max-w-[65vw] h-[80vh] bg-gray-900 text-white border border-gray-800">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold">
-            Détails des paiements
+          <DialogTitle className="text-xl font-bold text-white">
+            Détails des Paiements
           </DialogTitle>
         </DialogHeader>
         <div className="flex flex-col h-full space-y-4">
@@ -44,12 +44,12 @@ export function PaymentStateDetailsDialog({
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
                 <p className="text-gray-400">Période: {filters.periodType}</p>
-                <p className="text-gray-400">
-                  Date début: {filters.startDate || "Non définie"}
-                </p>
-                <p className="text-gray-400">
-                  Date fin: {filters.endDate || "Non définie"}
-                </p>
+                {filters.startDate && (
+                  <p className="text-gray-400">Date début: {filters.startDate}</p>
+                )}
+                {filters.endDate && (
+                  <p className="text-gray-400">Date fin: {filters.endDate}</p>
+                )}
               </div>
               <div>
                 <p className="text-gray-400">Client: {filters.client}</p>
@@ -60,44 +60,43 @@ export function PaymentStateDetailsDialog({
             </div>
           </div>
 
-          <ScrollArea className="flex-1 border rounded-lg border-gray-700">
-            <div className="p-4">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="text-white">Date</TableHead>
-                    <TableHead className="text-white">Référence</TableHead>
-                    <TableHead className="text-white">Client</TableHead>
-                    <TableHead className="text-white">Projet</TableHead>
-                    <TableHead className="text-white">Mode</TableHead>
-                    <TableHead className="text-right text-white">Montant</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {payments.map((payment) => (
-                    <TableRow key={payment.id} className="border-b border-gray-700">
-                      <TableCell>{payment.date}</TableCell>
-                      <TableCell>{payment.reference}</TableCell>
-                      <TableCell>{payment.clientName}</TableCell>
-                      <TableCell>{payment.projectName}</TableCell>
-                      <TableCell>{payment.method}</TableCell>
-                      <TableCell className="text-right">
-                        {payment.amount.toLocaleString()} DA
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                  <TableRow className="border-t border-gray-700 font-bold">
-                    <TableCell colSpan={5} className="text-right">
-                      Total:
-                    </TableCell>
+          <ScrollArea className="flex-1 rounded-md border border-gray-700">
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-gray-800 hover:bg-gray-800/90 border-b border-gray-700">
+                  <TableHead className="text-white">Date</TableHead>
+                  <TableHead className="text-white">Référence</TableHead>
+                  <TableHead className="text-white">Client</TableHead>
+                  <TableHead className="text-white">Projet</TableHead>
+                  <TableHead className="text-white">Mode</TableHead>
+                  <TableHead className="text-right text-white">Montant</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {payments.map((payment) => (
+                  <TableRow key={payment.id} className="border-b border-gray-700">
+                    <TableCell>{payment.date}</TableCell>
+                    <TableCell>{payment.reference}</TableCell>
+                    <TableCell>{payment.clientName}</TableCell>
+                    <TableCell>{payment.projectName}</TableCell>
+                    <TableCell>{payment.method}</TableCell>
                     <TableCell className="text-right">
-                      {totalAmount.toLocaleString()} DA
+                      {payment.amount.toLocaleString()} DA
                     </TableCell>
                   </TableRow>
-                </TableBody>
-              </Table>
-            </div>
+                ))}
+              </TableBody>
+            </Table>
           </ScrollArea>
+
+          <div className="p-4 bg-gray-800/50 rounded-lg border border-gray-700">
+            <div className="flex justify-between items-center">
+              <span className="text-lg font-semibold text-white">Total</span>
+              <span className="text-xl font-bold text-blue-400">
+                {totalAmount.toLocaleString()} DA
+              </span>
+            </div>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
