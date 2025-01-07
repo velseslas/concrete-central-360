@@ -176,9 +176,9 @@ export function BillingListWidget() {
                 Télécharger
               </Button>
               <Button
-                variant="default"
+                variant="outline"
                 onClick={handlePrintInvoice}
-                className="bg-[#1EA5E9] hover:bg-[#1EA5E9]/90 text-white shadow-lg hover:shadow-xl transition-all duration-200"
+                className="bg-[#9b87f5]/10 hover:bg-[#9b87f5]/20 border-[#9b87f5]/20 hover:border-[#9b87f5]/30 text-[#9b87f5] hover:text-[#7E69AB] transition-all duration-200"
               >
                 <Printer className="h-4 w-4 mr-2" />
                 Imprimer
