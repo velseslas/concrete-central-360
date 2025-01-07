@@ -116,40 +116,97 @@ export function InvoiceDetailsDialog({
       </Dialog>
 
       <Dialog open={showPreview} onOpenChange={setShowPreview}>
-        <DialogContent className="bg-gray-900/95 backdrop-blur-xl border border-gray-800 text-white max-w-4xl">
+        <DialogContent className="bg-white text-gray-900 max-w-4xl">
           <DialogHeader>
-            <DialogTitle className="text-xl font-bold">
-              Aperçu de la Facture {invoice?.id}
+            <DialogTitle className="text-2xl font-bold border-b pb-4">
+              Facture #{invoice?.id}
             </DialogTitle>
           </DialogHeader>
-          <div className="space-y-6">
-            {/* Aperçu de la facture */}
-            <div className="bg-white text-gray-900 p-8 rounded-lg">
-              <div className="space-y-4">
-                <h2 className="text-2xl font-bold">Facture #{invoice?.id}</h2>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-gray-600">Client</p>
-                    <p className="font-medium">{invoice?.client}</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-gray-600">Date</p>
-                    <p className="font-medium">{invoice?.date}</p>
-                  </div>
-                </div>
-                <div className="mt-8">
-                  <p className="text-gray-600">Montant Total</p>
-                  <p className="text-2xl font-bold">{invoice?.amount}</p>
-                </div>
+          
+          <div className="space-y-8 p-6">
+            {/* En-tête de la facture */}
+            <div className="flex justify-between">
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900">SARL EXEMPLE</h3>
+                <p className="text-gray-600">123 Rue des Entrepreneurs</p>
+                <p className="text-gray-600">16000 Alger, Algérie</p>
+                <p className="text-gray-600">Tél: +213 XX XX XX XX</p>
+              </div>
+              <div className="text-right">
+                <p className="text-gray-600">Date: {invoice?.date}</p>
+                <p className="text-gray-600">Facture N°: {invoice?.id}</p>
+              </div>
+            </div>
+
+            {/* Informations client */}
+            <div className="border-t border-b py-4">
+              <h4 className="font-semibold mb-2">Facturé à:</h4>
+              <p className="font-medium">{invoice?.client}</p>
+              <p className="text-gray-600">Adresse du client</p>
+              <p className="text-gray-600">Ville, Code postal</p>
+            </div>
+
+            {/* Détails de la facture */}
+            <div className="border rounded-lg overflow-hidden">
+              <table className="w-full">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Quantité</th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Prix unitaire</th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Total</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  <tr>
+                    <td className="px-6 py-4">Service de construction</td>
+                    <td className="px-6 py-4 text-right">1</td>
+                    <td className="px-6 py-4 text-right">150,000 DA</td>
+                    <td className="px-6 py-4 text-right">150,000 DA</td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4">Matériaux</td>
+                    <td className="px-6 py-4 text-right">1</td>
+                    <td className="px-6 py-4 text-right">80,000 DA</td>
+                    <td className="px-6 py-4 text-right">80,000 DA</td>
+                  </tr>
+                </tbody>
+                <tfoot className="bg-gray-50">
+                  <tr>
+                    <td colSpan={3} className="px-6 py-4 text-right font-medium">Total HT</td>
+                    <td className="px-6 py-4 text-right font-medium">230,000 DA</td>
+                  </tr>
+                  <tr>
+                    <td colSpan={3} className="px-6 py-4 text-right font-medium">TVA (19%)</td>
+                    <td className="px-6 py-4 text-right font-medium">43,700 DA</td>
+                  </tr>
+                  <tr>
+                    <td colSpan={3} className="px-6 py-4 text-right font-semibold">Total TTC</td>
+                    <td className="px-6 py-4 text-right font-semibold">273,700 DA</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+
+            {/* Conditions de paiement */}
+            <div className="space-y-4">
+              <div>
+                <h4 className="font-semibold mb-1">Conditions de paiement</h4>
+                <p className="text-gray-600">Paiement à 30 jours</p>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-1">Coordonnées bancaires</h4>
+                <p className="text-gray-600">IBAN: DZ XX XXXX XXXX XXXX XXXX</p>
+                <p className="text-gray-600">BIC: XXXXXXXX</p>
               </div>
             </div>
 
             {/* Boutons d'action */}
-            <div className="flex justify-end gap-3">
+            <div className="flex justify-end gap-3 pt-4 border-t">
               <Button
                 variant="outline"
                 onClick={handleDownloadInvoice}
-                className="bg-[#9b87f5]/10 hover:bg-[#9b87f5]/20 border-white text-[#9b87f5] hover:text-[#7E69AB] px-6"
+                className="bg-gray-100 hover:bg-gray-200 text-gray-900"
               >
                 <DollarSign className="h-5 w-5 mr-2" />
                 Télécharger
@@ -157,7 +214,7 @@ export function InvoiceDetailsDialog({
               <Button
                 variant="outline"
                 onClick={handlePrintInvoice}
-                className="bg-[#9b87f5]/10 hover:bg-[#9b87f5]/20 border-white text-[#9b87f5] hover:text-[#7E69AB] px-6"
+                className="bg-gray-100 hover:bg-gray-200 text-gray-900"
               >
                 <Printer className="h-5 w-5 mr-2" />
                 Imprimer
