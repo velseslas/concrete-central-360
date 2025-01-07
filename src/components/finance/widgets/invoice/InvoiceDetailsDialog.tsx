@@ -32,13 +32,67 @@ export function InvoiceDetailsDialog({
     
     const printWindow = window.open('', '', 'width=800,height=600');
     if (printWindow) {
-      printWindow.document.write('<html><head><title>Impression Facture</title>');
-      printWindow.document.write('</head><body>');
-      printWindow.document.write(invoiceElement.innerHTML);
-      printWindow.document.write('</body></html>');
+      printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title>Impression Facture</title>
+            <style>
+              @page {
+                size: A4;
+                margin: 20mm;
+              }
+              @media print {
+                body {
+                  font-family: Arial, sans-serif;
+                  line-height: 1.5;
+                  color: #000;
+                }
+                table {
+                  width: 100%;
+                  border-collapse: collapse;
+                  margin: 20px 0;
+                }
+                th, td {
+                  padding: 8px;
+                  border: 1px solid #ddd;
+                  text-align: left;
+                }
+                th {
+                  background-color: #f8f9fa;
+                }
+                .header {
+                  margin-bottom: 30px;
+                }
+                .footer {
+                  margin-top: 50px;
+                }
+                .company-info {
+                  margin-bottom: 20px;
+                }
+                .invoice-details {
+                  margin-bottom: 30px;
+                }
+                .total-section {
+                  margin-top: 20px;
+                }
+                .no-print {
+                  display: none !important;
+                }
+              }
+            </style>
+          </head>
+          <body>
+            ${invoiceElement.innerHTML}
+          </body>
+        </html>
+      `);
       printWindow.document.close();
-      printWindow.print();
-      printWindow.close();
+      printWindow.focus();
+      setTimeout(() => {
+        printWindow.print();
+        printWindow.close();
+      }, 250);
     }
     toast.success("Impression de la facture " + invoice?.id);
   };
@@ -149,19 +203,25 @@ export function InvoiceDetailsDialog({
       <Dialog open={showPreview} onOpenChange={setShowPreview}>
         <DialogContent className="bg-white text-gray-900 max-w-3xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-xl font-bold border-b pb-4">
+            <DialogTitle className="text-xl font-bold border-b pb-4 no-print">
               Facture #{invoice?.id}
             </DialogTitle>
           </DialogHeader>
           
           <div id="invoice-preview" className="space-y-6 p-4">
-            {/* En-tête de la facture */}
-            <div className="flex justify-between text-sm">
+            <div className="company-info">
+              <h3 className="text-base font-semibold text-gray-900">SARL EXEMPLE</h3>
+              <p className="text-gray-600">123 Rue des Entrepreneurs</p>
+              <p className="text-gray-600">16000 Alger, Algérie</p>
+              <p className="text-gray-600">Tél: +213 XX XX XX XX</p>
+            </div>
+
+            <div className="invoice-details flex justify-between">
               <div>
-                <h3 className="text-base font-semibold text-gray-900">SARL EXEMPLE</h3>
-                <p className="text-gray-600">123 Rue des Entrepreneurs</p>
-                <p className="text-gray-600">16000 Alger, Algérie</p>
-                <p className="text-gray-600">Tél: +213 XX XX XX XX</p>
+                <h4 className="font-semibold mb-1">Facturé à:</h4>
+                <p className="font-medium">{invoice?.client}</p>
+                <p className="text-gray-600">Adresse du client</p>
+                <p className="text-gray-600">Ville, Code postal</p>
               </div>
               <div className="text-right">
                 <p className="text-gray-600">Date: {invoice?.date}</p>
@@ -169,53 +229,41 @@ export function InvoiceDetailsDialog({
               </div>
             </div>
 
-            {/* Informations client */}
-            <div className="border-t border-b py-3 text-sm">
-              <h4 className="font-semibold mb-1">Facturé à:</h4>
-              <p className="font-medium">{invoice?.client}</p>
-              <p className="text-gray-600">Adresse du client</p>
-              <p className="text-gray-600">Ville, Code postal</p>
-            </div>
+            <table className="w-full border-collapse">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-4 py-2 text-left">Description</th>
+                  <th className="px-4 py-2 text-right">Quantité</th>
+                  <th className="px-4 py-2 text-right">Prix unitaire</th>
+                  <th className="px-4 py-2 text-right">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="px-4 py-2 border">Service de construction</td>
+                  <td className="px-4 py-2 text-right border">1</td>
+                  <td className="px-4 py-2 text-right border">150,000 DA</td>
+                  <td className="px-4 py-2 text-right border">150,000 DA</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colSpan={3} className="px-4 py-2 text-right font-medium border">Total HT</td>
+                  <td className="px-4 py-2 text-right font-medium border">150,000 DA</td>
+                </tr>
+                <tr>
+                  <td colSpan={3} className="px-4 py-2 text-right font-medium border">TVA (19%)</td>
+                  <td className="px-4 py-2 text-right font-medium border">28,500 DA</td>
+                </tr>
+                <tr>
+                  <td colSpan={3} className="px-4 py-2 text-right font-semibold border">Total TTC</td>
+                  <td className="px-4 py-2 text-right font-semibold border">178,500 DA</td>
+                </tr>
+              </tfoot>
+            </table>
 
-            {/* Détails de la facture */}
-            <div className="border rounded-lg overflow-hidden text-sm">
-              <table className="w-full">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500">Description</th>
-                    <th className="px-4 py-2 text-right text-xs font-medium text-gray-500">Quantité</th>
-                    <th className="px-4 py-2 text-right text-xs font-medium text-gray-500">Prix unitaire</th>
-                    <th className="px-4 py-2 text-right text-xs font-medium text-gray-500">Total</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  <tr>
-                    <td className="px-4 py-2">Service de construction</td>
-                    <td className="px-4 py-2 text-right">1</td>
-                    <td className="px-4 py-2 text-right">150,000 DA</td>
-                    <td className="px-4 py-2 text-right">150,000 DA</td>
-                  </tr>
-                </tbody>
-                <tfoot className="bg-gray-50">
-                  <tr>
-                    <td colSpan={3} className="px-4 py-2 text-right font-medium">Total HT</td>
-                    <td className="px-4 py-2 text-right font-medium">150,000 DA</td>
-                  </tr>
-                  <tr>
-                    <td colSpan={3} className="px-4 py-2 text-right font-medium">TVA (19%)</td>
-                    <td className="px-4 py-2 text-right font-medium">28,500 DA</td>
-                  </tr>
-                  <tr>
-                    <td colSpan={3} className="px-4 py-2 text-right font-semibold">Total TTC</td>
-                    <td className="px-4 py-2 text-right font-semibold">178,500 DA</td>
-                  </tr>
-                </tfoot>
-              </table>
-            </div>
-
-            {/* Conditions de paiement */}
-            <div className="space-y-3 text-sm">
-              <div>
+            <div className="footer">
+              <div className="mb-4">
                 <h4 className="font-semibold mb-1">Conditions de paiement</h4>
                 <p className="text-gray-600">Paiement à 30 jours</p>
               </div>
@@ -226,8 +274,7 @@ export function InvoiceDetailsDialog({
               </div>
             </div>
 
-            {/* Boutons d'action */}
-            <div className="flex justify-end gap-3 pt-4 border-t">
+            <div className="flex justify-end gap-3 pt-4 border-t no-print">
               <Button
                 variant="outline"
                 onClick={handleDownloadInvoice}
