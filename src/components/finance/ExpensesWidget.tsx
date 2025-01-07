@@ -44,7 +44,8 @@ export function ExpensesWidget() {
                   contentStyle={{
                     backgroundColor: '#1F2937',
                     border: '1px solid #374151',
-                    borderRadius: '0.375rem'
+                    borderRadius: '0.375rem',
+                    color: '#D6BCFA'  // Nouvelle couleur de texte (Light Purple)
                   }}
                   formatter={(value: number) => `${value.toLocaleString()} DA`}
                 />
