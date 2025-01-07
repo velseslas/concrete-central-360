@@ -161,39 +161,46 @@ export function PaymentState({ payments }: PaymentStateProps) {
             </div>
             <Button 
               variant="outline" 
-              onClick={() => setShowDetails(true)}
-              className="w-full mt-2"
+              onClick={() => {
+                console.log("Opening details dialog");
+                setShowDetails(true);
+              }}
+              className="w-full mt-2 hover:bg-gray-700 hover:text-white transition-colors"
             >
               Voir les détails
             </Button>
           </div>
         </div>
 
-        <PaymentStateDialog
-          open={showDetails}
-          onOpenChange={setShowDetails}
-          payments={filteredPayments}
-          filters={{
-            periodType,
-            startDate,
-            endDate,
-            client: selectedClient,
-            method: selectedMethod
-          }}
-        />
+        {showDetails && (
+          <PaymentStateDialog
+            open={showDetails}
+            onOpenChange={setShowDetails}
+            payments={filteredPayments}
+            filters={{
+              periodType,
+              startDate,
+              endDate,
+              client: selectedClient,
+              method: selectedMethod
+            }}
+          />
+        )}
 
-        <PaymentStatePreview
-          open={showPreview}
-          onOpenChange={setShowPreview}
-          payments={filteredPayments}
-          filters={{
-            periodType,
-            startDate,
-            endDate,
-            client: selectedClient,
-            method: selectedMethod
-          }}
-        />
+        {showPreview && (
+          <PaymentStatePreview
+            open={showPreview}
+            onOpenChange={setShowPreview}
+            payments={filteredPayments}
+            filters={{
+              periodType,
+              startDate,
+              endDate,
+              client: selectedClient,
+              method: selectedMethod
+            }}
+          />
+        )}
       </CardContent>
     </Card>
   );
