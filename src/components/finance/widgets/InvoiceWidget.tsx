@@ -36,11 +36,6 @@ export function InvoiceWidget() {
     setShowDetails(true);
   };
 
-  const handleCreateInvoice = () => {
-    console.log("Ouverture du dialogue de création de facture");
-    setShowCreateDialog(true);
-  };
-
   const handlePrintInvoice = () => {
     toast.success("Impression de la facture " + selectedInvoice?.id);
   };
@@ -80,12 +75,10 @@ export function InvoiceWidget() {
                 />
               </div>
               <Button 
-                onClick={handleCreateInvoice}
-                variant="outline" 
-                size="sm" 
-                className="text-white bg-gray-800/50 border-gray-700/50 hover:bg-gray-700/50"
+                onClick={() => setShowCreateDialog(true)}
+                className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-md flex items-center gap-2 transition-colors duration-200"
               >
-                <Plus className="h-4 w-4 mr-2" />
+                <Plus className="h-4 w-4" />
                 Nouvelle Facture
               </Button>
             </div>
