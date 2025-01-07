@@ -20,11 +20,11 @@ export function CreateInvoiceDialog({ open, onOpenChange }: CreateInvoiceDialogP
     status: "unpaid" as const,
   });
 
-  console.log("État du dialogue dans CreateInvoiceDialog:", { open, formData });
+  console.log("CreateInvoiceDialog - État du dialogue:", { open, formData });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Soumission du formulaire:", formData);
+    console.log("CreateInvoiceDialog - Soumission du formulaire:", formData);
     toast.success("Facture créée avec succès");
     setFormData({
       id: "",
@@ -36,9 +36,14 @@ export function CreateInvoiceDialog({ open, onOpenChange }: CreateInvoiceDialogP
     onOpenChange(false);
   };
 
+  const handleCancel = () => {
+    console.log("CreateInvoiceDialog - Annulation");
+    onOpenChange(false);
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-gray-900/95 backdrop-blur-xl border border-gray-800 text-white">
+      <DialogContent className="bg-gray-900/95 backdrop-blur-xl border border-gray-800 text-white sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold flex items-center gap-2">
             <FileText className="h-5 w-5 text-blue-400" />
@@ -53,7 +58,7 @@ export function CreateInvoiceDialog({ open, onOpenChange }: CreateInvoiceDialogP
                 id="client"
                 value={formData.client}
                 onChange={(e) => setFormData({ ...formData, client: e.target.value })}
-                className="bg-gray-800/50 border-gray-700 text-white"
+                className="bg-gray-800/50 border-gray-700 text-white mt-1.5"
                 required
               />
             </div>
@@ -64,7 +69,7 @@ export function CreateInvoiceDialog({ open, onOpenChange }: CreateInvoiceDialogP
                 type="text"
                 value={formData.amount}
                 onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
-                className="bg-gray-800/50 border-gray-700 text-white"
+                className="bg-gray-800/50 border-gray-700 text-white mt-1.5"
                 required
                 pattern="[0-9,\.]+"
               />
@@ -76,7 +81,7 @@ export function CreateInvoiceDialog({ open, onOpenChange }: CreateInvoiceDialogP
                 type="date"
                 value={formData.date}
                 onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                className="bg-gray-800/50 border-gray-700 text-white"
+                className="bg-gray-800/50 border-gray-700 text-white mt-1.5"
                 required
               />
             </div>
@@ -85,7 +90,7 @@ export function CreateInvoiceDialog({ open, onOpenChange }: CreateInvoiceDialogP
             <Button
               type="button"
               variant="outline"
-              onClick={() => onOpenChange(false)}
+              onClick={handleCancel}
               className="bg-gray-800/50 border-gray-700 hover:bg-gray-700 text-white"
             >
               Annuler
