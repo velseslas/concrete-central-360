@@ -2,7 +2,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
-interface PaymentStateDialogProps {
+interface PaymentStateDetailsDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   payments: Array<{
@@ -28,7 +28,7 @@ export function PaymentStateDetailsDialog({
   onOpenChange,
   payments,
   filters,
-}: PaymentStateDialogProps) {
+}: PaymentStateDetailsDialogProps) {
   const totalAmount = payments.reduce((sum, payment) => sum + payment.amount, 0);
 
   return (
@@ -41,23 +41,21 @@ export function PaymentStateDetailsDialog({
         </DialogHeader>
         <div className="flex flex-col h-full space-y-4">
           <div className="p-4 bg-gray-800/50 rounded-lg border border-gray-700">
-            <h3 className="text-lg font-semibold mb-2">Filtres appliqués</h3>
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
-                <span className="text-gray-400">Période:</span>{" "}
-                <span className="text-white">{filters.periodType}</span>
+                <p className="text-gray-400">Période: {filters.periodType}</p>
+                {filters.startDate && (
+                  <p className="text-gray-400">Date début: {filters.startDate}</p>
+                )}
+                {filters.endDate && (
+                  <p className="text-gray-400">Date fin: {filters.endDate}</p>
+                )}
               </div>
               <div>
-                <span className="text-gray-400">Client:</span>{" "}
-                <span className="text-white">{filters.client}</span>
-              </div>
-              <div>
-                <span className="text-gray-400">Date début:</span>{" "}
-                <span className="text-white">{filters.startDate || "Non définie"}</span>
-              </div>
-              <div>
-                <span className="text-gray-400">Date fin:</span>{" "}
-                <span className="text-white">{filters.endDate || "Non définie"}</span>
+                <p className="text-gray-400">Client: {filters.client}</p>
+                <p className="text-gray-400">
+                  Mode de paiement: {filters.method}
+                </p>
               </div>
             </div>
           </div>
@@ -70,22 +68,19 @@ export function PaymentStateDetailsDialog({
                   <TableHead className="text-white">Référence</TableHead>
                   <TableHead className="text-white">Client</TableHead>
                   <TableHead className="text-white">Projet</TableHead>
-                  <TableHead className="text-white">Méthode</TableHead>
+                  <TableHead className="text-white">Mode</TableHead>
                   <TableHead className="text-right text-white">Montant</TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody className="bg-gray-900">
+              <TableBody>
                 {payments.map((payment) => (
-                  <TableRow
-                    key={payment.id}
-                    className="border-b border-gray-800 hover:bg-gray-800/50"
-                  >
-                    <TableCell className="text-white">{payment.date}</TableCell>
-                    <TableCell className="text-white">{payment.reference}</TableCell>
-                    <TableCell className="text-white">{payment.clientName}</TableCell>
-                    <TableCell className="text-white">{payment.projectName}</TableCell>
-                    <TableCell className="text-white">{payment.method}</TableCell>
-                    <TableCell className="text-right text-white">
+                  <TableRow key={payment.id} className="border-b border-gray-700">
+                    <TableCell>{payment.date}</TableCell>
+                    <TableCell>{payment.reference}</TableCell>
+                    <TableCell>{payment.clientName}</TableCell>
+                    <TableCell>{payment.projectName}</TableCell>
+                    <TableCell>{payment.method}</TableCell>
+                    <TableCell className="text-right">
                       {payment.amount.toLocaleString()} DA
                     </TableCell>
                   </TableRow>
