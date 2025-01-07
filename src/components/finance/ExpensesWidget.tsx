@@ -61,19 +61,19 @@ export function ExpensesWidget() {
           <Table>
             <TableHeader>
               <TableRow className="border-gray-700">
-                <TableHead className="text-gray-300">Catégorie</TableHead>
-                <TableHead className="text-right text-gray-300">Montant</TableHead>
-                <TableHead className="text-right text-gray-300">%</TableHead>
+                <TableHead className="text-purple-300">Catégorie</TableHead>
+                <TableHead className="text-right text-purple-300">Montant</TableHead>
+                <TableHead className="text-right text-purple-300">%</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {expensesData.map((item) => (
                 <TableRow key={item.name} className="border-gray-700">
-                  <TableCell className="text-gray-300">{item.name}</TableCell>
-                  <TableCell className="text-right text-gray-300">
+                  <TableCell className="text-purple-300">{item.name}</TableCell>
+                  <TableCell className="text-right text-purple-300">
                     {item.value.toLocaleString()} DA
                   </TableCell>
-                  <TableCell className="text-right text-gray-300">
+                  <TableCell className="text-right text-purple-300">
                     {((item.value / total) * 100).toFixed(1)}%
                   </TableCell>
                 </TableRow>
