@@ -37,9 +37,10 @@ function App() {
                   <Route path="/vehicles" element={<Vehicles />} />
                   <Route path="/expenses" element={<Expenses />} />
                   <Route path="/production" element={<Production />} />
-                  <Route path="/invoices" element={<Invoices />} />
-                  <Route path="/finance" element={<Finance />} />
                   <Route path="/payments" element={<Payments />} />
+                  <Route path="/payments/clients" element={<Payments />} />
+                  <Route path="/payments/suppliers" element={<Payments />} />
+                  <Route path="/payments/invoices" element={<Invoices />} />
                 </Routes>
               </main>
             </div>

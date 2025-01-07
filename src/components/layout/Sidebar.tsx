@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { 
   Home, Users, TestTube, Truck, Car, 
-  DollarSign, FileSpreadsheet, Factory
+  DollarSign, FileSpreadsheet, Factory, Receipt
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -17,7 +17,17 @@ const Sidebar = () => {
     { to: "/suppliers", icon: Truck, label: "Fournisseurs", iconColor: "text-yellow-500" },
     { to: "/vehicles", icon: Car, label: "Parc roulant", iconColor: "text-red-500" },
     { to: "/expenses", icon: DollarSign, label: "Dépenses", iconColor: "text-emerald-500" },
-    { to: "/invoices", icon: FileSpreadsheet, label: "Finance", iconColor: "text-indigo-500" },
+    { 
+      to: "/payments", 
+      icon: Receipt, 
+      label: "Paiements & Factures",
+      iconColor: "text-indigo-500",
+      subItems: [
+        { to: "/payments/clients", label: "Paiements Clients" },
+        { to: "/payments/suppliers", label: "Paiements Fournisseurs" },
+        { to: "/payments/invoices", label: "Facturation" }
+      ]
+    },
   ];
 
   return (
@@ -45,7 +55,8 @@ const Sidebar = () => {
       <nav className="space-y-1">
         {menuItems.map((item, index) => {
           const Icon = item.icon;
-          const isActive = location.pathname === item.to;
+          const isActive = location.pathname === item.to || 
+                          (item.subItems?.some(sub => location.pathname === sub.to));
           
           return (
             <motion.div
@@ -53,6 +64,7 @@ const Sidebar = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.05 }}
+              className="flex flex-col"
             >
               <Link
                 to={item.to}
@@ -81,6 +93,25 @@ const Sidebar = () => {
                   />
                 )}
               </Link>
+
+              {item.subItems && (
+                <div className="ml-12 mt-1 space-y-1">
+                  {item.subItems.map((subItem) => (
+                    <Link
+                      key={subItem.to}
+                      to={subItem.to}
+                      className={cn(
+                        "block px-4 py-2 text-sm rounded-lg transition-colors duration-200",
+                        location.pathname === subItem.to
+                          ? "text-white bg-gray-800/50"
+                          : "text-gray-400 hover:text-white hover:bg-gray-800/30"
+                      )}
+                    >
+                      {subItem.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </motion.div>
           );
         })}
