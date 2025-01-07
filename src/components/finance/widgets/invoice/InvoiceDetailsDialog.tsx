@@ -5,6 +5,8 @@ import { DollarSign, Printer, Check, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
 import { Invoice } from "@/types/invoice";
+import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
 
 interface InvoiceDetailsDialogProps {
   invoice: Invoice | null;
@@ -21,12 +23,48 @@ export function InvoiceDetailsDialog({
 }: InvoiceDetailsDialogProps) {
   const [showPreview, setShowPreview] = useState(false);
 
-  const handlePrintInvoice = () => {
+  const handlePrintInvoice = async () => {
+    const invoiceElement = document.getElementById('invoice-preview');
+    if (!invoiceElement) {
+      toast.error("Erreur lors de l'impression");
+      return;
+    }
+    
+    const printWindow = window.open('', '', 'width=800,height=600');
+    if (printWindow) {
+      printWindow.document.write('<html><head><title>Impression Facture</title>');
+      printWindow.document.write('</head><body>');
+      printWindow.document.write(invoiceElement.innerHTML);
+      printWindow.document.write('</body></html>');
+      printWindow.document.close();
+      printWindow.print();
+      printWindow.close();
+    }
     toast.success("Impression de la facture " + invoice?.id);
   };
 
-  const handleDownloadInvoice = () => {
-    toast.success("Téléchargement de la facture " + invoice?.id);
+  const handleDownloadInvoice = async () => {
+    const invoiceElement = document.getElementById('invoice-preview');
+    if (!invoiceElement) {
+      toast.error("Erreur lors du téléchargement");
+      return;
+    }
+
+    try {
+      const canvas = await html2canvas(invoiceElement);
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const imgData = canvas.toDataURL('image/png');
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save(`facture-${invoice?.id}.pdf`);
+      
+      toast.success("Téléchargement de la facture " + invoice?.id);
+    } catch (error) {
+      console.error('Erreur lors de la génération du PDF:', error);
+      toast.error("Erreur lors du téléchargement du PDF");
+    }
   };
 
   const handleValidateInvoice = () => {
@@ -116,7 +154,7 @@ export function InvoiceDetailsDialog({
             </DialogTitle>
           </DialogHeader>
           
-          <div className="space-y-6 p-4">
+          <div id="invoice-preview" className="space-y-6 p-4">
             {/* En-tête de la facture */}
             <div className="flex justify-between text-sm">
               <div>
@@ -157,25 +195,19 @@ export function InvoiceDetailsDialog({
                     <td className="px-4 py-2 text-right">150,000 DA</td>
                     <td className="px-4 py-2 text-right">150,000 DA</td>
                   </tr>
-                  <tr>
-                    <td className="px-4 py-2">Matériaux</td>
-                    <td className="px-4 py-2 text-right">1</td>
-                    <td className="px-4 py-2 text-right">80,000 DA</td>
-                    <td className="px-4 py-2 text-right">80,000 DA</td>
-                  </tr>
                 </tbody>
                 <tfoot className="bg-gray-50">
                   <tr>
                     <td colSpan={3} className="px-4 py-2 text-right font-medium">Total HT</td>
-                    <td className="px-4 py-2 text-right font-medium">230,000 DA</td>
+                    <td className="px-4 py-2 text-right font-medium">150,000 DA</td>
                   </tr>
                   <tr>
                     <td colSpan={3} className="px-4 py-2 text-right font-medium">TVA (19%)</td>
-                    <td className="px-4 py-2 text-right font-medium">43,700 DA</td>
+                    <td className="px-4 py-2 text-right font-medium">28,500 DA</td>
                   </tr>
                   <tr>
                     <td colSpan={3} className="px-4 py-2 text-right font-semibold">Total TTC</td>
-                    <td className="px-4 py-2 text-right font-semibold">273,700 DA</td>
+                    <td className="px-4 py-2 text-right font-semibold">178,500 DA</td>
                   </tr>
                 </tfoot>
               </table>
