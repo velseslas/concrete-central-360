@@ -93,40 +93,57 @@ export default function ClientPayments() {
 
   const handleDocumentClick = (document: string) => {
     console.log("Opening document:", document);
-    // Implémenter la logique d'ouverture du document
   };
 
   return (
-    <div className="container mx-auto p-6 space-y-8">
+    <div className="container mx-auto p-6 min-h-screen bg-gray-900/95">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
         className="space-y-8"
       >
-        <h1 className="text-2xl font-bold text-white">
-          Paiements Clients
-        </h1>
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-bold text-white">
+            Paiements Clients
+          </h1>
+        </div>
 
         <div className="grid grid-cols-1 gap-8">
-          <PaymentState payments={mockPayments} />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+          >
+            <PaymentState payments={mockPayments} />
+          </motion.div>
           
-          <div className="space-y-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="space-y-4"
+          >
             <h2 className="text-xl font-semibold text-white">
               Historique des Paiements par Client
             </h2>
-            <ClientPaymentList 
-              clients={mockClients}
-              onViewDetails={handleViewDetails}
-            />
-          </div>
+            <div className="bg-gray-800/50 rounded-lg p-4 backdrop-blur-sm border border-gray-700/50">
+              <ClientPaymentList 
+                clients={mockClients}
+                onViewDetails={handleViewDetails}
+              />
+            </div>
+          </motion.div>
         </div>
 
-        <PaymentDetails
-          open={showPaymentDetails}
-          onOpenChange={setShowPaymentDetails}
-          selectedClient={selectedClient}
-          onDocumentClick={handleDocumentClick}
-        />
+        {showPaymentDetails && (
+          <PaymentDetails
+            open={showPaymentDetails}
+            onOpenChange={setShowPaymentDetails}
+            selectedClient={selectedClient}
+            onDocumentClick={handleDocumentClick}
+          />
+        )}
       </motion.div>
     </div>
   );
