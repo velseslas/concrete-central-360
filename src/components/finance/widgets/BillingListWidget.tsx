@@ -35,6 +35,11 @@ export function BillingListWidget() {
     setShowDetails(true);
   };
 
+  const handleCreateInvoice = () => {
+    console.log("Opening create invoice dialog");
+    setShowCreateDialog(true);
+  };
+
   const handleStatusChange = (newStatus: Invoice["status"]) => {
     if (selectedInvoice) {
       const statusMessages = {
@@ -50,11 +55,6 @@ export function BillingListWidget() {
       });
       setSelectedInvoice({ ...selectedInvoice, status: newStatus });
     }
-  };
-
-  const handleCreateInvoice = () => {
-    console.log("Ouverture du dialogue de création de facture");
-    setShowCreateDialog(true);
   };
 
   const getStatusColor = (status: Invoice["status"]) => {
