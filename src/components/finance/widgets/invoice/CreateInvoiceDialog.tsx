@@ -35,6 +35,8 @@ export function CreateInvoiceDialog({ open, onOpenChange }: CreateInvoiceDialogP
     onOpenChange(false);
   };
 
+  console.log("État du dialogue:", { open });
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-gray-900/95 backdrop-blur-xl border border-gray-800 text-white">

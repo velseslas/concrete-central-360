@@ -36,7 +36,7 @@ export function BillingListWidget() {
   };
 
   const handleCreateInvoice = () => {
-    console.log("Ouverture du dialogue de création de facture");
+    console.log("Tentative d'ouverture du dialogue de création");
     setShowCreateDialog(true);
   };
 
@@ -93,7 +93,10 @@ export function BillingListWidget() {
               Gestion des Factures
             </CardTitle>
             <Button 
-              onClick={handleCreateInvoice}
+              onClick={() => {
+                console.log("Clic sur le bouton Nouvelle Facture");
+                handleCreateInvoice();
+              }}
               variant="outline" 
               size="lg"
               className="text-white bg-gray-800/50 border-gray-700/50 hover:bg-gray-700/50 px-6"
@@ -147,10 +150,12 @@ export function BillingListWidget() {
         onStatusChange={handleStatusChange}
       />
 
-      <CreateInvoiceDialog
-        open={showCreateDialog}
-        onOpenChange={setShowCreateDialog}
-      />
+      {showCreateDialog && (
+        <CreateInvoiceDialog
+          open={showCreateDialog}
+          onOpenChange={setShowCreateDialog}
+        />
+      )}
     </motion.div>
   );
 }
