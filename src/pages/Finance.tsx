@@ -1,50 +1,52 @@
 import { motion } from "framer-motion";
-import { ClientPaymentsWidget } from "@/components/payments/widgets/ClientPaymentsWidget";
-import { SupplierPaymentsWidget } from "@/components/payments/widgets/SupplierPaymentsWidget";
-import { PaymentStatsWidget } from "@/components/payments/widgets/PaymentStatsWidget";
-import { PaymentOverviewWidget } from "@/components/payments/widgets/PaymentOverviewWidget";
-import { PaymentHistoryWidget } from "@/components/payments/widgets/PaymentHistoryWidget";
-import { PaymentReportsWidget } from "@/components/payments/widgets/PaymentReportsWidget";
+import { FinanceOverviewWidget } from "@/components/finance/widgets/FinanceOverviewWidget";
 import { BillingListWidget } from "@/components/finance/widgets/BillingListWidget";
 import { BillingReportsWidget } from "@/components/finance/widgets/BillingReportsWidget";
 import { PaymentTrackingWidget } from "@/components/finance/widgets/PaymentTrackingWidget";
 import { DailyExpenseWidget } from "@/components/finance/widgets/DailyExpenseWidget";
+import { TransactionsWidget } from "@/components/finance/TransactionsWidget";
+import { CashFlowWidget } from "@/components/finance/CashFlowWidget";
+import { ExpensesWidget } from "@/components/finance/ExpensesWidget";
 
 export default function Finance() {
   return (
-    <div className="space-y-8">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 p-6 space-y-8">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="flex items-center justify-between"
       >
-        <h1 className="text-3xl font-bold text-white">Finance</h1>
+        <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+          Finance
+        </h1>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <PaymentStatsWidget />
-      </div>
+      <div className="space-y-8">
+        {/* Vue d'ensemble */}
+        <FinanceOverviewWidget />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
-          <PaymentOverviewWidget />
+        {/* Graphiques principaux */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <CashFlowWidget />
+          <ExpensesWidget />
         </div>
-        <div className="space-y-6">
-          <PaymentHistoryWidget />
-          <PaymentReportsWidget />
+
+        {/* Widgets de gestion */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <BillingListWidget />
+          </div>
+          <div className="space-y-6">
+            <PaymentTrackingWidget />
+            <BillingReportsWidget />
+          </div>
         </div>
-      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <ClientPaymentsWidget />
-        <SupplierPaymentsWidget />
-        <BillingListWidget />
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <PaymentTrackingWidget />
-        <BillingReportsWidget />
-        <DailyExpenseWidget />
+        {/* Transactions et dépenses */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <TransactionsWidget />
+          <DailyExpenseWidget />
+        </div>
       </div>
     </div>
   );
