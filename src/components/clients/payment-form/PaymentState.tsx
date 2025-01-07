@@ -4,9 +4,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar, Filter } from "lucide-react";
-import { PaymentStateDialog } from "./PaymentStateDialog";
 import { PaymentStatePreview } from "./PaymentStatePreview";
 import { Label } from "@/components/ui/label";
+import { PaymentStateDetailsDialog } from "./PaymentStateDetailsDialog";
 
 interface PaymentStateProps {
   payments: Array<{
@@ -173,7 +173,7 @@ export function PaymentState({ payments }: PaymentStateProps) {
         </div>
 
         {showDetails && (
-          <PaymentStateDialog
+          <PaymentStateDetailsDialog
             open={showDetails}
             onOpenChange={setShowDetails}
             payments={filteredPayments}
