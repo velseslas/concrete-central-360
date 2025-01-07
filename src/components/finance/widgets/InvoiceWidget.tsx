@@ -18,17 +18,20 @@ interface Invoice {
 export function InvoiceWidget() {
   const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
   const [showDetails, setShowDetails] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const mockInvoices: Invoice[] = [
-    { id: "FA-2024-001", client: "Client A", amount: "150,000 DA", date: "2024-03-15", status: "pending" },
-    { id: "FA-2024-002", client: "Client B", amount: "280,000 DA", date: "2024-03-14", status: "paid" },
-    { id: "FA-2024-003", client: "Client C", amount: "95,000 DA", date: "2024-03-13", status: "overdue" },
+    { id: "FA-2024-001", client: "EURL Construction Plus", amount: "150,000 DA", date: "2024-03-15", status: "pending" },
+    { id: "FA-2024-002", client: "SPA Bâtiment Pro", amount: "280,000 DA", date: "2024-03-14", status: "paid" },
+    { id: "FA-2024-003", client: "SARL Travaux Publics", amount: "95,000 DA", date: "2024-03-13", status: "overdue" },
+    { id: "FA-2024-004", client: "ETS Batiment", amount: "120,000 DA", date: "2024-03-12", status: "pending" },
+    { id: "FA-2024-005", client: "SARL BTP Services", amount: "175,000 DA", date: "2024-03-11", status: "paid" },
   ];
 
   const handleInvoiceClick = (invoice: Invoice) => {
+    console.log("Facture sélectionnée:", invoice);
     setSelectedInvoice(invoice);
     setShowDetails(true);
-    console.log("Selected invoice:", invoice);
   };
 
   const handleCreateInvoice = () => {
@@ -40,6 +43,16 @@ export function InvoiceWidget() {
     toast.success("Impression de la facture " + selectedInvoice?.id);
     // Logique d'impression à implémenter
   };
+
+  const handleDownloadInvoice = () => {
+    toast.success("Téléchargement de la facture " + selectedInvoice?.id);
+    // Logique de téléchargement à implémenter
+  };
+
+  const filteredInvoices = mockInvoices.filter(invoice => 
+    invoice.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    invoice.client.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <motion.div
@@ -54,7 +67,7 @@ export function InvoiceWidget() {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <CardTitle className="text-white flex items-center gap-2">
               <FileText className="h-6 w-6 text-blue-400" />
-              Facturation
+              Gestion des Factures
             </CardTitle>
             <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
               <div className="relative flex-grow md:w-64">
@@ -62,6 +75,8 @@ export function InvoiceWidget() {
                 <Input 
                   placeholder="Rechercher une facture..." 
                   className="pl-9 bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-400"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
               <Button 
@@ -78,7 +93,7 @@ export function InvoiceWidget() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {mockInvoices.map((invoice) => (
+            {filteredInvoices.map((invoice) => (
               <motion.div
                 key={invoice.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -155,6 +170,14 @@ export function InvoiceWidget() {
               </div>
             </div>
             <div className="flex justify-end gap-2">
+              <Button
+                variant="outline"
+                onClick={handleDownloadInvoice}
+                className="text-white"
+              >
+                <DollarSign className="h-4 w-4 mr-2" />
+                Télécharger
+              </Button>
               <Button
                 variant="outline"
                 onClick={handlePrintInvoice}
