@@ -6,25 +6,27 @@ import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState } from "react";
 import { toast } from "sonner";
+import { CreateInvoiceDialog } from "./invoice/CreateInvoiceDialog";
 
 interface Invoice {
   id: string;
   client: string;
   amount: string;
   date: string;
-  status: "pending" | "paid" | "overdue";
+  status: "paid" | "unpaid";
 }
 
 export function InvoiceWidget() {
   const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
   const [showDetails, setShowDetails] = useState(false);
+  const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   const mockInvoices: Invoice[] = [
-    { id: "FA-2024-001", client: "EURL Construction Plus", amount: "150,000 DA", date: "2024-03-15", status: "pending" },
+    { id: "FA-2024-001", client: "EURL Construction Plus", amount: "150,000 DA", date: "2024-03-15", status: "unpaid" },
     { id: "FA-2024-002", client: "SPA Bâtiment Pro", amount: "280,000 DA", date: "2024-03-14", status: "paid" },
-    { id: "FA-2024-003", client: "SARL Travaux Publics", amount: "95,000 DA", date: "2024-03-13", status: "overdue" },
-    { id: "FA-2024-004", client: "ETS Batiment", amount: "120,000 DA", date: "2024-03-12", status: "pending" },
+    { id: "FA-2024-003", client: "SARL Travaux Publics", amount: "95,000 DA", date: "2024-03-13", status: "unpaid" },
+    { id: "FA-2024-004", client: "ETS Batiment", amount: "120,000 DA", date: "2024-03-12", status: "unpaid" },
     { id: "FA-2024-005", client: "SARL BTP Services", amount: "175,000 DA", date: "2024-03-11", status: "paid" },
   ];
 
@@ -35,7 +37,8 @@ export function InvoiceWidget() {
   };
 
   const handleCreateInvoice = () => {
-    toast.info("Création d'une nouvelle facture...");
+    console.log("Ouverture du dialogue de création de facture");
+    setShowCreateDialog(true);
   };
 
   const handlePrintInvoice = () => {
@@ -115,12 +118,9 @@ export function InvoiceWidget() {
                     <div>
                       <span className={`px-3 py-1 rounded-full text-sm font-medium ${
                         invoice.status === "paid" ? "bg-green-500/20 text-green-400" :
-                        invoice.status === "overdue" ? "bg-red-500/20 text-red-400" :
-                        "bg-yellow-500/20 text-yellow-400"
+                        "bg-red-500/20 text-red-400"
                       }`}>
-                        {invoice.status === "paid" ? "Payée" :
-                         invoice.status === "overdue" ? "En retard" :
-                         "En attente"}
+                        {invoice.status === "paid" ? "Payée" : "Impayée"}
                       </span>
                     </div>
                   </div>
@@ -157,12 +157,9 @@ export function InvoiceWidget() {
                 <p className="text-gray-400">Statut</p>
                 <span className={`px-3 py-1 rounded-full text-sm font-medium ${
                   selectedInvoice?.status === "paid" ? "bg-green-500/20 text-green-400" :
-                  selectedInvoice?.status === "overdue" ? "bg-red-500/20 text-red-400" :
-                  "bg-yellow-500/20 text-yellow-400"
+                  "bg-red-500/20 text-red-400"
                 }`}>
-                  {selectedInvoice?.status === "paid" ? "Payée" :
-                   selectedInvoice?.status === "overdue" ? "En retard" :
-                   "En attente"}
+                  {selectedInvoice?.status === "paid" ? "Payée" : "Impayée"}
                 </span>
               </div>
             </div>
@@ -187,6 +184,11 @@ export function InvoiceWidget() {
           </div>
         </DialogContent>
       </Dialog>
+
+      <CreateInvoiceDialog 
+        open={showCreateDialog} 
+        onOpenChange={setShowCreateDialog}
+      />
     </motion.div>
   );
 }
