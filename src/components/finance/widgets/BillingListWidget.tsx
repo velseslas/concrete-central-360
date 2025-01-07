@@ -3,16 +3,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { FileText, Plus, Search, DollarSign, Printer } from "lucide-react";
+import { FileText, Plus, Search, DollarSign, Printer, Check, X } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { toast } from "sonner";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface Invoice {
   id: string;
   client: string;
   amount: string;
   date: string;
-  status: "pending" | "paid" | "overdue";
+  status: "pending" | "paid" | "overdue" | "validated" | "rejected";
 }
 
 export function BillingListWidget() {
@@ -46,10 +47,61 @@ export function BillingListWidget() {
     toast.success("Téléchargement de la facture " + selectedInvoice?.id);
   };
 
+  const handleStatusChange = (newStatus: Invoice["status"]) => {
+    if (selectedInvoice) {
+      const statusMessages = {
+        pending: "En attente de validation",
+        paid: "Marquée comme payée",
+        overdue: "Marquée comme en retard",
+        validated: "Facture validée",
+        rejected: "Facture rejetée"
+      };
+
+      toast.success(`Facture ${selectedInvoice.id} : ${statusMessages[newStatus]}`);
+      setSelectedInvoice({ ...selectedInvoice, status: newStatus });
+    }
+  };
+
+  const handleValidateInvoice = () => {
+    if (selectedInvoice) {
+      handleStatusChange("validated");
+      toast.success(`La facture ${selectedInvoice.id} a été validée avec succès`);
+    }
+  };
+
+  const handleRejectInvoice = () => {
+    if (selectedInvoice) {
+      handleStatusChange("rejected");
+      toast.error(`La facture ${selectedInvoice.id} a été rejetée`);
+    }
+  };
+
   const filteredInvoices = mockInvoices.filter(invoice => 
     invoice.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
     invoice.client.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const getStatusColor = (status: Invoice["status"]) => {
+    const colors = {
+      pending: "bg-yellow-500/20 text-yellow-400",
+      paid: "bg-green-500/20 text-green-400",
+      overdue: "bg-red-500/20 text-red-400",
+      validated: "bg-blue-500/20 text-blue-400",
+      rejected: "bg-gray-500/20 text-gray-400"
+    };
+    return colors[status];
+  };
+
+  const getStatusLabel = (status: Invoice["status"]) => {
+    const labels = {
+      pending: "En attente",
+      paid: "Payée",
+      overdue: "En retard",
+      validated: "Validée",
+      rejected: "Rejetée"
+    };
+    return labels[status];
+  };
 
   return (
     <motion.div
@@ -113,14 +165,8 @@ export function BillingListWidget() {
                       <p className="text-gray-400 text-sm">{invoice.date}</p>
                     </div>
                     <div>
-                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                        invoice.status === "paid" ? "bg-green-500/20 text-green-400" :
-                        invoice.status === "overdue" ? "bg-red-500/20 text-red-400" :
-                        "bg-yellow-500/20 text-yellow-400"
-                      }`}>
-                        {invoice.status === "paid" ? "Payée" :
-                         invoice.status === "overdue" ? "En retard" :
-                         "En attente"}
+                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(invoice.status)}`}>
+                        {getStatusLabel(invoice.status)}
                       </span>
                     </div>
                   </div>
@@ -155,34 +201,57 @@ export function BillingListWidget() {
               </div>
               <div>
                 <p className="text-gray-400">Statut</p>
-                <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                  selectedInvoice?.status === "paid" ? "bg-green-500/20 text-green-400" :
-                  selectedInvoice?.status === "overdue" ? "bg-red-500/20 text-red-400" :
-                  "bg-yellow-500/20 text-yellow-400"
-                }`}>
-                  {selectedInvoice?.status === "paid" ? "Payée" :
-                   selectedInvoice?.status === "overdue" ? "En retard" :
-                   "En attente"}
-                </span>
+                <Select value={selectedInvoice?.status} onValueChange={handleStatusChange}>
+                  <SelectTrigger className="w-full bg-gray-800 border-gray-700">
+                    <SelectValue placeholder="Changer le statut" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="pending">En attente</SelectItem>
+                    <SelectItem value="paid">Payée</SelectItem>
+                    <SelectItem value="overdue">En retard</SelectItem>
+                    <SelectItem value="validated">Validée</SelectItem>
+                    <SelectItem value="rejected">Rejetée</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
-            <div className="flex justify-end gap-3 pt-4">
-              <Button
-                variant="outline"
-                onClick={handleDownloadInvoice}
-                className="bg-[#9b87f5]/10 hover:bg-[#9b87f5]/20 border-white text-[#9b87f5] hover:text-[#7E69AB] transition-all duration-200"
-              >
-                <DollarSign className="h-4 w-4 mr-2" />
-                Télécharger
-              </Button>
-              <Button
-                variant="outline"
-                onClick={handlePrintInvoice}
-                className="bg-[#9b87f5]/10 hover:bg-[#9b87f5]/20 border-white text-[#9b87f5] hover:text-[#7E69AB] transition-all duration-200"
-              >
-                <Printer className="h-4 w-4 mr-2" />
-                Imprimer
-              </Button>
+            <div className="flex justify-between gap-3 pt-4">
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  onClick={handleValidateInvoice}
+                  className="bg-green-500/10 hover:bg-green-500/20 border-white text-green-400 hover:text-green-300"
+                >
+                  <Check className="h-4 w-4 mr-2" />
+                  Valider
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={handleRejectInvoice}
+                  className="bg-red-500/10 hover:bg-red-500/20 border-white text-red-400 hover:text-red-300"
+                >
+                  <X className="h-4 w-4 mr-2" />
+                  Rejeter
+                </Button>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  onClick={handleDownloadInvoice}
+                  className="bg-[#9b87f5]/10 hover:bg-[#9b87f5]/20 border-white text-[#9b87f5] hover:text-[#7E69AB] transition-all duration-200"
+                >
+                  <DollarSign className="h-4 w-4 mr-2" />
+                  Télécharger
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={handlePrintInvoice}
+                  className="bg-[#9b87f5]/10 hover:bg-[#9b87f5]/20 border-white text-[#9b87f5] hover:text-[#7E69AB] transition-all duration-200"
+                >
+                  <Printer className="h-4 w-4 mr-2" />
+                  Imprimer
+                </Button>
+              </div>
             </div>
           </div>
         </DialogContent>
