@@ -65,7 +65,7 @@ export function PaymentFilters({
             type="date"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
-            className="bg-gray-800 border-gray-700 text-white"
+            className="bg-gray-800 border-gray-700 text-white w-full"
           />
         </div>
 
@@ -103,7 +103,7 @@ export function PaymentFilters({
             Mode de paiement
           </Label>
           <div className="flex gap-2">
-            <Select value={selectedMethod} onValueChange={setSelectedMethod}>
+            <Select value={selectedMethod} onValueChange={setSelectedMethod} className="w-full">
               <SelectTrigger id="payment-method" className="bg-gray-800 border-gray-700">
                 <SelectValue placeholder="Mode de paiement" />
               </SelectTrigger>
