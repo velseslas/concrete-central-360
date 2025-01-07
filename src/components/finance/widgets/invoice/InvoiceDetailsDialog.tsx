@@ -7,6 +7,9 @@ import html2canvas from "html2canvas";
 import { InvoiceActions } from "./components/InvoiceActions";
 import { InvoiceDetails } from "./components/InvoiceDetails";
 import { InvoicePrintPreview } from "./components/InvoicePrintPreview";
+import { CreateInvoiceDialog } from "./CreateInvoiceDialog";
+import { Edit2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface InvoiceDetailsDialogProps {
   invoice: Invoice | null;
@@ -23,6 +26,7 @@ export function InvoiceDetailsDialog({
 }: InvoiceDetailsDialogProps) {
   const [showPreview, setShowPreview] = useState(false);
   const [isValidated, setIsValidated] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
 
   const handlePrintInvoice = async () => {
     const invoiceElement = document.getElementById('invoice-preview');
@@ -130,6 +134,11 @@ export function InvoiceDetailsDialog({
     }
   };
 
+  const handleEditClick = () => {
+    console.log("Ouverture du dialogue de modification pour la facture:", invoice?.id);
+    setShowEditDialog(true);
+  };
+
   const isValidateEnabled = invoice?.status === "paid" && !isValidated;
 
   return (
@@ -137,9 +146,20 @@ export function InvoiceDetailsDialog({
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="bg-gray-900/95 backdrop-blur-xl border border-gray-800 text-white">
           <DialogHeader>
-            <DialogTitle className="text-xl font-bold flex items-center gap-2">
-              Détails de la Facture {invoice?.id}
-            </DialogTitle>
+            <div className="flex items-center justify-between">
+              <DialogTitle className="text-xl font-bold flex items-center gap-2">
+                Détails de la Facture {invoice?.id}
+              </DialogTitle>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleEditClick}
+                className="bg-blue-500/10 hover:bg-blue-500/20 border-blue-500/20 hover:border-blue-500/30 text-blue-400"
+              >
+                <Edit2 className="h-4 w-4 mr-2" />
+                Modifier
+              </Button>
+            </div>
           </DialogHeader>
           <div className="space-y-4">
             <InvoiceDetails 
@@ -171,6 +191,13 @@ export function InvoiceDetailsDialog({
           />
         </DialogContent>
       </Dialog>
+
+      <CreateInvoiceDialog 
+        open={showEditDialog}
+        onOpenChange={setShowEditDialog}
+        initialData={invoice}
+        mode="edit"
+      />
     </>
   );
 }
