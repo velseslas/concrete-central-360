@@ -144,8 +144,8 @@ export function PaymentWidget() {
             <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
               <Button 
                 onClick={handleNewPayment}
-                variant="default"
-                className="relative z-10 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white"
+                variant="outline"
+                className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 transition-colors relative z-10"
               >
                 Nouveau Paiement
               </Button>

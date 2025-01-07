@@ -121,7 +121,7 @@ export function PaymentFilters({
           </Label>
           <Button 
             onClick={onGenerateReport} 
-            className="bg-blue-500 hover:bg-blue-600 w-full"
+            className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 transition-colors w-full"
           >
             Générer l'état
           </Button>
