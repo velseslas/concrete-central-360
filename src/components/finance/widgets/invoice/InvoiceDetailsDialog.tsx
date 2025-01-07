@@ -40,6 +40,8 @@ export function InvoiceDetailsDialog({
     }
   };
 
+  const isValidateEnabled = invoice?.status === "paid";
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-gray-900/95 backdrop-blur-xl border border-gray-800 text-white">
@@ -83,7 +85,12 @@ export function InvoiceDetailsDialog({
                 variant="outline"
                 size="lg"
                 onClick={handleValidateInvoice}
-                className="bg-green-500/10 hover:bg-green-500/20 border-white text-green-400 hover:text-green-300 px-6"
+                disabled={!isValidateEnabled}
+                className={`bg-green-500/10 border-white px-6 ${
+                  isValidateEnabled 
+                    ? 'hover:bg-green-500/20 text-green-400 hover:text-green-300 cursor-pointer' 
+                    : 'opacity-50 cursor-not-allowed text-gray-400'
+                }`}
               >
                 <Check className="h-5 w-5 mr-2" />
                 Valider
