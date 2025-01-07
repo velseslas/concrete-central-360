@@ -36,7 +36,7 @@ export function BillingListWidget() {
   };
 
   const handleCreateInvoice = () => {
-    console.log("Opening create invoice dialog");
+    console.log("Ouverture du dialogue de création de facture");
     setShowCreateDialog(true);
   };
 

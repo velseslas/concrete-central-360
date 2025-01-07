@@ -22,7 +22,7 @@ export function CreateInvoiceDialog({ open, onOpenChange }: CreateInvoiceDialogP
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    console.log("Soumission du formulaire:", formData);
     toast({
       title: "Succès",
       description: "Facture créée avec succès"
