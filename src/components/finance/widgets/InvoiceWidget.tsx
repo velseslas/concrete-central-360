@@ -36,17 +36,14 @@ export function InvoiceWidget() {
 
   const handleCreateInvoice = () => {
     toast.info("Création d'une nouvelle facture...");
-    // Logique de création à implémenter
   };
 
   const handlePrintInvoice = () => {
     toast.success("Impression de la facture " + selectedInvoice?.id);
-    // Logique d'impression à implémenter
   };
 
   const handleDownloadInvoice = () => {
     toast.success("Téléchargement de la facture " + selectedInvoice?.id);
-    // Logique de téléchargement à implémenter
   };
 
   const filteredInvoices = mockInvoices.filter(invoice => 
@@ -171,17 +168,17 @@ export function InvoiceWidget() {
             </div>
             <div className="flex justify-end gap-2">
               <Button
-                variant="outline"
+                variant="secondary"
                 onClick={handleDownloadInvoice}
-                className="text-white"
+                className="bg-gradient-to-r from-purple-500/10 to-blue-500/10 hover:from-purple-500/20 hover:to-blue-500/20 text-white border border-purple-500/20 hover:border-purple-500/30"
               >
                 <DollarSign className="h-4 w-4 mr-2" />
                 Télécharger
               </Button>
               <Button
-                variant="outline"
+                variant="default"
                 onClick={handlePrintInvoice}
-                className="text-white"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
               >
                 <FileText className="h-4 w-4 mr-2" />
                 Imprimer
