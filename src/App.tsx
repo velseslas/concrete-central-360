@@ -41,6 +41,7 @@ function App() {
                 <Route path="/finance/payments/clients" element={<ClientPayments />} />
                 <Route path="/finance/payments/suppliers" element={<SupplierPayments />} />
                 <Route path="/finance/reports" element={<Reports />} />
+                <Route path="/finance/invoices" element={<Invoices />} />
               </Routes>
             </main>
           </div>

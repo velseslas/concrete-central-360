@@ -3,6 +3,8 @@ import { FinanceOverviewWidget } from "@/components/finance/widgets/FinanceOverv
 import { CashFlowWidget } from "@/components/finance/CashFlowWidget";
 import { ExpensesWidget } from "@/components/finance/ExpensesWidget";
 import { ComparativeStatsWidget } from "@/components/finance/widgets/ComparativeStatsWidget";
+import { BillingListWidget } from "@/components/finance/widgets/BillingListWidget";
+import { BillingReportsWidget } from "@/components/finance/widgets/BillingReportsWidget";
 
 export default function Finance() {
   return (
@@ -23,6 +25,11 @@ export default function Finance() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <CashFlowWidget />
           <ExpensesWidget />
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <BillingListWidget />
+          <BillingReportsWidget />
         </div>
 
         <ComparativeStatsWidget />
