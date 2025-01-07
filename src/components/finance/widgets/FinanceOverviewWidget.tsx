@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { TrendingUp, DollarSign, ArrowUpDown, PiggyBank } from "lucide-react";
+import { TrendingUp, DollarSign, ArrowUpDown, TrendingDown } from "lucide-react";
 
 export function FinanceOverviewWidget() {
   const stats = [
@@ -26,10 +26,10 @@ export function FinanceOverviewWidget() {
       color: "text-purple-500"
     },
     {
-      title: "Épargne",
+      title: "Bénéfice",
       value: "450K DA",
       change: "+15%",
-      icon: PiggyBank,
+      icon: TrendingDown,
       color: "text-amber-500"
     }
   ];
