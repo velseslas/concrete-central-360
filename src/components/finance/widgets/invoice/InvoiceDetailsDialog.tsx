@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Invoice } from "@/types/invoice";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
@@ -29,6 +29,14 @@ export function InvoiceDetailsDialog({
   const [isValidated, setIsValidated] = useState(false);
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [showValidateDialog, setShowValidateDialog] = useState(false);
+
+  // Réinitialiser isValidated quand une nouvelle facture est sélectionnée
+  useEffect(() => {
+    if (invoice) {
+      setIsValidated(invoice.status === "paid");
+      console.log("État de validation réinitialisé pour la facture:", invoice.id);
+    }
+  }, [invoice]);
 
   const handlePrintInvoice = async () => {
     const invoiceElement = document.getElementById('invoice-preview');
