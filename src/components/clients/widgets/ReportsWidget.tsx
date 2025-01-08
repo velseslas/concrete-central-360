@@ -1,22 +1,19 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { FileText } from "lucide-react";
-import { InvoiceFilters } from "@/components/finance/widgets/invoice/components/InvoiceFilters";
-import { InvoiceReportPreview } from "@/components/finance/widgets/invoice/components/InvoiceReportPreview";
-import { Invoice } from "@/types/invoice";
-import { toast } from "sonner";
+import { FileText, Download, Printer } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { toast } from "sonner";
 
 export function ReportsWidget() {
   const [selectedClient, setSelectedClient] = useState("all");
   const [selectedStatus, setSelectedStatus] = useState("all");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [showPreview, setShowPreview] = useState(false);
 
   // Données de démonstration
-  const invoices: Invoice[] = [
+  const invoices = [
     {
       id: "FA-2024-001",
       client: "EURL Construction Plus",
@@ -40,26 +37,16 @@ export function ReportsWidget() {
     }
   ];
 
-  const handleGenerateReport = () => {
-    console.log("Génération du rapport avec les filtres:", {
-      client: selectedClient,
-      status: selectedStatus,
-      startDate,
-      endDate
-    });
-    setShowPreview(true);
-    toast.success("Rapport généré avec succès");
+  const handleDownload = () => {
+    console.log("Téléchargement du rapport");
+    toast.success("Téléchargement du rapport en cours...");
   };
 
-  const filteredInvoices = invoices.filter(invoice => {
-    if (selectedClient !== "all" && invoice.client !== selectedClient) return false;
-    if (selectedStatus !== "all" && invoice.status !== selectedStatus) return false;
-    if (startDate && new Date(invoice.date) < new Date(startDate)) return false;
-    if (endDate && new Date(invoice.date) > new Date(endDate)) return false;
-    return true;
-  });
-
-  console.log("Filtered invoices:", filteredInvoices);
+  const handlePrint = () => {
+    console.log("Impression du rapport");
+    window.print();
+    toast.success("Impression lancée");
+  };
 
   const getStatusBadgeClass = (status: string) => {
     switch (status) {
@@ -97,70 +84,64 @@ export function ReportsWidget() {
       <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl group-hover:shadow-2xl transition-all duration-300">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
         <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
-            <FileText className="h-6 w-6 text-blue-400" />
-            Rapports de Facturation
-          </CardTitle>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <CardTitle className="text-white flex items-center gap-2">
+              <FileText className="h-6 w-6 text-blue-400" />
+              Rapports de Facturation
+            </CardTitle>
+            <div className="flex gap-2">
+              <Button 
+                onClick={handleDownload}
+                variant="outline"
+                className="bg-primary/10 hover:bg-primary/20 border-primary/20 hover:border-primary/30 text-primary-foreground"
+              >
+                <Download className="h-4 w-4 mr-2" />
+                Télécharger
+              </Button>
+              <Button 
+                onClick={handlePrint}
+                variant="outline"
+                className="bg-primary/10 hover:bg-primary/20 border-primary/20 hover:border-primary/30 text-primary-foreground"
+              >
+                <Printer className="h-4 w-4 mr-2" />
+                Imprimer
+              </Button>
+            </div>
+          </div>
         </CardHeader>
         <CardContent>
-          <div className="space-y-6">
-            <InvoiceFilters
-              selectedClient={selectedClient}
-              selectedStatus={selectedStatus}
-              startDate={startDate}
-              endDate={endDate}
-              onClientChange={setSelectedClient}
-              onStatusChange={setSelectedStatus}
-              onStartDateChange={setStartDate}
-              onEndDateChange={setEndDate}
-              onGenerateReport={handleGenerateReport}
-            />
-
-            <div className="rounded-lg border border-gray-800 overflow-hidden">
-              <Table>
-                <TableHeader className="bg-gray-900/50">
-                  <TableRow className="hover:bg-gray-800/50">
-                    <TableHead className="text-gray-400">N° Facture</TableHead>
-                    <TableHead className="text-gray-400">Client</TableHead>
-                    <TableHead className="text-gray-400">Date</TableHead>
-                    <TableHead className="text-gray-400 text-right">Montant</TableHead>
-                    <TableHead className="text-gray-400 text-center">Statut</TableHead>
+          <div className="rounded-lg border border-gray-800 overflow-hidden">
+            <Table>
+              <TableHeader className="bg-gray-900/50">
+                <TableRow className="hover:bg-gray-800/50">
+                  <TableHead className="text-gray-400">N° Facture</TableHead>
+                  <TableHead className="text-gray-400">Client</TableHead>
+                  <TableHead className="text-gray-400">Date</TableHead>
+                  <TableHead className="text-gray-400 text-right">Montant</TableHead>
+                  <TableHead className="text-gray-400 text-center">Statut</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {invoices.map((invoice) => (
+                  <TableRow 
+                    key={invoice.id}
+                    className="border-b border-gray-800 hover:bg-gray-800/50"
+                  >
+                    <TableCell className="text-gray-300">{invoice.id}</TableCell>
+                    <TableCell className="text-gray-300">{invoice.client}</TableCell>
+                    <TableCell className="text-gray-300">
+                      {new Date(invoice.date).toLocaleDateString()}
+                    </TableCell>
+                    <TableCell className="text-gray-300 text-right">{invoice.amount}</TableCell>
+                    <TableCell className="text-center">
+                      <span className={`px-2 py-1 rounded-full text-xs ${getStatusBadgeClass(invoice.status)}`}>
+                        {getStatusText(invoice.status)}
+                      </span>
+                    </TableCell>
                   </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredInvoices.map((invoice) => (
-                    <TableRow 
-                      key={invoice.id}
-                      className="border-b border-gray-800 hover:bg-gray-800/50"
-                    >
-                      <TableCell className="text-gray-300">{invoice.id}</TableCell>
-                      <TableCell className="text-gray-300">{invoice.client}</TableCell>
-                      <TableCell className="text-gray-300">
-                        {new Date(invoice.date).toLocaleDateString()}
-                      </TableCell>
-                      <TableCell className="text-gray-300 text-right">{invoice.amount}</TableCell>
-                      <TableCell className="text-center">
-                        <span className={`px-2 py-1 rounded-full text-xs ${getStatusBadgeClass(invoice.status)}`}>
-                          {getStatusText(invoice.status)}
-                        </span>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-
-            <InvoiceReportPreview
-              open={showPreview}
-              onOpenChange={setShowPreview}
-              invoices={filteredInvoices}
-              filters={{
-                client: selectedClient,
-                status: selectedStatus,
-                startDate,
-                endDate
-              }}
-            />
+                ))}
+              </TableBody>
+            </Table>
           </div>
         </CardContent>
       </Card>
