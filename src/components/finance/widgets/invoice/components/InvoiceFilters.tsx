@@ -35,9 +35,9 @@ export function InvoiceFilters({
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">Tous les clients</SelectItem>
-            <SelectItem value="client1">EURL Construction Plus</SelectItem>
-            <SelectItem value="client2">SARL Travaux Publics</SelectItem>
-            <SelectItem value="client3">ETS Batiment</SelectItem>
+            <SelectItem value="EURL Construction Plus">EURL Construction Plus</SelectItem>
+            <SelectItem value="SARL Travaux Publics">SARL Travaux Publics</SelectItem>
+            <SelectItem value="ETS Batiment">ETS Batiment</SelectItem>
           </SelectContent>
         </Select>
 

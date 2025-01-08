@@ -13,7 +13,6 @@ export function BillingReportsWidget() {
   const [endDate, setEndDate] = useState("");
   const [showPreview, setShowPreview] = useState(false);
 
-  // Exemple de données avec le bon typage pour status
   const invoices: Invoice[] = [
     {
       id: "FA-2024-001",
@@ -28,6 +27,13 @@ export function BillingReportsWidget() {
       amount: "95,000 DA",
       date: "2024-03-13",
       status: "paid"
+    },
+    {
+      id: "FA-2024-003",
+      client: "ETS Batiment",
+      amount: "120,000 DA",
+      date: "2024-03-10",
+      status: "validated"
     }
   ];
 
@@ -40,6 +46,14 @@ export function BillingReportsWidget() {
     });
     setShowPreview(true);
   };
+
+  const filteredInvoices = invoices.filter(invoice => {
+    if (selectedClient !== "all" && invoice.client !== selectedClient) return false;
+    if (selectedStatus !== "all" && invoice.status !== selectedStatus) return false;
+    if (startDate && new Date(invoice.date) < new Date(startDate)) return false;
+    if (endDate && new Date(invoice.date) > new Date(endDate)) return false;
+    return true;
+  });
 
   return (
     <motion.div
@@ -73,7 +87,7 @@ export function BillingReportsWidget() {
             <InvoiceReportPreview
               open={showPreview}
               onOpenChange={setShowPreview}
-              invoices={invoices}
+              invoices={filteredInvoices}
               filters={{
                 client: selectedClient,
                 status: selectedStatus,

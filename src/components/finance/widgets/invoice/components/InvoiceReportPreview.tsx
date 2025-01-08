@@ -23,7 +23,6 @@ export function InvoiceReportPreview({
 }: InvoiceReportPreviewProps) {
   const handleDownload = () => {
     console.log("Téléchargement du rapport");
-    // Implémenter la logique de téléchargement
   };
 
   const handlePrint = () => {
@@ -52,7 +51,7 @@ export function InvoiceReportPreview({
         <div className="bg-white text-gray-900 p-6 rounded-lg">
           <div className="mb-4">
             <h3 className="text-lg font-bold">Rapport de Facturation</h3>
-            <p className="text-sm text-gray-600">Période: {filters.startDate} - {filters.endDate}</p>
+            <p className="text-sm text-gray-600">Période: {filters.startDate || 'Non spécifiée'} - {filters.endDate || 'Non spécifiée'}</p>
             <p className="text-sm text-gray-600">Client: {filters.client === 'all' ? 'Tous' : filters.client}</p>
             <p className="text-sm text-gray-600">Statut: {filters.status === 'all' ? 'Tous' : filters.status}</p>
           </div>
