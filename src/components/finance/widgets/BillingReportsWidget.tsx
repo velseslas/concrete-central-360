@@ -4,6 +4,7 @@ import { FileText, Eye } from "lucide-react";
 import { useState } from "react";
 import { InvoiceFilters } from "./invoice/components/InvoiceFilters";
 import { InvoiceReportPreview } from "./invoice/components/InvoiceReportPreview";
+import { Invoice } from "@/types/invoice";
 
 export function BillingReportsWidget() {
   const [selectedClient, setSelectedClient] = useState("all");
@@ -12,8 +13,8 @@ export function BillingReportsWidget() {
   const [endDate, setEndDate] = useState("");
   const [showPreview, setShowPreview] = useState(false);
 
-  // Exemple de données pour la démonstration
-  const invoices = [
+  // Exemple de données avec le bon typage pour status
+  const invoices: Invoice[] = [
     {
       id: "FA-2024-001",
       client: "EURL Construction Plus",
