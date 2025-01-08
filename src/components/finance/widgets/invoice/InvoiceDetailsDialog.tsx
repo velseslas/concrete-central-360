@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { useState } from "react";
 import { Invoice } from "@/types/invoice";
@@ -8,6 +8,7 @@ import { InvoiceActions } from "./components/InvoiceActions";
 import { InvoiceDetails } from "./components/InvoiceDetails";
 import { InvoicePrintPreview } from "./components/InvoicePrintPreview";
 import { CreateInvoiceDialog } from "./CreateInvoiceDialog";
+import { ValidateInvoiceDialog } from "./components/ValidateInvoiceDialog";
 import { Edit2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -27,6 +28,7 @@ export function InvoiceDetailsDialog({
   const [showPreview, setShowPreview] = useState(false);
   const [isValidated, setIsValidated] = useState(false);
   const [showEditDialog, setShowEditDialog] = useState(false);
+  const [showValidateDialog, setShowValidateDialog] = useState(false);
 
   const handlePrintInvoice = async () => {
     const invoiceElement = document.getElementById('invoice-preview');
@@ -43,47 +45,18 @@ export function InvoiceDetailsDialog({
           <head>
             <title>Impression Facture</title>
             <style>
-              @page {
-                size: A4;
-                margin: 20mm;
-              }
+              @page { size: A4; margin: 20mm; }
               @media print {
-                body {
-                  font-family: Arial, sans-serif;
-                  line-height: 1.5;
-                  color: #000;
-                }
-                table {
-                  width: 100%;
-                  border-collapse: collapse;
-                  margin: 20px 0;
-                }
-                th, td {
-                  padding: 8px;
-                  border: 1px solid #ddd;
-                  text-align: left;
-                }
-                th {
-                  background-color: #f8f9fa;
-                }
-                .header {
-                  margin-bottom: 30px;
-                }
-                .footer {
-                  margin-top: 50px;
-                }
-                .company-info {
-                  margin-bottom: 20px;
-                }
-                .invoice-details {
-                  margin-bottom: 30px;
-                }
-                .total-section {
-                  margin-top: 20px;
-                }
-                .no-print {
-                  display: none !important;
-                }
+                body { font-family: Arial, sans-serif; line-height: 1.5; color: #000; }
+                table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+                th, td { padding: 8px; border: 1px solid #ddd; text-align: left; }
+                th { background-color: #f8f9fa; }
+                .header { margin-bottom: 30px; }
+                .footer { margin-top: 50px; }
+                .company-info { margin-bottom: 20px; }
+                .invoice-details { margin-bottom: 30px; }
+                .total-section { margin-top: 20px; }
+                .no-print { display: none !important; }
               }
             </style>
           </head>
@@ -139,16 +112,19 @@ export function InvoiceDetailsDialog({
     setShowEditDialog(true);
   };
 
-  const isValidateEnabled = invoice?.status === "paid" && !isValidated;
+  const isValidateEnabled = invoice?.status === "unpaid" && !isValidated;
 
   return (
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="bg-gray-900/95 backdrop-blur-xl border border-gray-800 text-white max-w-4xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-xl font-bold flex items-center gap-2">
+            <DialogTitle className="text-xl font-bold">
               Détails de la Facture {invoice?.id}
             </DialogTitle>
+            <DialogDescription className="text-gray-400">
+              Consultez et gérez les détails de la facture
+            </DialogDescription>
           </DialogHeader>
           <div className="space-y-6">
             <InvoiceDetails 
@@ -167,7 +143,7 @@ export function InvoiceDetailsDialog({
               <InvoiceActions 
                 invoice={invoice}
                 isValidateEnabled={isValidateEnabled}
-                onValidate={handleValidateInvoice}
+                onValidate={() => setShowValidateDialog(true)}
                 onPreviewClick={() => setShowPreview(true)}
               />
             </div>
@@ -196,6 +172,13 @@ export function InvoiceDetailsDialog({
         onOpenChange={setShowEditDialog}
         initialData={invoice}
         mode="edit"
+      />
+
+      <ValidateInvoiceDialog
+        open={showValidateDialog}
+        onOpenChange={setShowValidateDialog}
+        invoice={invoice}
+        onValidate={handleValidateInvoice}
       />
     </>
   );
