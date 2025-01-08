@@ -30,7 +30,7 @@ export function InvoiceFilters({
     <div className="space-y-4 bg-gray-800/50 p-4 rounded-lg border border-gray-700/50">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Select value={selectedClient} onValueChange={onClientChange}>
-          <SelectTrigger>
+          <SelectTrigger className="bg-gray-900/50 border-gray-700">
             <SelectValue placeholder="Sélectionner un client" />
           </SelectTrigger>
           <SelectContent>
@@ -42,13 +42,14 @@ export function InvoiceFilters({
         </Select>
 
         <Select value={selectedStatus} onValueChange={onStatusChange}>
-          <SelectTrigger>
+          <SelectTrigger className="bg-gray-900/50 border-gray-700">
             <SelectValue placeholder="Statut" />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">Tous les statuts</SelectItem>
             <SelectItem value="paid">Payée</SelectItem>
             <SelectItem value="unpaid">Impayée</SelectItem>
+            <SelectItem value="validated">Validée</SelectItem>
           </SelectContent>
         </Select>
 
@@ -57,7 +58,7 @@ export function InvoiceFilters({
           value={startDate}
           onChange={(e) => onStartDateChange(e.target.value)}
           placeholder="Date début"
-          className="bg-gray-900/50"
+          className="bg-gray-900/50 border-gray-700"
         />
 
         <Input
@@ -65,7 +66,7 @@ export function InvoiceFilters({
           value={endDate}
           onChange={(e) => onEndDateChange(e.target.value)}
           placeholder="Date fin"
-          className="bg-gray-900/50"
+          className="bg-gray-900/50 border-gray-700"
         />
       </div>
 

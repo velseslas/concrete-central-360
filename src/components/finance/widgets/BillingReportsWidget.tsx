@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { FileText, Eye } from "lucide-react";
+import { FileText } from "lucide-react";
 import { useState } from "react";
 import { InvoiceFilters } from "./invoice/components/InvoiceFilters";
 import { InvoiceReportPreview } from "./invoice/components/InvoiceReportPreview";

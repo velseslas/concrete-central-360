@@ -77,9 +77,11 @@ export function InvoiceReportPreview({
                     <span className={`px-2 py-1 rounded-full text-xs ${
                       invoice.status === 'paid' 
                         ? 'bg-green-100 text-green-800'
+                        : invoice.status === 'validated'
+                        ? 'bg-blue-100 text-blue-800'
                         : 'bg-yellow-100 text-yellow-800'
                     }`}>
-                      {invoice.status === 'paid' ? 'Payée' : 'Impayée'}
+                      {invoice.status === 'paid' ? 'Payée' : invoice.status === 'validated' ? 'Validée' : 'Impayée'}
                     </span>
                   </td>
                 </tr>
