@@ -1,9 +1,45 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { FileText, Download } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { FileText, Eye } from "lucide-react";
+import { useState } from "react";
+import { InvoiceFilters } from "./invoice/components/InvoiceFilters";
+import { InvoiceReportPreview } from "./invoice/components/InvoiceReportPreview";
 
 export function BillingReportsWidget() {
+  const [selectedClient, setSelectedClient] = useState("all");
+  const [selectedStatus, setSelectedStatus] = useState("all");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [showPreview, setShowPreview] = useState(false);
+
+  // Exemple de données pour la démonstration
+  const invoices = [
+    {
+      id: "FA-2024-001",
+      client: "EURL Construction Plus",
+      amount: "150,000 DA",
+      date: "2024-03-15",
+      status: "unpaid"
+    },
+    {
+      id: "FA-2024-002",
+      client: "SARL Travaux Publics",
+      amount: "95,000 DA",
+      date: "2024-03-13",
+      status: "paid"
+    }
+  ];
+
+  const handleGenerateReport = () => {
+    console.log("Génération du rapport avec les filtres:", {
+      client: selectedClient,
+      status: selectedStatus,
+      startDate,
+      endDate
+    });
+    setShowPreview(true);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -20,26 +56,30 @@ export function BillingReportsWidget() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            {[
-              { title: "Rapport mensuel", date: "Mars 2024" },
-              { title: "Rapport trimestriel", date: "Q1 2024" },
-              { title: "Rapport annuel", date: "2024" }
-            ].map((report, index) => (
-              <div
-                key={index}
-                className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 flex justify-between items-center"
-              >
-                <div>
-                  <h3 className="text-white font-medium">{report.title}</h3>
-                  <p className="text-gray-400 text-sm">{report.date}</p>
-                </div>
-                <Button variant="outline" size="sm" className="text-white">
-                  <Download className="h-4 w-4 mr-2" />
-                  Télécharger
-                </Button>
-              </div>
-            ))}
+          <div className="space-y-6">
+            <InvoiceFilters
+              selectedClient={selectedClient}
+              selectedStatus={selectedStatus}
+              startDate={startDate}
+              endDate={endDate}
+              onClientChange={setSelectedClient}
+              onStatusChange={setSelectedStatus}
+              onStartDateChange={setStartDate}
+              onEndDateChange={setEndDate}
+              onGenerateReport={handleGenerateReport}
+            />
+
+            <InvoiceReportPreview
+              open={showPreview}
+              onOpenChange={setShowPreview}
+              invoices={invoices}
+              filters={{
+                client: selectedClient,
+                status: selectedStatus,
+                startDate,
+                endDate
+              }}
+            />
           </div>
         </CardContent>
       </Card>
