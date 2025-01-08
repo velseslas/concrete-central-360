@@ -32,11 +32,6 @@ export function Sidebar() {
             { to: "/finance/payments/clients", label: "Clients" },
             { to: "/finance/payments/suppliers", label: "Fournisseurs" }
           ]
-        },
-        {
-          to: "/finance/reports",
-          label: "Rapports",
-          icon: FileSpreadsheet
         }
       ]
     },

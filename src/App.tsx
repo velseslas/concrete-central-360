@@ -15,7 +15,6 @@ import Payments from "./pages/Payments";
 import Invoices from "./pages/Invoices";
 import ClientPayments from "./pages/finance/ClientPayments";
 import SupplierPayments from "./pages/finance/SupplierPayments";
-import Reports from "./pages/finance/Reports";
 
 function App() {
   return (
@@ -40,7 +39,6 @@ function App() {
                 <Route path="/invoices" element={<Invoices />} />
                 <Route path="/finance/payments/clients" element={<ClientPayments />} />
                 <Route path="/finance/payments/suppliers" element={<SupplierPayments />} />
-                <Route path="/finance/reports" element={<Reports />} />
               </Routes>
             </main>
           </div>
