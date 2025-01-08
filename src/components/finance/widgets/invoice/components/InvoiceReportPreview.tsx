@@ -2,6 +2,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Download, Printer } from "lucide-react";
 import { Invoice } from "@/types/invoice";
+import { toast } from "sonner";
 
 interface InvoiceReportPreviewProps {
   open: boolean;
@@ -23,14 +24,18 @@ export function InvoiceReportPreview({
 }: InvoiceReportPreviewProps) {
   const handleDownload = () => {
     console.log("Téléchargement du rapport");
+    toast.success("Téléchargement du rapport en cours...");
   };
 
   const handlePrint = () => {
     console.log("Impression du rapport");
     window.print();
+    toast.success("Impression lancée");
   };
 
   const total = invoices.reduce((sum, invoice) => sum + parseFloat(invoice.amount.replace(/[^0-9.-]+/g,"")), 0);
+
+  console.log("Rendering report preview with invoices:", invoices);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

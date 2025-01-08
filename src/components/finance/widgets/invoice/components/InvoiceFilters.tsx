@@ -26,6 +26,8 @@ export function InvoiceFilters({
   onEndDateChange,
   onGenerateReport
 }: InvoiceFiltersProps) {
+  console.log("Current filter values:", { selectedClient, selectedStatus, startDate, endDate });
+
   return (
     <div className="space-y-4 bg-gray-800/50 p-4 rounded-lg border border-gray-700/50">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -57,16 +59,14 @@ export function InvoiceFilters({
           type="date"
           value={startDate}
           onChange={(e) => onStartDateChange(e.target.value)}
-          placeholder="Date début"
-          className="bg-gray-900/50 border-gray-700"
+          className="bg-gray-900/50 border-gray-700 text-white"
         />
 
         <Input
           type="date"
           value={endDate}
           onChange={(e) => onEndDateChange(e.target.value)}
-          placeholder="Date fin"
-          className="bg-gray-900/50 border-gray-700"
+          className="bg-gray-900/50 border-gray-700 text-white"
         />
       </div>
 

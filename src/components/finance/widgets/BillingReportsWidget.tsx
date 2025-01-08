@@ -5,6 +5,7 @@ import { useState } from "react";
 import { InvoiceFilters } from "./invoice/components/InvoiceFilters";
 import { InvoiceReportPreview } from "./invoice/components/InvoiceReportPreview";
 import { Invoice } from "@/types/invoice";
+import { toast } from "sonner";
 
 export function BillingReportsWidget() {
   const [selectedClient, setSelectedClient] = useState("all");
@@ -45,6 +46,7 @@ export function BillingReportsWidget() {
       endDate
     });
     setShowPreview(true);
+    toast.success("Rapport généré avec succès");
   };
 
   const filteredInvoices = invoices.filter(invoice => {
@@ -54,6 +56,8 @@ export function BillingReportsWidget() {
     if (endDate && new Date(invoice.date) > new Date(endDate)) return false;
     return true;
   });
+
+  console.log("Filtered invoices:", filteredInvoices);
 
   return (
     <motion.div
