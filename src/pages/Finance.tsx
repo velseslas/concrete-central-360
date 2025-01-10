@@ -8,7 +8,8 @@ import {
   PieChart,
   Receipt,
   Building2,
-  Factory
+  Factory,
+  Calculator
 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { CashFlowWidget } from "@/components/finance/CashFlowWidget";
@@ -19,6 +20,7 @@ import { PaymentTrackingWidget } from "@/components/finance/widgets/PaymentTrack
 import { BillingListWidget } from "@/components/finance/widgets/BillingListWidget";
 import { BillingReportsWidget } from "@/components/finance/widgets/BillingReportsWidget";
 import { DailyExpenseWidget } from "@/components/finance/widgets/DailyExpenseWidget";
+import { QuoteWidget } from "@/components/finance/widgets/QuoteWidget";
 
 export default function Finance() {
   const [activeWidget, setActiveWidget] = useState<string | null>(null);
@@ -79,6 +81,13 @@ export default function Finance() {
       icon: FileText,
       color: 'text-gray-400',
       component: BillingReportsWidget
+    },
+    {
+      id: 'quotes',
+      title: 'Devis',
+      icon: Calculator,
+      color: 'text-orange-400',
+      component: QuoteWidget
     }
   ];
 
