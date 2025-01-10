@@ -2,7 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Send, X } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Mail, Send, X, Copy } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -12,19 +13,79 @@ interface QuoteEmailDialogProps {
   quote: {
     id: string;
     client: string;
+    version?: number;
   } | null;
+}
+
+interface EmailTemplate {
+  id: string;
+  name: string;
+  subject: string;
+  content: string;
 }
 
 export function QuoteEmailDialog({ open, onOpenChange, quote }: QuoteEmailDialogProps) {
   const [email, setEmail] = useState("");
-  const [subject, setSubject] = useState(quote ? `Devis ${quote.id} - ${quote.client}` : "");
+  const [subject, setSubject] = useState(quote ? `Devis ${quote.id}${quote.version ? ` - Version ${quote.version}` : ''} - ${quote.client}` : "");
   const [message, setMessage] = useState("");
+  const [selectedTemplate, setSelectedTemplate] = useState("");
+
+  // Mock templates - à remplacer par des données réelles
+  const emailTemplates: EmailTemplate[] = [
+    {
+      id: "template1",
+      name: "Envoi initial",
+      subject: "Proposition commerciale - [Référence]",
+      content: `Cher client,
+
+Nous vous prions de trouver ci-joint notre proposition commerciale [Référence].
+
+N'hésitez pas à nous contacter pour toute question.
+
+Cordialement,
+[Nom de l'entreprise]`
+    },
+    {
+      id: "template2",
+      name: "Relance",
+      subject: "Suivi de notre proposition - [Référence]",
+      content: `Cher client,
+
+Nous souhaitons nous assurer que vous avez bien reçu notre proposition [Référence].
+
+Nous restons à votre disposition pour en discuter.
+
+Cordialement,
+[Nom de l'entreprise]`
+    },
+    {
+      id: "template3",
+      name: "Mise à jour",
+      subject: "Mise à jour de notre proposition - [Référence]",
+      content: `Cher client,
+
+Suite à nos échanges, vous trouverez ci-joint la version mise à jour de notre proposition [Référence].
+
+Nous restons à votre écoute pour toute précision.
+
+Cordialement,
+[Nom de l'entreprise]`
+    }
+  ];
+
+  const handleTemplateChange = (templateId: string) => {
+    const template = emailTemplates.find(t => t.id === templateId);
+    if (template) {
+      setSelectedTemplate(templateId);
+      setSubject(template.subject.replace("[Référence]", quote?.id || ""));
+      setMessage(template.content.replace("[Référence]", quote?.id || ""));
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Envoi du devis par email:", { email, subject, message });
     
-    // Simuler l'envoi
     toast.promise(
       new Promise((resolve) => setTimeout(resolve, 1500)),
       {
@@ -37,9 +98,14 @@ export function QuoteEmailDialog({ open, onOpenChange, quote }: QuoteEmailDialog
     onOpenChange(false);
   };
 
+  const handleCopyToClipboard = () => {
+    navigator.clipboard.writeText(message);
+    toast.success("Message copié dans le presse-papiers");
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[525px]">
+      <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Mail className="h-5 w-5" />
@@ -48,6 +114,27 @@ export function QuoteEmailDialog({ open, onOpenChange, quote }: QuoteEmailDialog
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <label htmlFor="template" className="text-sm font-medium">
+              Modèle d'email
+            </label>
+            <Select
+              value={selectedTemplate}
+              onValueChange={handleTemplateChange}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Sélectionner un modèle" />
+              </SelectTrigger>
+              <SelectContent>
+                {emailTemplates.map(template => (
+                  <SelectItem key={template.id} value={template.id}>
+                    {template.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
           <div className="space-y-2">
             <label htmlFor="email" className="text-sm font-medium">
               Email du destinataire
@@ -76,15 +163,27 @@ export function QuoteEmailDialog({ open, onOpenChange, quote }: QuoteEmailDialog
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="message" className="text-sm font-medium">
-              Message
-            </label>
+            <div className="flex items-center justify-between">
+              <label htmlFor="message" className="text-sm font-medium">
+                Message
+              </label>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={handleCopyToClipboard}
+                className="h-8"
+              >
+                <Copy className="h-4 w-4 mr-2" />
+                Copier
+              </Button>
+            </div>
             <Textarea
               id="message"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Votre message..."
-              rows={4}
+              rows={8}
             />
           </div>
 
