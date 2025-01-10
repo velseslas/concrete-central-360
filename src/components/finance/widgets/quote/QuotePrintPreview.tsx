@@ -122,25 +122,27 @@ export function QuotePrintPreview({ open, onOpenChange, quote }: QuotePrintPrevi
           </div>
         </div>
 
-        <style jsx global>{`
-          @media print {
-            body * {
-              visibility: hidden;
+        <style>
+          {`
+            @media print {
+              body * {
+                visibility: hidden;
+              }
+              #quote-preview, #quote-preview * {
+                visibility: visible;
+              }
+              #quote-preview {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+              }
+              .no-print {
+                display: none !important;
+              }
             }
-            #quote-preview, #quote-preview * {
-              visibility: visible;
-            }
-            #quote-preview {
-              position: absolute;
-              left: 0;
-              top: 0;
-              width: 100%;
-            }
-            .no-print {
-              display: none !important;
-            }
-          }
-        `}</style>
+          `}
+        </style>
       </DialogContent>
     </Dialog>
   );
