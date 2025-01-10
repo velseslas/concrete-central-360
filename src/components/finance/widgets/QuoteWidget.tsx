@@ -7,6 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { useState } from "react";
 import { toast } from "sonner";
 import { CreateQuoteDialog } from "./quote/CreateQuoteDialog";
+import { AdvancedFilters, FilterValues } from "./quote/AdvancedFilters";
 
 interface Quote {
   id: string;
@@ -21,6 +22,14 @@ export function QuoteWidget() {
   const [showDetails, setShowDetails] = useState(false);
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
+  const [activeFilters, setActiveFilters] = useState<FilterValues>({
+    startDate: "",
+    endDate: "",
+    minAmount: "",
+    maxAmount: "",
+    status: ""
+  });
 
   console.log("QuoteWidget - État du dialogue de création:", showCreateDialog);
 
@@ -48,10 +57,37 @@ export function QuoteWidget() {
     setShowCreateDialog(true);
   };
 
-  const filteredQuotes = mockQuotes.filter(quote => 
-    quote.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    quote.client.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const handleFilterChange = (newFilters: FilterValues) => {
+    setActiveFilters(newFilters);
+    console.log("Filtres appliqués:", newFilters);
+  };
+
+  const handleResetFilters = () => {
+    setActiveFilters({
+      startDate: "",
+      endDate: "",
+      minAmount: "",
+      maxAmount: "",
+      status: ""
+    });
+    setShowAdvancedFilters(false);
+  };
+
+  const filteredQuotes = mockQuotes.filter(quote => {
+    const matchesSearch = quote.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         quote.client.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchesDateRange = (!activeFilters.startDate || quote.date >= activeFilters.startDate) &&
+                            (!activeFilters.endDate || quote.date <= activeFilters.endDate);
+
+    const amount = parseInt(quote.amount.replace(/[^0-9]/g, ""));
+    const matchesAmount = (!activeFilters.minAmount || amount >= parseInt(activeFilters.minAmount)) &&
+                         (!activeFilters.maxAmount || amount <= parseInt(activeFilters.maxAmount));
+
+    const matchesStatus = !activeFilters.status || quote.status === activeFilters.status;
+
+    return matchesSearch && matchesDateRange && matchesAmount && matchesStatus;
+  });
 
   return (
     <motion.div
@@ -79,6 +115,14 @@ export function QuoteWidget() {
                 />
               </div>
               <Button 
+                onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
+                variant="outline"
+                className="bg-gray-800/50 hover:bg-gray-700/50"
+              >
+                <Filter className="h-4 w-4 mr-2" />
+                Filtres avancés
+              </Button>
+              <Button 
                 onClick={handleCreateClick}
                 className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-md flex items-center gap-2 transition-colors duration-200"
               >
@@ -89,6 +133,14 @@ export function QuoteWidget() {
           </div>
         </CardHeader>
         <CardContent>
+          {showAdvancedFilters && (
+            <div className="mb-4">
+              <AdvancedFilters
+                onFilterChange={handleFilterChange}
+                onReset={handleResetFilters}
+              />
+            </div>
+          )}
           <div className="space-y-4">
             {filteredQuotes.map((quote) => (
               <motion.div
