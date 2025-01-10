@@ -1,13 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { FileText, Plus, Search, Calculator, Printer, Filter } from "lucide-react";
+import { FileText, Plus, Search, Calculator, Printer, Filter, Download, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState } from "react";
 import { toast } from "sonner";
 import { CreateQuoteDialog } from "./quote/CreateQuoteDialog";
-import { AdvancedFilters, FilterValues } from "./quote/AdvancedFilters";
+import { AdvancedFilters } from "./quote/AdvancedFilters";
 
 interface Quote {
   id: string;
@@ -15,6 +15,8 @@ interface Quote {
   amount: string;
   date: string;
   status: "pending" | "accepted" | "rejected";
+  description?: string;
+  validUntil?: string;
 }
 
 export function QuoteWidget() {
@@ -23,7 +25,7 @@ export function QuoteWidget() {
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
-  const [activeFilters, setActiveFilters] = useState<FilterValues>({
+  const [activeFilters, setActiveFilters] = useState({
     startDate: "",
     endDate: "",
     minAmount: "",
@@ -34,9 +36,33 @@ export function QuoteWidget() {
   console.log("QuoteWidget - État du dialogue de création:", showCreateDialog);
 
   const mockQuotes: Quote[] = [
-    { id: "DV-2024-001", client: "EURL Construction Plus", amount: "150,000 DA", date: "2024-03-15", status: "pending" },
-    { id: "DV-2024-002", client: "SPA Bâtiment Pro", amount: "280,000 DA", date: "2024-03-14", status: "accepted" },
-    { id: "DV-2024-003", client: "SARL Travaux Publics", amount: "95,000 DA", date: "2024-03-13", status: "rejected" },
+    { 
+      id: "DV-2024-001", 
+      client: "EURL Construction Plus", 
+      amount: "150,000 DA", 
+      date: "2024-03-15", 
+      status: "pending",
+      description: "Travaux de construction",
+      validUntil: "2024-04-15"
+    },
+    { 
+      id: "DV-2024-002", 
+      client: "SPA Bâtiment Pro", 
+      amount: "280,000 DA", 
+      date: "2024-03-14", 
+      status: "accepted",
+      description: "Rénovation complète",
+      validUntil: "2024-04-14"
+    },
+    { 
+      id: "DV-2024-003", 
+      client: "SARL Travaux Publics", 
+      amount: "95,000 DA", 
+      date: "2024-03-13", 
+      status: "rejected",
+      description: "Travaux d'aménagement",
+      validUntil: "2024-04-13"
+    },
   ];
 
   const handleQuoteClick = (quote: Quote) => {
@@ -48,8 +74,8 @@ export function QuoteWidget() {
     toast.success("Impression du devis " + selectedQuote?.id);
   };
 
-  const handleDownloadQuote = () => {
-    toast.success("Téléchargement du devis " + selectedQuote?.id);
+  const handleExportQuote = () => {
+    toast.success("Export du devis " + selectedQuote?.id + " en PDF");
   };
 
   const handleCreateClick = () => {
@@ -57,7 +83,7 @@ export function QuoteWidget() {
     setShowCreateDialog(true);
   };
 
-  const handleFilterChange = (newFilters: FilterValues) => {
+  const handleFilterChange = (newFilters: typeof activeFilters) => {
     setActiveFilters(newFilters);
     console.log("Filtres appliqués:", newFilters);
   };
@@ -158,11 +184,17 @@ export function QuoteWidget() {
                       {quote.id}
                     </h3>
                     <p className="text-gray-400 text-sm">{quote.client}</p>
+                    {quote.description && (
+                      <p className="text-gray-500 text-sm mt-1">{quote.description}</p>
+                    )}
                   </div>
                   <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
                     <div className="text-right">
                       <p className="text-white font-medium">{quote.amount}</p>
                       <p className="text-gray-400 text-sm">{quote.date}</p>
+                      {quote.validUntil && (
+                        <p className="text-gray-500 text-xs">Valide jusqu'au {quote.validUntil}</p>
+                      )}
                     </div>
                     <div>
                       <span className={`px-3 py-1 rounded-full text-sm font-medium ${
@@ -217,15 +249,35 @@ export function QuoteWidget() {
                    "En attente"}
                 </span>
               </div>
+              {selectedQuote?.description && (
+                <div className="col-span-2">
+                  <p className="text-gray-400">Description</p>
+                  <p className="text-white font-medium">{selectedQuote.description}</p>
+                </div>
+              )}
+              {selectedQuote?.validUntil && (
+                <div className="col-span-2">
+                  <p className="text-gray-400">Valide jusqu'au</p>
+                  <p className="text-white font-medium">{selectedQuote.validUntil}</p>
+                </div>
+              )}
             </div>
             <div className="flex justify-end gap-3 pt-4">
               <Button
                 variant="outline"
-                onClick={handleDownloadQuote}
+                onClick={handleExportQuote}
                 className="bg-primary/10 hover:bg-primary/20 border-primary/20 hover:border-primary/30 text-primary-foreground transition-all duration-200"
               >
-                <FileText className="h-4 w-4 mr-2" />
-                Télécharger
+                <Download className="h-4 w-4 mr-2" />
+                Exporter
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => setShowDetails(true)}
+                className="bg-primary/10 hover:bg-primary/20 border-primary/20 hover:border-primary/30 text-primary-foreground transition-all duration-200"
+              >
+                <Eye className="h-4 w-4 mr-2" />
+                Aperçu
               </Button>
               <Button
                 variant="default"

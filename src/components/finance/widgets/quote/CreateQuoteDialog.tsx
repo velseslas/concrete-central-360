@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Calculator } from "lucide-react";
+import { Calculator, Save, X } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -17,6 +17,9 @@ export function CreateQuoteDialog({ open, onOpenChange }: CreateQuoteDialogProps
     amount: "",
     date: new Date().toISOString().split('T')[0],
     status: "pending" as const,
+    description: "",
+    validUntil: "",
+    reference: `DV-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`,
   });
 
   console.log("CreateQuoteDialog - État du formulaire:", formData);
@@ -30,6 +33,9 @@ export function CreateQuoteDialog({ open, onOpenChange }: CreateQuoteDialogProps
       amount: "",
       date: new Date().toISOString().split('T')[0],
       status: "pending",
+      description: "",
+      validUntil: "",
+      reference: `DV-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`,
     });
     onOpenChange(false);
   };
@@ -44,23 +50,48 @@ export function CreateQuoteDialog({ open, onOpenChange }: CreateQuoteDialogProps
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-gray-900/95 backdrop-blur-xl border border-gray-800 text-white sm:max-w-[500px]">
+      <DialogContent className="bg-gray-900/95 backdrop-blur-xl border border-gray-800 text-white sm:max-w-[600px]">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold flex items-center gap-2">
             <Calculator className="h-5 w-5 text-blue-400" />
             Nouveau Devis
           </DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="client" className="text-sm font-medium text-gray-200">
+        <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-200">
+                Référence
+              </label>
+              <Input
+                value={formData.reference}
+                className="bg-gray-800/50 border-gray-700 text-white"
+                readOnly
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-200">
+                Date
+              </label>
+              <Input
+                type="date"
+                value={formData.date}
+                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                className="bg-gray-800/50 border-gray-700 text-white"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-200">
               Client
             </label>
             <Select 
-              onValueChange={(value) => setFormData({ ...formData, client: value })}
               value={formData.client}
+              onValueChange={(value) => setFormData({ ...formData, client: value })}
             >
-              <SelectTrigger className="bg-gray-800/50 border-gray-700 text-white mt-1.5">
+              <SelectTrigger className="bg-gray-800/50 border-gray-700 text-white">
                 <SelectValue placeholder="Sélectionner un client" />
               </SelectTrigger>
               <SelectContent>
@@ -72,33 +103,48 @@ export function CreateQuoteDialog({ open, onOpenChange }: CreateQuoteDialogProps
               </SelectContent>
             </Select>
           </div>
-          <div>
-            <label htmlFor="amount" className="text-sm font-medium text-gray-200">
-              Montant
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-200">
+              Description
             </label>
             <Input
-              id="amount"
-              type="text"
-              value={formData.amount}
-              onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
-              className="bg-gray-800/50 border-gray-700 text-white mt-1.5"
-              required
-              pattern="[0-9,\.]+"
-            />
-          </div>
-          <div>
-            <label htmlFor="date" className="text-sm font-medium text-gray-200">
-              Date
-            </label>
-            <Input
-              id="date"
-              type="date"
-              value={formData.date}
-              onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-              className="bg-gray-800/50 border-gray-700 text-white mt-1.5"
+              value={formData.description}
+              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              className="bg-gray-800/50 border-gray-700 text-white"
+              placeholder="Description du devis"
               required
             />
           </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-200">
+                Montant
+              </label>
+              <Input
+                type="number"
+                value={formData.amount}
+                onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
+                className="bg-gray-800/50 border-gray-700 text-white"
+                placeholder="0.00"
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-200">
+                Valide jusqu'au
+              </label>
+              <Input
+                type="date"
+                value={formData.validUntil}
+                onChange={(e) => setFormData({ ...formData, validUntil: e.target.value })}
+                className="bg-gray-800/50 border-gray-700 text-white"
+                required
+              />
+            </div>
+          </div>
+
           <div className="flex justify-end gap-3 pt-4">
             <Button
               type="button"
@@ -106,12 +152,14 @@ export function CreateQuoteDialog({ open, onOpenChange }: CreateQuoteDialogProps
               onClick={() => onOpenChange(false)}
               className="bg-gray-800/50 border-gray-700 hover:bg-gray-700 text-white"
             >
+              <X className="h-4 w-4 mr-2" />
               Annuler
             </Button>
             <Button
               type="submit"
               className="bg-blue-500 hover:bg-blue-600 text-white"
             >
+              <Save className="h-4 w-4 mr-2" />
               Créer
             </Button>
           </div>
