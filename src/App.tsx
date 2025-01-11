@@ -30,12 +30,12 @@ function App() {
               <Routes>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/clients" element={<Clients />} />
+                <Route path="/clients/production" element={<Production />} />
                 <Route path="/finance" element={<Finance />} />
                 <Route path="/formulations" element={<Formulations />} />
                 <Route path="/suppliers" element={<Suppliers />} />
                 <Route path="/vehicles" element={<Vehicles />} />
                 <Route path="/orders" element={<Orders />} />
-                <Route path="/production" element={<Production />} />
                 <Route path="/expenses" element={<Expenses />} />
                 <Route path="/payments" element={<Payments />} />
                 <Route path="/invoices" element={<Invoices />} />
