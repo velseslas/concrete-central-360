@@ -1,4 +1,4 @@
-import { ClientListWidget } from "@/components/clients/widgets/ClientListWidget";
+import { ClientListWidget } from "@/components/clients/ClientListWidget";
 import { ProductionWidget } from "@/components/production/ProductionWidget";
 
 export default function Clients() {
