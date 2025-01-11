@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
 import { DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 import { Download, Eye, FileText, Printer } from "lucide-react";
 import { Quote } from "../types";
 
@@ -10,12 +10,7 @@ interface QuoteDetailsProps {
   onPrint: () => void;
 }
 
-export function QuoteDetails({
-  quote,
-  onExport,
-  onPreview,
-  onPrint
-}: QuoteDetailsProps) {
+export function QuoteDetails({ quote, onExport, onPreview, onPrint }: QuoteDetailsProps) {
   if (!quote) return null;
 
   return (
