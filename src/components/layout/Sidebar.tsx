@@ -13,15 +13,7 @@ export function Sidebar() {
 
   const menuItems = [
     { to: "/", icon: Home, label: "Tableau de bord", iconColor: "text-blue-500" },
-    { 
-      to: "/clients", 
-      icon: Users, 
-      label: "Clients", 
-      iconColor: "text-purple-500",
-      subItems: [
-        { to: "/clients/production", label: "Production", icon: Factory },
-      ]
-    },
+    { to: "/clients", icon: Users, label: "Clients", iconColor: "text-purple-500" },
     { to: "/formulations", icon: TestTube, label: "Formulations", iconColor: "text-pink-500" },
     { to: "/suppliers", icon: Truck, label: "Fournisseurs", iconColor: "text-yellow-500" },
     { to: "/vehicles", icon: Car, label: "Parc roulant", iconColor: "text-red-500" },
