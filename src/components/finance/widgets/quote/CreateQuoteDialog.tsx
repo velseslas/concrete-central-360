@@ -22,92 +22,45 @@ export function CreateQuoteDialog({ open, onOpenChange }: CreateQuoteDialogProps
     reference: `DV-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`,
   });
 
-  console.log("CreateQuoteDialog - État du formulaire:", formData);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("CreateQuoteDialog - Soumission du formulaire:", formData);
     toast.success("Devis créé avec succès");
-    setFormData({
-      client: "",
-      amount: "",
-      date: new Date().toISOString().split('T')[0],
-      status: "pending",
-      description: "",
-      validUntil: "",
-      reference: `DV-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`,
-    });
     onOpenChange(false);
   };
 
-  const mockClients = [
-    "EURL Construction Plus",
-    "SPA Bâtiment Pro",
-    "SARL Travaux Publics",
-    "ETS Batiment",
-    "SARL BTP Services",
-  ];
-
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-gray-900/95 backdrop-blur-xl border border-gray-800 text-white sm:max-w-[600px]">
+      <DialogContent className="bg-gray-900/95 backdrop-blur-xl border border-gray-800 text-white">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold flex items-center gap-2">
             <Calculator className="h-5 w-5 text-blue-400" />
             Nouveau Devis
           </DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4 mt-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-200">
-                Référence
-              </label>
-              <Input
-                value={formData.reference}
-                className="bg-gray-800/50 border-gray-700 text-white"
-                readOnly
-              />
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-200">
-                Date
-              </label>
-              <Input
-                type="date"
-                value={formData.date}
-                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                className="bg-gray-800/50 border-gray-700 text-white"
-                required
-              />
-            </div>
-          </div>
-
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-200">
-              Client
-            </label>
-            <Select 
+            <label className="text-sm text-gray-400">Référence</label>
+            <Input
+              value={formData.reference}
+              className="bg-gray-800/50 border-gray-700 text-white"
+              readOnly
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <label className="text-sm text-gray-400">Client</label>
+            <Input
               value={formData.client}
-              onValueChange={(value) => setFormData({ ...formData, client: value })}
-            >
-              <SelectTrigger className="bg-gray-800/50 border-gray-700 text-white">
-                <SelectValue placeholder="Sélectionner un client" />
-              </SelectTrigger>
-              <SelectContent>
-                {mockClients.map((client) => (
-                  <SelectItem key={client} value={client}>
-                    {client}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              onChange={(e) => setFormData({ ...formData, client: e.target.value })}
+              className="bg-gray-800/50 border-gray-700 text-white"
+              placeholder="Nom du client"
+              required
+            />
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-200">
-              Description
-            </label>
+            <label className="text-sm text-gray-400">Description</label>
             <Input
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -119,9 +72,7 @@ export function CreateQuoteDialog({ open, onOpenChange }: CreateQuoteDialogProps
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-200">
-                Montant
-              </label>
+              <label className="text-sm text-gray-400">Montant</label>
               <Input
                 type="number"
                 value={formData.amount}
@@ -132,9 +83,7 @@ export function CreateQuoteDialog({ open, onOpenChange }: CreateQuoteDialogProps
               />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-200">
-                Valide jusqu'au
-              </label>
+              <label className="text-sm text-gray-400">Date de validité</label>
               <Input
                 type="date"
                 value={formData.validUntil}

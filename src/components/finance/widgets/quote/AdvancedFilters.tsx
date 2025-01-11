@@ -9,7 +9,7 @@ interface AdvancedFiltersProps {
   onReset: () => void;
 }
 
-export interface FilterValues {
+interface FilterValues {
   startDate: string;
   endDate: string;
   minAmount: string;

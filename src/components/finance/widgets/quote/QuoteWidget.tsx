@@ -6,8 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState } from "react";
 import { toast } from "sonner";
-import { CreateQuoteDialog } from "./quote/CreateQuoteDialog";
-import { AdvancedFilters } from "./quote/AdvancedFilters";
+import { CreateQuoteDialog } from "./CreateQuoteDialog";
+import { AdvancedFilters } from "./AdvancedFilters";
 
 interface Quote {
   id: string;
