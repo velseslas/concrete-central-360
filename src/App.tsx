@@ -16,6 +16,7 @@ import Invoices from "./pages/Invoices";
 import ClientPayments from "./pages/finance/ClientPayments";
 import SupplierPayments from "./pages/finance/SupplierPayments";
 import Reports from "./pages/finance/Reports";
+import Quotes from "./pages/finance/Quotes";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
                 <Route path="/finance/payments/clients" element={<ClientPayments />} />
                 <Route path="/finance/payments/suppliers" element={<SupplierPayments />} />
                 <Route path="/finance/reports" element={<Reports />} />
+                <Route path="/finance/quotes" element={<Quotes />} />
               </Routes>
             </main>
           </div>
