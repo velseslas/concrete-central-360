@@ -9,18 +9,25 @@ import { PurchaseOrderWidget } from "@/components/suppliers/widgets/PurchaseOrde
 import { PaymentWidget } from "@/components/suppliers/widgets/PaymentWidget";
 import { ProductionWidget } from "@/components/clients/widgets/ProductionWidget";
 import { SupplierDashboard, WidgetProps } from "@/components/suppliers/SupplierDashboard";
+import { supabase } from "@/integrations/supabase/client";
 
 const Suppliers = () => {
   const [activeWidget, setActiveWidget] = useState<string | null>(null);
   const [selectedSupplierId, setSelectedSupplierId] = useState<number | null>(null);
 
-  const handleEdit = (supplier: any) => {
+  const handleEdit = async (supplier: any) => {
     console.log("Edit supplier:", supplier);
     setSelectedSupplierId(supplier.id);
   };
 
-  const handleDelete = (supplierId: number) => {
+  const handleDelete = async (supplierId: number) => {
     console.log("Delete supplier:", supplierId);
+    try {
+      // We'll implement the delete functionality once we have the suppliers table set up
+      console.log("Attempting to delete supplier with ID:", supplierId);
+    } catch (error) {
+      console.error("Error deleting supplier:", error);
+    }
   };
 
   const widgets: WidgetProps[] = [
