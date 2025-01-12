@@ -17,10 +17,7 @@ export function Sidebar() {
       to: "/clients", 
       icon: Users, 
       label: "Clients", 
-      iconColor: "text-purple-500",
-      subItems: [
-        { to: "/clients/production", label: "Production", icon: Factory },
-      ]
+      iconColor: "text-purple-500"
     },
     { to: "/formulations", icon: TestTube, label: "Formulations", iconColor: "text-pink-500" },
     { to: "/suppliers", icon: Truck, label: "Fournisseurs", iconColor: "text-yellow-500" },
