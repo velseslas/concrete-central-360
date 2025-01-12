@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Users, FileText, Construction, Building2, Package, DollarSign, ShoppingCart, CreditCard } from "lucide-react";
+import { Users, FileText, Construction, Building2, Package, DollarSign, ShoppingCart, CreditCard, Factory } from "lucide-react";
 import { motion } from "framer-motion";
 import { ClientListWidget } from "@/components/clients/widgets/ClientListWidget";
 import { ProductCategoryWidget } from "@/components/clients/widgets/ProductCategoryWidget";
@@ -10,7 +10,8 @@ import { AdminDocumentsWidget } from "@/components/clients/widgets/AdminDocument
 import { ReportsWidget } from "@/components/clients/widgets/ReportsWidget";
 import { OrderWidget } from "@/components/clients/widgets/OrderWidget";
 import { PaymentWidget } from "@/components/clients/widgets/PaymentWidget";
-import { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { ProductionWidget } from "@/components/production/ProductionWidget";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 const Clients = () => {
   const [activeWidget, setActiveWidget] = useState<string | null>(null);
@@ -79,6 +80,13 @@ const Clients = () => {
       icon: CreditCard,
       color: 'text-emerald-400',
       component: PaymentWidget
+    },
+    {
+      id: 'production',
+      title: 'Production',
+      icon: Factory,
+      color: 'text-blue-500',
+      component: ProductionWidget
     }
   ];
 
