@@ -9,6 +9,7 @@ import Formulations from "./pages/Formulations";
 import Suppliers from "./pages/Suppliers";
 import Vehicles from "./pages/Vehicles";
 import Orders from "./pages/Orders";
+import Production from "./pages/Production";
 import Expenses from "./pages/Expenses";
 import Payments from "./pages/Payments";
 import Invoices from "./pages/Invoices";
@@ -29,6 +30,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/clients" element={<Clients />} />
+                <Route path="/clients/production" element={<Production />} />
                 <Route path="/finance" element={<Finance />} />
                 <Route path="/formulations" element={<Formulations />} />
                 <Route path="/suppliers" element={<Suppliers />} />
