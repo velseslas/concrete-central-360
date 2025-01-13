@@ -10,10 +10,12 @@ import { PaymentWidget } from "@/components/suppliers/widgets/PaymentWidget";
 import { ProductionWidget } from "@/components/clients/widgets/ProductionWidget";
 import { SupplierDashboard, WidgetProps } from "@/components/suppliers/SupplierDashboard";
 import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/components/ui/use-toast";
 
 const Suppliers = () => {
   const [activeWidget, setActiveWidget] = useState<string | null>(null);
   const [selectedSupplierId, setSelectedSupplierId] = useState<number | null>(null);
+  const { toast } = useToast();
 
   const handleEdit = async (supplier: any) => {
     console.log("Edit supplier:", supplier);
@@ -23,10 +25,36 @@ const Suppliers = () => {
   const handleDelete = async (supplierId: number) => {
     console.log("Delete supplier:", supplierId);
     try {
-      // We'll implement the delete functionality once we have the suppliers table set up
-      console.log("Attempting to delete supplier with ID:", supplierId);
+      const { error } = await supabase
+        .from("suppliers")
+        .delete()
+        .eq("id", supplierId);
+
+      if (error) {
+        console.error("Error deleting supplier:", error);
+        toast({
+          variant: "destructive",
+          title: "Erreur",
+          description: "Impossible de supprimer le fournisseur.",
+        });
+        return;
+      }
+
+      toast({
+        title: "Succès",
+        description: "Le fournisseur a été supprimé avec succès.",
+      });
+      
+      // Refresh the list by forcing a re-render
+      setActiveWidget(null);
+      setActiveWidget("suppliers");
     } catch (error) {
-      console.error("Error deleting supplier:", error);
+      console.error("Error in handleDelete:", error);
+      toast({
+        variant: "destructive",
+        title: "Erreur",
+        description: "Une erreur est survenue lors de la suppression.",
+      });
     }
   };
 
