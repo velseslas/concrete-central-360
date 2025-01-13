@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -13,7 +13,6 @@ import { supabase } from "@/integrations/supabase/client";
 
 const productionSchema = z.object({
   orderId: z.string().min(1, "La commande est requise"),
-  formulation: z.string().min(1, "La formulation est requise"),
   volume: z.string().min(1, "Le volume est requis"),
   notes: z.string().optional(),
 });
@@ -31,13 +30,13 @@ export function ProductionForm({ open, onOpenChange }: ProductionFormProps) {
     resolver: zodResolver(productionSchema),
     defaultValues: {
       orderId: "",
-      formulation: "",
       volume: "",
       notes: "",
     },
   });
 
   const fetchOrders = async () => {
+    console.log("Fetching orders...");
     const { data, error } = await supabase
       .from("orders")
       .select("*")
@@ -49,10 +48,12 @@ export function ProductionForm({ open, onOpenChange }: ProductionFormProps) {
       return;
     }
 
+    console.log("Orders fetched:", data);
     setOrders(data || []);
   };
 
   const onSubmit = async (values: z.infer<typeof productionSchema>) => {
+    console.log("Submitting production:", values);
     setLoading(true);
     const selectedOrder = orders.find(order => order.id === values.orderId);
 
@@ -72,6 +73,7 @@ export function ProductionForm({ open, onOpenChange }: ProductionFormProps) {
         project: selectedOrder.project,
         notes: values.notes,
         start_date: new Date().toISOString(),
+        status: "pending"
       });
 
     if (error) {
@@ -92,18 +94,18 @@ export function ProductionForm({ open, onOpenChange }: ProductionFormProps) {
       toast.error("Erreur lors de la mise à jour du statut de la commande");
     }
 
+    console.log("Production created successfully");
     toast.success("Production créée avec succès");
     setLoading(false);
     onOpenChange(false);
     form.reset();
   };
 
-  // Fetch orders when dialog opens
-  useState(() => {
+  useEffect(() => {
     if (open) {
       fetchOrders();
     }
-  });
+  }, [open]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

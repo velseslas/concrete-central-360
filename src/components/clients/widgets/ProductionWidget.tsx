@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -26,6 +26,7 @@ export function ProductionWidget() {
   const [productions, setProductions] = useState<Production[]>([]);
 
   const fetchProductions = async () => {
+    console.log("Fetching productions...");
     const { data, error } = await supabase
       .from("productions")
       .select("*")
@@ -37,10 +38,11 @@ export function ProductionWidget() {
       return;
     }
 
-    // Cast the status to the correct type since we know it matches our enum
+    console.log("Productions fetched:", data);
+
     const typedData = data?.map(prod => ({
       ...prod,
-      status: prod.status as "pending" | "in_progress" | "completed"
+      status: (prod.status || "pending") as "pending" | "in_progress" | "completed"
     })) || [];
 
     setProductions(typedData);
@@ -61,10 +63,9 @@ export function ProductionWidget() {
     );
   };
 
-  // Fetch productions when component mounts
-  useState(() => {
+  useEffect(() => {
     fetchProductions();
-  });
+  }, []);
 
   return (
     <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl">
