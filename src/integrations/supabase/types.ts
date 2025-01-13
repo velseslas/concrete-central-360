@@ -9,6 +9,81 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      orders: {
+        Row: {
+          client: string
+          created_at: string | null
+          delivery_date: string
+          formulation: string
+          id: string
+          project: string
+          status: string | null
+          volume: number
+        }
+        Insert: {
+          client: string
+          created_at?: string | null
+          delivery_date: string
+          formulation: string
+          id: string
+          project: string
+          status?: string | null
+          volume: number
+        }
+        Update: {
+          client?: string
+          created_at?: string | null
+          delivery_date?: string
+          formulation?: string
+          id?: string
+          project?: string
+          status?: string | null
+          volume?: number
+        }
+        Relationships: []
+      }
+      productions: {
+        Row: {
+          client: string
+          created_at: string | null
+          end_date: string | null
+          formulation: string
+          id: number
+          notes: string | null
+          order_id: string
+          project: string
+          start_date: string | null
+          status: string | null
+          volume: number
+        }
+        Insert: {
+          client: string
+          created_at?: string | null
+          end_date?: string | null
+          formulation: string
+          id?: number
+          notes?: string | null
+          order_id: string
+          project: string
+          start_date?: string | null
+          status?: string | null
+          volume: number
+        }
+        Update: {
+          client?: string
+          created_at?: string | null
+          end_date?: string | null
+          formulation?: string
+          id?: number
+          notes?: string | null
+          order_id?: string
+          project?: string
+          start_date?: string | null
+          status?: string | null
+          volume?: number
+        }
+        Relationships: []
+      }
       suppliers: {
         Row: {
           address: string | null
