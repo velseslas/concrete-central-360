@@ -37,7 +37,13 @@ export function ProductionWidget() {
       return;
     }
 
-    setProductions(data || []);
+    // Cast the status to the correct type since we know it matches our enum
+    const typedData = data?.map(prod => ({
+      ...prod,
+      status: prod.status as "pending" | "in_progress" | "completed"
+    })) || [];
+
+    setProductions(typedData);
   };
 
   const getStatusBadge = (status: Production["status"]) => {
