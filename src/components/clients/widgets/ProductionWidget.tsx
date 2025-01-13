@@ -39,7 +39,6 @@ export function ProductionWidget() {
     }
 
     console.log("Productions fetched:", data);
-
     const typedData = data?.map(prod => ({
       ...prod,
       status: (prod.status || "pending") as "pending" | "in_progress" | "completed"
