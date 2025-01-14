@@ -10,7 +10,7 @@ import { AdminDocumentsWidget } from "@/components/clients/widgets/AdminDocument
 import { ReportsWidget } from "@/components/clients/widgets/ReportsWidget";
 import { OrderWidget } from "@/components/clients/widgets/OrderWidget";
 import { PaymentWidget } from "@/components/clients/widgets/PaymentWidget";
-import { ProductionWidget } from "@/components/production/ProductionWidget";
+import { ProductionWidget } from "@/components/clients/widgets/ProductionWidget";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 const Clients = () => {
