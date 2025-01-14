@@ -37,6 +37,8 @@ export function OrderWidget({ clientId }: OrderWidgetProps) {
     }
   ]);
 
+  console.log("OrderWidget rendered, showOrderForm:", showOrderForm);
+
   const getStatusBadge = (status: Order["status"]) => {
     const statusConfig = {
       pending: { label: "En attente", className: "bg-yellow-500/20 text-yellow-400" },
@@ -73,7 +75,7 @@ export function OrderWidget({ clientId }: OrderWidgetProps) {
               Liste des Commandes
             </CardTitle>
             <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
-              <div className="relative flex-grow md:w-64">
+              <div className="relative flex-grow md:flex-grow-0 md:w-64">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <Input 
                   placeholder="Rechercher une commande..." 
@@ -81,10 +83,11 @@ export function OrderWidget({ clientId }: OrderWidgetProps) {
                 />
               </div>
               <Button 
-                onClick={() => setShowOrderForm(true)} 
-                variant="outline" 
-                size="sm" 
-                className="text-white"
+                onClick={() => {
+                  console.log("New order button clicked");
+                  setShowOrderForm(true);
+                }}
+                className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white min-w-[200px]"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Nouvelle commande
