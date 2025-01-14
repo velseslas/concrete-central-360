@@ -59,6 +59,11 @@ export function OrderWidget({ clientId }: OrderWidgetProps) {
     setShowOrderForm(false);
   };
 
+  const handleNewOrder = () => {
+    console.log("Attempting to open order form");
+    setShowOrderForm(true);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -83,11 +88,9 @@ export function OrderWidget({ clientId }: OrderWidgetProps) {
                 />
               </div>
               <Button 
-                onClick={() => {
-                  console.log("New order button clicked");
-                  setShowOrderForm(true);
-                }}
-                className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white min-w-[200px]"
+                type="button"
+                onClick={handleNewOrder}
+                className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white min-w-[200px] relative z-10"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Nouvelle commande
