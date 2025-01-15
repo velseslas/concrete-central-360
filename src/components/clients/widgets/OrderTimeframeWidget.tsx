@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Search, FileText, Calendar, CalendarDays, CalendarRange } from "lucide-react";
+import { Plus, Search, FileText, Calendar, CalendarDays } from "lucide-react";
 import { OrderForm } from "@/components/orders/OrderForm";
 import { DetailView } from "@/components/clients/DetailView";
 import { motion } from "framer-motion";
@@ -115,7 +115,13 @@ export function OrderTimeframeWidget({ timeframe, clientId }: OrderTimeframeWidg
 
       if (error) throw error;
       
-      setOrders(data || []);
+      // Transform the data to ensure status is of the correct type
+      const transformedData = (data || []).map(order => ({
+        ...order,
+        status: (order.status || "pending") as Order["status"]
+      }));
+      
+      setOrders(transformedData);
     } catch (error) {
       console.error(`Error fetching ${timeframe} orders:`, error);
     } finally {
