@@ -8,6 +8,9 @@ import { toast } from "sonner";
 import { OrderFormFields } from "./OrderFormFields";
 import { OrderFormValues, OrderFormProps, orderSchema, mockClients, mockProjects, mockCategories, mockProducts } from "./types";
 import { ClientProjectFields } from "./ClientProjectFields";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 
 export function OrderForm({ open, onOpenChange, onSubmit }: OrderFormProps) {
   console.log("OrderForm rendered");
@@ -17,6 +20,7 @@ export function OrderForm({ open, onOpenChange, onSubmit }: OrderFormProps) {
     defaultValues: {
       clientId: "",
       projectId: "",
+      deliveryDate: "",
       products: [{ category: "", product: "", quantity: "" }],
     },
   });
@@ -44,48 +48,72 @@ export function OrderForm({ open, onOpenChange, onSubmit }: OrderFormProps) {
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
-            <ClientProjectFields 
-              form={form} 
-              mockClients={mockClients} 
-              mockProjects={mockProjects} 
-            />
+            <ScrollArea className="h-[60vh] pr-4">
+              <div className="space-y-6">
+                <ClientProjectFields 
+                  form={form} 
+                  mockClients={mockClients} 
+                  mockProjects={mockProjects} 
+                />
 
-            <div className="space-y-4">
-              {fields.map((field, index) => (
-                <div key={field.id} className="flex gap-4 items-end">
-                  <div className="flex-1">
-                    <OrderFormFields
-                      form={form}
-                      index={index}
-                      mockCategories={mockCategories}
-                      mockProducts={mockProducts}
-                    />
-                  </div>
-                  {index > 0 && (
-                    <Button
-                      type="button"
-                      variant="destructive"
-                      onClick={() => remove(index)}
-                    >
-                      Supprimer
-                    </Button>
+                <FormField
+                  control={form.control}
+                  name="deliveryDate"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-white">Date de livraison</FormLabel>
+                      <FormControl>
+                        <Input 
+                          type="date" 
+                          className="h-12 bg-gray-800/50 border-gray-700/50 text-white" 
+                          {...field} 
+                        />
+                      </FormControl>
+                      <FormMessage className="text-red-400" />
+                    </FormItem>
                   )}
-                </div>
-              ))}
+                />
 
-              <Button
-                type="button"
-                variant="outline"
-                className="w-full mt-2 border-dashed border-gray-700 text-white hover:bg-gray-800"
-                onClick={() => append({ category: "", product: "", quantity: "" })}
-              >
-                <Plus className="mr-2 h-4 w-4" />
-                Ajouter un produit
-              </Button>
-            </div>
+                <div className="space-y-4">
+                  {fields.map((field, index) => (
+                    <div key={field.id} className="flex gap-4 items-end">
+                      <div className="flex-1">
+                        <OrderFormFields
+                          form={form}
+                          index={index}
+                          mockCategories={mockCategories}
+                          mockProducts={mockProducts}
+                        />
+                      </div>
+                      {index > 0 && (
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          onClick={() => remove(index)}
+                          className="bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/20"
+                        >
+                          Supprimer
+                        </Button>
+                      )}
+                    </div>
+                  ))}
+
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full mt-2 border-dashed border-gray-700 text-white hover:bg-gray-800"
+                    onClick={() => append({ category: "", product: "", quantity: "" })}
+                  >
+                    <Plus className="mr-2 h-4 w-4" />
+                    Ajouter un produit
+                  </Button>
+                </div>
+              </div>
+            </ScrollArea>
 
             <div className="flex justify-end space-x-2 pt-4 border-t border-gray-700">
               <Button 
+                type="button"
                 variant="outline" 
                 onClick={() => onOpenChange(false)}
                 className="border-gray-700 text-white hover:bg-gray-800"
@@ -94,7 +122,7 @@ export function OrderForm({ open, onOpenChange, onSubmit }: OrderFormProps) {
               </Button>
               <Button 
                 type="submit"
-                className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600"
+                className="bg-primary hover:bg-primary/90"
               >
                 <Check className="mr-2 h-4 w-4" />
                 Valider

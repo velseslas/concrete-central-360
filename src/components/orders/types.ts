@@ -3,6 +3,7 @@ import { z } from "zod";
 export const orderSchema = z.object({
   clientId: z.string().min(1, "Le client est requis"),
   projectId: z.string().min(1, "Le chantier est requis"),
+  deliveryDate: z.string().min(1, "La date de livraison est requise"),
   products: z.array(z.object({
     category: z.string().min(1, "La catégorie est requise"),
     product: z.string().min(1, "Le produit est requis"),
