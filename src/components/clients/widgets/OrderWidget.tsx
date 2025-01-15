@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Plus, Search, FileText } from "lucide-react";
 import { OrderForm } from "@/components/orders/OrderForm";
+import { DetailView } from "@/components/clients/DetailView";
 import { motion } from "framer-motion";
 
 interface Order {
@@ -24,6 +25,7 @@ interface OrderWidgetProps {
 
 export function OrderWidget({ clientId }: OrderWidgetProps) {
   const [showOrderForm, setShowOrderForm] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [orders] = useState<Order[]>([
     {
       id: "CMD001",
@@ -62,6 +64,11 @@ export function OrderWidget({ clientId }: OrderWidgetProps) {
   const handleNewOrder = () => {
     console.log("Attempting to open order form");
     setShowOrderForm(true);
+  };
+
+  const handleOrderClick = (order: Order) => {
+    console.log("Order clicked:", order);
+    setSelectedOrder(order);
   };
 
   return (
@@ -103,6 +110,7 @@ export function OrderWidget({ clientId }: OrderWidgetProps) {
             {orders.map((order) => (
               <div
                 key={order.id}
+                onClick={() => handleOrderClick(order)}
                 className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/50 transition-colors cursor-pointer"
               >
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -134,6 +142,15 @@ export function OrderWidget({ clientId }: OrderWidgetProps) {
         onOpenChange={setShowOrderForm}
         onSubmit={handleSubmit}
       />
+
+      {selectedOrder && (
+        <DetailView
+          open={!!selectedOrder}
+          onOpenChange={(open) => !open && setSelectedOrder(null)}
+          data={selectedOrder}
+          title={`Détails de la commande ${selectedOrder.id}`}
+        />
+      )}
     </motion.div>
   );
 }
