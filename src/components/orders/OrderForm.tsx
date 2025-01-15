@@ -90,7 +90,7 @@ export function OrderForm({ open, onOpenChange, onSubmit }: OrderFormProps) {
                           type="button"
                           variant="destructive"
                           onClick={() => remove(index)}
-                          className="bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/20"
+                          className="bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/20"
                         >
                           Supprimer
                         </Button>
@@ -101,8 +101,8 @@ export function OrderForm({ open, onOpenChange, onSubmit }: OrderFormProps) {
                   <Button
                     type="button"
                     variant="outline"
-                    className="w-full mt-2 border-dashed border-gray-700 text-white hover:bg-gray-800"
                     onClick={() => append({ category: "", product: "", quantity: "" })}
+                    className="w-full mt-2 border border-gray-700/50 bg-gray-800/30 text-white hover:bg-gray-700/50 hover:border-gray-600/50 transition-all duration-200"
                   >
                     <Plus className="mr-2 h-4 w-4" />
                     Ajouter un produit
@@ -116,13 +116,13 @@ export function OrderForm({ open, onOpenChange, onSubmit }: OrderFormProps) {
                 type="button"
                 variant="outline" 
                 onClick={() => onOpenChange(false)}
-                className="border-gray-700 text-white hover:bg-gray-800"
+                className="bg-gray-800/50 border-gray-700/50 text-white hover:bg-gray-700/50 hover:border-gray-600/50 transition-all duration-200"
               >
                 Annuler
               </Button>
               <Button 
                 type="submit"
-                className="bg-primary hover:bg-primary/90"
+                className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white transition-all duration-200"
               >
                 <Check className="mr-2 h-4 w-4" />
                 Valider
