@@ -21,7 +21,7 @@ export function ProductionTimeframeWidgets() {
     });
   };
 
-  const mapProductionsToItems = (productions) => {
+  const mapProductionsToItems = (productions: any[]) => {
     return productions.map(production => ({
       id: production.order_id,
       client: production.client,
