@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ProductionWidget } from "@/components/production/ProductionWidget";
+import { ProductionReportsWidget } from "@/components/clients/widgets/production/reports/ProductionReportsWidget";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -62,6 +63,11 @@ const Production = () => {
         {/* Section principale avec les statistiques */}
         <div className="grid grid-cols-1 gap-8">
           <ProductionWidget />
+        </div>
+
+        {/* Section des rapports */}
+        <div className="grid grid-cols-1 gap-8">
+          <ProductionReportsWidget />
         </div>
 
         {/* Liste des productions */}
