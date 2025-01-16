@@ -4,8 +4,8 @@ import { useState } from "react";
 import { Calendar, CalendarDays, CalendarRange, CalendarClock } from "lucide-react";
 import { ProductionSheetTitle } from "@/components/production/sheets/ProductionSheetTitle";
 import { ProductionSheetContent } from "@/components/production/sheets/ProductionSheetContent";
-import { useProduction } from "@/components/clients/widgets/production/useProduction";
-import { Production } from "@/components/clients/widgets/production/types";
+import { useProduction } from "./useProduction";
+import { Production } from "./types";
 import { startOfDay, startOfWeek, startOfMonth, startOfYear, endOfDay, endOfWeek, endOfMonth, endOfYear } from "date-fns";
 
 interface ProductionItem {
