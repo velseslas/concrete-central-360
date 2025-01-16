@@ -21,6 +21,16 @@ export function ProductionTimeframeWidgets() {
     });
   };
 
+  const mapProductionsToItems = (productions) => {
+    return productions.map(production => ({
+      id: production.order_id,
+      client: production.client,
+      formulation: production.formulation,
+      volume: production.volume,
+      date: production.start_date,
+    }));
+  };
+
   const now = new Date();
   const dailyProductions = filterProductionsByTimeframe(startOfDay(now), endOfDay(now));
   const weeklyProductions = filterProductionsByTimeframe(startOfWeek(now), endOfWeek(now));
@@ -98,7 +108,7 @@ export function ProductionTimeframeWidgets() {
                       iconColor={card.iconColor}
                     />
                   </SheetHeader>
-                  <ProductionSheetContent items={card.productions} />
+                  <ProductionSheetContent items={mapProductionsToItems(card.productions)} />
                 </SheetContent>
               </Sheet>
             </div>
