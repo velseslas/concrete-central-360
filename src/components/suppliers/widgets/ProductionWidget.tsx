@@ -4,7 +4,7 @@ import { Plus, FileText } from "lucide-react";
 import { ProductionForm } from "@/components/clients/widgets/ProductionForm";
 import { ProductionList } from "@/components/clients/widgets/production/ProductionList";
 import { useProduction } from "@/components/clients/widgets/production/useProduction";
-import { ProductionTimeframeWidgets } from "./production/ProductionTimeframeWidgets";
+import { ProductionTimeframeWidgets } from "@/components/clients/widgets/production/ProductionTimeframeWidgets";
 import { useState, useEffect } from "react";
 
 export function ProductionWidget() {
