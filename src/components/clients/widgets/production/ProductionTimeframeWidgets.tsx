@@ -5,7 +5,16 @@ import { Calendar, CalendarDays, CalendarRange, CalendarClock } from "lucide-rea
 import { ProductionSheetTitle } from "@/components/production/sheets/ProductionSheetTitle";
 import { ProductionSheetContent } from "@/components/production/sheets/ProductionSheetContent";
 import { useProduction } from "./useProduction";
+import { Production } from "./types";
 import { startOfDay, startOfWeek, startOfMonth, startOfYear, endOfDay, endOfWeek, endOfMonth, endOfYear } from "date-fns";
+
+interface ProductionItem {
+  id: string;
+  client: string;
+  formulation: string;
+  volume: number;
+  date: string;
+}
 
 export function ProductionTimeframeWidgets() {
   const [isDailyOpen, setIsDailyOpen] = useState(false);
@@ -16,18 +25,18 @@ export function ProductionTimeframeWidgets() {
 
   const filterProductionsByTimeframe = (start: Date, end: Date) => {
     return productions.filter(production => {
-      const productionDate = new Date(production.start_date);
+      const productionDate = new Date(production.start_date || '');
       return productionDate >= start && productionDate <= end;
     });
   };
 
-  const mapProductionsToItems = (productions: any[]) => {
+  const mapProductionsToItems = (productions: Production[]): ProductionItem[] => {
     return productions.map(production => ({
       id: production.order_id,
       client: production.client,
       formulation: production.formulation,
       volume: production.volume,
-      date: production.start_date,
+      date: production.start_date || new Date().toISOString(),
     }));
   };
 
