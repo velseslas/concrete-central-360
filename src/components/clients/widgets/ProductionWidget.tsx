@@ -5,11 +5,16 @@ import { ProductionForm } from "./ProductionForm";
 import { ProductionList } from "./production/ProductionList";
 import { useProduction } from "./production/useProduction";
 import { ProductionTimeframeWidgets } from "./production/ProductionTimeframeWidgets";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export function ProductionWidget() {
   const [showProductionForm, setShowProductionForm] = useState(false);
   const { productions, fetchProductions } = useProduction();
+
+  useEffect(() => {
+    console.log("ProductionWidget mounted, fetching productions...");
+    fetchProductions();
+  }, []);
 
   return (
     <>
