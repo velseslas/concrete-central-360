@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FileText, Download, Eye } from "lucide-react";
 import { ProductionReportFilters } from "./ProductionReportFilters";
+import { ProductionReportTemplate } from "./ProductionReportTemplate";
 import { ProductionReportPreviewDialog } from "./ProductionReportPreviewDialog";
 import { useProduction } from "../useProduction";
 import { toast } from "sonner";
