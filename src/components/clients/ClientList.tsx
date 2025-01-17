@@ -49,7 +49,7 @@ const mockProjects = [
 const ClientList = () => {
   const [selectedClient, setSelectedClient] = useState<any>(null);
   const [showProjectList, setShowProjectList] = useState(false);
-  const [showDocumentUpload, setShowDocumentUpload] = useState(false);
+  const [showDocuments, setShowDocuments] = useState(false);
   const [isNewClientDialogOpen, setIsNewClientDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -68,7 +68,7 @@ const ClientList = () => {
 
   const handleDocumentUpload = (client: any) => {
     setSelectedClient(client);
-    setShowDocumentUpload(true);
+    setShowDocuments(true);
   };
 
   return (
@@ -146,8 +146,12 @@ const ClientList = () => {
             </Sheet>
           )}
 
-          {showDocumentUpload && (
-            <DocumentsWidget />
+          {showDocuments && (
+            <Sheet open={showDocuments} onOpenChange={setShowDocuments}>
+              <SheetContent side="right" className="w-[400px] sm:w-[540px] bg-gray-900/95 border-gray-700/50">
+                <DocumentsWidget />
+              </SheetContent>
+            </Sheet>
           )}
         </>
       )}
