@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { ClientForm } from "./ClientForm";
-import { ProjectForm } from "../projects/ProjectForm";
-import { DocumentsWidget } from "./widgets/DocumentsWidget";
+import { ProjectList } from "./ProjectList";
+import { DocumentList } from "./DocumentList";
 import { ClientTable } from "./ClientTable";
 import { Button } from "../ui/button";
 import { UserPlus, Search } from "lucide-react";
 import { motion } from "framer-motion";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
-import { Sheet, SheetContent } from "../ui/sheet";
 import { Input } from "../ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
@@ -30,8 +29,8 @@ const mockClients = [
 
 const ClientList = () => {
   const [selectedClient, setSelectedClient] = useState<any>(null);
-  const [showProjectForm, setShowProjectForm] = useState(false);
-  const [showDocumentUpload, setShowDocumentUpload] = useState(false);
+  const [showProjectList, setShowProjectList] = useState(false);
+  const [showDocumentList, setShowDocumentList] = useState(false);
   const [isNewClientDialogOpen, setIsNewClientDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -43,14 +42,14 @@ const ClientList = () => {
     setSelectedClient(client);
   };
 
-  const handleAddProject = (client: any) => {
+  const handleShowProjects = (client: any) => {
     setSelectedClient(client);
-    setShowProjectForm(true);
+    setShowProjectList(true);
   };
 
-  const handleDocumentUpload = (client: any) => {
+  const handleShowDocuments = (client: any) => {
     setSelectedClient(client);
-    setShowDocumentUpload(true);
+    setShowDocumentList(true);
   };
 
   return (
@@ -81,7 +80,6 @@ const ClientList = () => {
                 <DialogTrigger asChild>
                   <Button 
                     className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white shadow-lg hover:shadow-xl transition-all duration-300"
-                    onClick={() => setIsNewClientDialogOpen(true)}
                   >
                     <UserPlus className="mr-2 h-4 w-4" />
                     Nouveau client
@@ -104,8 +102,8 @@ const ClientList = () => {
             <ClientTable
               clients={mockClients}
               onEdit={handleEdit}
-              onAddProject={handleAddProject}
-              onDocumentUpload={handleDocumentUpload}
+              onAddProject={handleShowProjects}
+              onDocumentUpload={handleShowDocuments}
               onDelete={handleDelete}
             />
           </motion.div>
@@ -114,19 +112,17 @@ const ClientList = () => {
       
       {selectedClient && (
         <>
-          <Sheet>
-            <SheetContent side="right" className="w-[400px] sm:w-[540px] bg-gray-900/95 border-gray-700/50">
-              <ClientForm clientToEdit={selectedClient} onSuccess={() => setSelectedClient(null)} />
-            </SheetContent>
-          </Sheet>
-          <ProjectForm
-            open={showProjectForm}
-            onOpenChange={setShowProjectForm}
-            clientId={selectedClient.id}
+          <ClientForm clientToEdit={selectedClient} onSuccess={() => setSelectedClient(null)} />
+          <ProjectList
+            open={showProjectList}
+            onOpenChange={setShowProjectList}
+            client={selectedClient}
           />
-          {showDocumentUpload && (
-            <DocumentsWidget />
-          )}
+          <DocumentList
+            open={showDocumentList}
+            onOpenChange={setShowDocumentList}
+            client={selectedClient}
+          />
         </>
       )}
     </motion.div>
