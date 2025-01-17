@@ -8,7 +8,7 @@ import { ClientBasicInfoFields } from "./ClientBasicInfoFields";
 import { ClientAddressFields } from "./ClientAddressFields";
 import { ClientContactFields } from "./ClientContactFields";
 import { ClientAdminFields } from "./ClientAdminFields";
-import { SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { toast } from "sonner";
 
 const clientSchema = z.object({
@@ -100,11 +100,11 @@ export function ClientForm({ clientToEdit, onSuccess }: ClientFormProps) {
 
   return (
     <div className="h-full flex flex-col w-full max-w-[1200px] mx-auto bg-gray-900/95">
-      <SheetHeader className="mb-4">
-        <SheetTitle className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+      <DialogHeader className="mb-4">
+        <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
           {clientToEdit ? "Modifier le client" : "Nouveau client"}
-        </SheetTitle>
-      </SheetHeader>
+        </DialogTitle>
+      </DialogHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
           <div className="space-y-6 bg-gray-800/50 rounded-lg p-6 backdrop-blur-xl border border-gray-700/50">
