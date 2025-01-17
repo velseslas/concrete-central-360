@@ -4,7 +4,7 @@ import { Edit, Trash, Building, FileText } from "lucide-react";
 interface ClientActionsProps {
   client: any;
   onEdit: (client: any) => void;
-  onAddProject: (client: any) => void;
+  onViewProjects: (client: any) => void;
   onDocumentUpload: (client: any) => void;
   onDelete: (clientId: number) => void;
 }
@@ -12,7 +12,7 @@ interface ClientActionsProps {
 export function ClientActions({
   client,
   onEdit,
-  onAddProject,
+  onViewProjects,
   onDocumentUpload,
   onDelete,
 }: ClientActionsProps) {
@@ -29,7 +29,7 @@ export function ClientActions({
       <Button
         variant="ghost"
         size="icon"
-        onClick={() => onAddProject(client)}
+        onClick={() => onViewProjects(client)}
         className="hover:bg-blue-500/20 transition-colors"
       >
         <Building className="h-4 w-4 text-blue-400" />

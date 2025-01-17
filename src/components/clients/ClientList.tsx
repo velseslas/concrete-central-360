@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { ClientForm } from "./ClientForm";
-import { ProjectForm } from "../projects/ProjectForm";
 import { DocumentsWidget } from "./widgets/DocumentsWidget";
 import { ClientTable } from "./ClientTable";
 import { Button } from "../ui/button";
@@ -10,6 +9,7 @@ import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import { Sheet, SheetContent } from "../ui/sheet";
 import { Input } from "../ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { ProjectListSection } from "./widgets/ProjectListSection";
 
 const mockClients = [
   {
@@ -28,9 +28,27 @@ const mockClients = [
   },
 ];
 
+// Mock projects data
+const mockProjects = [
+  {
+    id: 1,
+    name: "Projet Construction A",
+    client: "Entreprise ABC",
+    status: "En cours",
+    concreteQuantity: "500",
+  },
+  {
+    id: 2,
+    name: "Projet Construction B",
+    client: "Entreprise ABC",
+    status: "Terminé",
+    concreteQuantity: "750",
+  },
+];
+
 const ClientList = () => {
   const [selectedClient, setSelectedClient] = useState<any>(null);
-  const [showProjectForm, setShowProjectForm] = useState(false);
+  const [showProjectList, setShowProjectList] = useState(false);
   const [showDocumentUpload, setShowDocumentUpload] = useState(false);
   const [isNewClientDialogOpen, setIsNewClientDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -43,9 +61,9 @@ const ClientList = () => {
     setSelectedClient(client);
   };
 
-  const handleAddProject = (client: any) => {
+  const handleViewProjects = (client: any) => {
     setSelectedClient(client);
-    setShowProjectForm(true);
+    setShowProjectList(true);
   };
 
   const handleDocumentUpload = (client: any) => {
@@ -104,7 +122,7 @@ const ClientList = () => {
             <ClientTable
               clients={mockClients}
               onEdit={handleEdit}
-              onAddProject={handleAddProject}
+              onViewProjects={handleViewProjects}
               onDocumentUpload={handleDocumentUpload}
               onDelete={handleDelete}
             />
@@ -119,11 +137,15 @@ const ClientList = () => {
               <ClientForm clientToEdit={selectedClient} onSuccess={() => setSelectedClient(null)} />
             </SheetContent>
           </Sheet>
-          <ProjectForm
-            open={showProjectForm}
-            onOpenChange={setShowProjectForm}
-            clientId={selectedClient.id}
-          />
+          
+          {showProjectList && (
+            <Sheet open={showProjectList} onOpenChange={setShowProjectList}>
+              <SheetContent side="right" className="w-[400px] sm:w-[540px] bg-gray-900/95 border-gray-700/50">
+                <ProjectListSection projects={mockProjects} />
+              </SheetContent>
+            </Sheet>
+          )}
+
           {showDocumentUpload && (
             <DocumentsWidget />
           )}

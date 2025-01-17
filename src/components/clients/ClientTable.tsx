@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 interface ClientTableProps {
   clients: any[];
   onEdit: (client: any) => void;
-  onAddProject: (client: any) => void;
+  onViewProjects: (client: any) => void;
   onDocumentUpload: (client: any) => void;
   onDelete: (clientId: number) => void;
 }
@@ -14,7 +14,7 @@ interface ClientTableProps {
 export function ClientTable({
   clients,
   onEdit,
-  onAddProject,
+  onViewProjects,
   onDocumentUpload,
   onDelete,
 }: ClientTableProps) {
@@ -59,7 +59,7 @@ export function ClientTable({
                   <ClientActions
                     client={client}
                     onEdit={onEdit}
-                    onAddProject={onAddProject}
+                    onViewProjects={onViewProjects}
                     onDocumentUpload={onDocumentUpload}
                     onDelete={onDelete}
                   />
