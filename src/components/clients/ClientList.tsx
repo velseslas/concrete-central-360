@@ -60,8 +60,7 @@ const ClientList = () => {
       transition={{ duration: 0.3 }}
       className="space-y-6"
     >
-      <Card className="relative overflow-hidden bg-gradient-to-br from-purple-500/5 via-blue-500/5 to-purple-500/5 border-gray-700/50 shadow-xl">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-blue-500/5 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
+      <Card className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-800 shadow-xl">
         <CardHeader>
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <CardTitle className="text-white flex items-center gap-2">
@@ -80,7 +79,10 @@ const ClientList = () => {
               </div>
               <Dialog open={isNewClientDialogOpen} onOpenChange={setIsNewClientDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white">
+                  <Button 
+                    className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white shadow-lg hover:shadow-xl transition-all duration-300"
+                    onClick={() => setIsNewClientDialogOpen(true)}
+                  >
                     <UserPlus className="mr-2 h-4 w-4" />
                     Nouveau client
                   </Button>
@@ -114,7 +116,7 @@ const ClientList = () => {
         <>
           <Sheet>
             <SheetContent side="right" className="w-[400px] sm:w-[540px] bg-gray-900/95 border-gray-700/50">
-              <ClientForm clientToEdit={selectedClient} />
+              <ClientForm clientToEdit={selectedClient} onSuccess={() => setSelectedClient(null)} />
             </SheetContent>
           </Sheet>
           <ProjectForm
