@@ -36,7 +36,7 @@ export function DocumentList({ open, onOpenChange, client }: DocumentListProps) 
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[600px] bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-700/50">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold text-white flex items-center gap-2">
+          <DialogTitle className="flex items-center gap-2 text-xl font-bold text-white">
             <FileText className="h-6 w-6 text-blue-400" />
             Documents de {client?.nom}
           </DialogTitle>
