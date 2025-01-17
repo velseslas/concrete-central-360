@@ -7,7 +7,7 @@ import { ClientBasicInfoFields } from "./ClientBasicInfoFields";
 import { ClientAddressFields } from "./ClientAddressFields";
 import { ClientContactFields } from "./ClientContactFields";
 import { ClientAdminFields } from "./ClientAdminFields";
-import { SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { toast } from "sonner";
 
 const clientSchema = z.object({
@@ -22,9 +22,11 @@ const clientSchema = z.object({
   nis: z.string().min(5, "Le NIS est requis"),
   numeroArticle: z.string().min(3, "Le numéro d'article est requis"),
   categorieClient: z.string().min(1, "La catégorie est requise"),
+  contact: z.string().optional(),
+  registreCommerce: z.string().optional(),
 });
 
-type ClientFormValues = z.infer<typeof clientSchema>;
+export type ClientFormValues = z.infer<typeof clientSchema>;
 
 interface ClientFormProps {
   clientToEdit?: any;
@@ -46,6 +48,8 @@ export function ClientForm({ clientToEdit, onSuccess }: ClientFormProps) {
       nis: "",
       numeroArticle: "",
       categorieClient: "",
+      contact: "",
+      registreCommerce: "",
     },
   });
 
@@ -54,10 +58,8 @@ export function ClientForm({ clientToEdit, onSuccess }: ClientFormProps) {
       console.log("Form data:", data);
       
       if (clientToEdit) {
-        // Update existing client
         console.log("Updating client:", clientToEdit.id, data);
       } else {
-        // Create new client
         console.log("Creating new client:", data);
       }
       
