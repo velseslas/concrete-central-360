@@ -17,16 +17,16 @@ export function ClientAddressFields({ form }: ClientAddressFieldsProps) {
             name="adresse"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Adresse</FormLabel>
+                <FormLabel className="text-gray-200">Adresse</FormLabel>
                 <FormControl>
                   <Input 
                     placeholder="Adresse" 
-                    className="h-12 w-full" 
+                    className="h-12 w-full bg-gray-800/50 border-gray-700 text-gray-200 placeholder:text-gray-500" 
                     maxLength={255} 
                     {...field} 
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-red-400" />
               </FormItem>
             )}
           />
@@ -36,16 +36,16 @@ export function ClientAddressFields({ form }: ClientAddressFieldsProps) {
           name="ville"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>Ville</FormLabel>
+              <FormLabel className="text-gray-200">Ville</FormLabel>
               <FormControl>
                 <Input 
                   placeholder="Ville" 
-                  className="h-12 w-full" 
+                  className="h-12 w-full bg-gray-800/50 border-gray-700 text-gray-200 placeholder:text-gray-500" 
                   maxLength={50} 
                   {...field} 
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-400" />
             </FormItem>
           )}
         />
@@ -54,16 +54,16 @@ export function ClientAddressFields({ form }: ClientAddressFieldsProps) {
           name="codePostal"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>Code postal</FormLabel>
+              <FormLabel className="text-gray-200">Code postal</FormLabel>
               <FormControl>
                 <Input 
                   placeholder="Code postal" 
-                  className="h-12 w-full" 
+                  className="h-12 w-full bg-gray-800/50 border-gray-700 text-gray-200 placeholder:text-gray-500" 
                   maxLength={10} 
                   {...field} 
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-400" />
             </FormItem>
           )}
         />

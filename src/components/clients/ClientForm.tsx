@@ -99,33 +99,46 @@ export function ClientForm({ clientToEdit, onSuccess }: ClientFormProps) {
   };
 
   return (
-    <div className="h-full flex flex-col w-full max-w-[1200px] mx-auto">
-      <SheetHeader className="mb-2">
-        <SheetTitle className="text-xl font-bold text-primary">
+    <div className="h-full flex flex-col w-full max-w-[1200px] mx-auto bg-gray-900/95">
+      <SheetHeader className="mb-4">
+        <SheetTitle className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
           {clientToEdit ? "Modifier le client" : "Nouveau client"}
         </SheetTitle>
       </SheetHeader>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 flex-1">
-          <div className="space-y-3">
-            <div className="grid grid-cols-1 gap-3">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
+          <div className="space-y-6 bg-gray-800/50 rounded-lg p-6 backdrop-blur-xl border border-gray-700/50">
+            <div className="grid grid-cols-1 gap-6">
               <ClientBasicInfoFields form={form} />
               <ClientAddressFields form={form} />
               <ClientContactFields form={form} />
               <ClientAdminFields form={form} />
             </div>
           </div>
-          <div className="flex justify-end space-x-2 pt-3 border-t">
+          <div className="flex justify-end space-x-3 pt-4 border-t border-gray-700/50">
             {clientToEdit && (
-              <Button type="button" variant="outline" onClick={handlePrint}>
+              <Button 
+                type="button" 
+                variant="outline" 
+                onClick={handlePrint}
+                className="bg-gray-800 hover:bg-gray-700 text-gray-200 border-gray-600"
+              >
                 <Printer className="mr-2 h-4 w-4" />
                 Imprimer
               </Button>
             )}
-            <Button type="button" variant="outline" onClick={onSuccess}>
+            <Button 
+              type="button" 
+              variant="outline" 
+              onClick={onSuccess}
+              className="bg-gray-800 hover:bg-gray-700 text-gray-200 border-gray-600"
+            >
               Annuler
             </Button>
-            <Button type="submit">
+            <Button 
+              type="submit"
+              className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white"
+            >
               {clientToEdit ? "Modifier" : "Créer"}
             </Button>
           </div>

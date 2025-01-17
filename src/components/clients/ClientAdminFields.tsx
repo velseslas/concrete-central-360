@@ -16,16 +16,16 @@ export function ClientAdminFields({ form }: ClientAdminFieldsProps) {
           name="registreCommerce"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>Registre de Commerce</FormLabel>
+              <FormLabel className="text-gray-200">Registre de Commerce</FormLabel>
               <FormControl>
                 <Input 
                   placeholder="Registre de Commerce" 
-                  className="h-10" 
+                  className="h-10 bg-gray-800/50 border-gray-700 text-gray-200 placeholder:text-gray-500" 
                   maxLength={100}
                   {...field} 
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-400" />
             </FormItem>
           )}
         />
@@ -34,16 +34,16 @@ export function ClientAdminFields({ form }: ClientAdminFieldsProps) {
           name="numeroArticle"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>Article Imposition</FormLabel>
+              <FormLabel className="text-gray-200">Article Imposition</FormLabel>
               <FormControl>
                 <Input 
                   placeholder="Article Imposition" 
-                  className="h-10" 
+                  className="h-10 bg-gray-800/50 border-gray-700 text-gray-200 placeholder:text-gray-500" 
                   maxLength={20}
                   {...field} 
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-400" />
             </FormItem>
           )}
         />
@@ -54,16 +54,16 @@ export function ClientAdminFields({ form }: ClientAdminFieldsProps) {
           name="nif"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>NIF</FormLabel>
+              <FormLabel className="text-gray-200">NIF</FormLabel>
               <FormControl>
                 <Input 
                   placeholder="NIF" 
-                  className="h-10" 
+                  className="h-10 bg-gray-800/50 border-gray-700 text-gray-200 placeholder:text-gray-500" 
                   maxLength={100}
                   {...field} 
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-400" />
             </FormItem>
           )}
         />
@@ -72,16 +72,16 @@ export function ClientAdminFields({ form }: ClientAdminFieldsProps) {
           name="nis"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>NIS</FormLabel>
+              <FormLabel className="text-gray-200">NIS</FormLabel>
               <FormControl>
                 <Input 
                   placeholder="NIS" 
-                  className="h-10" 
+                  className="h-10 bg-gray-800/50 border-gray-700 text-gray-200 placeholder:text-gray-500" 
                   maxLength={20}
                   {...field} 
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-400" />
             </FormItem>
           )}
         />

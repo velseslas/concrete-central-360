@@ -15,16 +15,16 @@ export function ClientContactFields({ form }: ClientContactFieldsProps) {
         name="contact"
         render={({ field }) => (
           <FormItem className="col-span-1">
-            <FormLabel>Contact</FormLabel>
+            <FormLabel className="text-gray-200">Contact</FormLabel>
             <FormControl>
               <Input 
                 placeholder="Nom du contact" 
-                className="h-10" 
+                className="h-10 bg-gray-800/50 border-gray-700 text-gray-200 placeholder:text-gray-500" 
                 maxLength={100}
                 {...field} 
               />
             </FormControl>
-            <FormMessage />
+            <FormMessage className="text-red-400" />
           </FormItem>
         )}
       />
@@ -33,16 +33,16 @@ export function ClientContactFields({ form }: ClientContactFieldsProps) {
         name="telephone"
         render={({ field }) => (
           <FormItem className="col-span-1">
-            <FormLabel>Téléphone</FormLabel>
+            <FormLabel className="text-gray-200">Téléphone</FormLabel>
             <FormControl>
               <Input 
                 placeholder="Numéro de téléphone" 
-                className="h-10" 
+                className="h-10 bg-gray-800/50 border-gray-700 text-gray-200 placeholder:text-gray-500" 
                 maxLength={15}
                 {...field} 
               />
             </FormControl>
-            <FormMessage />
+            <FormMessage className="text-red-400" />
           </FormItem>
         )}
       />
@@ -51,16 +51,16 @@ export function ClientContactFields({ form }: ClientContactFieldsProps) {
         name="email"
         render={({ field }) => (
           <FormItem className="col-span-2">
-            <FormLabel>Email</FormLabel>
+            <FormLabel className="text-gray-200">Email</FormLabel>
             <FormControl>
               <Input 
                 placeholder="Adresse email" 
-                className="h-10" 
+                className="h-10 bg-gray-800/50 border-gray-700 text-gray-200 placeholder:text-gray-500" 
                 maxLength={100} 
                 {...field} 
               />
             </FormControl>
-            <FormMessage />
+            <FormMessage className="text-red-400" />
           </FormItem>
         )}
       />
