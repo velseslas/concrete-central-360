@@ -28,33 +28,33 @@ export function ClientTable({
 
   return (
     <>
-      <div className="overflow-hidden rounded-lg border border-gray-800">
-        <table className="w-full text-sm">
-          <thead className="bg-gray-900/50 backdrop-blur-xl border-b border-gray-800">
+      <div className="overflow-hidden rounded-lg border border-gray-700/50">
+        <table className="w-full text-sm text-left">
+          <thead className="text-xs uppercase bg-gradient-to-r from-purple-500/10 to-blue-500/10 backdrop-blur-xl border-b border-gray-700/50">
             <tr>
-              <th className="px-6 py-4 text-left font-medium text-gray-300">Nom</th>
-              <th className="px-6 py-4 text-left font-medium text-gray-300">Raison sociale</th>
-              <th className="px-6 py-4 text-left font-medium text-gray-300">Téléphone</th>
-              <th className="px-6 py-4 text-left font-medium text-gray-300">Email</th>
-              <th className="px-6 py-4 text-left font-medium text-gray-300">Ville</th>
-              <th className="px-6 py-4 text-left font-medium text-gray-300">Actions</th>
+              <th className="px-6 py-4 text-white font-medium">Nom</th>
+              <th className="px-6 py-4 text-white font-medium">Raison sociale</th>
+              <th className="px-6 py-4 text-white font-medium">Téléphone</th>
+              <th className="px-6 py-4 text-white font-medium">Email</th>
+              <th className="px-6 py-4 text-white font-medium">Ville</th>
+              <th className="px-6 py-4 text-white font-medium">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-800">
+          <tbody className="divide-y divide-gray-700/50">
             {clients.map((client, index) => (
               <motion.tr
                 key={client.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
-                className="bg-gray-900/30 hover:bg-gray-800/50 transition-colors cursor-pointer"
+                className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-xl hover:bg-gray-700/30 transition-colors cursor-pointer"
                 onClick={() => handleRowClick(client)}
               >
-                <td className="px-6 py-4 text-gray-300">{client.nom}</td>
-                <td className="px-6 py-4 text-gray-300">{client.raisonSociale}</td>
-                <td className="px-6 py-4 text-gray-300">{client.telephone}</td>
-                <td className="px-6 py-4 text-gray-300">{client.email}</td>
-                <td className="px-6 py-4 text-gray-300">{client.ville}</td>
+                <td className="px-6 py-4 text-white">{client.nom}</td>
+                <td className="px-6 py-4 text-white">{client.raisonSociale}</td>
+                <td className="px-6 py-4 text-white">{client.telephone}</td>
+                <td className="px-6 py-4 text-white">{client.email}</td>
+                <td className="px-6 py-4 text-white">{client.ville}</td>
                 <td className="px-6 py-4" onClick={(e) => e.stopPropagation()}>
                   <ClientActions
                     client={client}
