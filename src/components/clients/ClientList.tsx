@@ -71,6 +71,21 @@ const ClientList = () => {
     setShowDocuments(true);
   };
 
+  // Filtrer les clients en fonction de la recherche
+  const filteredClients = mockClients.filter((client) => {
+    const searchLower = searchQuery.toLowerCase();
+    return (
+      client.nom.toLowerCase().includes(searchLower) ||
+      client.raisonSociale.toLowerCase().includes(searchLower) ||
+      client.email.toLowerCase().includes(searchLower) ||
+      client.telephone.includes(searchQuery) ||
+      client.ville.toLowerCase().includes(searchLower)
+    );
+  });
+
+  console.log("Search query:", searchQuery);
+  console.log("Filtered clients:", filteredClients);
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -120,7 +135,7 @@ const ClientList = () => {
             className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 rounded-lg shadow-xl border border-gray-700/50 backdrop-blur-xl"
           >
             <ClientTable
-              clients={mockClients}
+              clients={filteredClients}
               onEdit={handleEdit}
               onViewProjects={handleViewProjects}
               onDocumentUpload={handleDocumentUpload}
