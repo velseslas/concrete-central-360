@@ -38,7 +38,7 @@ export function ClientActions({
         variant="ghost"
         size="icon"
         onClick={() => onDocumentUpload(client)}
-        className="bg-indigo-500/10 hover:bg-indigo-500/20 transition-colors"
+        className="hover:bg-indigo-500/20 transition-colors"
       >
         <FileText className="h-4 w-4 text-indigo-400" />
       </Button>
