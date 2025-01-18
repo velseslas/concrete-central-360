@@ -26,26 +26,27 @@ export function DocumentList() {
 
   return (
     <div className="space-y-4">
-      {mockDocuments.map((doc) => (
+      {mockDocuments.map((doc, index) => (
         <motion.div
           key={doc.id}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/50 transition-colors cursor-pointer"
+          transition={{ duration: 0.3, delay: index * 0.1 }}
           onClick={() => handleDocumentClick(doc)}
+          className="p-4 rounded-lg bg-gray-800/30 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/30 transition-colors cursor-pointer group"
         >
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div>
-              <h3 className="text-white font-medium flex items-center gap-2">
+          <div className="flex justify-between items-center">
+            <div className="space-y-1">
+              <h4 className="font-medium text-gray-100 group-hover:text-white transition-colors flex items-center gap-2">
                 <FileText className="h-4 w-4 text-blue-400" />
                 {doc.title}
-              </h3>
-              <p className="text-gray-400 text-sm">Document #{doc.id}</p>
+              </h4>
+              <p className="text-sm text-gray-400">
+                Document #{doc.id}
+              </p>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="px-3 py-1 rounded-full text-sm font-medium bg-blue-500/20 text-blue-400">
-                PDF
-              </span>
+            <div className="px-3 py-1 rounded-full text-xs border border-blue-500/30 bg-blue-500/20 text-blue-400 flex items-center gap-2">
+              PDF
             </div>
           </div>
         </motion.div>
