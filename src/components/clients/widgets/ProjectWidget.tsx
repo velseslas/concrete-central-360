@@ -5,8 +5,26 @@ import { ProjectList } from "./ProjectList";
 import { useState } from "react";
 import { ProjectFormDialog } from "./ProjectFormDialog";
 
+interface Project {
+  id: number;
+  clientName: string;
+  name: string;
+  address: string;
+  volume: string;
+}
+
 export function ProjectWidget() {
   const [showNewProjectForm, setShowNewProjectForm] = useState(false);
+
+  const handleEditProject = (project: Project) => {
+    console.log("Editing project:", project);
+  };
+
+  // Mock clients data
+  const mockClients = [
+    { id: "1", name: "Client A" },
+    { id: "2", name: "Client B" },
+  ];
 
   return (
     <Card className="bg-gray-900/50 border-gray-800">
@@ -21,12 +39,13 @@ export function ProjectWidget() {
         </Button>
       </CardHeader>
       <CardContent>
-        <ProjectList />
+        <ProjectList onEdit={handleEditProject} />
       </CardContent>
 
       <ProjectFormDialog
         open={showNewProjectForm}
         onOpenChange={setShowNewProjectForm}
+        clients={mockClients}
       />
     </Card>
   );
