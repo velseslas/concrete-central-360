@@ -1,54 +1,44 @@
-import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Plus, Search, FileText } from "lucide-react";
+import { Plus } from "lucide-react";
+import { useState } from "react";
 import { OrderForm } from "@/components/orders/OrderForm";
-import { DetailView } from "@/components/clients/DetailView";
-import { motion } from "framer-motion";
-
-interface Order {
-  id: string;
-  formulation: string;
-  volume: number;
-  status: "pending" | "in_progress" | "completed";
-  deliveryDate: string;
-  client: string;
-  project: string;
-  category: string;
-}
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
 
 interface OrderWidgetProps {
   clientId: number;
 }
 
 export function OrderWidget({ clientId }: OrderWidgetProps) {
-  const [showOrderForm, setShowOrderForm] = useState(false);
-  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
-  const [orders] = useState<Order[]>([
+  const [showNewOrderForm, setShowNewOrderForm] = useState(false);
+
+  // Mock data for demonstration
+  const orders = [
     {
-      id: "CMD001",
-      deliveryDate: "2024-03-20",
-      client: "Client A",
-      project: "Projet 1",
-      category: "Béton",
-      formulation: "B25",
-      volume: 30,
+      id: 1,
+      date: "2024-03-20",
       status: "pending",
+      total: 150000,
+      items: 3
+    },
+    {
+      id: 2,
+      date: "2024-03-19",
+      status: "completed",
+      total: 275000,
+      items: 5
     }
-  ]);
+  ];
 
-  console.log("OrderWidget rendered, showOrderForm:", showOrderForm);
-
-  const getStatusBadge = (status: Order["status"]) => {
+  const getStatusBadge = (status: string) => {
     const statusConfig = {
       pending: { label: "En attente", className: "bg-yellow-500/20 text-yellow-400" },
-      in_progress: { label: "En cours", className: "bg-blue-500/20 text-blue-400" },
       completed: { label: "Terminée", className: "bg-green-500/20 text-green-400" },
+      cancelled: { label: "Annulée", className: "bg-red-500/20 text-red-400" }
     };
 
-    const config = statusConfig[status];
+    const config = statusConfig[status as keyof typeof statusConfig];
     return (
       <Badge variant="outline" className={config.className}>
         {config.label}
@@ -56,101 +46,50 @@ export function OrderWidget({ clientId }: OrderWidgetProps) {
     );
   };
 
-  const handleSubmit = (data: any) => {
-    console.log("New order:", data);
-    setShowOrderForm(false);
-  };
-
-  const handleNewOrder = () => {
-    console.log("Attempting to open order form");
-    setShowOrderForm(true);
-  };
-
-  const handleOrderClick = (order: Order) => {
-    console.log("Order clicked:", order);
-    setSelectedOrder(order);
-  };
-
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-      className="group"
-    >
-      <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl group-hover:shadow-2xl transition-all duration-300">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
-        <CardHeader>
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <CardTitle className="text-white flex items-center gap-2">
-              <FileText className="h-6 w-6 text-blue-400" />
-              Liste des Commandes
-            </CardTitle>
-            <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
-              <div className="relative flex-grow md:flex-grow-0 md:w-64">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                <Input 
-                  placeholder="Rechercher une commande..." 
-                  className="pl-9 bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-400"
-                />
-              </div>
-              <Button 
-                type="button"
-                onClick={handleNewOrder}
-                className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white min-w-[200px] relative z-10"
-              >
-                <Plus className="h-4 w-4 mr-2" />
-                Nouvelle commande
-              </Button>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {orders.map((order) => (
-              <div
-                key={order.id}
-                onClick={() => handleOrderClick(order)}
-                className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/50 transition-colors cursor-pointer"
-              >
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                  <div>
-                    <h3 className="text-white font-medium flex items-center gap-2">
-                      <FileText className="h-4 w-4 text-blue-400" />
-                      {order.id}
-                    </h3>
-                    <p className="text-gray-400 text-sm">{order.client} - {order.project}</p>
-                  </div>
-                  <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
-                    <div className="text-right">
-                      <p className="text-white font-medium">{order.formulation}</p>
-                      <p className="text-gray-400 text-sm">{order.deliveryDate}</p>
-                    </div>
-                    <div>
-                      {getStatusBadge(order.status)}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+    <Card className="bg-gray-900/50 border-gray-800">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0">
+        <CardTitle className="text-xl font-bold">Commandes</CardTitle>
+        <Button 
+          onClick={() => setShowNewOrderForm(true)}
+          className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 border-indigo-500/20 transition-colors"
+        >
+          <Plus className="mr-2 h-4 w-4" />
+          Nouvelle Commande
+        </Button>
+      </CardHeader>
+      <CardContent>
+        <div className="rounded-lg overflow-hidden border border-gray-700/50">
+          <Table>
+            <TableHeader className="bg-gray-800/50">
+              <TableRow>
+                <TableHead className="text-gray-300">N°</TableHead>
+                <TableHead className="text-gray-300">Date</TableHead>
+                <TableHead className="text-gray-300">Articles</TableHead>
+                <TableHead className="text-gray-300">Total</TableHead>
+                <TableHead className="text-gray-300">Statut</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {orders.map((order) => (
+                <TableRow key={order.id} className="hover:bg-gray-800/30">
+                  <TableCell className="font-medium text-white">#{order.id}</TableCell>
+                  <TableCell className="text-gray-300">{order.date}</TableCell>
+                  <TableCell className="text-gray-300">{order.items} articles</TableCell>
+                  <TableCell className="text-gray-300">{order.total.toLocaleString()} DA</TableCell>
+                  <TableCell>{getStatusBadge(order.status)}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </CardContent>
 
       <OrderForm
-        open={showOrderForm}
-        onOpenChange={setShowOrderForm}
-        onSubmit={handleSubmit}
+        open={showNewOrderForm}
+        onOpenChange={setShowNewOrderForm}
+        clientId={clientId}
       />
-
-      {selectedOrder && (
-        <DetailView
-          open={!!selectedOrder}
-          onOpenChange={(open) => !open && setSelectedOrder(null)}
-          data={selectedOrder}
-          title={`Détails de la commande ${selectedOrder.id}`}
-        />
-      )}
-    </motion.div>
+    </Card>
   );
 }

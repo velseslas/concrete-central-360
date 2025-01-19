@@ -1,32 +1,33 @@
-import { useState } from "react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileText } from "lucide-react";
-import { DocumentList } from "@/components/clients/widgets/DocumentList";
-import { DocumentUploadDialog } from "@/components/clients/DocumentUploadDialog";
-import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import { DocumentList } from "./DocumentList";
+import { useState } from "react";
+import { DocumentUploadDialog } from "./DocumentUploadDialog";
 
 export function DocumentsWidget() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [showUploadDialog, setShowUploadDialog] = useState(false);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-      className="h-full flex flex-col"
-    >
-      <div className="pb-6">
-        <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400 flex items-center gap-2">
-          <FileText className="h-6 w-6" />
-          Documents
-        </h2>
-      </div>
-
-      <div className="flex-1 overflow-y-auto">
+    <Card className="bg-gray-900/50 border-gray-800">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0">
+        <CardTitle className="text-xl font-bold">Documents</CardTitle>
+        <Button 
+          onClick={() => setShowUploadDialog(true)}
+          className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 border-indigo-500/20 transition-colors"
+        >
+          <Plus className="mr-2 h-4 w-4" />
+          Nouveau Document
+        </Button>
+      </CardHeader>
+      <CardContent>
         <DocumentList />
-      </div>
-    </motion.div>
+      </CardContent>
+
+      <DocumentUploadDialog
+        open={showUploadDialog}
+        onOpenChange={setShowUploadDialog}
+      />
+    </Card>
   );
 }
