@@ -1,15 +1,12 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
+import { Sheet, SheetContent } from "../ui/sheet";
+import { Card, CardContent, CardHeader } from "../ui/card";
 import { ClientForm } from "./ClientForm";
 import { DocumentsWidget } from "./widgets/DocumentsWidget";
-import { ClientTable } from "./ClientTable";
-import { Button } from "../ui/button";
-import { UserPlus, Search } from "lucide-react";
-import { motion } from "framer-motion";
-import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
-import { Sheet, SheetContent } from "../ui/sheet";
-import { Input } from "../ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { ProjectListSection } from "./widgets/ProjectListSection";
+import { ClientListHeader } from "./list/ClientListHeader";
+import { ClientListContent } from "./list/ClientListContent";
 
 const mockClients = [
   {
@@ -28,7 +25,6 @@ const mockClients = [
   },
 ];
 
-// Mock projects data
 const mockProjects = [
   {
     id: 1,
@@ -71,7 +67,6 @@ const ClientList = () => {
     setShowDocuments(true);
   };
 
-  // Filtrer les clients en fonction de la recherche
   const filteredClients = mockClients.filter((client) => {
     const searchLower = searchQuery.toLowerCase();
     return (
@@ -95,53 +90,21 @@ const ClientList = () => {
     >
       <Card className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-800 shadow-xl">
         <CardHeader>
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <CardTitle className="text-white flex items-center gap-2">
-              <UserPlus className="h-6 w-6 text-purple-400" />
-              Liste des Clients
-            </CardTitle>
-            <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
-              <div className="relative flex-grow md:w-64">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                <Input 
-                  placeholder="Rechercher un client..." 
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-9 bg-gray-800/30 border-gray-700/50 text-white placeholder-gray-400"
-                />
-              </div>
-              <Dialog open={isNewClientDialogOpen} onOpenChange={setIsNewClientDialogOpen}>
-                <DialogTrigger asChild>
-                  <Button 
-                    className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 border border-white transition-colors"
-                    onClick={() => setIsNewClientDialogOpen(true)}
-                  >
-                    <UserPlus className="mr-2 h-4 w-4" />
-                    Nouveau client
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-[800px] max-h-[90vh] overflow-y-auto bg-gray-900/95 border-gray-700/50">
-                  <ClientForm onSuccess={() => setIsNewClientDialogOpen(false)} />
-                </DialogContent>
-              </Dialog>
-            </div>
-          </div>
+          <ClientListHeader
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+            isNewClientDialogOpen={isNewClientDialogOpen}
+            setIsNewClientDialogOpen={setIsNewClientDialogOpen}
+          />
         </CardHeader>
         <CardContent>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.2 }}
-            className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 rounded-lg shadow-xl border border-gray-700/50 backdrop-blur-xl"
-          >
-            <ClientTable
-              clients={filteredClients}
-              onEdit={handleEdit}
-              onViewProjects={handleViewProjects}
-              onDocumentUpload={handleDocumentUpload}
-              onDelete={handleDelete}
-            />
-          </motion.div>
+          <ClientListContent
+            clients={filteredClients}
+            onEdit={handleEdit}
+            onViewProjects={handleViewProjects}
+            onDocumentUpload={handleDocumentUpload}
+            onDelete={handleDelete}
+          />
         </CardContent>
       </Card>
       
