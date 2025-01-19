@@ -97,7 +97,7 @@ export function OrderWidget({ clientId }: OrderWidgetProps) {
               <Button 
                 type="button"
                 onClick={handleNewOrder}
-                className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 border-white transition-colors relative z-10"
+                className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 border border-white transition-colors relative z-10"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Nouvelle commande

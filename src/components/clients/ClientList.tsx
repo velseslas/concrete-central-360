@@ -113,7 +113,7 @@ const ClientList = () => {
               <Dialog open={isNewClientDialogOpen} onOpenChange={setIsNewClientDialogOpen}>
                 <DialogTrigger asChild>
                   <Button 
-                    className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 border-white transition-colors"
+                    className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 border border-white transition-colors"
                     onClick={() => setIsNewClientDialogOpen(true)}
                   >
                     <UserPlus className="mr-2 h-4 w-4" />
