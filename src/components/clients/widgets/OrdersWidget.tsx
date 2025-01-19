@@ -82,7 +82,6 @@ export function OrdersWidget({ clientId, clientName }: OrdersWidgetProps) {
       <OrderForm
         open={showOrderForm}
         onOpenChange={setShowOrderForm}
-        clientId={clientId}
         onSubmit={(data) => {
           console.log("New order:", data);
           setShowOrderForm(false);
