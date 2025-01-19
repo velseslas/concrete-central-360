@@ -156,10 +156,10 @@ export function DetailView({ open, onOpenChange, data, title }: DetailViewProps)
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-700">
+      <DialogContent className="max-w-2xl max-h-[80vh] bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-700">
         <DialogHeader className="flex flex-row items-center justify-between space-x-4">
           <div className="flex items-center gap-4">
-            <DialogTitle className="text-2xl font-bold text-white">
+            <DialogTitle className="text-xl font-bold text-white">
               {title}
             </DialogTitle>
             <Button 
@@ -171,11 +171,11 @@ export function DetailView({ open, onOpenChange, data, title }: DetailViewProps)
               <Printer className="h-4 w-4 text-blue-400" />
             </Button>
           </div>
-          <Badge variant="outline" className="px-4">
+          <Badge variant="outline" className="px-3 py-1">
             {data.id}
           </Badge>
         </DialogHeader>
-        <ScrollArea className="max-h-[600px] pr-4">
+        <ScrollArea className="max-h-[60vh] pr-4">
           <Table>
             <TableBody>
               {Object.entries(data)
