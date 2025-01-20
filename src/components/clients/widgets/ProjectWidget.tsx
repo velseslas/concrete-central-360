@@ -23,6 +23,19 @@ const mockProjects = [
 
 export function ProjectWidget() {
   const [open, setOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredProjects = mockProjects.filter((project) => {
+    const query = searchQuery.toLowerCase();
+    return (
+      project.name.toLowerCase().includes(query) ||
+      project.client.toLowerCase().includes(query) ||
+      project.status.toLowerCase().includes(query)
+    );
+  });
+
+  console.log("Search query:", searchQuery);
+  console.log("Filtered projects:", filteredProjects);
 
   return (
     <motion.div
@@ -45,11 +58,17 @@ export function ProjectWidget() {
                 <Input 
                   placeholder="Rechercher un chantier..." 
                   className="pl-9 bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-400"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
               <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
-                  <Button variant="outline" size="sm" className="text-white bg-gray-800/50 border-gray-700/50 hover:bg-gray-700/50">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 border border-white transition-colors"
+                  >
                     <Plus className="h-4 w-4 mr-2" />
                     Nouveau Chantier
                   </Button>
@@ -65,7 +84,7 @@ export function ProjectWidget() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {mockProjects.map((project) => (
+            {filteredProjects.map((project) => (
               <motion.div
                 key={project.id}
                 initial={{ opacity: 0, y: 20 }}
