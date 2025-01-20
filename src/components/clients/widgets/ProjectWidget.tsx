@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { Construction, Plus, Search } from "lucide-react";
+import { Construction, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
@@ -69,7 +69,7 @@ export function ProjectWidget() {
                     size="sm" 
                     className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 border border-white transition-colors"
                   >
-                    <Plus className="h-4 w-4 mr-2" />
+                    <Construction className="h-4 w-4 mr-2" />
                     Nouveau Chantier
                   </Button>
                 </DialogTrigger>
