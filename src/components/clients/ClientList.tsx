@@ -7,6 +7,7 @@ import { DocumentsWidget } from "./widgets/DocumentsWidget";
 import { ProjectListSection } from "./widgets/ProjectListSection";
 import { ClientListHeader } from "./list/ClientListHeader";
 import { ClientListContent } from "./list/ClientListContent";
+import { Dialog, DialogContent } from "../ui/dialog";
 
 const mockClients = [
   {
@@ -110,7 +111,7 @@ const ClientList = () => {
       
       {selectedClient && (
         <>
-          <Sheet>
+          <Sheet open={!!selectedClient} onOpenChange={() => setSelectedClient(null)}>
             <SheetContent side="right" className="w-[400px] sm:w-[540px] bg-gray-900/95 border-gray-700/50">
               <ClientForm clientToEdit={selectedClient} onSuccess={() => setSelectedClient(null)} />
             </SheetContent>
@@ -133,6 +134,12 @@ const ClientList = () => {
           )}
         </>
       )}
+
+      <Dialog open={isNewClientDialogOpen} onOpenChange={setIsNewClientDialogOpen}>
+        <DialogContent className="max-w-[800px] max-h-[90vh] overflow-y-auto bg-gray-900/95 border-gray-700/50">
+          <ClientForm onSuccess={() => setIsNewClientDialogOpen(false)} />
+        </DialogContent>
+      </Dialog>
     </motion.div>
   );
 };

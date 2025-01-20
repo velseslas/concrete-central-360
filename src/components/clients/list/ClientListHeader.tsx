@@ -1,8 +1,7 @@
 import { UserPlus, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { ClientForm } from "../ClientForm";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 
 interface ClientListHeaderProps {
   searchQuery: string;
@@ -14,7 +13,6 @@ interface ClientListHeaderProps {
 export function ClientListHeader({
   searchQuery,
   onSearchChange,
-  isNewClientDialogOpen,
   setIsNewClientDialogOpen,
 }: ClientListHeaderProps) {
   return (
@@ -33,20 +31,14 @@ export function ClientListHeader({
             className="pl-9 bg-gray-800/30 border-gray-700/50 text-white placeholder-gray-400"
           />
         </div>
-        <Dialog open={isNewClientDialogOpen} onOpenChange={setIsNewClientDialogOpen}>
-          <DialogTrigger asChild>
-            <Button 
-              className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 border border-white transition-colors"
-              onClick={() => setIsNewClientDialogOpen(true)}
-            >
-              <UserPlus className="mr-2 h-4 w-4" />
-              Nouveau client
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-[800px] max-h-[90vh] overflow-y-auto bg-gray-900/95 border-gray-700/50">
-            <ClientForm onSuccess={() => setIsNewClientDialogOpen(false)} />
-          </DialogContent>
-        </Dialog>
+        <DialogTrigger asChild onClick={() => setIsNewClientDialogOpen(true)}>
+          <Button 
+            className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 border border-indigo-500/20"
+          >
+            <UserPlus className="mr-2 h-4 w-4" />
+            Nouveau client
+          </Button>
+        </DialogTrigger>
       </div>
     </div>
   );
