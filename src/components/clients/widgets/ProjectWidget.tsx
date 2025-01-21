@@ -109,6 +109,7 @@ export function ProjectWidget() {
                   setSelectedStatus={setSelectedStatus}
                   clients={mockClients}
                   showSearchOnly={true}
+                  projects={filteredProjects}
                 />
                 <Dialog open={open} onOpenChange={setOpen}>
                   <DialogTrigger asChild>
@@ -142,6 +143,7 @@ export function ProjectWidget() {
               setSelectedStatus={setSelectedStatus}
               clients={mockClients}
               showSearchOnly={false}
+              projects={filteredProjects}
             />
             <ProjectList projects={filteredProjects} />
           </CardContent>
