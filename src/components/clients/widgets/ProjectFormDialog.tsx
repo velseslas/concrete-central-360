@@ -7,13 +7,12 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
-import { motion } from "framer-motion";
 
 const projectSchema = z.object({
   clientId: z.string().min(1, "Veuillez sélectionner un client"),
   name: z.string().min(2, "Le nom du chantier est requis"),
-  address: z.string().min(5, "L'adresse est requise"),
   concreteQuantity: z.string().min(1, "La quantité de béton est requise"),
+  date: z.string().min(1, "La date est requise"),
 });
 
 type ProjectFormValues = z.infer<typeof projectSchema>;
@@ -30,8 +29,8 @@ export function ProjectFormDialog({ open, onOpenChange, clients }: ProjectFormDi
     defaultValues: {
       clientId: "",
       name: "",
-      address: "",
       concreteQuantity: "",
+      date: new Date().toISOString().split('T')[0],
     },
   });
 
@@ -98,13 +97,14 @@ export function ProjectFormDialog({ open, onOpenChange, clients }: ProjectFormDi
           />
           <FormField
             control={form.control}
-            name="address"
+            name="concreteQuantity"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-gray-200">Adresse du chantier</FormLabel>
+                <FormLabel className="text-gray-200">Quantité de béton (M3)</FormLabel>
                 <FormControl>
                   <Input 
-                    placeholder="Adresse" 
+                    type="number" 
+                    placeholder="Quantité en M3" 
                     className="bg-gray-800/50 border-gray-700 text-gray-200 placeholder:text-gray-500"
                     {...field} 
                   />
@@ -115,15 +115,14 @@ export function ProjectFormDialog({ open, onOpenChange, clients }: ProjectFormDi
           />
           <FormField
             control={form.control}
-            name="concreteQuantity"
+            name="date"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-gray-200">Quantité de béton (M3)</FormLabel>
+                <FormLabel className="text-gray-200">Date d'enregistrement</FormLabel>
                 <FormControl>
                   <Input 
-                    type="number" 
-                    placeholder="Quantité en M3" 
-                    className="bg-gray-800/50 border-gray-700 text-gray-200 placeholder:text-gray-500"
+                    type="date" 
+                    className="bg-gray-800/50 border-gray-700 text-gray-200"
                     {...field} 
                   />
                 </FormControl>
