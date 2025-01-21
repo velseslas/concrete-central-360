@@ -7,8 +7,8 @@ import { useState } from "react";
 import { ProjectFormDialog } from "./ProjectFormDialog";
 import { ProjectFilters } from "./project/ProjectFilters";
 import { ProjectList } from "./project/ProjectList";
+import { ProjectStats } from "./project/ProjectStats";
 
-// Mock data for demonstration
 const mockClients = [
   { id: "1", name: "Client A" },
   { id: "2", name: "Client B" },
@@ -39,6 +39,14 @@ const mockProjects = [
     status: "Terminé", 
     concreteQuantity: "300",
     createdAt: new Date("2024-03-10").toISOString()
+  },
+  { 
+    id: 4, 
+    name: "Chantier 4", 
+    client: "Client D", 
+    status: "Terminé", 
+    concreteQuantity: "250",
+    createdAt: new Date("2024-03-15").toISOString()
   },
 ];
 
@@ -114,6 +122,7 @@ export function ProjectWidget() {
           </div>
         </CardHeader>
         <CardContent className="space-y-6">
+          <ProjectStats projects={filteredProjects} />
           <ProjectFilters
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
