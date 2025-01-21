@@ -74,70 +74,79 @@ export function ProjectWidget() {
   console.log("Filtered projects:", filteredProjects);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-      className="group"
-    >
-      <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl group-hover:shadow-2xl transition-all duration-300">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
-        <CardHeader>
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <CardTitle className="text-white flex items-center gap-2">
-              <Construction className="h-6 w-6 text-blue-400" />
-              Liste des Chantiers
-            </CardTitle>
-            <div className="flex items-center gap-4 w-full md:w-auto">
-              <ProjectFilters
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
-                selectedYear={selectedYear}
-                setSelectedYear={setSelectedYear}
-                selectedClient={selectedClient}
-                setSelectedClient={setSelectedClient}
-                selectedStatus={selectedStatus}
-                setSelectedStatus={setSelectedStatus}
-                clients={mockClients}
-                showSearchOnly={true}
-              />
-              <Dialog open={open} onOpenChange={setOpen}>
-                <DialogTrigger asChild>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 border-white transition-colors whitespace-nowrap"
-                  >
-                    <Construction className="h-4 w-4 mr-2" />
-                    Nouveau Chantier
-                  </Button>
-                </DialogTrigger>
-                <ProjectFormDialog 
-                  open={open} 
-                  onOpenChange={setOpen}
+    <>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        <ProjectStats projects={filteredProjects} />
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+        className="group"
+      >
+        <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl group-hover:shadow-2xl transition-all duration-300">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
+          <CardHeader>
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+              <CardTitle className="text-white flex items-center gap-2">
+                <Construction className="h-6 w-6 text-blue-400" />
+                Liste des Chantiers
+              </CardTitle>
+              <div className="flex items-center gap-4 w-full md:w-auto">
+                <ProjectFilters
+                  searchQuery={searchQuery}
+                  setSearchQuery={setSearchQuery}
+                  selectedYear={selectedYear}
+                  setSelectedYear={setSelectedYear}
+                  selectedClient={selectedClient}
+                  setSelectedClient={setSelectedClient}
+                  selectedStatus={selectedStatus}
+                  setSelectedStatus={setSelectedStatus}
                   clients={mockClients}
+                  showSearchOnly={true}
                 />
-              </Dialog>
+                <Dialog open={open} onOpenChange={setOpen}>
+                  <DialogTrigger asChild>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 border-white transition-colors whitespace-nowrap"
+                    >
+                      <Construction className="h-4 w-4 mr-2" />
+                      Nouveau Chantier
+                    </Button>
+                  </DialogTrigger>
+                  <ProjectFormDialog 
+                    open={open} 
+                    onOpenChange={setOpen}
+                    clients={mockClients}
+                  />
+                </Dialog>
+              </div>
             </div>
-          </div>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <ProjectStats projects={filteredProjects} />
-          <ProjectFilters
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            selectedYear={selectedYear}
-            setSelectedYear={setSelectedYear}
-            selectedClient={selectedClient}
-            setSelectedClient={setSelectedClient}
-            selectedStatus={selectedStatus}
-            setSelectedStatus={setSelectedStatus}
-            clients={mockClients}
-            showSearchOnly={false}
-          />
-          <ProjectList projects={filteredProjects} />
-        </CardContent>
-      </Card>
-    </motion.div>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <ProjectFilters
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              selectedYear={selectedYear}
+              setSelectedYear={setSelectedYear}
+              selectedClient={selectedClient}
+              setSelectedClient={setSelectedClient}
+              selectedStatus={selectedStatus}
+              setSelectedStatus={setSelectedStatus}
+              clients={mockClients}
+              showSearchOnly={false}
+            />
+            <ProjectList projects={filteredProjects} />
+          </CardContent>
+        </Card>
+      </motion.div>
+    </>
   );
 }
