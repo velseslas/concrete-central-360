@@ -4,14 +4,17 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sh
 import { useState } from "react";
 import { ProjectList } from "./ProjectList";
 
+interface Project {
+  id: number;
+  name: string;
+  client: string;
+  status: string;
+  concreteQuantity: string;
+  createdAt: string;
+}
+
 interface ProjectStatsProps {
-  projects: {
-    id: number;
-    name: string;
-    client: string;
-    status: string;
-    concreteQuantity: string;
-  }[];
+  projects: Project[];
 }
 
 export function ProjectStats({ projects }: ProjectStatsProps) {
