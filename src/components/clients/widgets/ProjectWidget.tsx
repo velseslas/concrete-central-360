@@ -64,7 +64,7 @@ export function ProjectWidget() {
       project.status.toLowerCase().includes(searchQuery.toLowerCase());
 
     const matchesClient = selectedClient === "all" || project.client === mockClients.find(c => c.id === selectedClient)?.name;
-    const matchesStatus = selectedStatus === "all" || project.status.toLowerCase() === selectedStatus;
+    const matchesStatus = selectedStatus === "all" || project.status === selectedStatus;
     const matchesYear = selectedYear === "all" || new Date(project.createdAt).getFullYear().toString() === selectedYear;
 
     return matchesSearch && matchesClient && matchesStatus && matchesYear;
