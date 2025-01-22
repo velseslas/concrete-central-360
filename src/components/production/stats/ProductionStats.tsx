@@ -3,7 +3,6 @@ import { InProgressCard } from "./InProgressCard";
 import { PendingCard } from "./PendingCard";
 import { CancelledCard } from "./CancelledCard";
 import { CompletionRateCard } from "./CompletionRateCard";
-import { motion } from "framer-motion";
 
 interface ProductionStatsProps {
   dailyProduction: number;
@@ -45,12 +44,7 @@ export function ProductionStats({
   const completionRate = (dailyProduction / totalProduction) * 100;
 
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4"
-    >
+    <div className="flex flex-nowrap overflow-x-auto gap-3 pb-2">
       <DailyProductionCard
         dailyProduction={dailyProduction}
         productionChange={productionChange}
@@ -74,6 +68,6 @@ export function ProductionStats({
         onClick={onCancelledClick}
       />
       <CompletionRateCard completionRate={completionRate} />
-    </motion.div>
+    </div>
   );
 }
