@@ -25,19 +25,25 @@ export function PaymentStats() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
       >
-        <Card className="bg-gradient-to-br from-blue-500/10 to-purple-500/10">
+        <Card className="stats-card bg-gradient-to-br from-blue-500/10 to-purple-500/10">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Paiements</CardTitle>
-            <DollarSign className="h-4 w-4 text-blue-400" />
+            <CardTitle className="text-sm font-medium text-gray-300">Total Paiements</CardTitle>
+            <div className="stats-icon">
+              <DollarSign className="h-4 w-4 text-blue-400" />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{totalPayments.toLocaleString()} DA</div>
-            <div className="flex items-center text-xs text-gray-400">
-              {isPositiveChange ? <ArrowUpRight className="h-4 w-4 text-green-400" /> : <ArrowDownRight className="h-4 w-4 text-red-400" />}
+            <div className="stats-value">{totalPayments.toLocaleString()} DA</div>
+            <div className="flex items-center text-xs mt-2">
+              {isPositiveChange ? (
+                <ArrowUpRight className="h-4 w-4 text-green-400 mr-1" />
+              ) : (
+                <ArrowDownRight className="h-4 w-4 text-red-400 mr-1" />
+              )}
               <span className={isPositiveChange ? "text-green-400" : "text-red-400"}>
                 {percentageChange}%
               </span>
-              <span className="ml-1">vs mois dernier</span>
+              <span className="text-gray-400 ml-1">vs mois dernier</span>
             </div>
           </CardContent>
         </Card>
@@ -48,14 +54,16 @@ export function PaymentStats() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.1 }}
       >
-        <Card className="bg-gradient-to-br from-purple-500/10 to-pink-500/10">
+        <Card className="stats-card bg-gradient-to-br from-purple-500/10 to-pink-500/10">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Moyenne Paiements</CardTitle>
-            <Calendar className="h-4 w-4 text-purple-400" />
+            <CardTitle className="text-sm font-medium text-gray-300">Moyenne Paiements</CardTitle>
+            <div className="stats-icon">
+              <Calendar className="h-4 w-4 text-purple-400" />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{averagePayment.toLocaleString()} DA</div>
-            <p className="text-xs text-gray-400">Par transaction</p>
+            <div className="stats-value">{averagePayment.toLocaleString()} DA</div>
+            <p className="stats-label">Par transaction</p>
           </CardContent>
         </Card>
       </motion.div>
@@ -66,9 +74,9 @@ export function PaymentStats() {
         transition={{ duration: 0.3, delay: 0.2 }}
         className="md:col-span-2"
       >
-        <Card className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95">
+        <Card className="stats-card">
           <CardHeader>
-            <CardTitle className="text-sm font-medium">Évolution des Paiements</CardTitle>
+            <CardTitle className="text-sm font-medium text-gray-300">Évolution des Paiements</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="h-[200px]">
@@ -87,7 +95,8 @@ export function PaymentStats() {
                     contentStyle={{ 
                       backgroundColor: '#1f2937',
                       border: '1px solid #374151',
-                      borderRadius: '0.5rem'
+                      borderRadius: '0.5rem',
+                      color: '#fff'
                     }}
                   />
                   <Area
