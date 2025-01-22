@@ -22,6 +22,7 @@ export function ClientTable({
   const [showDetail, setShowDetail] = useState(false);
 
   const handleRowClick = (client: any) => {
+    console.log("Row clicked, showing details for client:", client);
     setSelectedClient(client);
     setShowDetail(true);
   };
@@ -47,8 +48,8 @@ export function ClientTable({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
-                className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-xl hover:bg-gray-700/30 transition-colors cursor-pointer"
                 onClick={() => handleRowClick(client)}
+                className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-xl hover:bg-gray-700/30 transition-colors cursor-pointer"
               >
                 <td className="px-6 py-4 text-white">{client.nom}</td>
                 <td className="px-6 py-4 text-white">{client.raisonSociale}</td>
