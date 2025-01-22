@@ -1,10 +1,6 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Search, Eye } from "lucide-react";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { ProjectPreviewDialog } from "./ProjectPreviewDialog";
-import { useState } from "react";
+import { Search } from "lucide-react";
 
 interface ProjectFiltersProps {
   searchQuery: string;
@@ -51,7 +47,7 @@ const FilterSelects = ({
 }) => {
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 5 }, (_, i) => (currentYear - i).toString());
-  const statuses = ["En cours", "Terminé"];
+  const statuses = ["En cours", "Terminé", "Archivé"];
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 flex-1">
@@ -90,7 +86,7 @@ const FilterSelects = ({
         <SelectContent className="bg-gray-800 border-gray-700">
           <SelectItem value="all" className="text-gray-200">Tous les statuts</SelectItem>
           {statuses.map((status) => (
-            <SelectItem key={status} value={status} className="text-gray-200">
+            <SelectItem key={status} value={status.toLowerCase()} className="text-gray-200">
               {status}
             </SelectItem>
           ))}
@@ -113,8 +109,6 @@ export function ProjectFilters({
   showSearchOnly,
   projects,
 }: ProjectFiltersProps) {
-  const [previewOpen, setPreviewOpen] = useState(false);
-
   if (showSearchOnly) {
     return (
       <div className="flex items-center gap-4 flex-1 md:max-w-xs">
@@ -124,7 +118,7 @@ export function ProjectFilters({
   }
 
   return (
-    <div className="flex flex-col md:flex-row gap-4">
+    <div className="flex flex-col md:flex-row gap-4 w-full">
       <FilterSelects
         selectedYear={selectedYear}
         setSelectedYear={setSelectedYear}
@@ -134,22 +128,6 @@ export function ProjectFilters({
         setSelectedStatus={setSelectedStatus}
         clients={clients}
       />
-      
-      <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
-        <DialogTrigger asChild>
-          <Button 
-            variant="outline"
-            size="icon"
-            className="bg-gray-800/50 border-gray-700/50 hover:bg-gray-700/50"
-          >
-            <Eye className="h-4 w-4 text-gray-300" />
-          </Button>
-        </DialogTrigger>
-        <ProjectPreviewDialog 
-          projects={projects}
-          onOpenChange={setPreviewOpen}
-        />
-      </Dialog>
     </div>
   );
 }
