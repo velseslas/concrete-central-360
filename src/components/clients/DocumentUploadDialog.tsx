@@ -52,9 +52,11 @@ export function DocumentUploadDialog({ open, onOpenChange }: DocumentUploadDialo
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-[500px] bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800">
         <DialogHeader>
-          <DialogTitle>Nouveau document</DialogTitle>
+          <DialogTitle className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+            Nouveau document
+          </DialogTitle>
         </DialogHeader>
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -72,7 +74,7 @@ export function DocumentUploadDialog({ open, onOpenChange }: DocumentUploadDialo
                   <Input
                     {...form.register("title")}
                     placeholder="Entrez le titre du document"
-                    className="bg-gray-800/50 border-gray-700 text-white placeholder-gray-400"
+                    className="bg-gray-800/50 border-gray-700 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500"
                   />
                   {form.formState.errors.title && (
                     <p className="text-sm text-red-400">
@@ -94,11 +96,11 @@ export function DocumentUploadDialog({ open, onOpenChange }: DocumentUploadDialo
                     />
                     <label
                       htmlFor="file-upload"
-                      className="flex items-center justify-center w-full p-4 border-2 border-dashed border-gray-700 rounded-lg cursor-pointer hover:border-gray-600 transition-colors bg-gray-800/30"
+                      className="flex items-center justify-center w-full p-6 border-2 border-dashed border-gray-700 rounded-lg cursor-pointer hover:border-blue-500 transition-colors bg-gray-800/30 group"
                     >
                       <div className="flex flex-col items-center space-y-2">
-                        <Upload className="h-8 w-8 text-gray-400" />
-                        <span className="text-sm text-gray-400">
+                        <Upload className="h-8 w-8 text-gray-400 group-hover:text-blue-400 transition-colors" />
+                        <span className="text-sm text-gray-400 group-hover:text-blue-400 transition-colors">
                           Cliquez pour sélectionner un fichier
                         </span>
                       </div>
@@ -114,9 +116,17 @@ export function DocumentUploadDialog({ open, onOpenChange }: DocumentUploadDialo
 
               <div className="flex justify-end space-x-2 pt-4 border-t border-gray-700">
                 <Button 
+                  type="button"
+                  variant="outline"
+                  onClick={() => onOpenChange?.(false)}
+                  className="bg-gray-800/50 border-gray-700 text-gray-200 hover:bg-gray-700 hover:text-white"
+                >
+                  Annuler
+                </Button>
+                <Button 
                   type="submit" 
                   disabled={isUploading}
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0"
                 >
                   {isUploading ? (
                     <>
