@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
@@ -41,23 +40,21 @@ export function DocumentUploadDialog({ open, onOpenChange }: DocumentUploadDialo
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px] bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800">
-        <DocumentTitle />
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="h-full flex flex-col"
-        >
-          <DocumentForm 
-            form={form}
-            isUploading={isUploading}
-            onCancel={() => onOpenChange?.(false)}
-            onSubmit={onSubmit}
-          />
-        </motion.div>
-      </DialogContent>
-    </Dialog>
+    <>
+      <DocumentTitle />
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+        className="h-full flex flex-col"
+      >
+        <DocumentForm 
+          form={form}
+          isUploading={isUploading}
+          onCancel={() => onOpenChange?.(false)}
+          onSubmit={onSubmit}
+        />
+      </motion.div>
+    </>
   );
 }
