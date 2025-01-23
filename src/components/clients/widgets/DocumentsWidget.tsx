@@ -38,10 +38,7 @@ export function DocumentsWidget() {
 
       <Dialog open={showUploadDialog} onOpenChange={setShowUploadDialog}>
         <DialogContent className="sm:max-w-[500px] bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800">
-          <DocumentUploadDialog 
-            open={showUploadDialog} 
-            onOpenChange={setShowUploadDialog} 
-          />
+          <DocumentUploadDialog />
         </DialogContent>
       </Dialog>
     </motion.div>

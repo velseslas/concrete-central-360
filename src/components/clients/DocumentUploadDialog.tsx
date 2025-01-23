@@ -7,12 +7,7 @@ import { DocumentTitle } from "./document-upload/DocumentTitle";
 import { DocumentForm } from "./document-upload/DocumentForm";
 import { DocumentFormValues, documentSchema } from "./document-upload/types";
 
-interface DocumentUploadDialogProps {
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
-}
-
-export function DocumentUploadDialog({ open, onOpenChange }: DocumentUploadDialogProps) {
+export function DocumentUploadDialog() {
   const [isUploading, setIsUploading] = useState(false);
 
   const form = useForm<DocumentFormValues>({
@@ -28,9 +23,6 @@ export function DocumentUploadDialog({ open, onOpenChange }: DocumentUploadDialo
     try {
       console.log("Document data:", data);
       toast.success("Document téléchargé avec succès");
-      if (onOpenChange) {
-        onOpenChange(false);
-      }
     } catch (error) {
       console.error("Erreur lors du téléchargement:", error);
       toast.error("Erreur lors du téléchargement du document");
@@ -51,7 +43,7 @@ export function DocumentUploadDialog({ open, onOpenChange }: DocumentUploadDialo
         <DocumentForm 
           form={form}
           isUploading={isUploading}
-          onCancel={() => onOpenChange?.(false)}
+          onCancel={() => {}}
           onSubmit={onSubmit}
         />
       </motion.div>
