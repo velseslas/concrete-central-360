@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Package, Plus } from "lucide-react";
+import { Package } from "lucide-react";
 import { ProductClientForm } from "./forms/ProductClientForm";
 import { ProductList } from "./ProductList";
 import { motion } from "framer-motion";
@@ -32,10 +32,10 @@ export function ProductWidget() {
               setProductToEdit(null);
               setShowNewProductForm(true);
             }}
-            className="bg-blue-600 hover:bg-blue-700 text-white"
+            className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg transition-all duration-200 hover:shadow-blue-500/25"
             size="sm"
           >
-            <Plus className="mr-2 h-4 w-4" />
+            <Package className="mr-2 h-4 w-4" />
             Nouveau produit
           </Button>
         </CardHeader>
