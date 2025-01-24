@@ -4,18 +4,19 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 
 const productSchema = z.object({
-  category: z.string().min(1, "La catégorie est requise"),
   name: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
+  category: z.string().min(1, "La catégorie est requise"),
+  description: z.string().optional(),
 });
 
 type ProductFormValues = z.infer<typeof productSchema>;
 
-interface ProductClientFormProps {
+interface ProductFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   productToEdit?: ProductFormValues & { id?: number };
@@ -27,12 +28,13 @@ const mockCategories = [
   { id: "3", name: "Location" },
 ];
 
-export function ProductClientForm({ open, onOpenChange, productToEdit }: ProductClientFormProps) {
+export function ProductClientForm({ open, onOpenChange, productToEdit }: ProductFormProps) {
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productSchema),
     defaultValues: {
-      category: productToEdit?.category || "",
       name: productToEdit?.name || "",
+      category: productToEdit?.category || "",
+      description: productToEdit?.description || "",
     },
   });
 
@@ -47,9 +49,7 @@ export function ProductClientForm({ open, onOpenChange, productToEdit }: Product
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px] bg-gray-900/95 border-gray-700/50">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold text-white">
-            {productToEdit ? "Modifier le produit" : "Nouveau produit"}
-          </DialogTitle>
+          <DialogTitle className="text-white">{productToEdit ? "Modifier le produit" : "Nouveau produit"}</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -58,7 +58,7 @@ export function ProductClientForm({ open, onOpenChange, productToEdit }: Product
               name="category"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-gray-200">Catégorie</FormLabel>
+                  <FormLabel className="text-white">Catégorie</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger className="bg-gray-800/50 border-gray-700/50 text-white">
@@ -67,11 +67,7 @@ export function ProductClientForm({ open, onOpenChange, productToEdit }: Product
                     </FormControl>
                     <SelectContent className="bg-gray-800 border-gray-700">
                       {mockCategories.map((category) => (
-                        <SelectItem 
-                          key={category.id} 
-                          value={category.id}
-                          className="text-gray-200 focus:bg-gray-700/50"
-                        >
+                        <SelectItem key={category.id} value={category.id}>
                           {category.name}
                         </SelectItem>
                       ))}
@@ -86,12 +82,29 @@ export function ProductClientForm({ open, onOpenChange, productToEdit }: Product
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-gray-200">Nom du produit</FormLabel>
+                  <FormLabel className="text-white">Nom</FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="Nom du produit" 
-                      className="bg-gray-800/50 border-gray-700/50 text-white placeholder:text-gray-500"
                       {...field} 
+                      className="bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-400"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-400" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-white">Description</FormLabel>
+                  <FormControl>
+                    <Input 
+                      placeholder="Description (optionnel)" 
+                      {...field} 
+                      className="bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-400"
                     />
                   </FormControl>
                   <FormMessage className="text-red-400" />
@@ -102,13 +115,13 @@ export function ProductClientForm({ open, onOpenChange, productToEdit }: Product
               <Button 
                 variant="outline" 
                 onClick={() => onOpenChange(false)}
-                className="bg-gray-800/50 border-gray-700/50 text-gray-200 hover:bg-gray-700/50"
+                className="bg-gray-800/50 hover:bg-gray-700/50 border-gray-700/50 text-white"
               >
                 Annuler
               </Button>
               <Button 
                 type="submit"
-                className="bg-blue-600 hover:bg-blue-700 text-white"
+                className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 border border-white/20 transition-colors"
               >
                 {productToEdit ? "Modifier" : "Créer"}
               </Button>

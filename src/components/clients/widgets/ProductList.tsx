@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Edit, Trash2, Package } from "lucide-react";
-import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 
 interface Product {
@@ -13,6 +12,7 @@ interface Product {
 
 interface ProductListProps {
   onEdit?: (product: Product) => void;
+  searchQuery?: string;
 }
 
 const mockProducts: Product[] = [
@@ -30,10 +30,9 @@ const mockProducts: Product[] = [
   },
 ];
 
-export function ProductList({ onEdit }: ProductListProps) {
+export function ProductList({ onEdit, searchQuery = "" }: ProductListProps) {
   const handleDelete = (productId: number) => {
     console.log("Delete product:", productId);
-    toast.success("Produit supprimé avec succès");
   };
 
   const getCategoryName = (categoryId: string) => {
@@ -49,9 +48,14 @@ export function ProductList({ onEdit }: ProductListProps) {
     };
   };
 
+  const filteredProducts = mockProducts.filter(product => 
+    product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    getCategoryName(product.category).name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="space-y-4">
-      {mockProducts.map((product, index) => {
+      {filteredProducts.map((product, index) => {
         const category = getCategoryName(product.category);
         return (
           <motion.div

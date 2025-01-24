@@ -5,10 +5,12 @@ import { Package } from "lucide-react";
 import { ProductClientForm } from "./forms/ProductClientForm";
 import { ProductList } from "./ProductList";
 import { motion } from "framer-motion";
+import { Input } from "@/components/ui/input";
 
 export function ProductWidget() {
   const [showNewProductForm, setShowNewProductForm] = useState(false);
   const [productToEdit, setProductToEdit] = useState<any>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleEdit = (product: any) => {
     setProductToEdit(product);
@@ -27,20 +29,30 @@ export function ProductWidget() {
             <Package className="h-5 w-5 text-blue-400" />
             Produits Client
           </CardTitle>
-          <Button 
-            onClick={() => {
-              setProductToEdit(null);
-              setShowNewProductForm(true);
-            }}
-            className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg transition-all duration-200 hover:shadow-blue-500/25"
-            size="sm"
-          >
-            <Package className="mr-2 h-4 w-4" />
-            Nouveau produit
-          </Button>
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              <Input
+                type="search"
+                placeholder="Rechercher un produit..."
+                className="w-64 bg-gray-800/30 border-gray-700/50 text-white placeholder-gray-400"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+            <Button 
+              onClick={() => {
+                setProductToEdit(null);
+                setShowNewProductForm(true);
+              }}
+              className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 border border-white/20 transition-colors"
+            >
+              <Package className="mr-2 h-4 w-4" />
+              Nouveau produit
+            </Button>
+          </div>
         </CardHeader>
         <CardContent>
-          <ProductList onEdit={handleEdit} />
+          <ProductList onEdit={handleEdit} searchQuery={searchQuery} />
           
           <ProductClientForm 
             open={showNewProductForm}
