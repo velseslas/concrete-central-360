@@ -37,13 +37,13 @@ export function DocumentUploadDialog({ onSuccess }: DocumentUploadDialogProps) {
   };
 
   return (
-    <>
+    <div className="h-full flex flex-col w-full max-w-[1200px] mx-auto bg-gray-900/95">
       <DocumentTitle />
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
-        className="h-full flex flex-col"
+        className="flex-1"
       >
         <DocumentForm 
           form={form}
@@ -52,6 +52,6 @@ export function DocumentUploadDialog({ onSuccess }: DocumentUploadDialogProps) {
           onSubmit={onSubmit}
         />
       </motion.div>
-    </>
+    </div>
   );
 }
