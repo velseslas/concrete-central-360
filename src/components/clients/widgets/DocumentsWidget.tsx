@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileText, Plus } from "lucide-react";
 import { DocumentList } from "@/components/clients/widgets/DocumentList";
 import { DocumentUploadDialog } from "@/components/clients/DocumentUploadDialog";
@@ -8,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 export function DocumentsWidget() {
-  const [isOpen, setIsOpen] = useState(false);
   const [showUploadDialog, setShowUploadDialog] = useState(false);
 
   return (
@@ -38,7 +36,7 @@ export function DocumentsWidget() {
 
       <Dialog open={showUploadDialog} onOpenChange={setShowUploadDialog}>
         <DialogContent className="sm:max-w-[500px] bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800">
-          <DocumentUploadDialog />
+          <DocumentUploadDialog onSuccess={() => setShowUploadDialog(false)} />
         </DialogContent>
       </Dialog>
     </motion.div>
