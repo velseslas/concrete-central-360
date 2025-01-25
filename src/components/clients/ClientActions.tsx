@@ -22,9 +22,9 @@ export function ClientActions({
         variant="ghost"
         size="icon"
         onClick={() => onEdit(client)}
-        className="hover:bg-purple-500/20 transition-colors"
+        className="hover:bg-blue-500/20 transition-colors"
       >
-        <Edit className="h-4 w-4 text-purple-400" />
+        <Edit className="h-4 w-4 text-blue-400 hover:text-blue-300" />
       </Button>
       <Button
         variant="ghost"
@@ -48,7 +48,7 @@ export function ClientActions({
         onClick={() => onDelete(client.id)}
         className="hover:bg-red-500/20 transition-colors"
       >
-        <Trash className="h-4 w-4 text-red-400" />
+        <Trash className="h-4 w-4 text-red-400 hover:text-red-300" />
       </Button>
     </div>
   );
