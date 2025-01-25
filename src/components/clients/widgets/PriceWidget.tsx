@@ -13,6 +13,11 @@ export function PriceWidget() {
     console.log("Editing price:", price);
   };
 
+  const handleOpenPriceForm = () => {
+    console.log("Opening price form");
+    setShowPriceForm(true);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -24,10 +29,7 @@ export function PriceWidget() {
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-white flex items-center gap-2">Prix</CardTitle>
           <Button 
-            onClick={() => {
-              console.log("Opening price form");
-              setShowPriceForm(true);
-            }} 
+            onClick={handleOpenPriceForm}
             size="sm"
             className="bg-blue-600 hover:bg-blue-700 text-white"
           >

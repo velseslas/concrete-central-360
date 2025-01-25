@@ -37,6 +37,12 @@ export function PriceForm({ open, onOpenChange }: PriceFormProps) {
     }
   };
 
+  const handleClose = () => {
+    console.log("Closing price form");
+    onOpenChange(false);
+    form.reset();
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[800px] bg-gradient-to-br from-gray-900 to-gray-800 border-gray-700/50">
@@ -52,7 +58,8 @@ export function PriceForm({ open, onOpenChange }: PriceFormProps) {
             <div className="flex justify-end space-x-2 pt-4 border-t border-gray-700/50">
               <Button 
                 variant="outline" 
-                onClick={() => onOpenChange(false)}
+                onClick={handleClose}
+                type="button"
                 className="bg-gray-800/50 hover:bg-gray-700/50 border-gray-700/50 text-white"
               >
                 Annuler
