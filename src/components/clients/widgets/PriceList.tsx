@@ -7,8 +7,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Edit, FileText, Plus, Search, Trash2 } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { Edit, FileText, Plus, Trash2 } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface Price {
@@ -47,16 +46,6 @@ export function PriceList({ onEdit }: PriceListProps) {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div className="relative flex-grow md:w-64">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-          <Input 
-            placeholder="Rechercher un prix..." 
-            className="pl-9 bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-400"
-          />
-        </div>
-      </div>
-
       <div className="space-y-4">
         {mockPrices.map((price) => (
           <motion.div
