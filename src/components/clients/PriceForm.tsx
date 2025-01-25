@@ -25,6 +25,8 @@ interface PriceFormProps {
 }
 
 export function PriceForm({ open, onOpenChange }: PriceFormProps) {
+  console.log("PriceForm rendered with open:", open);
+
   const form = useForm<PriceFormValues>({
     resolver: zodResolver(priceFormSchema),
     defaultValues: {

@@ -24,7 +24,10 @@ export function PriceWidget() {
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-white flex items-center gap-2">Prix</CardTitle>
           <Button 
-            onClick={() => setShowPriceForm(true)} 
+            onClick={() => {
+              console.log("Opening price form");
+              setShowPriceForm(true);
+            }} 
             size="sm"
             className="bg-blue-600 hover:bg-blue-700 text-white"
           >
