@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
 
 const priceFormSchema = z.object({
   client: z.string().min(1, "Le client est requis"),
@@ -35,15 +36,21 @@ export function PriceForm({ open, onOpenChange }: PriceFormProps) {
     },
   });
 
-  const onSubmit = (data: PriceFormValues) => {
-    console.log("Price data:", data);
-    toast.success("Prix ajouté avec succès");
-    onOpenChange(false);
+  const onSubmit = async (data: PriceFormValues) => {
+    try {
+      console.log("Submitting price data:", data);
+      toast.success("Prix ajouté avec succès");
+      onOpenChange(false);
+      form.reset();
+    } catch (error) {
+      console.error("Error submitting price:", error);
+      toast.error("Erreur lors de l'ajout du prix");
+    }
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[800px] bg-gray-900/95 border-gray-700/50">
+      <DialogContent className="sm:max-w-[800px] bg-gradient-to-br from-gray-900 to-gray-800 border-gray-700/50">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-white">
             Nouveau prix
@@ -51,7 +58,7 @@ export function PriceForm({ open, onOpenChange }: PriceFormProps) {
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FormField
                 control={form.control}
                 name="client"
@@ -99,7 +106,7 @@ export function PriceForm({ open, onOpenChange }: PriceFormProps) {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FormField
                 control={form.control}
                 name="category"
@@ -176,7 +183,7 @@ export function PriceForm({ open, onOpenChange }: PriceFormProps) {
               </Button>
               <Button 
                 type="submit"
-                className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 border border-indigo-500/20"
+                className="bg-blue-600 hover:bg-blue-700 text-white"
               >
                 Enregistrer
               </Button>
