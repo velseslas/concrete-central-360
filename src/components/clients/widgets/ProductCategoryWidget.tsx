@@ -9,6 +9,17 @@ import { motion } from "framer-motion";
 
 export function ProductCategoryWidget() {
   const [showNewCategoryForm, setShowNewCategoryForm] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleOpenForm = () => {
+    console.log("Opening category form");
+    setShowNewCategoryForm(true);
+  };
+
+  const handleCloseForm = (open: boolean) => {
+    console.log("Closing category form, open state:", open);
+    setShowNewCategoryForm(open);
+  };
 
   return (
     <motion.div
@@ -30,14 +41,14 @@ export function ProductCategoryWidget() {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <Input 
                   placeholder="Rechercher une catégorie..." 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-9 bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-400"
                 />
               </div>
               <Button 
-                onClick={() => setShowNewCategoryForm(true)}
-                variant="outline" 
-                size="sm" 
-                className="text-white"
+                onClick={handleOpenForm}
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Nouvelle Catégorie
@@ -46,42 +57,13 @@ export function ProductCategoryWidget() {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            {[
-              { id: "CAT-001", name: "Béton", count: "12 produits", date: "15/03/2024" },
-              { id: "CAT-002", name: "Agrégats", count: "8 produits", date: "14/03/2024" },
-              { id: "CAT-003", name: "Adjuvants", count: "5 produits", date: "13/03/2024" },
-              { id: "CAT-004", name: "Ciment", count: "3 produits", date: "12/03/2024" },
-              { id: "CAT-005", name: "Additifs", count: "7 produits", date: "11/03/2024" },
-            ].map((category) => (
-              <div
-                key={category.id}
-                className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/50 transition-colors cursor-pointer"
-              >
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                  <div>
-                    <h3 className="text-white font-medium flex items-center gap-2">
-                      <FileText className="h-4 w-4 text-blue-400" />
-                      {category.name}
-                    </h3>
-                    <p className="text-gray-400 text-sm">{category.id}</p>
-                  </div>
-                  <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
-                    <div className="text-right">
-                      <p className="text-white font-medium">{category.count}</p>
-                      <p className="text-gray-400 text-sm">{category.date}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <ProductCategoryList />
         </CardContent>
       </Card>
 
       <ProductCategoryForm 
         open={showNewCategoryForm}
-        onOpenChange={setShowNewCategoryForm}
+        onOpenChange={handleCloseForm}
       />
     </motion.div>
   );
