@@ -37,9 +37,9 @@ export function ProductList({ onEdit, searchQuery = "" }: ProductListProps) {
 
   const getCategoryName = (categoryId: string) => {
     const categories = [
-      { id: "1", name: "Béton", color: "bg-blue-500" },
-      { id: "2", name: "Pompe", color: "bg-green-500" },
-      { id: "3", name: "Location", color: "bg-purple-500" },
+      { id: "1", name: "Béton", color: "bg-purple-500" },
+      { id: "2", name: "Pompe", color: "bg-blue-500" },
+      { id: "3", name: "Location", color: "bg-indigo-500" },
     ];
     const category = categories.find(cat => cat.id === categoryId);
     return {
@@ -63,15 +63,15 @@ export function ProductList({ onEdit, searchQuery = "" }: ProductListProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: index * 0.1 }}
-            className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/50 transition-all duration-200 group"
+            className="p-4 rounded-lg bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border border-gray-700/50 backdrop-blur-xl hover:bg-gray-800/50 transition-all duration-300 group shadow-lg hover:shadow-purple-500/10"
           >
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
               <div className="flex items-start gap-3">
-                <div className="p-2 rounded-lg bg-gray-700/50">
-                  <Package className="h-5 w-5 text-blue-400" />
+                <div className="p-2 rounded-lg bg-gradient-to-br from-purple-500/20 to-blue-500/20 border border-purple-500/20">
+                  <Package className="h-5 w-5 text-purple-400" />
                 </div>
                 <div>
-                  <h3 className="text-white font-medium group-hover:text-blue-400 transition-colors">
+                  <h3 className="text-white font-medium group-hover:text-purple-400 transition-colors">
                     {product.name}
                   </h3>
                   <Badge 
@@ -89,7 +89,7 @@ export function ProductList({ onEdit, searchQuery = "" }: ProductListProps) {
                     variant="ghost"
                     size="icon"
                     onClick={() => onEdit?.(product)}
-                    className="hover:bg-blue-500/10 hover:text-blue-400 transition-colors"
+                    className="hover:bg-purple-500/20 text-gray-400 hover:text-purple-400 transition-colors"
                   >
                     <Edit className="h-4 w-4" />
                   </Button>
@@ -97,7 +97,7 @@ export function ProductList({ onEdit, searchQuery = "" }: ProductListProps) {
                     variant="ghost"
                     size="icon"
                     onClick={() => handleDelete(product.id)}
-                    className="hover:bg-red-500/10 hover:text-red-400 transition-colors"
+                    className="hover:bg-red-500/20 text-gray-400 hover:text-red-400 transition-colors"
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
