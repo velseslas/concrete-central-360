@@ -48,28 +48,31 @@ export function ProductCategoryList() {
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3 }}
-      className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 overflow-hidden"
+      className="rounded-lg bg-gradient-to-br from-gray-900/50 via-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 overflow-hidden shadow-xl"
     >
       <Table>
-        <TableHeader className="bg-gray-900/50 backdrop-blur-xl">
-          <TableRow className="border-b border-gray-700 hover:bg-gray-800/50">
-            <TableHead className="text-gray-300">Nom</TableHead>
-            <TableHead className="text-gray-300">Description</TableHead>
-            <TableHead className="text-right text-gray-300">Actions</TableHead>
+        <TableHeader className="bg-gray-900/70 backdrop-blur-xl border-b border-gray-700">
+          <TableRow>
+            <TableHead className="text-gray-300 font-medium">Nom</TableHead>
+            <TableHead className="text-gray-300 font-medium">Description</TableHead>
+            <TableHead className="text-right text-gray-300 font-medium">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {mockCategories.map((category) => (
-            <TableRow key={category.id} className="border-b border-gray-700/50 hover:bg-gray-700/30 transition-colors duration-200">
+            <TableRow 
+              key={category.id} 
+              className="border-b border-gray-700/50 hover:bg-purple-500/10 transition-colors duration-200"
+            >
               <TableCell className="text-gray-300 font-medium">{category.name}</TableCell>
-              <TableCell className="text-gray-300">{category.description}</TableCell>
+              <TableCell className="text-gray-400">{category.description}</TableCell>
               <TableCell>
                 <div className="flex justify-end space-x-2">
                   <Button 
                     variant="ghost" 
                     size="icon"
                     onClick={() => handleEdit(category)}
-                    className="hover:bg-gray-700/50 text-gray-300 hover:text-blue-400"
+                    className="hover:bg-purple-500/20 text-gray-400 hover:text-purple-400 transition-colors"
                   >
                     <Edit className="h-4 w-4" />
                   </Button>
@@ -77,7 +80,7 @@ export function ProductCategoryList() {
                     variant="ghost" 
                     size="icon"
                     onClick={() => handleDelete(category.id)}
-                    className="hover:bg-gray-700/50 text-gray-300 hover:text-red-400"
+                    className="hover:bg-red-500/20 text-gray-400 hover:text-red-400 transition-colors"
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
