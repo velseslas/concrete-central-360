@@ -47,8 +47,9 @@ export function ProductCategoryWidget() {
                 />
               </div>
               <Button 
+                type="button"
                 onClick={handleOpenForm}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 cursor-pointer"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Nouvelle Catégorie
