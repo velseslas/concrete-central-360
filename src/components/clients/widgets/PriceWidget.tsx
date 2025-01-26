@@ -18,6 +18,11 @@ export function PriceWidget() {
     setShowPriceForm(true);
   };
 
+  const handleClosePriceForm = (open: boolean) => {
+    console.log("Closing price form, open state:", open);
+    setShowPriceForm(open);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -48,7 +53,7 @@ export function PriceWidget() {
 
       <PriceForm 
         open={showPriceForm} 
-        onOpenChange={setShowPriceForm}
+        onOpenChange={handleClosePriceForm}
       />
     </motion.div>
   );
