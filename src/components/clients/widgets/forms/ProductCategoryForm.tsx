@@ -1,20 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
-
-const categorySchema = z.object({
-  name: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
-  description: z.string().optional(),
-});
-
-type CategoryFormValues = z.infer<typeof categorySchema>;
+import { CategoryFormFields } from "../category/CategoryFormFields";
+import { CategoryFormValues, categorySchema } from "../category/types";
 
 interface ProductCategoryFormProps {
   open: boolean;
@@ -52,40 +44,7 @@ export function ProductCategoryForm({ open, onOpenChange, categoryToEdit }: Prod
           </DialogHeader>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-4">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-gray-200">Nom</FormLabel>
-                    <FormControl>
-                      <Input 
-                        placeholder="Nom de la catégorie" 
-                        {...field}
-                        className="bg-gray-800/50 border-gray-700/50 text-white placeholder:text-gray-400 focus:border-blue-500/50 transition-colors"
-                      />
-                    </FormControl>
-                    <FormMessage className="text-red-400" />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="description"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-gray-200">Description</FormLabel>
-                    <FormControl>
-                      <Textarea 
-                        placeholder="Description de la catégorie" 
-                        {...field}
-                        className="bg-gray-800/50 border-gray-700/50 text-white placeholder:text-gray-400 focus:border-blue-500/50 transition-colors resize-none"
-                      />
-                    </FormControl>
-                    <FormMessage className="text-red-400" />
-                  </FormItem>
-                )}
-              />
+              <CategoryFormFields form={form} />
               <div className="flex justify-end space-x-2 pt-4 border-t border-gray-700/30">
                 <Button 
                   variant="outline" 

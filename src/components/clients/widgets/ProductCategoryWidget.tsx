@@ -5,12 +5,13 @@ import { Plus, Package } from "lucide-react";
 import { ProductCategoryForm } from "./forms/ProductCategoryForm";
 import { ProductCategoryList } from "./ProductCategoryList";
 import { motion } from "framer-motion";
+import { CategoryFormValues } from "./category/types";
 
 export function ProductCategoryWidget() {
   const [showNewCategoryForm, setShowNewCategoryForm] = useState(false);
-  const [categoryToEdit, setCategoryToEdit] = useState<any>(null);
+  const [categoryToEdit, setCategoryToEdit] = useState<CategoryFormValues | undefined>(undefined);
 
-  const handleEdit = (category: any) => {
+  const handleEdit = (category: CategoryFormValues) => {
     setCategoryToEdit(category);
     setShowNewCategoryForm(true);
   };
@@ -30,7 +31,10 @@ export function ProductCategoryWidget() {
               Catégories de produits
             </CardTitle>
             <Button 
-              onClick={() => setShowNewCategoryForm(true)}
+              onClick={() => {
+                setCategoryToEdit(undefined);
+                setShowNewCategoryForm(true);
+              }}
               className="bg-gradient-to-r from-blue-600/80 to-purple-600/80 hover:from-blue-600 hover:to-purple-600 text-white transition-all duration-300 shadow-lg hover:shadow-xl"
             >
               <Plus className="h-4 w-4 mr-2" />
