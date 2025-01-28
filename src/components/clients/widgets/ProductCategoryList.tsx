@@ -1,4 +1,3 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Edit, Trash2 } from "lucide-react";
 import { motion } from "framer-motion";
@@ -46,14 +45,14 @@ export function ProductCategoryList({ onEdit }: ProductCategoryListProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: index * 0.1 }}
-          className="p-4 rounded-lg bg-gray-800/30 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/30 transition-colors"
+          className="group p-4 rounded-xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/30 hover:border-gray-600/50 shadow-lg hover:shadow-xl transition-all duration-300"
         >
           <div className="flex justify-between items-center">
             <div className="space-y-1">
-              <h4 className="font-medium text-gray-100">{category.name}</h4>
-              <p className="text-sm text-gray-400">{category.description}</p>
+              <h4 className="font-medium text-gray-100 group-hover:text-white transition-colors">{category.name}</h4>
+              <p className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">{category.description}</p>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <Button
                 variant="ghost"
                 size="icon"
