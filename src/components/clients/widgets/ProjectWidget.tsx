@@ -73,6 +73,11 @@ export function ProjectWidget() {
   console.log("Filters:", { searchQuery, selectedYear, selectedClient, selectedStatus });
   console.log("Filtered projects:", filteredProjects);
 
+  const handleNewProject = () => {
+    console.log("Opening new project dialog");
+    setOpen(true);
+  };
+
   return (
     <>
       <motion.div
@@ -111,23 +116,15 @@ export function ProjectWidget() {
                   showSearchOnly={true}
                   projects={filteredProjects}
                 />
-                <Dialog open={open} onOpenChange={setOpen}>
-                  <DialogTrigger asChild>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 border-white transition-colors whitespace-nowrap"
-                    >
-                      <Construction className="h-4 w-4 mr-2" />
-                      Nouveau Chantier
-                    </Button>
-                  </DialogTrigger>
-                  <ProjectFormDialog 
-                    open={open} 
-                    onOpenChange={setOpen}
-                    clients={mockClients}
-                  />
-                </Dialog>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={handleNewProject}
+                  className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 border-indigo-500/30 cursor-pointer"
+                >
+                  <Construction className="h-4 w-4 mr-2" />
+                  Nouveau Chantier
+                </Button>
               </div>
             </div>
           </CardHeader>
@@ -149,6 +146,12 @@ export function ProjectWidget() {
           </CardContent>
         </Card>
       </motion.div>
+
+      <ProjectFormDialog 
+        open={open} 
+        onOpenChange={setOpen}
+        clients={mockClients}
+      />
     </>
   );
 }
