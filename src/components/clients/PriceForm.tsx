@@ -5,6 +5,7 @@ import { Form } from "@/components/ui/form";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { PriceFormFields, priceFormSchema, type PriceFormValues } from "./price/PriceFormFields";
+import { motion } from "framer-motion";
 
 interface PriceFormProps {
   open: boolean;
@@ -45,34 +46,40 @@ export function PriceForm({ open, onOpenChange }: PriceFormProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[800px] bg-gradient-to-br from-gray-900 to-gray-800 border-gray-700/50">
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-white">
-            Nouveau prix
-          </DialogTitle>
-        </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <PriceFormFields form={form} />
-            
-            <div className="flex justify-end space-x-2 pt-4 border-t border-gray-700/50">
-              <Button 
-                variant="outline" 
-                onClick={handleClose}
-                type="button"
-                className="bg-gray-800/50 hover:bg-gray-700/50 border-gray-700/50 text-white"
-              >
-                Annuler
-              </Button>
-              <Button 
-                type="submit"
-                className="bg-blue-600 hover:bg-blue-700 text-white"
-              >
-                Enregistrer
-              </Button>
-            </div>
-          </form>
-        </Form>
+      <DialogContent className="sm:max-w-[800px] bg-gradient-to-br from-gray-900 to-gray-800 border-gray-700/50 shadow-xl backdrop-blur-sm">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-white bg-clip-text">
+              Nouveau prix
+            </DialogTitle>
+          </DialogHeader>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 mt-4">
+              <PriceFormFields form={form} />
+              
+              <div className="flex justify-end space-x-2 pt-4 border-t border-gray-700/50">
+                <Button 
+                  variant="outline" 
+                  onClick={handleClose}
+                  type="button"
+                  className="bg-gray-800/50 hover:bg-gray-700/50 border-gray-700/50 text-white transition-colors duration-200"
+                >
+                  Annuler
+                </Button>
+                <Button 
+                  type="submit"
+                  className="bg-blue-600 hover:bg-blue-700 text-white transition-colors duration-200"
+                >
+                  Enregistrer
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </motion.div>
       </DialogContent>
     </Dialog>
   );
