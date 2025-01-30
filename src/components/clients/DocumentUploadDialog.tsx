@@ -37,7 +37,7 @@ export function DocumentUploadDialog({ onSuccess }: DocumentUploadDialogProps) {
   };
 
   return (
-    <div className="h-full flex flex-col w-full max-w-[1200px] mx-auto bg-gray-900/95">
+    <div className="h-full flex flex-col w-full max-w-[1200px] mx-auto">
       <DocumentTitle />
       <motion.div 
         initial={{ opacity: 0, y: 20 }}

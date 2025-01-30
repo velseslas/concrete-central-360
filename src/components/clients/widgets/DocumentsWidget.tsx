@@ -9,6 +9,8 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 export function DocumentsWidget() {
   const [showUploadDialog, setShowUploadDialog] = useState(false);
 
+  console.log("DocumentsWidget - Dialog state:", showUploadDialog);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
