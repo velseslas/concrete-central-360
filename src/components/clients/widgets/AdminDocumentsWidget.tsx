@@ -1,10 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus, FileText, Printer } from "lucide-react";
-import { DocumentUpload } from "@/components/shared/DocumentUpload";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { DocumentUploadDialog } from "@/components/clients/DocumentUploadDialog";
 
 const mockClients = [
   { id: 1, nom: "Entreprise ABC", documents: [
@@ -26,6 +26,8 @@ export function AdminDocumentsWidget() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [selectedDoc, setSelectedDoc] = useState<{ id: number; title: string } | null>(null);
+
+  console.log("AdminDocumentsWidget - Upload form state:", showUploadForm);
 
   const handleClientClick = (client: typeof mockClients[0]) => {
     setSelectedClient(client);
@@ -65,18 +67,6 @@ export function AdminDocumentsWidget() {
           </Button>
         </CardHeader>
         <CardContent>
-          {showUploadForm ? (
-            <motion.div 
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mb-6 p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50"
-            >
-              <DocumentUpload 
-                onUploadSuccess={() => setShowUploadForm(false)}
-              />
-            </motion.div>
-          ) : null}
-
           <div className="space-y-2 mt-4">
             {mockClients.map((client) => (
               <motion.div
@@ -140,6 +130,17 @@ export function AdminDocumentsWidget() {
               <FileText className="h-24 w-24 text-gray-600" />
             </div>
           </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showUploadForm} onOpenChange={setShowUploadForm}>
+        <DialogContent className="max-w-4xl bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-700/50">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+              Nouveau document
+            </DialogTitle>
+          </DialogHeader>
+          <DocumentUploadDialog onSuccess={() => setShowUploadForm(false)} />
         </DialogContent>
       </Dialog>
     </motion.div>
