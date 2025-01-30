@@ -27,12 +27,12 @@ export function ClientListHeader({
             placeholder="Rechercher un client..." 
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="pl-9 bg-gray-800/30 border-gray-700/50 text-white placeholder-gray-400"
+            className="pl-9 bg-gray-800/30 border-gray-700/50 text-white placeholder-gray-400 focus:border-purple-500/50 transition-colors"
           />
         </div>
         <Button 
           onClick={() => setIsNewClientDialogOpen(true)}
-          className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 border border-indigo-500/20"
+          className="bg-gradient-to-r from-blue-600/80 to-purple-600/80 hover:from-blue-600 hover:to-purple-600 text-white transition-all duration-300 shadow-lg hover:shadow-xl"
         >
           <UserPlus className="mr-2 h-4 w-4" />
           Nouveau client

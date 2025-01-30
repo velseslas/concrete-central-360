@@ -17,38 +17,38 @@ export function ClientActions({
   onDelete,
 }: ClientActionsProps) {
   return (
-    <div className="flex space-x-2">
+    <div className="flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
       <Button
         variant="ghost"
         size="icon"
         onClick={() => onEdit(client)}
-        className="hover:bg-blue-500/20 transition-colors"
+        className="hover:bg-blue-500/20 text-blue-400 hover:text-blue-300 transition-colors"
       >
-        <Edit className="h-4 w-4 text-blue-400 hover:text-blue-300" />
+        <Edit className="h-4 w-4" />
       </Button>
       <Button
         variant="ghost"
         size="icon"
         onClick={() => onViewProjects(client)}
-        className="hover:bg-blue-500/20 transition-colors"
+        className="hover:bg-purple-500/20 text-purple-400 hover:text-purple-300 transition-colors"
       >
-        <Building className="h-4 w-4 text-blue-400" />
+        <Building className="h-4 w-4" />
       </Button>
       <Button
         variant="ghost"
         size="icon"
         onClick={() => onDocumentUpload(client)}
-        className="bg-indigo-500/10 hover:bg-indigo-500/20 transition-colors"
+        className="hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 transition-colors"
       >
-        <FileText className="h-4 w-4 text-indigo-400" />
+        <FileText className="h-4 w-4" />
       </Button>
       <Button
         variant="ghost"
         size="icon"
         onClick={() => onDelete(client.id)}
-        className="hover:bg-red-500/20 transition-colors"
+        className="hover:bg-red-500/20 text-red-400 hover:text-red-300 transition-colors"
       >
-        <Trash className="h-4 w-4 text-red-400 hover:text-red-300" />
+        <Trash className="h-4 w-4" />
       </Button>
     </div>
   );
