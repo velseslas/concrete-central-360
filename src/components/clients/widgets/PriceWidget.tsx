@@ -36,7 +36,7 @@ export function PriceWidget() {
           <Button 
             onClick={handleOpenPriceForm}
             size="sm"
-            className="bg-blue-600 hover:bg-blue-700 text-white"
+            className="bg-blue-600 hover:bg-blue-700 text-white transition-colors duration-200"
           >
             <Plus className="h-4 w-4 mr-2" />
             Ajouter un prix
