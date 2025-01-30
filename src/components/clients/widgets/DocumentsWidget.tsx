@@ -23,19 +23,24 @@ export function DocumentsWidget() {
         </h2>
         <Button 
           onClick={() => setShowUploadDialog(true)}
-          className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+          className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white transition-all duration-300"
         >
           <Plus className="h-4 w-4 mr-2" />
           Nouveau document
         </Button>
       </div>
 
-      <div className="flex-1 overflow-y-auto">
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.3 }}
+        className="flex-1 overflow-y-auto bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 rounded-lg p-6 backdrop-blur-xl border border-gray-700/50 shadow-lg"
+      >
         <DocumentList />
-      </div>
+      </motion.div>
 
       <Dialog open={showUploadDialog} onOpenChange={setShowUploadDialog}>
-        <DialogContent className="sm:max-w-[500px] bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800">
+        <DialogContent className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-700/50 backdrop-blur-xl">
           <DocumentUploadDialog onSuccess={() => setShowUploadDialog(false)} />
         </DialogContent>
       </Dialog>
