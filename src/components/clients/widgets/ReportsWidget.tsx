@@ -42,16 +42,16 @@ export function ReportsWidget() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      className="space-y-4 max-w-3xl mx-auto"
     >
       {reports.map((type) => (
         <motion.div
           key={type}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3 }}
         >
-          <Card className="bg-gray-800/50 backdrop-blur-lg border border-gray-700">
+          <Card className="bg-gray-800/50 backdrop-blur-lg border border-gray-700 w-full">
             <CardHeader className="flex flex-row items-center justify-between">
               <CardTitle>{getReportTitle(type)}</CardTitle>
               <Button 
