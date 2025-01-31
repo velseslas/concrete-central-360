@@ -9,12 +9,12 @@ export function ReportsWidget() {
   const [previewOpen, setPreviewOpen] = useState(false);
 
   const handleDownload = () => {
-    console.log("Téléchargement du rapport");
+    console.log("Téléchargement du rapport quotidien");
     // Logique de téléchargement à implémenter
   };
 
   const handlePrint = () => {
-    console.log("Impression du rapport");
+    console.log("Impression du rapport quotidien");
     window.print();
   };
 
@@ -26,7 +26,7 @@ export function ReportsWidget() {
     >
       <Card className="bg-gray-800/50 backdrop-blur-lg border border-gray-700">
         <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle>Rapports</CardTitle>
+          <CardTitle>Rapport Quotidien</CardTitle>
           <Button 
             variant="outline" 
             onClick={() => setPreviewOpen(true)}
@@ -54,11 +54,10 @@ export function ReportsWidget() {
             </Button>
           </div>
           <div className="bg-white p-6 rounded-lg">
-            {/* Contenu de l'aperçu du rapport */}
-            <h2 className="text-xl font-bold mb-4">Aperçu du Rapport</h2>
+            <h2 className="text-xl font-bold mb-4">Aperçu du Rapport Quotidien</h2>
             <div className="space-y-4">
               {/* Exemple de contenu */}
-              <p>Contenu du rapport...</p>
+              <p>Contenu du rapport quotidien...</p>
             </div>
           </div>
         </DialogContent>
