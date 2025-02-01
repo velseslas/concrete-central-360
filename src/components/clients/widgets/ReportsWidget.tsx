@@ -42,7 +42,7 @@ export function ReportsWidget() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className="space-y-4 max-w-xl mx-auto"
+      className="space-y-4"
     >
       {reports.map((type, index) => (
         <motion.div
@@ -53,7 +53,7 @@ export function ReportsWidget() {
           className="group"
         >
           <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border border-gray-700/50 backdrop-blur-xl hover:bg-gray-800/50 transition-all duration-300 group shadow-lg hover:shadow-purple-500/10">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 p-4">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 p-6">
               <div className="flex items-start gap-3">
                 <div className="p-2 rounded-lg bg-gradient-to-br from-purple-500/20 to-blue-500/20 border border-purple-500/20">
                   <Eye className="h-5 w-5 text-purple-400" />
