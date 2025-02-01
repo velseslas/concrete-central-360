@@ -47,33 +47,37 @@ export function ReportsWidget() {
       {reports.map((type, index) => (
         <motion.div
           key={type}
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: index * 0.1 }}
           className="group"
         >
-          <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-700/50 shadow-lg hover:shadow-xl transition-all duration-300">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-50 transition-opacity duration-300" />
-            <CardHeader className="relative z-10">
-              <div className="flex justify-between items-center">
-                <CardTitle className="text-white flex items-center gap-2">
-                  {getReportTitle(type)}
-                </CardTitle>
-                <Button 
-                  variant="outline" 
+          <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border border-gray-700/50 backdrop-blur-xl hover:bg-gray-800/50 transition-all duration-300 group shadow-lg hover:shadow-purple-500/10">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 p-6">
+              <div className="flex items-start gap-3">
+                <div className="p-2 rounded-lg bg-gradient-to-br from-purple-500/20 to-blue-500/20 border border-purple-500/20">
+                  <Eye className="h-5 w-5 text-purple-400" />
+                </div>
+                <div>
+                  <h3 className="text-white font-medium group-hover:text-purple-400 transition-colors">
+                    {getReportTitle(type)}
+                  </h3>
+                  <p className="text-sm text-gray-400 mt-1">
+                    Visualisez et exportez vos données {getReportTitle(type).toLowerCase()}
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  variant="ghost"
                   onClick={() => setSelectedReport(type)}
-                  className="bg-gray-800/50 hover:bg-gray-700/50 border-gray-700/50 text-white backdrop-blur-sm transition-all duration-300 hover:scale-105"
+                  className="hover:bg-purple-500/20 text-gray-400 hover:text-purple-400 transition-colors"
                 >
-                  <Eye className="mr-2 h-4 w-4" />
+                  <Eye className="h-4 w-4 mr-2" />
                   Aperçu
                 </Button>
               </div>
-            </CardHeader>
-            <CardContent className="relative z-10">
-              <div className="text-gray-400 text-sm">
-                Visualisez et exportez vos données {getReportTitle(type).toLowerCase()}
-              </div>
-            </CardContent>
+            </div>
           </Card>
         </motion.div>
       ))}
