@@ -49,7 +49,6 @@ export function AdminDocumentsWidget() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="space-y-6"
     >
       <Card className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -59,8 +58,7 @@ export function AdminDocumentsWidget() {
           </CardTitle>
           <Button 
             onClick={() => setShowUploadForm(true)} 
-            size="sm"
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 border-0"
+            className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 border border-white/20 transition-colors"
           >
             <Plus className="mr-2 h-4 w-4" />
             Nouveau document
@@ -74,11 +72,12 @@ export function AdminDocumentsWidget() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 whileHover={{ scale: 1.01 }}
-                className="flex items-center gap-3 p-3 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/50 transition-all cursor-pointer"
+                className="flex items-center gap-3 p-3 rounded-lg bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/50 hover:border-gray-600/50 transition-all cursor-pointer group relative overflow-hidden"
                 onClick={() => handleClientClick(client)}
               >
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <FileText className="h-5 w-5 text-blue-400" />
-                <span className="text-gray-200">{client.nom}</span>
+                <span className="text-gray-200 group-hover:text-white transition-colors">{client.nom}</span>
               </motion.div>
             ))}
           </div>
@@ -86,7 +85,7 @@ export function AdminDocumentsWidget() {
       </Card>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="sm:max-w-[425px] bg-gray-900 border-gray-800">
+        <DialogContent className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-700/50">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-white">
               {selectedClient?.nom}
@@ -99,11 +98,12 @@ export function AdminDocumentsWidget() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 whileHover={{ scale: 1.05 }}
-                className="flex flex-col items-center gap-2 p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/50 transition-all cursor-pointer"
+                className="flex flex-col items-center gap-2 p-4 rounded-lg bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/50 hover:border-gray-600/50 transition-all cursor-pointer group relative overflow-hidden"
                 onClick={() => handleDocumentClick(doc)}
               >
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <FileText className="h-12 w-12 text-blue-400" />
-                <span className="text-sm text-center text-gray-200">{doc.title}</span>
+                <span className="text-sm text-center text-gray-200 group-hover:text-white transition-colors">{doc.title}</span>
               </motion.div>
             ))}
           </div>
@@ -111,7 +111,7 @@ export function AdminDocumentsWidget() {
       </Dialog>
 
       <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
-        <DialogContent className="max-h-[90vh] w-[90vw] max-w-[800px] overflow-y-auto bg-gray-900 border-gray-800">
+        <DialogContent className="max-h-[90vh] w-[90vw] max-w-[800px] overflow-y-auto bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-700/50">
           <DialogHeader className="flex flex-row items-center justify-between space-y-0">
             <DialogTitle className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
               Aperçu - {selectedDoc?.title}
@@ -126,7 +126,7 @@ export function AdminDocumentsWidget() {
             </Button>
           </DialogHeader>
           <div className="flex flex-col items-center gap-4 py-4">
-            <div className="w-full aspect-[3/4] bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-lg flex items-center justify-center">
+            <div className="w-full aspect-[3/4] bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/50 rounded-lg flex items-center justify-center">
               <FileText className="h-24 w-24 text-gray-600" />
             </div>
           </div>
