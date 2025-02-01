@@ -18,15 +18,15 @@ export function DocumentsWidget() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <Card className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl">
+      <Card className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-800 shadow-xl">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-lg font-medium text-white flex items-center gap-2">
-            <FileText className="h-5 w-5 text-blue-400" />
+            <FileText className="h-5 w-5 text-indigo-400" />
             Documents
           </CardTitle>
           <Button 
             onClick={() => setShowUploadDialog(true)}
-            className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 border border-white/20 transition-colors"
+            className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 border border-indigo-500/20 transition-colors"
           >
             <Plus className="mr-2 h-4 w-4" />
             Nouveau document
