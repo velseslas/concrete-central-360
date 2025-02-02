@@ -1,118 +1,172 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Eye, Download, Printer } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { FileChartLine, Filter, Printer } from "lucide-react";
+import { toast } from "sonner";
 import { motion } from "framer-motion";
 
-type ReportType = "daily" | "weekly" | "monthly" | "quarterly" | "yearly";
+interface Report {
+  id: string;
+  date: string;
+  supplier: string;
+  product: string;
+  quantity: number;
+  price: number;
+  total: number;
+}
 
 export function ReportsWidget() {
-  const [selectedReport, setSelectedReport] = useState<ReportType | null>(null);
+  const [selectedSupplier, setSelectedSupplier] = useState<string>("");
+  const [selectedProduct, setSelectedProduct] = useState<string>("");
+  const [startDate, setStartDate] = useState<string>("");
+  const [endDate, setEndDate] = useState<string>("");
 
-  const handleDownload = (type: ReportType) => {
-    console.log(`Téléchargement du rapport ${type}`);
-    // Logique de téléchargement à implémenter
+  const reports: Report[] = [
+    {
+      id: "1",
+      date: "2024-03-20",
+      supplier: "SARL CIMENT PLUS",
+      product: "Ciment",
+      quantity: 100,
+      price: 1200,
+      total: 120000
+    },
+    {
+      id: "2",
+      date: "2024-03-21",
+      supplier: "EURL AGREGATS",
+      product: "Gravier 8/15",
+      quantity: 50,
+      price: 800,
+      total: 40000
+    }
+  ];
+
+  const handleGenerateReport = () => {
+    console.log("Generating report with filters:", {
+      supplier: selectedSupplier,
+      product: selectedProduct,
+      startDate,
+      endDate,
+    });
+    toast.success("Rapport généré avec succès");
   };
 
-  const handlePrint = (type: ReportType) => {
-    console.log(`Impression du rapport ${type}`);
+  const handlePrint = () => {
+    console.log("Impression du rapport");
     window.print();
   };
 
-  const getReportTitle = (type: ReportType) => {
-    switch (type) {
-      case "daily":
-        return "Rapport Quotidien";
-      case "weekly":
-        return "Rapport Hebdomadaire";
-      case "monthly":
-        return "Rapport Mensuel";
-      case "quarterly":
-        return "Rapport Trimestriel";
-      case "yearly":
-        return "Rapport Annuel";
-    }
-  };
-
-  const reports: ReportType[] = ["daily", "weekly", "monthly", "quarterly", "yearly"];
+  const totalGeneral = reports.reduce((sum, report) => sum + report.total, 0);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
-      className="space-y-4"
-    >
-      {reports.map((type, index) => (
-        <motion.div
-          key={type}
+    <Card className="max-w-4xl mx-auto bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-800 shadow-xl backdrop-blur-xl">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2 text-white">
+          <div className="p-2 rounded-lg bg-gradient-to-br from-indigo-500/20 to-purple-500/20">
+            <FileChartLine className="h-5 w-5 text-indigo-400" />
+          </div>
+          Rapports des livraisons
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: index * 0.1 }}
-          className="group"
+          className="space-y-4"
         >
-          <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border border-gray-700/50 backdrop-blur-xl hover:bg-gray-800/50 transition-all duration-300 group shadow-lg hover:shadow-purple-500/10">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 p-6">
-              <div className="flex items-start gap-3">
-                <div className="p-2 rounded-lg bg-gradient-to-br from-purple-500/20 to-blue-500/20 border border-purple-500/20">
-                  <Eye className="h-5 w-5 text-purple-400" />
-                </div>
-                <div>
-                  <h3 className="text-white font-medium group-hover:text-purple-400 transition-colors">
-                    {getReportTitle(type)}
-                  </h3>
-                  <p className="text-sm text-gray-400 mt-1">
-                    Visualisez et exportez vos données {getReportTitle(type).toLowerCase()}
-                  </p>
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <Button
-                  variant="ghost"
-                  onClick={() => setSelectedReport(type)}
-                  className="hover:bg-purple-500/20 text-gray-400 hover:text-purple-400 transition-colors"
-                >
-                  <Eye className="h-4 w-4 mr-2" />
-                  Aperçu
-                </Button>
-              </div>
-            </div>
-          </Card>
-        </motion.div>
-      ))}
+          <div className="flex items-center gap-2 mb-4">
+            <Filter className="h-4 w-4 text-indigo-400" />
+            <span className="font-medium text-white">Filtres</span>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <Select value={selectedSupplier} onValueChange={setSelectedSupplier}>
+              <SelectTrigger className="bg-gray-800/30 border-gray-700/50">
+                <SelectValue placeholder="Sélectionner un fournisseur" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="supplier-1">SARL CIMENT PLUS</SelectItem>
+                <SelectItem value="supplier-2">EURL AGREGATS</SelectItem>
+              </SelectContent>
+            </Select>
 
-      <Dialog open={selectedReport !== null} onOpenChange={() => setSelectedReport(null)}>
-        <DialogContent className="max-w-4xl bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-700/50 backdrop-blur-xl">
-          <div className="flex justify-end space-x-2 mb-4">
+            <Select value={selectedProduct} onValueChange={setSelectedProduct}>
+              <SelectTrigger className="bg-gray-800/30 border-gray-700/50">
+                <SelectValue placeholder="Sélectionner un produit" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="ciment">Ciment</SelectItem>
+                <SelectItem value="gravier">Gravier 8/15</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Input
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+              className="bg-gray-800/30 border-gray-700/50"
+            />
+
+            <Input
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+              className="bg-gray-800/30 border-gray-700/50"
+            />
+
             <Button 
-              variant="outline" 
-              onClick={() => selectedReport && handleDownload(selectedReport)}
-              className="bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 hover:text-blue-300 border-blue-500/20"
+              onClick={handleGenerateReport}
+              className="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 hover:from-indigo-500/30 hover:to-purple-500/30 text-indigo-300 hover:text-white border border-indigo-500/30 transition-all duration-300"
             >
-              <Download className="mr-2 h-4 w-4" />
-              Télécharger
+              Générer le rapport
             </Button>
+
             <Button 
-              variant="outline" 
-              onClick={() => selectedReport && handlePrint(selectedReport)}
-              className="bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 hover:text-purple-300 border-purple-500/20"
+              onClick={handlePrint} 
+              variant="outline"
+              className="bg-gradient-to-r from-indigo-500/10 to-purple-500/10 hover:from-indigo-500/20 hover:to-purple-500/20 text-indigo-300 hover:text-white border border-indigo-500/30 transition-all duration-300"
             >
-              <Printer className="mr-2 h-4 w-4" />
-              Imprimer
+              <Printer className="h-4 w-4 mr-2" />
+              Version imprimable
             </Button>
           </div>
-          <div className="bg-gray-800/50 p-6 rounded-lg backdrop-blur-sm border border-gray-700/50">
-            <h2 className="text-xl font-bold text-white mb-4">
-              {selectedReport && getReportTitle(selectedReport)}
-            </h2>
-            <div className="space-y-4 text-gray-300">
-              {/* Exemple de contenu */}
-              <p>Contenu du {selectedReport && getReportTitle(selectedReport).toLowerCase()}...</p>
-            </div>
+
+          <div className="mt-6 overflow-hidden rounded-lg border border-gray-700/50">
+            <Table>
+              <TableHeader>
+                <TableRow className="border-gray-700/50 bg-gray-800/30">
+                  <TableHead className="text-gray-300">Date</TableHead>
+                  <TableHead className="text-gray-300">Fournisseur</TableHead>
+                  <TableHead className="text-gray-300">Produit</TableHead>
+                  <TableHead className="text-gray-300">Quantité</TableHead>
+                  <TableHead className="text-gray-300">Prix unitaire</TableHead>
+                  <TableHead className="text-gray-300">Total</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {reports.map((report) => (
+                  <TableRow key={report.id} className="border-gray-700/50">
+                    <TableCell className="text-gray-300">{report.date}</TableCell>
+                    <TableCell className="text-gray-300">{report.supplier}</TableCell>
+                    <TableCell className="text-gray-300">{report.product}</TableCell>
+                    <TableCell className="text-gray-300">{report.quantity} T</TableCell>
+                    <TableCell className="text-gray-300">{report.price.toLocaleString()} DA</TableCell>
+                    <TableCell className="text-gray-300">{report.total.toLocaleString()} DA</TableCell>
+                  </TableRow>
+                ))}
+                <TableRow className="border-gray-700/50 bg-gray-800/30 font-bold">
+                  <TableCell colSpan={5} className="text-right text-gray-300">Total Général:</TableCell>
+                  <TableCell className="text-gray-300">{totalGeneral.toLocaleString()} DA</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
           </div>
-        </DialogContent>
-      </Dialog>
-    </motion.div>
+        </motion.div>
+      </CardContent>
+    </Card>
   );
 }
