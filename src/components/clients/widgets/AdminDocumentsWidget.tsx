@@ -1,10 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus, FileText, Printer } from "lucide-react";
+import { Plus, FileText, Printer, Search } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { DocumentUploadDialog } from "@/components/clients/DocumentUploadDialog";
+import { Input } from "@/components/ui/input";
 
 const mockClients = [
   { id: 1, nom: "Entreprise ABC", documents: [
@@ -26,6 +27,7 @@ export function AdminDocumentsWidget() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [selectedDoc, setSelectedDoc] = useState<{ id: number; title: string } | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleClientClick = (client: typeof mockClients[0]) => {
     setSelectedClient(client);
@@ -42,6 +44,11 @@ export function AdminDocumentsWidget() {
     window.print();
   };
 
+  const filteredClients = mockClients.filter(client => 
+    client.nom.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    client.documents.some(doc => doc.title.toLowerCase().includes(searchQuery.toLowerCase()))
+  );
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -51,21 +58,37 @@ export function AdminDocumentsWidget() {
     >
       <Card className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-800 shadow-xl backdrop-blur-xl">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400 flex items-center gap-2">
-            <FileText className="h-6 w-6" />
-            Gestion des Documents
-          </CardTitle>
-          <Button 
-            onClick={() => setShowUploadForm(true)} 
-            className="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 hover:from-indigo-500/30 hover:to-purple-500/30 text-indigo-300 hover:text-white border border-indigo-500/30 transition-all duration-300"
-          >
-            <Plus className="mr-2 h-4 w-4" />
-            Nouveau document
-          </Button>
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-gradient-to-br from-indigo-500/20 to-purple-500/20">
+              <FileText className="h-6 w-6 text-indigo-400" />
+            </div>
+            <CardTitle className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+              Gestion des Documents
+            </CardTitle>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Input
+                type="text"
+                placeholder="Rechercher..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 w-[200px] bg-gray-800/50 border-gray-700/50 text-gray-300 placeholder:text-gray-500"
+              />
+            </div>
+            <Button 
+              onClick={() => setShowUploadForm(true)} 
+              className="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 hover:from-indigo-500/30 hover:to-purple-500/30 text-indigo-300 hover:text-white border border-indigo-500/30 transition-all duration-300"
+            >
+              <Plus className="mr-2 h-4 w-4" />
+              Nouveau document
+            </Button>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="space-y-4 mt-4">
-            {mockClients.map((client) => (
+            {filteredClients.map((client) => (
               <motion.div
                 key={client.id}
                 initial={{ opacity: 0, y: 20 }}
