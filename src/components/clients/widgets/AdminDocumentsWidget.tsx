@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus, FileText, Printer, Search } from "lucide-react";
+import { Plus, FileText, Printer, Search, X } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -74,8 +74,16 @@ export function AdminDocumentsWidget() {
                 placeholder="Rechercher..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 w-[200px] bg-gray-800/50 border-gray-700/50 text-gray-300 placeholder:text-gray-500"
+                className="pl-10 pr-10 w-[300px] bg-gray-800/50 border-gray-700/50 text-gray-300 placeholder:text-gray-500"
               />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-300 transition-colors"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              )}
             </div>
             <Button 
               onClick={() => setShowUploadForm(true)} 
