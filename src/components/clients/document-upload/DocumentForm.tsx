@@ -31,14 +31,14 @@ export function DocumentForm({ form, isUploading, onCancel, onSubmit }: Document
             variant="outline"
             onClick={onCancel}
             disabled={isUploading}
-            className="bg-gray-800/80 hover:bg-gray-700/80 text-gray-200 border-gray-600 backdrop-blur-sm transition-all duration-300"
+            className="bg-gradient-to-r from-gray-800/80 to-gray-700/80 hover:from-gray-700/80 hover:to-gray-600/80 text-gray-200 border-gray-600 backdrop-blur-sm transition-all duration-300"
           >
             Annuler
           </Button>
           <Button 
             type="submit"
             disabled={isUploading}
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white transition-all duration-300"
+            className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white transition-all duration-300"
           >
             {isUploading ? "Téléchargement..." : "Télécharger"}
           </Button>

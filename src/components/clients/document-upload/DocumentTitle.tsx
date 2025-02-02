@@ -9,9 +9,12 @@ export function DocumentTitle() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
+        className="flex items-center gap-2"
       >
-        <SheetTitle className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent flex items-center gap-2">
-          <FileText className="h-6 w-6" />
+        <div className="p-2 rounded-lg bg-gradient-to-br from-indigo-500/10 to-purple-500/10">
+          <FileText className="h-6 w-6 text-indigo-400" />
+        </div>
+        <SheetTitle className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
           Nouveau document
         </SheetTitle>
       </motion.div>

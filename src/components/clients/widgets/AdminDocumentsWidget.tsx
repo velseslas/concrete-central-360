@@ -27,8 +27,6 @@ export function AdminDocumentsWidget() {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [selectedDoc, setSelectedDoc] = useState<{ id: number; title: string } | null>(null);
 
-  console.log("AdminDocumentsWidget - Upload form state:", showUploadForm);
-
   const handleClientClick = (client: typeof mockClients[0]) => {
     setSelectedClient(client);
     setDialogOpen(true);
@@ -49,35 +47,49 @@ export function AdminDocumentsWidget() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
+      className="space-y-6"
     >
-      <Card className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-800 shadow-xl">
+      <Card className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-800 shadow-xl backdrop-blur-xl">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-lg font-medium text-white flex items-center gap-2">
-            <FileText className="h-5 w-5 text-blue-400" />
+          <CardTitle className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400 flex items-center gap-2">
+            <FileText className="h-6 w-6" />
             Gestion des Documents
           </CardTitle>
           <Button 
             onClick={() => setShowUploadForm(true)} 
-            className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 border border-indigo-500/20 transition-colors"
+            className="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 hover:from-indigo-500/30 hover:to-purple-500/30 text-indigo-300 hover:text-white border border-indigo-500/30 transition-all duration-300"
           >
             <Plus className="mr-2 h-4 w-4" />
             Nouveau document
           </Button>
         </CardHeader>
         <CardContent>
-          <div className="space-y-2 mt-4">
+          <div className="space-y-4 mt-4">
             {mockClients.map((client) => (
               <motion.div
                 key={client.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 whileHover={{ scale: 1.01 }}
-                className="flex items-center gap-3 p-3 rounded-lg bg-gradient-to-br from-gray-800/50 via-gray-800/30 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 hover:border-indigo-500/30 transition-all cursor-pointer group relative overflow-hidden"
+                className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-800/50 via-gray-800/30 to-gray-900/50 p-4 backdrop-blur-sm border border-gray-700/50 hover:border-indigo-500/30 transition-all duration-300 cursor-pointer"
                 onClick={() => handleClientClick(client)}
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <FileText className="h-5 w-5 text-indigo-400" />
-                <span className="text-gray-200 group-hover:text-white transition-colors">{client.nom}</span>
+                <div className="relative z-10 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-gradient-to-br from-indigo-500/10 to-purple-500/10 group-hover:from-indigo-500/20 group-hover:to-purple-500/20 transition-all duration-300">
+                      <FileText className="h-5 w-5 text-indigo-400 group-hover:text-indigo-300" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-200 group-hover:text-white transition-colors">
+                        {client.nom}
+                      </h3>
+                      <p className="text-sm text-gray-400 group-hover:text-gray-300">
+                        {client.documents.length} document(s)
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -85,25 +97,31 @@ export function AdminDocumentsWidget() {
       </Card>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-700/50">
+        <DialogContent className="max-w-4xl bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-700/50 backdrop-blur-xl">
           <DialogHeader>
-            <DialogTitle className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
+            <DialogTitle className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
               {selectedClient?.nom}
             </DialogTitle>
           </DialogHeader>
-          <div className="grid grid-cols-2 gap-4 py-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 py-4">
             {selectedClient?.documents.map((doc) => (
               <motion.div
                 key={doc.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 whileHover={{ scale: 1.05 }}
-                className="flex flex-col items-center gap-2 p-4 rounded-lg bg-gradient-to-br from-gray-800/50 via-gray-800/30 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 hover:border-indigo-500/30 transition-all cursor-pointer group relative overflow-hidden"
+                className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-800/50 via-gray-800/30 to-gray-900/50 p-4 backdrop-blur-sm border border-gray-700/50 hover:border-indigo-500/30 transition-all duration-300 cursor-pointer"
                 onClick={() => handleDocumentClick(doc)}
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <FileText className="h-12 w-12 text-indigo-400" />
-                <span className="text-sm text-center text-gray-200 group-hover:text-white transition-colors">{doc.title}</span>
+                <div className="relative z-10 flex flex-col items-center gap-3 text-center">
+                  <div className="p-3 rounded-xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 group-hover:from-indigo-500/20 group-hover:to-purple-500/20 transition-all duration-300">
+                    <FileText className="h-8 w-8 text-indigo-400 group-hover:text-indigo-300" />
+                  </div>
+                  <h4 className="text-gray-200 group-hover:text-white font-medium transition-colors">
+                    {doc.title}
+                  </h4>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -111,15 +129,14 @@ export function AdminDocumentsWidget() {
       </Dialog>
 
       <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
-        <DialogContent className="max-h-[90vh] w-[90vw] max-w-[800px] overflow-y-auto bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-700/50">
+        <DialogContent className="max-h-[90vh] w-[90vw] max-w-[800px] overflow-y-auto bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-700/50 backdrop-blur-xl">
           <DialogHeader className="flex flex-row items-center justify-between space-y-0">
             <DialogTitle className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
               Aperçu - {selectedDoc?.title}
             </DialogTitle>
             <Button 
-              onClick={handlePrint} 
-              variant="outline"
-              className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 border border-indigo-500/20 transition-colors"
+              onClick={handlePrint}
+              className="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 hover:from-indigo-500/30 hover:to-purple-500/30 text-indigo-300 hover:text-white border border-indigo-500/30 transition-all duration-300"
             >
               <Printer className="mr-2 h-4 w-4" />
               Imprimer
@@ -134,7 +151,7 @@ export function AdminDocumentsWidget() {
       </Dialog>
 
       <Dialog open={showUploadForm} onOpenChange={setShowUploadForm}>
-        <DialogContent className="max-w-4xl bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-700/50">
+        <DialogContent className="max-w-4xl bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-700/50 backdrop-blur-xl">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
               Nouveau document
