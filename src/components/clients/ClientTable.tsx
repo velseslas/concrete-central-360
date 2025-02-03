@@ -29,7 +29,7 @@ export function ClientTable({
 
   return (
     <>
-      <div className="overflow-hidden rounded-lg border border-gray-700/50">
+      <div className="overflow-hidden rounded-lg">
         <table className="w-full text-sm text-left">
           <thead className="text-xs uppercase bg-gradient-to-r from-purple-500/10 to-blue-500/10 backdrop-blur-xl border-b border-gray-700/50">
             <tr>

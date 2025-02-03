@@ -36,15 +36,17 @@ export function ClientListContent({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: 0.2 }}
-      className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 rounded-lg shadow-xl border border-gray-700/50 backdrop-blur-xl"
+      className="p-6"
     >
-      <ClientTable
-        clients={clients}
-        onEdit={onEdit}
-        onViewProjects={onViewProjects}
-        onDocumentUpload={onDocumentUpload}
-        onDelete={onDelete}
-      />
+      <div className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 rounded-lg shadow-xl border border-gray-700/50 backdrop-blur-xl overflow-hidden">
+        <ClientTable
+          clients={clients}
+          onEdit={onEdit}
+          onViewProjects={onViewProjects}
+          onDocumentUpload={onDocumentUpload}
+          onDelete={onDelete}
+        />
+      </div>
     </motion.div>
   );
 }

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Sheet, SheetContent } from "../ui/sheet";
-import { Card, CardContent, CardHeader } from "../ui/card";
+import { Card } from "../ui/card";
 import { ClientForm } from "./ClientForm";
 import { DocumentsWidget } from "./widgets/DocumentsWidget";
 import { ProjectListSection } from "./widgets/ProjectListSection";
@@ -79,9 +79,6 @@ const ClientList = () => {
     );
   });
 
-  console.log("Search query:", searchQuery);
-  console.log("Filtered clients:", filteredClients);
-
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -90,23 +87,19 @@ const ClientList = () => {
       className="space-y-6"
     >
       <Card className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-800 shadow-xl">
-        <CardHeader>
-          <ClientListHeader
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
-            isNewClientDialogOpen={isNewClientDialogOpen}
-            setIsNewClientDialogOpen={setIsNewClientDialogOpen}
-          />
-        </CardHeader>
-        <CardContent>
-          <ClientListContent
-            clients={filteredClients}
-            onEdit={handleEdit}
-            onViewProjects={handleViewProjects}
-            onDocumentUpload={handleDocumentUpload}
-            onDelete={handleDelete}
-          />
-        </CardContent>
+        <ClientListHeader
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          isNewClientDialogOpen={isNewClientDialogOpen}
+          setIsNewClientDialogOpen={setIsNewClientDialogOpen}
+        />
+        <ClientListContent
+          clients={filteredClients}
+          onEdit={handleEdit}
+          onViewProjects={handleViewProjects}
+          onDocumentUpload={handleDocumentUpload}
+          onDelete={handleDelete}
+        />
       </Card>
       
       {selectedClient && (
