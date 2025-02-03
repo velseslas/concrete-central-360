@@ -30,9 +30,9 @@ export function ClientTable({
 
   return (
     <>
-      <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-800 shadow-xl mb-4">
+      <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-800 shadow-xl">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-blue-500/10 opacity-50" />
-        <div className="relative z-10 p-4">
+        <div className="relative z-10 p-6">
           <div className="grid grid-cols-6 gap-4 text-xs uppercase font-medium text-white bg-gradient-to-r from-purple-500/20 to-blue-500/20 p-4 rounded-lg backdrop-blur-xl">
             <div>Nom</div>
             <div>Raison sociale</div>
@@ -41,13 +41,7 @@ export function ClientTable({
             <div>Ville</div>
             <div>Actions</div>
           </div>
-        </div>
-      </Card>
-
-      <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-800 shadow-xl">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-blue-500/10 opacity-50" />
-        <div className="relative z-10 p-4">
-          <div className="space-y-2">
+          <div className="mt-4 space-y-3">
             {clients.map((client, index) => (
               <motion.div
                 key={client.id}
