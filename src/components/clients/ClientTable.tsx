@@ -2,7 +2,7 @@ import { ClientActions } from "./ClientActions";
 import { useState } from "react";
 import { DetailView } from "./DetailView";
 import { motion } from "framer-motion";
-import { ClientTableHeader } from "./list/ClientTableHeader";
+import { Card } from "../ui/card";
 
 interface ClientTableProps {
   clients: any[];
@@ -30,25 +30,39 @@ export function ClientTable({
 
   return (
     <>
-      <div className="overflow-hidden rounded-lg">
-        <table className="w-full text-sm text-left">
-          <ClientTableHeader />
-          <tbody className="divide-y divide-gray-700/50">
+      <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-800 shadow-xl mb-4">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-blue-500/10 opacity-50" />
+        <div className="relative z-10 p-4">
+          <div className="grid grid-cols-6 gap-4 text-xs uppercase font-medium text-white bg-gradient-to-r from-purple-500/20 to-blue-500/20 p-4 rounded-lg backdrop-blur-xl">
+            <div>Nom</div>
+            <div>Raison sociale</div>
+            <div>Téléphone</div>
+            <div>Email</div>
+            <div>Ville</div>
+            <div>Actions</div>
+          </div>
+        </div>
+      </Card>
+
+      <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-800 shadow-xl">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-blue-500/10 opacity-50" />
+        <div className="relative z-10 p-4">
+          <div className="space-y-2">
             {clients.map((client, index) => (
-              <motion.tr
+              <motion.div
                 key={client.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
                 onClick={() => handleRowClick(client)}
-                className="bg-gradient-to-r from-gray-800/30 to-gray-900/30 backdrop-blur-xl hover:bg-gray-700/30 transition-colors cursor-pointer group"
+                className="grid grid-cols-6 gap-4 p-4 bg-gradient-to-r from-gray-800/30 to-gray-900/30 backdrop-blur-xl hover:bg-gray-700/30 transition-all rounded-lg cursor-pointer group"
               >
-                <td className="px-6 py-4 text-white group-hover:text-purple-400 transition-colors">{client.nom}</td>
-                <td className="px-6 py-4 text-white group-hover:text-purple-400 transition-colors">{client.raisonSociale}</td>
-                <td className="px-6 py-4 text-white group-hover:text-purple-400 transition-colors">{client.telephone}</td>
-                <td className="px-6 py-4 text-white group-hover:text-purple-400 transition-colors">{client.email}</td>
-                <td className="px-6 py-4 text-white group-hover:text-purple-400 transition-colors">{client.ville}</td>
-                <td className="px-6 py-4" onClick={(e) => e.stopPropagation()}>
+                <div className="text-white group-hover:text-purple-400 transition-colors">{client.nom}</div>
+                <div className="text-white group-hover:text-purple-400 transition-colors">{client.raisonSociale}</div>
+                <div className="text-white group-hover:text-purple-400 transition-colors">{client.telephone}</div>
+                <div className="text-white group-hover:text-purple-400 transition-colors">{client.email}</div>
+                <div className="text-white group-hover:text-purple-400 transition-colors">{client.ville}</div>
+                <div onClick={(e) => e.stopPropagation()}>
                   <ClientActions
                     client={client}
                     onEdit={onEdit}
@@ -56,12 +70,12 @@ export function ClientTable({
                     onDocumentUpload={onDocumentUpload}
                     onDelete={onDelete}
                   />
-                </td>
-              </motion.tr>
+                </div>
+              </motion.div>
             ))}
-          </tbody>
-        </table>
-      </div>
+          </div>
+        </div>
+      </Card>
 
       {selectedClient && (
         <DetailView
