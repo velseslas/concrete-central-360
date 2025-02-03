@@ -2,6 +2,7 @@ import { ClientActions } from "./ClientActions";
 import { useState } from "react";
 import { DetailView } from "./DetailView";
 import { motion } from "framer-motion";
+import { ClientTableHeader } from "./list/ClientTableHeader";
 
 interface ClientTableProps {
   clients: any[];
@@ -31,16 +32,7 @@ export function ClientTable({
     <>
       <div className="overflow-hidden rounded-lg">
         <table className="w-full text-sm text-left">
-          <thead className="text-xs uppercase bg-gradient-to-r from-purple-500/10 to-blue-500/10 backdrop-blur-xl border-b border-gray-700/50">
-            <tr>
-              <th className="px-6 py-4 text-white font-medium">Nom</th>
-              <th className="px-6 py-4 text-white font-medium">Raison sociale</th>
-              <th className="px-6 py-4 text-white font-medium">Téléphone</th>
-              <th className="px-6 py-4 text-white font-medium">Email</th>
-              <th className="px-6 py-4 text-white font-medium">Ville</th>
-              <th className="px-6 py-4 text-white font-medium">Actions</th>
-            </tr>
-          </thead>
+          <ClientTableHeader />
           <tbody className="divide-y divide-gray-700/50">
             {clients.map((client, index) => (
               <motion.tr
