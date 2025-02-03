@@ -86,33 +86,36 @@ const ClientList = () => {
       transition={{ duration: 0.3 }}
       className="space-y-6"
     >
-      <Card className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-800 shadow-xl">
-        <ClientListHeader
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          isNewClientDialogOpen={isNewClientDialogOpen}
-          setIsNewClientDialogOpen={setIsNewClientDialogOpen}
-        />
-        <ClientListContent
-          clients={filteredClients}
-          onEdit={handleEdit}
-          onViewProjects={handleViewProjects}
-          onDocumentUpload={handleDocumentUpload}
-          onDelete={handleDelete}
-        />
+      <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-800 shadow-xl">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-blue-500/10 opacity-50" />
+        <div className="relative z-10">
+          <ClientListHeader
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+            isNewClientDialogOpen={isNewClientDialogOpen}
+            setIsNewClientDialogOpen={setIsNewClientDialogOpen}
+          />
+          <ClientListContent
+            clients={filteredClients}
+            onEdit={handleEdit}
+            onViewProjects={handleViewProjects}
+            onDocumentUpload={handleDocumentUpload}
+            onDelete={handleDelete}
+          />
+        </div>
       </Card>
       
       {selectedClient && (
         <>
           <Sheet open={!!selectedClient} onOpenChange={() => setSelectedClient(null)}>
-            <SheetContent side="right" className="w-[400px] sm:w-[540px] bg-gray-900/95 border-gray-700/50">
+            <SheetContent side="right" className="w-[400px] sm:w-[540px] bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-700/50">
               <ClientForm clientToEdit={selectedClient} onSuccess={() => setSelectedClient(null)} />
             </SheetContent>
           </Sheet>
           
           {showProjectList && (
             <Sheet open={showProjectList} onOpenChange={setShowProjectList}>
-              <SheetContent side="right" className="w-[400px] sm:w-[540px] bg-gray-900/95 border-gray-700/50">
+              <SheetContent side="right" className="w-[400px] sm:w-[540px] bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-700/50">
                 <ProjectListSection projects={mockProjects} />
               </SheetContent>
             </Sheet>
@@ -120,7 +123,7 @@ const ClientList = () => {
 
           {showDocuments && (
             <Sheet open={showDocuments} onOpenChange={setShowDocuments}>
-              <SheetContent side="right" className="w-[400px] sm:w-[540px] bg-gray-900/95 border-gray-700/50">
+              <SheetContent side="right" className="w-[400px] sm:w-[540px] bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-700/50">
                 <DocumentsWidget />
               </SheetContent>
             </Sheet>
@@ -129,7 +132,7 @@ const ClientList = () => {
       )}
 
       <Dialog open={isNewClientDialogOpen} onOpenChange={setIsNewClientDialogOpen}>
-        <DialogContent className="max-w-[800px] max-h-[90vh] overflow-y-auto bg-gray-900/95 border-gray-700/50">
+        <DialogContent className="max-w-[800px] max-h-[90vh] overflow-y-auto bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-700/50">
           <ClientForm onSuccess={() => setIsNewClientDialogOpen(false)} />
         </DialogContent>
       </Dialog>

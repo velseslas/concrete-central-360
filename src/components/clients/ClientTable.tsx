@@ -49,13 +49,13 @@ export function ClientTable({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
                 onClick={() => handleRowClick(client)}
-                className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-xl hover:bg-gray-700/30 transition-colors cursor-pointer group"
+                className="bg-gradient-to-r from-gray-800/30 to-gray-900/30 backdrop-blur-xl hover:bg-gray-700/30 transition-colors cursor-pointer group"
               >
-                <td className="px-6 py-4 text-white group-hover:text-blue-400 transition-colors">{client.nom}</td>
-                <td className="px-6 py-4 text-white group-hover:text-blue-400 transition-colors">{client.raisonSociale}</td>
-                <td className="px-6 py-4 text-white group-hover:text-blue-400 transition-colors">{client.telephone}</td>
-                <td className="px-6 py-4 text-white group-hover:text-blue-400 transition-colors">{client.email}</td>
-                <td className="px-6 py-4 text-white group-hover:text-blue-400 transition-colors">{client.ville}</td>
+                <td className="px-6 py-4 text-white group-hover:text-purple-400 transition-colors">{client.nom}</td>
+                <td className="px-6 py-4 text-white group-hover:text-purple-400 transition-colors">{client.raisonSociale}</td>
+                <td className="px-6 py-4 text-white group-hover:text-purple-400 transition-colors">{client.telephone}</td>
+                <td className="px-6 py-4 text-white group-hover:text-purple-400 transition-colors">{client.email}</td>
+                <td className="px-6 py-4 text-white group-hover:text-purple-400 transition-colors">{client.ville}</td>
                 <td className="px-6 py-4" onClick={(e) => e.stopPropagation()}>
                   <ClientActions
                     client={client}

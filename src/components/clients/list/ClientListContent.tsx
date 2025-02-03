@@ -38,7 +38,7 @@ export function ClientListContent({
       transition={{ duration: 0.3, delay: 0.2 }}
       className="p-6"
     >
-      <div className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 rounded-lg shadow-xl border border-gray-700/50 backdrop-blur-xl overflow-hidden">
+      <div className="bg-gradient-to-br from-gray-800/50 via-gray-800/30 to-gray-900/50 rounded-lg shadow-xl border border-gray-700/50 backdrop-blur-xl overflow-hidden">
         <ClientTable
           clients={clients}
           onEdit={onEdit}
