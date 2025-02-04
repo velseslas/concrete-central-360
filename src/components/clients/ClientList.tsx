@@ -43,7 +43,7 @@ const mockProjects = [
   },
 ];
 
-const ClientList = () => {
+export const ClientList = () => {
   const [selectedClient, setSelectedClient] = useState<any>(null);
   const [showProjectList, setShowProjectList] = useState(false);
   const [showDocuments, setShowDocuments] = useState(false);
@@ -139,5 +139,3 @@ const ClientList = () => {
     </motion.div>
   );
 };
-
-export default ClientList;
