@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Users, FileText, Construction, Building2, Package, DollarSign, ShoppingCart, CreditCard, Factory } from "lucide-react";
 import { motion } from "framer-motion";
-import { ClientListWidget } from "@/components/clients/widgets/ClientListWidget";
+import { ClientList } from "@/components/clients/ClientList";
 import { ProductCategoryWidget } from "@/components/clients/widgets/ProductCategoryWidget";
 import { ProjectWidget } from "@/components/clients/widgets/ProjectWidget";
 import { ProductWidget } from "@/components/clients/widgets/ProductWidget";
@@ -23,7 +23,7 @@ const Clients = () => {
       title: 'Clients',
       icon: Users,
       color: 'text-blue-400',
-      component: ClientListWidget
+      component: ClientList
     },
     {
       id: 'documents',
