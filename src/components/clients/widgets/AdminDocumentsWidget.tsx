@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus, FileText, Printer, Search, X } from "lucide-react";
@@ -8,14 +9,14 @@ import { DocumentUploadDialog } from "@/components/clients/DocumentUploadDialog"
 import { Input } from "@/components/ui/input";
 
 const mockClients = [
-  { id: 1, nom: "Entreprise ABC", documents: [
+  { id: "1", nom: "Entreprise ABC", documents: [
     { id: 1, title: "Contrat commercial" },
     { id: 2, title: "Facture 2024-001" }
   ]},
-  { id: 2, nom: "Société XYZ", documents: [
+  { id: "2", nom: "Société XYZ", documents: [
     { id: 3, title: "Devis 2024-001" }
   ]},
-  { id: 3, nom: "Company 123", documents: [
+  { id: "3", nom: "Company 123", documents: [
     { id: 4, title: "Bon de commande" },
     { id: 5, title: "Attestation fiscale" }
   ]},
@@ -191,7 +192,7 @@ export function AdminDocumentsWidget() {
           <DocumentUploadDialog 
             open={showUploadForm} 
             onOpenChange={setShowUploadForm}
-            clients={mockClients}
+            clients={mockClients.map(client => ({ id: client.id, nom: client.nom }))}
           />
         </DialogContent>
       </Dialog>
