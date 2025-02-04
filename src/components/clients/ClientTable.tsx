@@ -34,12 +34,12 @@ export function ClientTable({
         <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-blue-500/10 opacity-50" />
         <div className="relative z-10 p-6">
           <div className="grid grid-cols-6 gap-4 text-xs uppercase font-medium text-white bg-gradient-to-r from-purple-500/20 to-blue-500/20 p-4 rounded-lg backdrop-blur-xl">
-            <div>Nom</div>
-            <div>Raison sociale</div>
-            <div>Téléphone</div>
-            <div>Email</div>
-            <div>Ville</div>
-            <div>Actions</div>
+            <div className="col-span-1">Nom</div>
+            <div className="col-span-1">Raison sociale</div>
+            <div className="col-span-1">Téléphone</div>
+            <div className="col-span-1">Email</div>
+            <div className="col-span-1 text-right pr-8">Ville</div>
+            <div className="col-span-1">Actions</div>
           </div>
           <div className="mt-4 space-y-3">
             {clients.map((client, index) => (
@@ -51,12 +51,12 @@ export function ClientTable({
                 onClick={() => handleRowClick(client)}
                 className="grid grid-cols-6 gap-4 p-4 bg-gradient-to-r from-gray-800/30 to-gray-900/30 backdrop-blur-xl hover:bg-gray-700/30 transition-all rounded-lg cursor-pointer group"
               >
-                <div className="text-white group-hover:text-purple-400 transition-colors">{client.nom}</div>
-                <div className="text-white group-hover:text-purple-400 transition-colors">{client.raisonSociale}</div>
-                <div className="text-white group-hover:text-purple-400 transition-colors">{client.telephone}</div>
-                <div className="text-white group-hover:text-purple-400 transition-colors">{client.email}</div>
-                <div className="text-white group-hover:text-purple-400 transition-colors">{client.ville}</div>
-                <div onClick={(e) => e.stopPropagation()}>
+                <div className="col-span-1 text-white group-hover:text-purple-400 transition-colors">{client.nom}</div>
+                <div className="col-span-1 text-white group-hover:text-purple-400 transition-colors">{client.raisonSociale}</div>
+                <div className="col-span-1 text-white group-hover:text-purple-400 transition-colors">{client.telephone}</div>
+                <div className="col-span-1 text-white group-hover:text-purple-400 transition-colors">{client.email}</div>
+                <div className="col-span-1 text-white group-hover:text-purple-400 transition-colors text-right pr-8">{client.ville}</div>
+                <div className="col-span-1" onClick={(e) => e.stopPropagation()}>
                   <ClientActions
                     client={client}
                     onEdit={onEdit}
