@@ -3,7 +3,6 @@ import { Toaster } from "@/components/ui/sonner";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Header } from "@/components/layout/Header";
 import Dashboard from "./pages/Dashboard";
-import Index from "./pages/Index";
 import Clients from "./pages/Clients";
 import Finance from "./pages/Finance";
 import Formulations from "./pages/Formulations";
@@ -31,8 +30,7 @@ function App() {
               <Header />
               <main className="p-6">
                 <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/" element={<Dashboard />} />
                   <Route path="/clients" element={<Clients />} />
                   <Route path="/clients/production" element={<Production />} />
                   <Route path="/finance" element={<Finance />} />
