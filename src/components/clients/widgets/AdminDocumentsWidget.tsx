@@ -188,7 +188,11 @@ export function AdminDocumentsWidget() {
               Nouveau document
             </DialogTitle>
           </DialogHeader>
-          <DocumentUploadDialog onSuccess={() => setShowUploadForm(false)} />
+          <DocumentUploadDialog 
+            open={showUploadForm} 
+            onOpenChange={setShowUploadForm}
+            clients={mockClients}
+          />
         </DialogContent>
       </Dialog>
     </motion.div>
