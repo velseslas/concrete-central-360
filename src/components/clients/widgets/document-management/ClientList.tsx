@@ -1,9 +1,8 @@
-
 import { motion } from "framer-motion";
 import { FileText } from "lucide-react";
 
 interface Document {
-  id: number;
+  id: string;  // Changed from number to string
   title: string;
 }
 

@@ -10,7 +10,18 @@ import { ClientList } from "./document-management/ClientList";
 import { DocumentList } from "./document-management/DocumentList";
 import { DocumentPreview } from "./document-management/DocumentPreview";
 
-const mockClients = [
+interface Document {
+  id: string;
+  title: string;
+}
+
+interface Client {
+  id: string;
+  nom: string;
+  documents: Document[];
+}
+
+const mockClients: Client[] = [
   { id: "1", nom: "Entreprise ABC", documents: [
     { id: "1", title: "Contrat commercial" },
     { id: "2", title: "Facture 2024-001" }
@@ -26,18 +37,18 @@ const mockClients = [
 
 export function AdminDocumentsWidget() {
   const [showUploadForm, setShowUploadForm] = useState(false);
-  const [selectedClient, setSelectedClient] = useState<typeof mockClients[0] | null>(null);
+  const [selectedClient, setSelectedClient] = useState<Client | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
-  const [selectedDoc, setSelectedDoc] = useState<{ id: string; title: string } | null>(null);
+  const [selectedDoc, setSelectedDoc] = useState<Document | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const handleClientClick = (client: typeof mockClients[0]) => {
+  const handleClientClick = (client: Client) => {
     setSelectedClient(client);
     setDialogOpen(true);
   };
 
-  const handleDocumentClick = (doc: { id: string; title: string }) => {
+  const handleDocumentClick = (doc: Document) => {
     setSelectedDoc(doc);
     setPreviewOpen(true);
   };
