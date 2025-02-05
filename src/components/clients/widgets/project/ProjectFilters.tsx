@@ -140,7 +140,8 @@ export function ProjectFilters({
           <Button 
             variant="outline"
             size="icon"
-            className="bg-gray-800/50 border-gray-700/50 hover:bg-gray-700/50"
+            className="bg-gray-800/50 border-gray-700/50 hover:bg-gray-700/50 cursor-pointer"
+            onClick={() => setPreviewOpen(true)}
           >
             <Eye className="h-4 w-4 text-gray-300" />
           </Button>
