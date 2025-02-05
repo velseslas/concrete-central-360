@@ -5,6 +5,7 @@ import { ProductionForm } from "./ProductionForm";
 import { ProductionList } from "./production/ProductionList";
 import { useProduction } from "./production/useProduction";
 import { ProductionTimeframeWidgets } from "./production/ProductionTimeframeWidgets";
+import { ReportsWidget } from "./ReportsWidget";
 import { useState, useEffect } from "react";
 
 export function ProductionWidget() {
@@ -17,7 +18,7 @@ export function ProductionWidget() {
   }, []);
 
   return (
-    <>
+    <div className="space-y-8">
       <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-50" />
         <CardHeader>
@@ -41,6 +42,8 @@ export function ProductionWidget() {
         </CardContent>
       </Card>
 
+      <ReportsWidget />
+
       <ProductionForm
         open={showProductionForm}
         onOpenChange={(open) => {
@@ -51,6 +54,6 @@ export function ProductionWidget() {
         }}
         onSuccess={fetchProductions}
       />
-    </>
+    </div>
   );
 }
