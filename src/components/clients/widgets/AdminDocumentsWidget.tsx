@@ -97,7 +97,7 @@ export function AdminDocumentsWidget() {
       </Card>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-w-4xl bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-700/50 backdrop-blur-xl">
+        <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-700/50 backdrop-blur-xl [&>button]:text-white [&>button]:border [&>button]:border-gray-700/50 [&>button]:hover:border-gray-600">
           <DocumentList 
             documents={selectedClient?.documents || []} 
             onDocumentClick={handleDocumentClick}
@@ -115,7 +115,7 @@ export function AdminDocumentsWidget() {
       </Dialog>
 
       <Dialog open={showUploadForm} onOpenChange={setShowUploadForm}>
-        <DialogContent className="max-w-4xl bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-700/50 backdrop-blur-xl">
+        <DialogContent className="max-w-3xl bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-700/50 backdrop-blur-xl">
           <DocumentUploadDialog 
             open={showUploadForm} 
             onOpenChange={setShowUploadForm}
