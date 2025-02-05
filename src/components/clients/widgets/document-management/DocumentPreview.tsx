@@ -1,4 +1,3 @@
-
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { FileText, Printer } from "lucide-react";
@@ -6,7 +5,7 @@ import { FileText, Printer } from "lucide-react";
 interface DocumentPreviewProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  document: { id: number; title: string } | null;
+  document: { id: string; title: string } | null;
   onPrint: () => void;
 }
 

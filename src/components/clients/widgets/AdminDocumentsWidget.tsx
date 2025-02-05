@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus, FileText } from "lucide-react";
@@ -13,15 +12,15 @@ import { DocumentPreview } from "./document-management/DocumentPreview";
 
 const mockClients = [
   { id: "1", nom: "Entreprise ABC", documents: [
-    { id: 1, title: "Contrat commercial" },
-    { id: 2, title: "Facture 2024-001" }
+    { id: "1", title: "Contrat commercial" },
+    { id: "2", title: "Facture 2024-001" }
   ]},
   { id: "2", nom: "Société XYZ", documents: [
-    { id: 3, title: "Devis 2024-001" }
+    { id: "3", title: "Devis 2024-001" }
   ]},
   { id: "3", nom: "Company 123", documents: [
-    { id: 4, title: "Bon de commande" },
-    { id: 5, title: "Attestation fiscale" }
+    { id: "4", title: "Bon de commande" },
+    { id: "5", title: "Attestation fiscale" }
   ]},
 ];
 
@@ -30,7 +29,7 @@ export function AdminDocumentsWidget() {
   const [selectedClient, setSelectedClient] = useState<typeof mockClients[0] | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
-  const [selectedDoc, setSelectedDoc] = useState<{ id: number; title: string } | null>(null);
+  const [selectedDoc, setSelectedDoc] = useState<{ id: string; title: string } | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleClientClick = (client: typeof mockClients[0]) => {
@@ -38,7 +37,7 @@ export function AdminDocumentsWidget() {
     setDialogOpen(true);
   };
 
-  const handleDocumentClick = (doc: { id: number; title: string }) => {
+  const handleDocumentClick = (doc: { id: string; title: string }) => {
     setSelectedDoc(doc);
     setPreviewOpen(true);
   };
