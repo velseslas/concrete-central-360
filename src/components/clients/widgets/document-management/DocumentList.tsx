@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
 interface Document {
-  id: number;
+  id: string;  // Changed from number to string to match UUID type
   title: string;
 }
 
@@ -15,7 +15,7 @@ interface DocumentListProps {
 }
 
 export function DocumentList({ documents, onDocumentClick }: DocumentListProps) {
-  const handleDelete = async (docId: number) => {
+  const handleDelete = async (docId: string) => {
     try {
       const { error } = await supabase
         .from('documents')
