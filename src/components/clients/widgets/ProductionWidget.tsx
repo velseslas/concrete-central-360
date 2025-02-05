@@ -5,7 +5,7 @@ import { ProductionForm } from "./ProductionForm";
 import { ProductionList } from "./production/ProductionList";
 import { useProduction } from "./production/useProduction";
 import { ProductionTimeframeWidgets } from "./production/ProductionTimeframeWidgets";
-import { ReportsWidget } from "./ReportsWidget";
+import { ProductionReportsWidget } from "./production/reports/ProductionReportsWidget";
 import { useState, useEffect } from "react";
 
 export function ProductionWidget() {
@@ -42,7 +42,7 @@ export function ProductionWidget() {
         </CardContent>
       </Card>
 
-      <ReportsWidget />
+      <ProductionReportsWidget />
 
       <ProductionForm
         open={showProductionForm}
