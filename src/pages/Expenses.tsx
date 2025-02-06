@@ -110,7 +110,7 @@ const Expenses = () => {
     }
 
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {widgets.map((widget) => {
           const IconComponent = widget.icon;
           return (
@@ -122,7 +122,7 @@ const Expenses = () => {
               className="group"
             >
               <Card
-                className="relative overflow-hidden cursor-pointer bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl group-hover:shadow-2xl transition-all duration-300"
+                className="relative overflow-hidden cursor-pointer bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl group-hover:shadow-2xl transition-all duration-300 h-full"
                 onClick={() => setActiveWidget(widget.id)}
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
@@ -174,3 +174,4 @@ const Expenses = () => {
 };
 
 export default Expenses;
+
