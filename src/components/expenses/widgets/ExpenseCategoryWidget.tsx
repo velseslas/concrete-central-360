@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus, Pencil, Trash2, ListFilter } from "lucide-react";
@@ -70,11 +71,11 @@ export function ExpenseCategoryWidget() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="group"
+      className="group h-full"
     >
-      <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl group-hover:shadow-2xl transition-all duration-300">
+      <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl group-hover:shadow-2xl transition-all duration-300 h-full">
         <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-orange-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
           <CardTitle className="text-lg font-medium text-white flex items-center gap-2">
             <ListFilter className="h-5 w-5 text-yellow-400" />
             Catégories
@@ -88,32 +89,32 @@ export function ExpenseCategoryWidget() {
             Nouvelle catégorie
           </Button>
         </CardHeader>
-        <CardContent>
+        <CardContent className="relative z-10">
           <div className="space-y-4">
             {categories.length === 0 ? (
               <p className="text-white/70">Aucune catégorie pour le moment</p>
             ) : (
-              <div className="grid gap-4">
-                {categories.map((category) => (
+              <div className="grid gap-3">
+                {categories.map((category, index) => (
                   <motion.div
                     key={category.id}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
                   >
-                    <div className="flex items-center justify-between p-3 bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 hover:bg-white/10 transition-colors duration-300">
+                    <div className="flex items-center justify-between p-3 bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm rounded-lg border border-gray-700/30 hover:border-gray-600/50 shadow-lg hover:shadow-xl transition-all duration-300">
                       <div>
                         <h4 className="font-medium text-white">{category.name}</h4>
                         <p className="text-sm text-white/70">
                           {getTypeLabel(category.type)}
                         </p>
                       </div>
-                      <div className="flex gap-2">
+                      <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <Button
                           variant="ghost"
                           size="sm"
                           onClick={() => handleEditCategory(category)}
-                          className="text-white/70 hover:text-white hover:bg-white/10"
+                          className="hover:bg-blue-500/20 text-blue-400 hover:text-blue-300"
                         >
                           <Pencil className="h-4 w-4" />
                         </Button>
@@ -121,7 +122,7 @@ export function ExpenseCategoryWidget() {
                           variant="ghost"
                           size="sm"
                           onClick={() => handleDeleteCategory(category.id)}
-                          className="text-white/70 hover:text-white hover:bg-white/10"
+                          className="hover:bg-red-500/20 text-red-400 hover:text-red-300"
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
