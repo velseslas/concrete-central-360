@@ -1,8 +1,9 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { DollarSign, Car, Building2, Globe, ListFilter, Plus } from "lucide-react";
+import { DollarSign, Car, Building2, Globe, ListFilter, Plus, FileText } from "lucide-react";
 import ExpenseForm from "@/components/expenses/ExpenseForm";
 import ExpenseList from "@/components/expenses/ExpenseList";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
@@ -28,10 +29,10 @@ const Expenses = () => {
   const widgets = [
     {
       id: 'global',
-      title: 'Vue Globale',
+      title: 'Achat Générale',
       icon: Globe,
       color: 'text-purple-500',
-      description: 'Aperçu global des dépenses'
+      description: 'Aperçu global des achats'
     },
     {
       id: 'categories',
@@ -53,6 +54,13 @@ const Expenses = () => {
       icon: Building2,
       color: 'text-orange-500',
       description: 'Dépenses de la centrale à béton'
+    },
+    {
+      id: 'reports',
+      title: 'Rapport Achat',
+      icon: FileText,
+      color: 'text-green-500',
+      description: 'Rapports et analyses des achats'
     }
   ];
 
@@ -141,23 +149,6 @@ const Expenses = () => {
         transition={{ duration: 0.5 }}
         className="container mx-auto p-6 space-y-6"
       >
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="flex justify-between items-center"
-        >
-          {!activeWidget && (
-            <Button 
-              className="bg-white/10 backdrop-blur-lg border border-white/20 hover:bg-white/20 hover:border-white/30 transition-all duration-300 text-white"
-              onClick={() => setIsOpen(true)}
-            >
-              <Plus className="mr-2 h-4 w-4" />
-              Ajouter une dépense
-            </Button>
-          )}
-        </motion.div>
-
         {renderContent()}
 
         <Drawer open={isOpen} onOpenChange={setIsOpen}>
