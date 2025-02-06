@@ -73,17 +73,17 @@ export function ExpenseCategoryWidget() {
       transition={{ duration: 0.3 }}
       className="group h-full"
     >
-      <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl group-hover:shadow-2xl transition-all duration-300 h-full">
-        <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-orange-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
+      <Card className="relative overflow-hidden bg-gradient-to-br from-[#1A1F2C] via-gray-900 to-[#1A1F2C] border-[#9b87f5]/20 shadow-xl group-hover:shadow-2xl transition-all duration-300 h-full">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#9b87f5]/10 to-[#7E69AB]/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
           <CardTitle className="text-lg font-medium text-white flex items-center gap-2">
-            <ListFilter className="h-5 w-5 text-yellow-400" />
+            <ListFilter className="h-5 w-5 text-[#9b87f5]" />
             Catégories
           </CardTitle>
           <Button 
             onClick={() => setShowNewCategoryForm(true)} 
             size="sm"
-            className="bg-white/10 backdrop-blur-lg border border-white/20 hover:bg-white/20 hover:border-white/30 transition-all duration-300 text-white"
+            className="bg-[#9b87f5]/20 backdrop-blur-lg border border-[#9b87f5]/30 hover:bg-[#9b87f5]/30 hover:border-[#9b87f5]/40 transition-all duration-300 text-white"
           >
             <Plus className="mr-2 h-4 w-4" />
             Nouvelle catégorie
@@ -102,7 +102,7 @@ export function ExpenseCategoryWidget() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3, delay: index * 0.1 }}
                   >
-                    <div className="flex items-center justify-between p-3 bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm rounded-lg border border-gray-700/30 hover:border-gray-600/50 shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div className="flex items-center justify-between p-3 bg-gradient-to-br from-[#1A1F2C]/80 to-gray-900/80 backdrop-blur-sm rounded-lg border border-[#9b87f5]/20 hover:border-[#9b87f5]/30 shadow-lg hover:shadow-xl transition-all duration-300">
                       <div>
                         <h4 className="font-medium text-white">{category.name}</h4>
                         <p className="text-sm text-white/70">
@@ -114,7 +114,7 @@ export function ExpenseCategoryWidget() {
                           variant="ghost"
                           size="sm"
                           onClick={() => handleEditCategory(category)}
-                          className="hover:bg-blue-500/20 text-blue-400 hover:text-blue-300"
+                          className="hover:bg-[#9b87f5]/20 text-[#9b87f5] hover:text-[#9b87f5]"
                         >
                           <Pencil className="h-4 w-4" />
                         </Button>
