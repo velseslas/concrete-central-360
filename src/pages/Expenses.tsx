@@ -10,6 +10,7 @@ import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/u
 import { ExpenseCategoryWidget } from "@/components/expenses/widgets/ExpenseCategoryWidget";
 import { RollingStockExpenseWidget } from "@/components/expenses/widgets/RollingStockExpenseWidget";
 import { ConcreteExpenseWidget } from "@/components/expenses/widgets/ConcreteExpenseWidget";
+import { GlobalExpenseWidget } from "@/components/expenses/widgets/GlobalExpenseWidget";
 
 const Expenses = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -66,6 +67,8 @@ const Expenses = () => {
 
   const renderWidget = (widgetId: string) => {
     switch (widgetId) {
+      case 'global':
+        return <GlobalExpenseWidget />;
       case 'categories':
         return <ExpenseCategoryWidget />;
       case 'mechanical':
@@ -174,4 +177,3 @@ const Expenses = () => {
 };
 
 export default Expenses;
-
