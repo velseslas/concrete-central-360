@@ -1,3 +1,4 @@
+
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Edit, Trash } from "lucide-react";
@@ -45,45 +46,60 @@ const ExpenseList = ({ onEdit, category }: ExpenseListProps) => {
   const filteredExpenses = mockExpenses.filter(expense => expense.category === category);
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Date</TableHead>
-          <TableHead>Catégorie</TableHead>
-          <TableHead>Montant</TableHead>
-          <TableHead>Fournisseur</TableHead>
-          <TableHead>Actions</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {filteredExpenses.map((expense) => (
-          <TableRow key={expense.id}>
-            <TableCell>{new Date(expense.date).toLocaleDateString()}</TableCell>
-            <TableCell>{expense.category}</TableCell>
-            <TableCell>{expense.amount} DA</TableCell>
-            <TableCell>{expense.supplier}</TableCell>
-            <TableCell>
-              <div className="flex gap-2">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => onEdit(expense)}
-                >
-                  <Edit className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => handleDelete(expense.id)}
-                >
-                  <Trash className="h-4 w-4" />
-                </Button>
-              </div>
-            </TableCell>
+    <div className="rounded-lg border border-[#9b87f5]/20 overflow-hidden">
+      <Table>
+        <TableHeader>
+          <TableRow className="hover:bg-[#1A1F2C]/50 border-b border-[#9b87f5]/20">
+            <TableHead className="text-[#9b87f5]">Date</TableHead>
+            <TableHead className="text-[#9b87f5]">Catégorie</TableHead>
+            <TableHead className="text-[#9b87f5]">Montant</TableHead>
+            <TableHead className="text-[#9b87f5]">Fournisseur</TableHead>
+            <TableHead className="text-[#9b87f5]">Actions</TableHead>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {filteredExpenses.map((expense) => (
+            <TableRow 
+              key={expense.id}
+              className="hover:bg-[#1A1F2C]/50 border-b border-[#9b87f5]/20"
+            >
+              <TableCell className="text-gray-300">
+                {new Date(expense.date).toLocaleDateString()}
+              </TableCell>
+              <TableCell className="text-gray-300 capitalize">
+                {expense.category}
+              </TableCell>
+              <TableCell className="text-gray-300">
+                {expense.amount.toLocaleString()} DA
+              </TableCell>
+              <TableCell className="text-gray-300">
+                {expense.supplier}
+              </TableCell>
+              <TableCell>
+                <div className="flex gap-2">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => onEdit(expense)}
+                    className="text-[#9b87f5] hover:text-white hover:bg-[#9b87f5]/20"
+                  >
+                    <Edit className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => handleDelete(expense.id)}
+                    className="text-[#9b87f5] hover:text-white hover:bg-[#9b87f5]/20"
+                  >
+                    <Trash className="h-4 w-4" />
+                  </Button>
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 };
 
