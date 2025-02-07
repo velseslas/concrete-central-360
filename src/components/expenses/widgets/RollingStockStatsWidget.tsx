@@ -1,6 +1,6 @@
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Car, Fuel, Tool, TrendingUp } from "lucide-react";
+import { Car, Fuel, Wrench, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
 
 export function RollingStockStatsWidget() {
@@ -17,7 +17,7 @@ export function RollingStockStatsWidget() {
       title: "Maintenance",
       value: "180,000 DA",
       change: "-12%",
-      icon: Tool,
+      icon: Wrench,
       color: "text-yellow-400",
       trend: "down"
     },
