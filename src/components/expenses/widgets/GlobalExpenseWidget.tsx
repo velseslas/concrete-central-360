@@ -4,11 +4,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import ExpenseList from "../ExpenseList";
-import { ConcreteExpenseStatsWidget } from "./ConcreteExpenseStatsWidget";
+import { GeneralExpenseStatsWidget } from "./GeneralExpenseStatsWidget";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
 import ExpenseForm from "../ExpenseForm";
 
-export function ConcreteExpenseWidget() {
+export function GlobalExpenseWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [editingExpense, setEditingExpense] = useState<any>(null);
 
@@ -24,7 +24,7 @@ export function ConcreteExpenseWidget() {
 
   return (
     <div className="space-y-6">
-      <ConcreteExpenseStatsWidget />
+      <GeneralExpenseStatsWidget />
       
       <Card className="relative overflow-hidden bg-gradient-to-br from-[#1A1F2C] via-gray-900 to-[#1A1F2C] border-[#9b87f5]/20">
         <CardHeader>
@@ -37,7 +37,7 @@ export function ConcreteExpenseWidget() {
           </div>
         </CardHeader>
         <CardContent>
-          <ExpenseList onEdit={handleEdit} category="concrete" />
+          <ExpenseList onEdit={handleEdit} category="general" />
         </CardContent>
       </Card>
 
