@@ -1,23 +1,16 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Beaker, Plus, Search, Calendar, ArrowUpRight } from "lucide-react";
+import { Beaker, Plus, Calendar, ArrowUpRight, Printer } from "lucide-react";
 import { motion } from "framer-motion";
-
-interface Formulation {
-  id: string;
-  name: string;
-  type: string;
-  resistance: string;
-  status: "active" | "inactive" | "draft";
-  lastModified: string;
-}
+import { FormulationForm } from "@/components/formulations/FormulationForm";
+import { FormulationPreview } from "@/components/formulations/FormulationPreview";
 
 const Formulations = () => {
-  const [formulations] = useState<Formulation[]>([
+  const [formulations] = useState([
     {
       id: "1",
       name: "B25",
@@ -36,7 +29,11 @@ const Formulations = () => {
     },
   ]);
 
-  const getStatusBadge = (status: Formulation["status"]) => {
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [selectedFormulation, setSelectedFormulation] = useState<any>(null);
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+
+  const getStatusBadge = (status: "active" | "inactive" | "draft") => {
     const statusConfig = {
       active: { label: "Active", className: "bg-green-500/20 text-green-400" },
       inactive: { label: "Inactive", className: "bg-red-500/20 text-red-400" },
@@ -51,6 +48,16 @@ const Formulations = () => {
     );
   };
 
+  const handleFormSubmit = (data: any) => {
+    console.log("Form data:", data);
+    setIsFormOpen(false);
+  };
+
+  const handlePreview = (formulation: any) => {
+    setSelectedFormulation(formulation);
+    setIsPreviewOpen(true);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white p-6 space-y-6">
       <motion.div 
@@ -62,24 +69,18 @@ const Formulations = () => {
         <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl group-hover:shadow-2xl transition-all duration-300">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
           <CardHeader>
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div className="flex items-center justify-between">
               <CardTitle className="text-white flex items-center gap-2">
                 <Beaker className="h-6 w-6 text-blue-400" />
                 Formulations de Béton
               </CardTitle>
-              <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
-                <div className="relative flex-grow md:w-64">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                  <Input 
-                    placeholder="Rechercher une formulation..." 
-                    className="pl-9 bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-400"
-                  />
-                </div>
-                <Button variant="outline" size="sm" className="text-white">
-                  <Plus className="h-4 w-4 mr-2" />
-                  Nouvelle Formulation
-                </Button>
-              </div>
+              <Button 
+                onClick={() => setIsFormOpen(true)} 
+                className="bg-[#9b87f5] hover:bg-[#7E69AB] text-white"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Nouvelle Formulation
+              </Button>
             </div>
           </CardHeader>
           <CardContent>
@@ -110,10 +111,11 @@ const Formulations = () => {
                         </span>
                       </div>
                       <div className="flex items-center gap-2">
-                        {getStatusBadge(formulation.status)}
+                        {getStatusBadge(formulation.status as "active" | "inactive" | "draft")}
                         <Button
                           variant="ghost"
                           size="icon"
+                          onClick={() => handlePreview(formulation)}
                           className="h-8 w-8 hover:bg-blue-500/20"
                         >
                           <ArrowUpRight className="h-4 w-4 text-blue-400" />
@@ -127,6 +129,18 @@ const Formulations = () => {
           </CardContent>
         </Card>
       </motion.div>
+
+      <FormulationForm 
+        open={isFormOpen} 
+        onOpenChange={setIsFormOpen} 
+        onSubmit={handleFormSubmit}
+      />
+
+      <FormulationPreview
+        open={isPreviewOpen}
+        onOpenChange={setIsPreviewOpen}
+        formulation={selectedFormulation}
+      />
     </div>
   );
 };
