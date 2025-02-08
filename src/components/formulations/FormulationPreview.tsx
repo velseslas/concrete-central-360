@@ -49,21 +49,23 @@ export function FormulationPreview({ open, onOpenChange, formulation }: Formulat
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[800px] max-h-[90vh] overflow-y-auto bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-700/50">
-        <DialogHeader className="flex flex-row items-center justify-between space-y-0">
-          <DialogTitle className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
-            Formulation {formulation.name}
-          </DialogTitle>
-          <div className="flex gap-2">
+        <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+          <div className="flex-1">
+            <DialogTitle className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+              Formulation {formulation.name}
+            </DialogTitle>
+          </div>
+          <div className="flex gap-4 mr-8">
             <Button 
               onClick={handlePrint}
-              className="cursor-pointer bg-gradient-to-r from-blue-500/20 to-purple-500/20 hover:from-blue-500/30 hover:to-purple-500/30 text-blue-300 hover:text-white border border-blue-500/30"
+              className="cursor-pointer bg-gradient-to-r from-[#9b87f5]/20 to-[#7E69AB]/20 hover:from-[#9b87f5]/30 hover:to-[#7E69AB]/30 text-[#9b87f5] hover:text-white border border-[#9b87f5]/30"
             >
               <Printer className="mr-2 h-4 w-4" />
               Imprimer
             </Button>
             <Button 
               onClick={handleDownload}
-              className="cursor-pointer bg-gradient-to-r from-blue-500/20 to-purple-500/20 hover:from-blue-500/30 hover:to-purple-500/30 text-blue-300 hover:text-white border border-blue-500/30"
+              className="cursor-pointer bg-gradient-to-r from-[#9b87f5]/20 to-[#7E69AB]/20 hover:from-[#9b87f5]/30 hover:to-[#7E69AB]/30 text-[#9b87f5] hover:text-white border border-[#9b87f5]/30"
             >
               <Download className="mr-2 h-4 w-4" />
               Télécharger
@@ -82,27 +84,27 @@ export function FormulationPreview({ open, onOpenChange, formulation }: Formulat
               <div>
                 <h3 className="font-semibold text-gray-900 mb-3">Granulats</h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  <div className="p-3 bg-gray-50 rounded">
+                  <div className="p-3 bg-gray-50 rounded shadow hover:shadow-md transition-shadow">
                     <p className="text-sm text-gray-600">Sable 0/1</p>
                     <p className="font-medium">300 kg/m³</p>
                   </div>
-                  <div className="p-3 bg-gray-50 rounded">
+                  <div className="p-3 bg-gray-50 rounded shadow hover:shadow-md transition-shadow">
                     <p className="text-sm text-gray-600">Sable 0/3</p>
                     <p className="font-medium">400 kg/m³</p>
                   </div>
-                  <div className="p-3 bg-gray-50 rounded">
+                  <div className="p-3 bg-gray-50 rounded shadow hover:shadow-md transition-shadow">
                     <p className="text-sm text-gray-600">Sable 0/4</p>
                     <p className="font-medium">350 kg/m³</p>
                   </div>
-                  <div className="p-3 bg-gray-50 rounded">
+                  <div className="p-3 bg-gray-50 rounded shadow hover:shadow-md transition-shadow">
                     <p className="text-sm text-gray-600">Gravier 3/8</p>
                     <p className="font-medium">500 kg/m³</p>
                   </div>
-                  <div className="p-3 bg-gray-50 rounded">
+                  <div className="p-3 bg-gray-50 rounded shadow hover:shadow-md transition-shadow">
                     <p className="text-sm text-gray-600">Gravier 8/15</p>
                     <p className="font-medium">550 kg/m³</p>
                   </div>
-                  <div className="p-3 bg-gray-50 rounded">
+                  <div className="p-3 bg-gray-50 rounded shadow hover:shadow-md transition-shadow">
                     <p className="text-sm text-gray-600">Gravier 15/25</p>
                     <p className="font-medium">600 kg/m³</p>
                   </div>
@@ -112,15 +114,15 @@ export function FormulationPreview({ open, onOpenChange, formulation }: Formulat
               <div>
                 <h3 className="font-semibold text-gray-900 mb-3">Liants et Additifs</h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  <div className="p-3 bg-gray-50 rounded">
+                  <div className="p-3 bg-gray-50 rounded shadow hover:shadow-md transition-shadow">
                     <p className="text-sm text-gray-600">Ciment</p>
                     <p className="font-medium">350 kg/m³</p>
                   </div>
-                  <div className="p-3 bg-gray-50 rounded">
+                  <div className="p-3 bg-gray-50 rounded shadow hover:shadow-md transition-shadow">
                     <p className="text-sm text-gray-600">Eau</p>
                     <p className="font-medium">175 L/m³</p>
                   </div>
-                  <div className="p-3 bg-gray-50 rounded">
+                  <div className="p-3 bg-gray-50 rounded shadow hover:shadow-md transition-shadow">
                     <p className="text-sm text-gray-600">Adjuvant</p>
                     <p className="font-medium">2.5 kg/m³</p>
                   </div>
@@ -130,15 +132,15 @@ export function FormulationPreview({ open, onOpenChange, formulation }: Formulat
               <div>
                 <h3 className="font-semibold text-gray-900 mb-3">Ratios</h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  <div className="p-3 bg-gray-50 rounded">
+                  <div className="p-3 bg-gray-50 rounded shadow hover:shadow-md transition-shadow">
                     <p className="text-sm text-gray-600">Poids Total</p>
                     <p className="font-medium">2877.5 kg/m³</p>
                   </div>
-                  <div className="p-3 bg-gray-50 rounded">
+                  <div className="p-3 bg-gray-50 rounded shadow hover:shadow-md transition-shadow">
                     <p className="text-sm text-gray-600">G/S</p>
                     <p className="font-medium">1.57</p>
                   </div>
-                  <div className="p-3 bg-gray-50 rounded">
+                  <div className="p-3 bg-gray-50 rounded shadow hover:shadow-md transition-shadow">
                     <p className="text-sm text-gray-600">E/C</p>
                     <p className="font-medium">0.5</p>
                   </div>
