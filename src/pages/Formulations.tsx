@@ -76,7 +76,7 @@ const Formulations = () => {
               </CardTitle>
               <Button 
                 onClick={() => setIsFormOpen(true)} 
-                className="bg-[#9b87f5] hover:bg-[#7E69AB] text-white"
+                className="bg-[#9b87f5] hover:bg-[#7E69AB] text-white cursor-pointer"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Nouvelle Formulation
@@ -90,7 +90,7 @@ const Formulations = () => {
                   key={formulation.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/50 transition-colors cursor-pointer"
+                  className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/50 transition-colors"
                 >
                   <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
@@ -116,7 +116,7 @@ const Formulations = () => {
                           variant="ghost"
                           size="icon"
                           onClick={() => handlePreview(formulation)}
-                          className="h-8 w-8 hover:bg-blue-500/20"
+                          className="h-8 w-8 hover:bg-blue-500/20 cursor-pointer"
                         >
                           <ArrowUpRight className="h-4 w-4 text-blue-400" />
                         </Button>

@@ -20,21 +20,25 @@ export function FormulationPreview({ open, onOpenChange, formulation }: Formulat
   const handlePrint = async () => {
     if (!contentRef.current) return;
 
-    const content = contentRef.current;
-    const canvas = await html2canvas(content);
-    const imgData = canvas.toDataURL('image/png');
+    try {
+      const content = contentRef.current;
+      const canvas = await html2canvas(content);
+      const imgData = canvas.toDataURL('image/png');
 
-    const pdf = new jsPDF({
-      orientation: 'portrait',
-      unit: 'mm',
-      format: 'a4'
-    });
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4'
+      });
 
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
-    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-    pdf.save(`formulation-${formulation.name}.pdf`);
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save(`formulation-${formulation.name}.pdf`);
+    } catch (error) {
+      console.error("Erreur lors de l'impression:", error);
+    }
   };
 
   return (
@@ -46,7 +50,7 @@ export function FormulationPreview({ open, onOpenChange, formulation }: Formulat
           </DialogTitle>
           <Button 
             onClick={handlePrint}
-            className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 hover:from-blue-500/30 hover:to-purple-500/30 text-blue-300 hover:text-white border border-blue-500/30"
+            className="cursor-pointer bg-gradient-to-r from-blue-500/20 to-purple-500/20 hover:from-blue-500/30 hover:to-purple-500/30 text-blue-300 hover:text-white border border-blue-500/30"
           >
             <Printer className="mr-2 h-4 w-4" />
             Imprimer
