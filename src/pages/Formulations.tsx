@@ -75,8 +75,8 @@ const Formulations = () => {
                 Formulations de Béton
               </CardTitle>
               <Button 
-                onClick={() => setIsFormOpen(true)} 
-                className="bg-[#9b87f5] hover:bg-[#7E69AB] text-white cursor-pointer"
+                onClick={() => setIsFormOpen(true)}
+                className="bg-[#9b87f5] hover:bg-[#7E69AB] text-white transition-all duration-200 transform hover:scale-105"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Nouvelle Formulation
