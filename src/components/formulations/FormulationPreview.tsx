@@ -1,7 +1,7 @@
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Printer } from "lucide-react";
+import { Printer, Download } from "lucide-react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useRef } from "react";
@@ -17,7 +17,12 @@ export function FormulationPreview({ open, onOpenChange, formulation }: Formulat
 
   if (!formulation) return null;
 
-  const handlePrint = async () => {
+  const handlePrint = () => {
+    if (!contentRef.current) return;
+    window.print();
+  };
+
+  const handleDownload = async () => {
     if (!contentRef.current) return;
 
     try {
@@ -37,7 +42,7 @@ export function FormulationPreview({ open, onOpenChange, formulation }: Formulat
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
       pdf.save(`formulation-${formulation.name}.pdf`);
     } catch (error) {
-      console.error("Erreur lors de l'impression:", error);
+      console.error("Erreur lors du téléchargement:", error);
     }
   };
 
@@ -48,13 +53,22 @@ export function FormulationPreview({ open, onOpenChange, formulation }: Formulat
           <DialogTitle className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
             Formulation {formulation.name}
           </DialogTitle>
-          <Button 
-            onClick={handlePrint}
-            className="cursor-pointer bg-gradient-to-r from-blue-500/20 to-purple-500/20 hover:from-blue-500/30 hover:to-purple-500/30 text-blue-300 hover:text-white border border-blue-500/30"
-          >
-            <Printer className="mr-2 h-4 w-4" />
-            Imprimer
-          </Button>
+          <div className="flex gap-2">
+            <Button 
+              onClick={handlePrint}
+              className="cursor-pointer bg-gradient-to-r from-blue-500/20 to-purple-500/20 hover:from-blue-500/30 hover:to-purple-500/30 text-blue-300 hover:text-white border border-blue-500/30"
+            >
+              <Printer className="mr-2 h-4 w-4" />
+              Imprimer
+            </Button>
+            <Button 
+              onClick={handleDownload}
+              className="cursor-pointer bg-gradient-to-r from-blue-500/20 to-purple-500/20 hover:from-blue-500/30 hover:to-purple-500/30 text-blue-300 hover:text-white border border-blue-500/30"
+            >
+              <Download className="mr-2 h-4 w-4" />
+              Télécharger
+            </Button>
+          </div>
         </DialogHeader>
 
         <div ref={contentRef} className="bg-white text-black p-8 rounded-lg">
@@ -64,13 +78,70 @@ export function FormulationPreview({ open, onOpenChange, formulation }: Formulat
               <p className="text-gray-600">{formulation.type}</p>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-6">
               <div>
-                <h3 className="font-semibold text-gray-900">Informations Générales</h3>
-                <div className="mt-2 space-y-2">
-                  <p><span className="font-medium">Résistance:</span> {formulation.resistance}</p>
-                  <p><span className="font-medium">Statut:</span> {formulation.status}</p>
-                  <p><span className="font-medium">Dernière modification:</span> {formulation.lastModified}</p>
+                <h3 className="font-semibold text-gray-900 mb-3">Granulats</h3>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  <div className="p-3 bg-gray-50 rounded">
+                    <p className="text-sm text-gray-600">Sable 0/1</p>
+                    <p className="font-medium">300 kg/m³</p>
+                  </div>
+                  <div className="p-3 bg-gray-50 rounded">
+                    <p className="text-sm text-gray-600">Sable 0/3</p>
+                    <p className="font-medium">400 kg/m³</p>
+                  </div>
+                  <div className="p-3 bg-gray-50 rounded">
+                    <p className="text-sm text-gray-600">Sable 0/4</p>
+                    <p className="font-medium">350 kg/m³</p>
+                  </div>
+                  <div className="p-3 bg-gray-50 rounded">
+                    <p className="text-sm text-gray-600">Gravier 3/8</p>
+                    <p className="font-medium">500 kg/m³</p>
+                  </div>
+                  <div className="p-3 bg-gray-50 rounded">
+                    <p className="text-sm text-gray-600">Gravier 8/15</p>
+                    <p className="font-medium">550 kg/m³</p>
+                  </div>
+                  <div className="p-3 bg-gray-50 rounded">
+                    <p className="text-sm text-gray-600">Gravier 15/25</p>
+                    <p className="font-medium">600 kg/m³</p>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="font-semibold text-gray-900 mb-3">Liants et Additifs</h3>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  <div className="p-3 bg-gray-50 rounded">
+                    <p className="text-sm text-gray-600">Ciment</p>
+                    <p className="font-medium">350 kg/m³</p>
+                  </div>
+                  <div className="p-3 bg-gray-50 rounded">
+                    <p className="text-sm text-gray-600">Eau</p>
+                    <p className="font-medium">175 L/m³</p>
+                  </div>
+                  <div className="p-3 bg-gray-50 rounded">
+                    <p className="text-sm text-gray-600">Adjuvant</p>
+                    <p className="font-medium">2.5 kg/m³</p>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="font-semibold text-gray-900 mb-3">Ratios</h3>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  <div className="p-3 bg-gray-50 rounded">
+                    <p className="text-sm text-gray-600">Poids Total</p>
+                    <p className="font-medium">2877.5 kg/m³</p>
+                  </div>
+                  <div className="p-3 bg-gray-50 rounded">
+                    <p className="text-sm text-gray-600">G/S</p>
+                    <p className="font-medium">1.57</p>
+                  </div>
+                  <div className="p-3 bg-gray-50 rounded">
+                    <p className="text-sm text-gray-600">E/C</p>
+                    <p className="font-medium">0.5</p>
+                  </div>
                 </div>
               </div>
             </div>
