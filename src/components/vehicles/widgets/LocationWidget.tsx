@@ -1,8 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { MapPin, Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { MapPin } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -43,21 +42,10 @@ export function LocationWidget() {
       <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl group-hover:shadow-2xl transition-all duration-300">
         <div className="absolute inset-0 bg-gradient-to-br from-[#9b87f5]/10 to-[#7E69AB]/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
         <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-white flex items-center gap-2">
-              <MapPin className="h-6 w-6 text-[#9b87f5]" />
-              Localisation des Véhicules
-            </CardTitle>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="text-white hover:bg-[#9b87f5]/20 transition-colors"
-              onClick={() => console.log("Add new location")}
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Nouvelle Localisation
-            </Button>
-          </div>
+          <CardTitle className="text-white flex items-center gap-2">
+            <MapPin className="h-6 w-6 text-[#9b87f5]" />
+            Localisation des Véhicules
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
@@ -66,7 +54,8 @@ export function LocationWidget() {
             ) : locations?.map((location) => (
               <div
                 key={location.id}
-                className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/50 transition-colors"
+                className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/50 transition-colors cursor-pointer"
+                onClick={() => console.log("Location clicked:", location)}
               >
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                   <div>

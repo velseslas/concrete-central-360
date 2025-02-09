@@ -1,8 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { FileText, Plus, AlertTriangle } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { FileText, AlertTriangle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -50,21 +49,10 @@ export function DocumentWidget() {
       <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl group-hover:shadow-2xl transition-all duration-300">
         <div className="absolute inset-0 bg-gradient-to-br from-[#9b87f5]/10 to-[#7E69AB]/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
         <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-white flex items-center gap-2">
-              <FileText className="h-6 w-6 text-[#9b87f5]" />
-              Documents Véhicules
-            </CardTitle>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="text-white hover:bg-[#9b87f5]/20 transition-colors"
-              onClick={() => console.log("Add new document")}
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Nouveau Document
-            </Button>
-          </div>
+          <CardTitle className="text-white flex items-center gap-2">
+            <FileText className="h-6 w-6 text-[#9b87f5]" />
+            Documents Véhicules
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
@@ -73,11 +61,12 @@ export function DocumentWidget() {
             ) : documents?.map((document) => (
               <div
                 key={document.id}
-                className={`p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border transition-colors ${
+                className={`p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border transition-colors cursor-pointer ${
                   isExpiringSoon(document.expiry_date) 
                     ? 'border-red-500/50 hover:bg-red-900/10' 
                     : 'border-gray-700/50 hover:bg-gray-700/50'
                 }`}
+                onClick={() => console.log("Document clicked:", document)}
               >
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                   <div>
