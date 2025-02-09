@@ -5,6 +5,8 @@ import { Car } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import VehicleSheetContent from "@/components/vehicles/VehicleSheetContent";
 
 export function VehicleWidget() {
   const { data: vehicles, isLoading } = useQuery({
@@ -44,28 +46,34 @@ export function VehicleWidget() {
             {isLoading ? (
               <div className="text-center text-gray-400">Chargement...</div>
             ) : vehicles?.map((vehicle) => (
-              <div
-                key={vehicle.id}
-                className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/50 transition-colors cursor-pointer"
-                onClick={() => console.log("Vehicle clicked:", vehicle)}
-              >
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                  <div>
-                    <h3 className="text-white font-medium flex items-center gap-2">
-                      <Car className="h-4 w-4 text-[#9b87f5]" />
-                      {vehicle.brand} {vehicle.model}
-                    </h3>
-                    <p className="text-gray-400 text-sm">{vehicle.license_plate}</p>
+              <Sheet key={vehicle.id}>
+                <SheetTrigger className="w-full">
+                  <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/50 transition-colors cursor-pointer text-left w-full">
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                      <div>
+                        <h3 className="text-white font-medium flex items-center gap-2">
+                          <Car className="h-4 w-4 text-[#9b87f5]" />
+                          {vehicle.brand} {vehicle.model}
+                        </h3>
+                        <p className="text-gray-400 text-sm">{vehicle.license_plate}</p>
+                      </div>
+                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                        vehicle.status === "active" ? "bg-green-500/20 text-green-400" :
+                        vehicle.status === "maintenance" ? "bg-yellow-500/20 text-yellow-400" :
+                        "bg-red-500/20 text-red-400"
+                      }`}>
+                        {vehicle.status}
+                      </span>
+                    </div>
                   </div>
-                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                    vehicle.status === "active" ? "bg-green-500/20 text-green-400" :
-                    vehicle.status === "maintenance" ? "bg-yellow-500/20 text-yellow-400" :
-                    "bg-red-500/20 text-red-400"
-                  }`}>
-                    {vehicle.status}
-                  </span>
-                </div>
-              </div>
+                </SheetTrigger>
+                <SheetContent>
+                  <SheetHeader>
+                    <SheetTitle>Détails du véhicule</SheetTitle>
+                  </SheetHeader>
+                  <VehicleSheetContent items={[vehicle]} type="active" />
+                </SheetContent>
+              </Sheet>
             ))}
           </div>
         </CardContent>

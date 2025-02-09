@@ -5,6 +5,7 @@ import { FileSpreadsheet } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
 export function RentalReportWidget() {
   const { data: rentals, isLoading } = useQuery({
@@ -51,29 +52,63 @@ export function RentalReportWidget() {
             {isLoading ? (
               <div className="text-center text-gray-400">Chargement...</div>
             ) : rentals?.map((rental) => (
-              <div
-                key={rental.id}
-                className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/50 transition-colors cursor-pointer"
-                onClick={() => console.log("Rental clicked:", rental)}
-              >
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                  <div>
-                    <h3 className="text-white font-medium">
-                      {rental.vehicles?.brand} {rental.vehicles?.model}
-                    </h3>
-                    <p className="text-gray-400 text-sm">Client: {rental.client_name}</p>
+              <Sheet key={rental.id}>
+                <SheetTrigger className="w-full">
+                  <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/50 transition-colors cursor-pointer text-left w-full">
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                      <div>
+                        <h3 className="text-white font-medium">
+                          {rental.vehicles?.brand} {rental.vehicles?.model}
+                        </h3>
+                        <p className="text-gray-400 text-sm">Client: {rental.client_name}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm text-gray-400">
+                          Du {new Date(rental.start_date).toLocaleDateString()}
+                          {rental.end_date && ` au ${new Date(rental.end_date).toLocaleDateString()}`}
+                        </p>
+                        {rental.cost && (
+                          <p className="text-white font-medium">{rental.cost.toLocaleString()} DA</p>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <p className="text-sm text-gray-400">
-                      Du {new Date(rental.start_date).toLocaleDateString()}
-                      {rental.end_date && ` au ${new Date(rental.end_date).toLocaleDateString()}`}
+                </SheetTrigger>
+                <SheetContent>
+                  <SheetHeader>
+                    <SheetTitle>Détails de la location</SheetTitle>
+                  </SheetHeader>
+                  <div className="mt-6">
+                    <p className="text-lg font-semibold">
+                      {rental.vehicles?.brand} {rental.vehicles?.model}
                     </p>
+                    <p className="text-sm text-gray-500">{rental.vehicles?.license_plate}</p>
+                    <div className="mt-4">
+                      <p className="font-medium">Client :</p>
+                      <p className="text-gray-500">{rental.client_name}</p>
+                    </div>
+                    <div className="mt-4">
+                      <p className="font-medium">Période :</p>
+                      <p className="text-gray-500">
+                        Du {new Date(rental.start_date).toLocaleDateString()}
+                        {rental.end_date && ` au ${new Date(rental.end_date).toLocaleDateString()}`}
+                      </p>
+                    </div>
                     {rental.cost && (
-                      <p className="text-white font-medium">{rental.cost.toLocaleString()} DA</p>
+                      <div className="mt-4">
+                        <p className="font-medium">Coût :</p>
+                        <p className="text-gray-500">{rental.cost.toLocaleString()} DA</p>
+                      </div>
+                    )}
+                    {rental.notes && (
+                      <div className="mt-4">
+                        <p className="font-medium">Notes :</p>
+                        <p className="text-gray-500">{rental.notes}</p>
+                      </div>
                     )}
                   </div>
-                </div>
-              </div>
+                </SheetContent>
+              </Sheet>
             ))}
           </div>
         </CardContent>
