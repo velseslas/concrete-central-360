@@ -147,6 +147,162 @@ export type Database = {
         }
         Relationships: []
       }
+      vehicle_documents: {
+        Row: {
+          created_at: string
+          expiry_date: string
+          file_path: string | null
+          id: string
+          status: string | null
+          title: string
+          type: string
+          vehicle_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          expiry_date: string
+          file_path?: string | null
+          id?: string
+          status?: string | null
+          title: string
+          type: string
+          vehicle_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          expiry_date?: string
+          file_path?: string | null
+          id?: string
+          status?: string | null
+          title?: string
+          type?: string
+          vehicle_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vehicle_documents_vehicle_id_fkey"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      vehicle_locations: {
+        Row: {
+          created_at: string
+          end_date: string | null
+          id: string
+          location: string
+          start_date: string
+          status: string | null
+          vehicle_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          end_date?: string | null
+          id?: string
+          location: string
+          start_date: string
+          status?: string | null
+          vehicle_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          end_date?: string | null
+          id?: string
+          location?: string
+          start_date?: string
+          status?: string | null
+          vehicle_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vehicle_locations_vehicle_id_fkey"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      vehicle_rentals: {
+        Row: {
+          client_name: string
+          cost: number | null
+          created_at: string
+          end_date: string | null
+          id: string
+          notes: string | null
+          start_date: string
+          status: string | null
+          vehicle_id: string | null
+        }
+        Insert: {
+          client_name: string
+          cost?: number | null
+          created_at?: string
+          end_date?: string | null
+          id?: string
+          notes?: string | null
+          start_date: string
+          status?: string | null
+          vehicle_id?: string | null
+        }
+        Update: {
+          client_name?: string
+          cost?: number | null
+          created_at?: string
+          end_date?: string | null
+          id?: string
+          notes?: string | null
+          start_date?: string
+          status?: string | null
+          vehicle_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vehicle_rentals_vehicle_id_fkey"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      vehicles: {
+        Row: {
+          brand: string
+          created_at: string
+          id: string
+          license_plate: string
+          model: string
+          status: string | null
+          type: string
+          year: string
+        }
+        Insert: {
+          brand: string
+          created_at?: string
+          id?: string
+          license_plate: string
+          model: string
+          status?: string | null
+          type: string
+          year: string
+        }
+        Update: {
+          brand?: string
+          created_at?: string
+          id?: string
+          license_plate?: string
+          model?: string
+          status?: string | null
+          type?: string
+          year?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
