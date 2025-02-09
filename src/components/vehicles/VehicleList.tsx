@@ -1,9 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { Car, Plus, Search, Settings, Calendar, FileText } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Car } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -69,12 +67,6 @@ export function VehicleList({ onEdit }: VehicleListProps) {
                     <p className="text-gray-400 text-sm">{vehicle.license_plate}</p>
                   </div>
                   <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
-                    <div className="flex items-center gap-2">
-                      <Calendar className="h-4 w-4 text-[#9b87f5]" />
-                      <span className="text-sm text-gray-300">
-                        Prochain contrôle: {new Date(vehicle.next_control_date).toLocaleDateString()}
-                      </span>
-                    </div>
                     <div>
                       <span className={`px-3 py-1 rounded-full text-sm font-medium ${
                         vehicle.status === "active" ? "bg-green-500/20 text-green-400" :
