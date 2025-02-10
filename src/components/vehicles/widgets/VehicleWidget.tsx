@@ -1,20 +1,15 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { Car, Plus } from "lucide-react";
+import { Car } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import VehicleSheetContent from "@/components/vehicles/VehicleSheetContent";
-import { Button } from "@/components/ui/button";
-import VehicleForm from "@/components/vehicles/VehicleForm";
-import { useState } from "react";
 
 export function VehicleWidget() {
-  const [isNewVehicleOpen, setIsNewVehicleOpen] = useState(false);
-
-  const { data: vehicles, isLoading, refetch } = useQuery({
+  const { data: vehicles, isLoading } = useQuery({
     queryKey: ['vehicles'],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -41,34 +36,10 @@ export function VehicleWidget() {
       <Card className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl group-hover:shadow-2xl transition-all duration-300">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
         <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-white flex items-center gap-2">
-              <Car className="h-6 w-6 text-[#9b87f5]" />
-              Liste des Véhicules
-            </CardTitle>
-            <Sheet open={isNewVehicleOpen} onOpenChange={setIsNewVehicleOpen}>
-              <SheetTrigger asChild>
-                <Button 
-                  variant="ghost" 
-                  className="bg-[#9b87f5]/10 hover:bg-[#9b87f5]/20 text-[#9b87f5]"
-                >
-                  <Plus className="h-5 w-5 mr-2" />
-                  Nouveau Véhicule
-                </Button>
-              </SheetTrigger>
-              <SheetContent className="w-[400px] sm:w-[540px]">
-                <SheetHeader>
-                  <SheetTitle>Ajouter un véhicule</SheetTitle>
-                </SheetHeader>
-                <div className="mt-6">
-                  <VehicleForm onClose={() => {
-                    setIsNewVehicleOpen(false);
-                    refetch();
-                  }} />
-                </div>
-              </SheetContent>
-            </Sheet>
-          </div>
+          <CardTitle className="text-white flex items-center gap-2">
+            <Car className="h-6 w-6 text-[#9b87f5]" />
+            Liste des Véhicules
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
