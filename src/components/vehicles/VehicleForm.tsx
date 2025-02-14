@@ -1,18 +1,21 @@
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const vehicleSchema = z.object({
   brand: z.string().min(1, "La marque est requise"),
   model: z.string().min(1, "Le modèle est requis"),
-  licensePlate: z.string().min(1, "L'immatriculation est requise"),
-  insuranceExpiry: z.string().min(1, "La date d'expiration de l'assurance est requise"),
-  technicalControlExpiry: z.string().min(1, "La date d'expiration du contrôle technique est requise"),
-  circulationPermitExpiry: z.string().min(1, "La date d'expiration du permis de circulation est requise"),
+  type: z.string().min(1, "Le type de véhicule est requis"),
+  year: z.string().min(1, "L'année est requise"),
+  license_plate: z.string().min(1, "L'immatriculation est requise"),
+  status: z.string().default("active"),
 });
 
 interface VehicleFormProps {
@@ -26,16 +29,21 @@ const VehicleForm = ({ onClose, initialData }: VehicleFormProps) => {
     defaultValues: initialData || {
       brand: "",
       model: "",
-      licensePlate: "",
-      insuranceExpiry: "",
-      technicalControlExpiry: "",
-      circulationPermitExpiry: "",
+      type: "",
+      year: "",
+      license_plate: "",
+      status: "active",
     },
   });
 
   const onSubmit = async (values: z.infer<typeof vehicleSchema>) => {
     try {
-      console.log("Submitting vehicle:", values);
+      const { error } = await supabase
+        .from('vehicles')
+        .insert([values]);
+
+      if (error) throw error;
+
       toast.success(initialData ? "Véhicule modifié" : "Véhicule ajouté");
       onClose();
     } catch (error) {
@@ -54,7 +62,7 @@ const VehicleForm = ({ onClose, initialData }: VehicleFormProps) => {
             <FormItem>
               <FormLabel>Marque</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} placeholder="Ex: Renault" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -68,7 +76,7 @@ const VehicleForm = ({ onClose, initialData }: VehicleFormProps) => {
             <FormItem>
               <FormLabel>Modèle</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} placeholder="Ex: Clio" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -77,54 +85,49 @@ const VehicleForm = ({ onClose, initialData }: VehicleFormProps) => {
 
         <FormField
           control={form.control}
-          name="licensePlate"
+          name="type"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Type de véhicule</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Sélectionnez un type" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="car">Voiture</SelectItem>
+                  <SelectItem value="truck">Camion</SelectItem>
+                  <SelectItem value="van">Utilitaire</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="year"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Année</FormLabel>
+              <FormControl>
+                <Input {...field} placeholder="Ex: 2020" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="license_plate"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Immatriculation</FormLabel>
               <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="insuranceExpiry"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Date d'expiration de l'assurance</FormLabel>
-              <FormControl>
-                <Input type="date" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="technicalControlExpiry"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Date d'expiration du contrôle technique</FormLabel>
-              <FormControl>
-                <Input type="date" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="circulationPermitExpiry"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Date d'expiration du permis de circulation</FormLabel>
-              <FormControl>
-                <Input type="date" {...field} />
+                <Input {...field} placeholder="Ex: AB-123-CD" />
               </FormControl>
               <FormMessage />
             </FormItem>
