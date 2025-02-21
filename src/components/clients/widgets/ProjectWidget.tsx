@@ -1,6 +1,7 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { Construction, Plus } from "lucide-react";
+import { Construction } from "lucide-react";
 import { useState } from "react";
 import { ProjectFilters } from "./project/ProjectFilters";
 import { ProjectList } from "./project/ProjectList";
@@ -131,10 +132,9 @@ export function ProjectWidget() {
                   <SheetTrigger asChild>
                     <Button 
                       type="button"
-                      variant="ghost" 
-                      className="bg-[#9b87f5]/10 hover:bg-[#9b87f5]/20 text-[#9b87f5] cursor-pointer"
+                      className="bg-gradient-to-r from-[#9b87f5] to-[#8b77e5] hover:from-[#8b77e5] hover:to-[#7a66d4] text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
                     >
-                      <Plus className="h-5 w-5 mr-2" />
+                      <Construction className="h-5 w-5" />
                       Nouveau Chantier
                     </Button>
                   </SheetTrigger>
@@ -226,7 +226,7 @@ export function ProjectWidget() {
                           </Button>
                           <Button 
                             type="submit"
-                            className="bg-[#9b87f5] hover:bg-[#8b77e5] text-white"
+                            className="bg-gradient-to-r from-[#9b87f5] to-[#8b77e5] hover:from-[#8b77e5] hover:to-[#7a66d4] text-white"
                           >
                             Créer le chantier
                           </Button>
