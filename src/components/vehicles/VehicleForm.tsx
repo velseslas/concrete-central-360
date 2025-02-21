@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
+// Define the schema to match Supabase's expected types
 const vehicleSchema = z.object({
   brand: z.string().min(1, "La marque est requise"),
   model: z.string().min(1, "Le modèle est requis"),
@@ -18,13 +19,15 @@ const vehicleSchema = z.object({
   status: z.string().default("active"),
 });
 
+type VehicleFormData = z.infer<typeof vehicleSchema>;
+
 interface VehicleFormProps {
   onClose: () => void;
-  initialData?: any;
+  initialData?: VehicleFormData;
 }
 
 const VehicleForm = ({ onClose, initialData }: VehicleFormProps) => {
-  const form = useForm<z.infer<typeof vehicleSchema>>({
+  const form = useForm<VehicleFormData>({
     resolver: zodResolver(vehicleSchema),
     defaultValues: initialData || {
       brand: "",
@@ -36,16 +39,24 @@ const VehicleForm = ({ onClose, initialData }: VehicleFormProps) => {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof vehicleSchema>) => {
+  const onSubmit = async (values: VehicleFormData) => {
     try {
       const { error } = await supabase
         .from('vehicles')
-        .insert([values]);
+        .insert({
+          brand: values.brand,
+          model: values.model,
+          type: values.type,
+          year: values.year,
+          license_plate: values.license_plate,
+          status: values.status
+        });
 
       if (error) throw error;
 
-      toast.success(initialData ? "Véhicule modifié" : "Véhicule ajouté");
+      toast.success("Véhicule ajouté avec succès");
       onClose();
+      form.reset();
     } catch (error) {
       console.error("Error submitting vehicle:", error);
       toast.error("Une erreur est survenue");
