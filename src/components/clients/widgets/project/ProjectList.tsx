@@ -1,9 +1,8 @@
+
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Construction, Eye } from "lucide-react";
+import { Construction } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { ProjectFormDialog } from "../ProjectFormDialog";
 
 interface Project {
   id: number;
@@ -21,18 +20,6 @@ interface ProjectListProps {
 export function ProjectList({ projects }: ProjectListProps) {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [previewOpen, setPreviewOpen] = useState(false);
-  const [isNewProjectOpen, setIsNewProjectOpen] = useState(false);
-
-  const getStatusColor = (status: string) => {
-    switch (status.toLowerCase()) {
-      case "en cours":
-        return "bg-yellow-500/20 text-yellow-400";
-      case "terminé":
-        return "bg-green-500/20 text-green-400";
-      default:
-        return "bg-gray-500/20 text-gray-400";
-    }
-  };
 
   const handleProjectClick = (project: Project) => {
     console.log("Project clicked:", project);
@@ -40,26 +27,8 @@ export function ProjectList({ projects }: ProjectListProps) {
     setPreviewOpen(true);
   };
 
-  const mockClients = [
-    { id: "1", name: "Client A" },
-    { id: "2", name: "Client B" },
-    { id: "3", name: "Client C" },
-  ];
-
   return (
     <div className="space-y-4">
-      <div className="flex justify-end mb-4">
-        <Button 
-          variant="outline" 
-          size="sm" 
-          onClick={() => setIsNewProjectOpen(true)}
-          className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 border-indigo-500/30"
-        >
-          <Construction className="h-4 w-4 mr-2" />
-          Nouveau Chantier
-        </Button>
-      </div>
-
       <div className="space-y-4">
         {projects.map((project, index) => (
           <motion.div
@@ -84,7 +53,11 @@ export function ProjectList({ projects }: ProjectListProps) {
                   <p className="text-gray-400 text-sm">Volume de béton</p>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(project.status)}`}>
+                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                    project.status === "En cours" ? "bg-yellow-500/20 text-yellow-400" :
+                    project.status === "Terminé" ? "bg-green-500/20 text-green-400" :
+                    "bg-gray-500/20 text-gray-400"
+                  }`}>
                     {project.status}
                   </span>
                 </div>
@@ -121,7 +94,11 @@ export function ProjectList({ projects }: ProjectListProps) {
                   </div>
                   <div>
                     <h4 className="text-sm font-medium text-gray-400">Statut</h4>
-                    <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium mt-1 ${getStatusColor(selectedProject.status)}`}>
+                    <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium mt-1 ${
+                      selectedProject.status === "En cours" ? "bg-yellow-500/20 text-yellow-400" :
+                      selectedProject.status === "Terminé" ? "bg-green-500/20 text-green-400" :
+                      "bg-gray-500/20 text-gray-400"
+                    }`}>
                       {selectedProject.status}
                     </span>
                   </div>
@@ -141,12 +118,6 @@ export function ProjectList({ projects }: ProjectListProps) {
           )}
         </DialogContent>
       </Dialog>
-
-      <ProjectFormDialog 
-        open={isNewProjectOpen} 
-        onOpenChange={setIsNewProjectOpen}
-        clients={mockClients}
-      />
     </div>
   );
 }

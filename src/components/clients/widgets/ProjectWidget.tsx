@@ -1,9 +1,8 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { Construction } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { ProjectFormDialog } from "./ProjectFormDialog";
 import { ProjectFilters } from "./project/ProjectFilters";
 import { ProjectList } from "./project/ProjectList";
 import { ProjectStats } from "./project/ProjectStats";
@@ -50,7 +49,6 @@ const mockProjects = [
 ];
 
 export function ProjectWidget() {
-  const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedYear, setSelectedYear] = useState("all");
   const [selectedClient, setSelectedClient] = useState("all");
@@ -68,14 +66,6 @@ export function ProjectWidget() {
 
     return matchesSearch && matchesClient && matchesStatus && matchesYear;
   });
-
-  console.log("Filters:", { searchQuery, selectedYear, selectedClient, selectedStatus });
-  console.log("Filtered projects:", filteredProjects);
-
-  const handleNewProject = () => {
-    console.log("Opening new project dialog");
-    setOpen(true);
-  };
 
   return (
     <>
@@ -115,15 +105,6 @@ export function ProjectWidget() {
                   showSearchOnly={true}
                   projects={filteredProjects}
                 />
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  onClick={handleNewProject}
-                  className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 hover:text-indigo-300 border-indigo-500/30 cursor-pointer"
-                >
-                  <Construction className="h-4 w-4 mr-2" />
-                  Nouveau Chantier
-                </Button>
               </div>
             </div>
           </CardHeader>
@@ -145,12 +126,6 @@ export function ProjectWidget() {
           </CardContent>
         </Card>
       </motion.div>
-
-      <ProjectFormDialog 
-        open={open} 
-        onOpenChange={setOpen}
-        clients={mockClients}
-      />
     </>
   );
 }
