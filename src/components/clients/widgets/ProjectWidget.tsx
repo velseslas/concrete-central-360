@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { Construction, Plus } from "lucide-react";
@@ -127,17 +128,22 @@ export function ProjectWidget() {
                 Liste des Chantiers
               </CardTitle>
               <div className="flex items-center gap-4">
-                <Sheet open={isNewProjectOpen} onOpenChange={setIsNewProjectOpen}>
+                <Sheet>
                   <SheetTrigger asChild>
                     <Button 
+                      type="button"
                       variant="ghost" 
-                      className="bg-[#9b87f5]/10 hover:bg-[#9b87f5]/20 text-[#9b87f5]"
+                      className="bg-[#9b87f5]/10 hover:bg-[#9b87f5]/20 text-[#9b87f5] cursor-pointer"
+                      onClick={() => setIsNewProjectOpen(true)}
                     >
                       <Plus className="h-5 w-5 mr-2" />
                       Nouveau Chantier
                     </Button>
                   </SheetTrigger>
-                  <SheetContent className="bg-gray-900/95 border-gray-800">
+                  <SheetContent 
+                    className="bg-gray-900/95 border-gray-800"
+                    onClose={() => setIsNewProjectOpen(false)}
+                  >
                     <SheetHeader>
                       <SheetTitle className="text-white">Nouveau Chantier</SheetTitle>
                     </SheetHeader>
@@ -214,6 +220,7 @@ export function ProjectWidget() {
 
                         <div className="flex justify-end gap-2 pt-4">
                           <Button 
+                            type="button"
                             variant="outline" 
                             onClick={() => setIsNewProjectOpen(false)}
                             className="border-gray-700 text-gray-300 hover:bg-gray-800"
