@@ -1,11 +1,19 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { Construction } from "lucide-react";
+import { Construction, Plus } from "lucide-react";
 import { useState } from "react";
 import { ProjectFilters } from "./project/ProjectFilters";
 import { ProjectList } from "./project/ProjectList";
 import { ProjectStats } from "./project/ProjectStats";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { toast } from "sonner";
 
 const mockClients = [
   { id: "1", name: "Client A" },
@@ -48,11 +56,27 @@ const mockProjects = [
   },
 ];
 
+const formSchema = z.object({
+  client: z.string({ required_error: "Veuillez sélectionner un client" }),
+  name: z.string().min(1, "Le nom du chantier est requis"),
+  concreteQuantity: z.string().min(1, "L'estimation de béton est requise"),
+});
+
 export function ProjectWidget() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedYear, setSelectedYear] = useState("all");
   const [selectedClient, setSelectedClient] = useState("all");
   const [selectedStatus, setSelectedStatus] = useState("all");
+  const [isNewProjectOpen, setIsNewProjectOpen] = useState(false);
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      client: "",
+      name: "",
+      concreteQuantity: "",
+    },
+  });
 
   const filteredProjects = mockProjects.filter((project) => {
     const matchesSearch = 
@@ -66,6 +90,17 @@ export function ProjectWidget() {
 
     return matchesSearch && matchesClient && matchesStatus && matchesYear;
   });
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      console.log("Form values:", values);
+      toast.success("Chantier créé avec succès");
+      setIsNewProjectOpen(false);
+      form.reset();
+    } catch (error) {
+      toast.error("Une erreur est survenue");
+    }
+  };
 
   return (
     <>
@@ -88,10 +123,114 @@ export function ProjectWidget() {
           <CardHeader>
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
               <CardTitle className="text-white flex items-center gap-2">
-                <Construction className="h-6 w-6 text-blue-400" />
+                <Construction className="h-6 w-6 text-[#9b87f5]" />
                 Liste des Chantiers
               </CardTitle>
-              <div className="flex items-center gap-4 w-full md:w-auto">
+              <div className="flex items-center gap-4">
+                <Sheet open={isNewProjectOpen} onOpenChange={setIsNewProjectOpen}>
+                  <SheetTrigger asChild>
+                    <Button 
+                      variant="ghost" 
+                      className="bg-[#9b87f5]/10 hover:bg-[#9b87f5]/20 text-[#9b87f5]"
+                    >
+                      <Plus className="h-5 w-5 mr-2" />
+                      Nouveau Chantier
+                    </Button>
+                  </SheetTrigger>
+                  <SheetContent className="bg-gray-900/95 border-gray-800">
+                    <SheetHeader>
+                      <SheetTitle className="text-white">Nouveau Chantier</SheetTitle>
+                    </SheetHeader>
+                    <Form {...form}>
+                      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 mt-6">
+                        <FormField
+                          control={form.control}
+                          name="client"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-gray-200">Client</FormLabel>
+                              <Select 
+                                onValueChange={field.onChange} 
+                                defaultValue={field.value}
+                              >
+                                <FormControl>
+                                  <SelectTrigger className="bg-gray-800 border-gray-700 text-white">
+                                    <SelectValue placeholder="Sélectionner un client" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent className="bg-gray-800 border-gray-700">
+                                  {mockClients.map((client) => (
+                                    <SelectItem 
+                                      key={client.id} 
+                                      value={client.id}
+                                      className="text-white hover:bg-gray-700"
+                                    >
+                                      {client.name}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                              <FormMessage className="text-red-400" />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name="name"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-gray-200">Nom du chantier</FormLabel>
+                              <FormControl>
+                                <Input 
+                                  {...field} 
+                                  className="bg-gray-800 border-gray-700 text-white"
+                                  placeholder="Entrer le nom du chantier" 
+                                />
+                              </FormControl>
+                              <FormMessage className="text-red-400" />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name="concreteQuantity"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-gray-200">Estimation de béton (m³)</FormLabel>
+                              <FormControl>
+                                <Input 
+                                  {...field} 
+                                  className="bg-gray-800 border-gray-700 text-white"
+                                  placeholder="Ex: 150" 
+                                  type="number"
+                                />
+                              </FormControl>
+                              <FormMessage className="text-red-400" />
+                            </FormItem>
+                          )}
+                        />
+
+                        <div className="flex justify-end gap-2 pt-4">
+                          <Button 
+                            variant="outline" 
+                            onClick={() => setIsNewProjectOpen(false)}
+                            className="border-gray-700 text-gray-300 hover:bg-gray-800"
+                          >
+                            Annuler
+                          </Button>
+                          <Button 
+                            type="submit"
+                            className="bg-[#9b87f5] hover:bg-[#8b77e5] text-white"
+                          >
+                            Créer le chantier
+                          </Button>
+                        </div>
+                      </form>
+                    </Form>
+                  </SheetContent>
+                </Sheet>
                 <ProjectFilters
                   searchQuery={searchQuery}
                   setSearchQuery={setSearchQuery}
