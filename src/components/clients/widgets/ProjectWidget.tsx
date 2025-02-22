@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { Construction } from "lucide-react";
@@ -89,16 +88,14 @@ export function ProjectWidget() {
               Liste des Chantiers
             </CardTitle>
             <Sheet>
-              <SheetTrigger>
-                <Button 
-                  type="button"
-                  variant="default"
-                  className="bg-gradient-to-r from-[#9b87f5] to-[#8b77e5] hover:from-[#8b77e5] hover:to-[#7a66d4] text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
-                >
-                  <Construction className="h-5 w-5" />
-                  Nouveau Chantier
-                </Button>
-              </SheetTrigger>
+              <div className="flex items-center gap-2">
+                <SheetTrigger>
+                  <div className="bg-gradient-to-r from-[#9b87f5] to-[#8b77e5] hover:from-[#8b77e5] hover:to-[#7a66d4] text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 px-4 py-2 rounded-md cursor-pointer">
+                    <Construction className="h-5 w-5" />
+                    Nouveau Chantier
+                  </div>
+                </SheetTrigger>
+              </div>
               <SheetContent side="right" className="bg-gray-900/95 border-gray-800">
                 <SheetHeader>
                   <SheetTitle className="text-white">Nouveau Chantier</SheetTitle>
