@@ -5,7 +5,7 @@ import { Construction } from "lucide-react";
 import { useState } from "react";
 import { ProjectList } from "./project/ProjectList";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
@@ -66,8 +66,8 @@ export function ProjectWidget() {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log(data);
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    console.log(values);
     toast.success("Chantier créé avec succès");
     setIsOpen(false);
     form.reset();
@@ -89,16 +89,17 @@ export function ProjectWidget() {
               Liste des Chantiers
             </CardTitle>
             <Sheet>
-              <SheetTrigger asChild>
+              <SheetTrigger>
                 <Button 
                   type="button"
+                  variant="default"
                   className="bg-gradient-to-r from-[#9b87f5] to-[#8b77e5] hover:from-[#8b77e5] hover:to-[#7a66d4] text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
                 >
                   <Construction className="h-5 w-5" />
                   Nouveau Chantier
                 </Button>
               </SheetTrigger>
-              <SheetContent className="bg-gray-900/95 border-gray-800">
+              <SheetContent side="right" className="bg-gray-900/95 border-gray-800">
                 <SheetHeader>
                   <SheetTitle className="text-white">Nouveau Chantier</SheetTitle>
                 </SheetHeader>
@@ -154,14 +155,15 @@ export function ProjectWidget() {
                       )}
                     />
                     <div className="flex justify-end gap-2 pt-4">
-                      <Button 
-                        type="button"
-                        variant="outline" 
-                        onClick={() => setIsOpen(false)}
-                        className="border-gray-700 text-gray-300 hover:bg-gray-800"
-                      >
-                        Annuler
-                      </Button>
+                      <SheetClose asChild>
+                        <Button 
+                          type="button"
+                          variant="outline" 
+                          className="border-gray-700 text-gray-300 hover:bg-gray-800"
+                        >
+                          Annuler
+                        </Button>
+                      </SheetClose>
                       <Button 
                         type="submit"
                         className="bg-gradient-to-r from-[#9b87f5] to-[#8b77e5] hover:from-[#8b77e5] hover:to-[#7a66d4] text-white"
