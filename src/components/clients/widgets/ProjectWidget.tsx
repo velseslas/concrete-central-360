@@ -88,9 +88,10 @@ export function ProjectWidget() {
               <Construction className="h-6 w-6 text-[#9b87f5]" />
               Liste des Chantiers
             </CardTitle>
-            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <Sheet>
               <SheetTrigger asChild>
                 <Button 
+                  type="button"
                   className="bg-gradient-to-r from-[#9b87f5] to-[#8b77e5] hover:from-[#8b77e5] hover:to-[#7a66d4] text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
                 >
                   <Construction className="h-5 w-5" />
