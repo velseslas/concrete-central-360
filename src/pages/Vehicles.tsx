@@ -1,6 +1,6 @@
 
 import { motion } from "framer-motion";
-import { Car, FileText, AlertTriangle, Settings, MapPin, ClipboardCheck, Wrench, Calendar } from "lucide-react";
+import { Car, FileText, AlertTriangle, Settings, MapPin, ClipboardCheck, Wrench, Calendar, List, FileArchive } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import VehicleSheetContent from "@/components/vehicles/VehicleSheetContent";
@@ -43,31 +43,31 @@ const widgets = [
     description: "Véhicules hors service"
   },
   {
-    title: "Localisation",
-    icon: MapPin,
+    title: "Liste des Véhicules",
+    icon: List,
     color: "text-blue-400",
     bgGradient: "from-blue-500/10 to-blue-500/5",
     borderColor: "border-blue-500/20",
-    description: "Position des véhicules",
-    content: "Vue d'ensemble de la flotte"
+    description: "Parc complet",
+    content: "Liste détaillée de tous les véhicules"
   },
   {
-    title: "Inspections",
-    icon: ClipboardCheck,
+    title: "Documents Véhicules",
+    icon: FileArchive,
     color: "text-purple-400",
     bgGradient: "from-purple-500/10 to-purple-500/5",
     borderColor: "border-purple-500/20",
-    description: "Contrôles techniques",
-    content: "Planification des inspections"
+    description: "Gestion documentaire",
+    content: "Tous les documents des véhicules"
   },
   {
-    title: "Maintenance Planifiée",
-    icon: Calendar,
+    title: "Localisation",
+    icon: MapPin,
     color: "text-indigo-400",
     bgGradient: "from-indigo-500/10 to-indigo-500/5",
     borderColor: "border-indigo-500/20",
-    description: "Entretiens programmés",
-    content: "Calendrier des maintenances"
+    description: "Position des véhicules",
+    content: "Suivi en temps réel de la flotte"
   },
   {
     title: "État de la Flotte",
