@@ -1,5 +1,6 @@
+
 import { motion } from "framer-motion";
-import { Car, FileText, AlertTriangle, Settings, MapPin, ClipboardCheck, Tool, Calendar } from "lucide-react";
+import { Car, FileText, AlertTriangle, Settings, MapPin, ClipboardCheck, Wrench, Calendar } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import VehicleSheetContent from "@/components/vehicles/VehicleSheetContent";
@@ -17,7 +18,7 @@ const widgets = [
   {
     title: "En Maintenance",
     value: "3",
-    icon: Tool,
+    icon: Wrench,
     color: "text-orange-400",
     bgGradient: "from-orange-500/10 to-orange-500/5",
     borderColor: "border-orange-500/20",
