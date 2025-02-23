@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { Construction } from "lucide-react";
@@ -55,8 +54,6 @@ const formSchema = z.object({
 });
 
 export function ProjectWidget() {
-  const [open, setOpen] = useState(false);
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -69,7 +66,6 @@ export function ProjectWidget() {
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values);
     toast.success("Chantier créé avec succès");
-    setOpen(false);
     form.reset();
   };
 
@@ -88,17 +84,13 @@ export function ProjectWidget() {
               <Construction className="h-6 w-6 text-[#9b87f5]" />
               Liste des Chantiers
             </CardTitle>
-            <Sheet open={open} onOpenChange={setOpen}>
-              <SheetTrigger asChild>
-                <Button 
-                  variant="default"
-                  className="bg-gradient-to-r from-[#9b87f5] to-[#8b77e5] hover:from-[#8b77e5] hover:to-[#7a66d4] text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
-                >
-                  <Construction className="h-5 w-5" />
-                  Nouveau Chantier
-                </Button>
+            
+            <Sheet>
+              <SheetTrigger className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gradient-to-r from-[#9b87f5] to-[#8b77e5] hover:from-[#8b77e5] hover:to-[#7a66d4] text-white shadow-lg hover:shadow-xl transition-all duration-300 h-10 px-4 py-2">
+                <Construction className="h-5 w-5 mr-2" />
+                Nouveau Chantier
               </SheetTrigger>
-              <SheetContent side="right" className="bg-gray-900/95 border-gray-800">
+              <SheetContent>
                 <SheetHeader>
                   <SheetTitle className="text-white">Nouveau Chantier</SheetTitle>
                 </SheetHeader>
@@ -157,7 +149,12 @@ export function ProjectWidget() {
                       <Button 
                         type="button"
                         variant="outline" 
-                        onClick={() => setOpen(false)}
+                        onClick={() => {
+                          const sheet = document.querySelector('[data-radix-popper-content-wrapper]');
+                          if (sheet instanceof HTMLElement) {
+                            sheet.style.display = 'none';
+                          }
+                        }}
                         className="border-gray-700 text-gray-300 hover:bg-gray-800"
                       >
                         Annuler
