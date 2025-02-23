@@ -1,10 +1,11 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { Construction } from "lucide-react";
 import { useState } from "react";
 import { ProjectList } from "./project/ProjectList";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
@@ -54,7 +55,7 @@ const formSchema = z.object({
 });
 
 export function ProjectWidget() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -68,7 +69,7 @@ export function ProjectWidget() {
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values);
     toast.success("Chantier créé avec succès");
-    setIsOpen(false);
+    setOpen(false);
     form.reset();
   };
 
@@ -87,15 +88,16 @@ export function ProjectWidget() {
               <Construction className="h-6 w-6 text-[#9b87f5]" />
               Liste des Chantiers
             </CardTitle>
-            <Sheet>
-              <div className="flex items-center gap-2">
-                <SheetTrigger>
-                  <div className="bg-gradient-to-r from-[#9b87f5] to-[#8b77e5] hover:from-[#8b77e5] hover:to-[#7a66d4] text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 px-4 py-2 rounded-md cursor-pointer">
-                    <Construction className="h-5 w-5" />
-                    Nouveau Chantier
-                  </div>
-                </SheetTrigger>
-              </div>
+            <Sheet open={open} onOpenChange={setOpen}>
+              <SheetTrigger asChild>
+                <Button 
+                  variant="default"
+                  className="bg-gradient-to-r from-[#9b87f5] to-[#8b77e5] hover:from-[#8b77e5] hover:to-[#7a66d4] text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
+                >
+                  <Construction className="h-5 w-5" />
+                  Nouveau Chantier
+                </Button>
+              </SheetTrigger>
               <SheetContent side="right" className="bg-gray-900/95 border-gray-800">
                 <SheetHeader>
                   <SheetTitle className="text-white">Nouveau Chantier</SheetTitle>
@@ -152,15 +154,14 @@ export function ProjectWidget() {
                       )}
                     />
                     <div className="flex justify-end gap-2 pt-4">
-                      <SheetClose asChild>
-                        <Button 
-                          type="button"
-                          variant="outline" 
-                          className="border-gray-700 text-gray-300 hover:bg-gray-800"
-                        >
-                          Annuler
-                        </Button>
-                      </SheetClose>
+                      <Button 
+                        type="button"
+                        variant="outline" 
+                        onClick={() => setOpen(false)}
+                        className="border-gray-700 text-gray-300 hover:bg-gray-800"
+                      >
+                        Annuler
+                      </Button>
                       <Button 
                         type="submit"
                         className="bg-gradient-to-r from-[#9b87f5] to-[#8b77e5] hover:from-[#8b77e5] hover:to-[#7a66d4] text-white"
