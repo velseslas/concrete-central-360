@@ -1,3 +1,4 @@
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster } from "@/components/ui/sonner";
 import { Sidebar } from "@/components/layout/Sidebar";
@@ -18,6 +19,7 @@ import SupplierPayments from "./pages/finance/SupplierPayments";
 import Reports from "./pages/finance/Reports";
 import Quotes from "./pages/finance/Quotes";
 import VehicleRental from "./pages/vehicles/VehicleRental";
+import VehicleList from "./pages/vehicles/VehicleList";
 import { LazyMotion, domAnimation } from "framer-motion";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -43,6 +45,7 @@ function App() {
                     <Route path="/suppliers" element={<Suppliers />} />
                     <Route path="/vehicles" element={<Vehicles />} />
                     <Route path="/vehicles/rental" element={<VehicleRental />} />
+                    <Route path="/vehicles/list" element={<VehicleList />} />
                     <Route path="/orders" element={<Orders />} />
                     <Route path="/expenses" element={<Expenses />} />
                     <Route path="/payments" element={<Payments />} />

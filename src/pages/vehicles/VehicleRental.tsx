@@ -1,7 +1,9 @@
 
 import { motion } from "framer-motion";
-import { ClipboardList, CalendarDays, FileText, BarChart3 } from "lucide-react";
+import { ClipboardList, CalendarDays, FileText, BarChart3, ArrowLeft } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const rentalStats = [
   {
@@ -37,8 +39,16 @@ const rentalStats = [
 const VehicleRental = () => {
   return (
     <div className="space-y-6 p-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold text-white">Gestion des Locations</h1>
+      <div className="flex flex-col gap-4">
+        <Link to="/vehicles">
+          <Button variant="outline" className="gap-2">
+            <ArrowLeft className="h-4 w-4" />
+            Retour aux véhicules
+          </Button>
+        </Link>
+        <div className="flex justify-between items-center">
+          <h1 className="text-3xl font-bold text-white">Gestion des Locations</h1>
+        </div>
       </div>
 
       <motion.div 
