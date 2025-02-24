@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster } from "@/components/ui/sonner";
 import { Sidebar } from "@/components/layout/Sidebar";
@@ -18,10 +17,10 @@ import ClientPayments from "./pages/finance/ClientPayments";
 import SupplierPayments from "./pages/finance/SupplierPayments";
 import Reports from "./pages/finance/Reports";
 import Quotes from "./pages/finance/Quotes";
+import VehicleRental from "./pages/vehicles/VehicleRental";
 import { LazyMotion, domAnimation } from "framer-motion";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-// Créer une instance de QueryClient
 const queryClient = new QueryClient();
 
 function App() {
@@ -43,6 +42,7 @@ function App() {
                     <Route path="/formulations" element={<Formulations />} />
                     <Route path="/suppliers" element={<Suppliers />} />
                     <Route path="/vehicles" element={<Vehicles />} />
+                    <Route path="/vehicles/rental" element={<VehicleRental />} />
                     <Route path="/orders" element={<Orders />} />
                     <Route path="/expenses" element={<Expenses />} />
                     <Route path="/payments" element={<Payments />} />
