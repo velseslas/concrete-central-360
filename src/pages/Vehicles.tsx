@@ -70,7 +70,7 @@ const widgets = [
     content: "Suivi en temps réel de la flotte"
   },
   {
-    title: "État de la Flotte",
+    title: "LOCATION",
     icon: Settings,
     color: "text-cyan-400",
     bgGradient: "from-cyan-500/10 to-cyan-500/5",
