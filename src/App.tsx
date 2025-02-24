@@ -20,6 +20,8 @@ import Reports from "./pages/finance/Reports";
 import Quotes from "./pages/finance/Quotes";
 import VehicleRental from "./pages/vehicles/VehicleRental";
 import VehicleList from "./pages/vehicles/VehicleList";
+import VehicleMaintenance from "./pages/vehicles/VehicleMaintenance";
+import VehicleDocuments from "./pages/vehicles/VehicleDocuments";
 import { LazyMotion, domAnimation } from "framer-motion";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -46,6 +48,8 @@ function App() {
                     <Route path="/vehicles" element={<Vehicles />} />
                     <Route path="/vehicles/rental" element={<VehicleRental />} />
                     <Route path="/vehicles/list" element={<VehicleList />} />
+                    <Route path="/vehicles/maintenance" element={<VehicleMaintenance />} />
+                    <Route path="/vehicles/documents" element={<VehicleDocuments />} />
                     <Route path="/orders" element={<Orders />} />
                     <Route path="/expenses" element={<Expenses />} />
                     <Route path="/payments" element={<Payments />} />
