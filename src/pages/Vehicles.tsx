@@ -2,8 +2,7 @@
 import { motion } from "framer-motion";
 import { Car, FileText, AlertTriangle, Settings, MapPin, ClipboardCheck, Wrench, Calendar, List, FileArchive } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import VehicleSheetContent from "@/components/vehicles/VehicleSheetContent";
+import { Link } from "react-router-dom";
 
 const widgets = [
   {
@@ -13,7 +12,8 @@ const widgets = [
     color: "text-green-400",
     bgGradient: "from-green-500/10 to-green-500/5",
     borderColor: "border-green-500/20",
-    description: "Véhicules en service"
+    description: "Véhicules en service",
+    route: "/vehicles/active"
   },
   {
     title: "En Maintenance",
@@ -22,7 +22,8 @@ const widgets = [
     color: "text-orange-400",
     bgGradient: "from-orange-500/10 to-orange-500/5",
     borderColor: "border-orange-500/20",
-    description: "Véhicules en réparation"
+    description: "Véhicules en réparation",
+    route: "/vehicles/maintenance"
   },
   {
     title: "Documents à Renouveler",
@@ -31,7 +32,8 @@ const widgets = [
     color: "text-yellow-400",
     bgGradient: "from-yellow-500/10 to-yellow-500/5",
     borderColor: "border-yellow-500/20",
-    description: "Documents expirant bientôt"
+    description: "Documents expirant bientôt",
+    route: "/vehicles/documents-renewal"
   },
   {
     title: "En Panne",
@@ -40,7 +42,8 @@ const widgets = [
     color: "text-red-400",
     bgGradient: "from-red-500/10 to-red-500/5",
     borderColor: "border-red-500/20",
-    description: "Véhicules hors service"
+    description: "Véhicules hors service",
+    route: "/vehicles/broken"
   },
   {
     title: "Liste des Véhicules",
@@ -49,7 +52,7 @@ const widgets = [
     bgGradient: "from-blue-500/10 to-blue-500/5",
     borderColor: "border-blue-500/20",
     description: "Parc complet",
-    content: "Liste détaillée de tous les véhicules"
+    route: "/vehicles/list"
   },
   {
     title: "Documents Véhicules",
@@ -58,7 +61,7 @@ const widgets = [
     bgGradient: "from-purple-500/10 to-purple-500/5",
     borderColor: "border-purple-500/20",
     description: "Gestion documentaire",
-    content: "Tous les documents des véhicules"
+    route: "/vehicles/documents"
   },
   {
     title: "Localisation",
@@ -67,7 +70,7 @@ const widgets = [
     bgGradient: "from-indigo-500/10 to-indigo-500/5",
     borderColor: "border-indigo-500/20",
     description: "Position des véhicules",
-    content: "Suivi en temps réel de la flotte"
+    route: "/vehicles/location"
   },
   {
     title: "LOCATION",
@@ -76,7 +79,7 @@ const widgets = [
     bgGradient: "from-cyan-500/10 to-cyan-500/5",
     borderColor: "border-cyan-500/20",
     description: "Vue d'ensemble",
-    content: "Statistiques globales"
+    route: "/vehicles/rental"
   }
 ];
 
@@ -96,44 +99,27 @@ const Vehicles = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3, delay: index * 0.1 }}
             >
-              <Sheet>
-                <SheetTrigger className="w-full">
-                  <Card className={`w-full group bg-gray-800/50 backdrop-blur-lg border ${widget.borderColor} hover:bg-gray-700/50 transition-all duration-300 cursor-pointer`}>
-                    <div className={`absolute inset-0 bg-gradient-to-br ${widget.bgGradient} opacity-50 group-hover:opacity-70 transition-opacity duration-300 rounded-lg`} />
-                    <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0 relative">
-                      <CardTitle className="text-sm font-medium text-gray-300">
-                        {widget.title}
-                      </CardTitle>
-                      <widget.icon className={`h-5 w-5 ${widget.color}`} />
-                    </CardHeader>
-                    <CardContent className="relative">
-                      {widget.value && (
-                        <div className={`text-2xl font-bold mb-1 ${widget.color}`}>
-                          {widget.value}
-                        </div>
-                      )}
-                      <p className="text-sm text-gray-400">
-                        {widget.description}
-                      </p>
-                    </CardContent>
-                  </Card>
-                </SheetTrigger>
-                <SheetContent side="right" className="w-full sm:max-w-md bg-gray-900/95 border-gray-800">
-                  <SheetHeader>
-                    <SheetTitle className="text-white flex items-center gap-2">
-                      <widget.icon className={`h-5 w-5 ${widget.color}`} />
+              <Link to={widget.route} className="block w-full">
+                <Card className={`w-full group bg-gray-800/50 backdrop-blur-lg border ${widget.borderColor} hover:bg-gray-700/50 transition-all duration-300 cursor-pointer`}>
+                  <div className={`absolute inset-0 bg-gradient-to-br ${widget.bgGradient} opacity-50 group-hover:opacity-70 transition-opacity duration-300 rounded-lg`} />
+                  <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0 relative">
+                    <CardTitle className="text-sm font-medium text-gray-300">
                       {widget.title}
-                    </SheetTitle>
-                  </SheetHeader>
-                  <div className="mt-6">
-                    <div className="space-y-4">
-                      <div className="p-4 rounded-lg bg-gray-800/50 border border-gray-700">
-                        <p className="text-gray-400">{widget.content || "Contenu détaillé à venir"}</p>
+                    </CardTitle>
+                    <widget.icon className={`h-5 w-5 ${widget.color}`} />
+                  </CardHeader>
+                  <CardContent className="relative">
+                    {widget.value && (
+                      <div className={`text-2xl font-bold mb-1 ${widget.color}`}>
+                        {widget.value}
                       </div>
-                    </div>
-                  </div>
-                </SheetContent>
-              </Sheet>
+                    )}
+                    <p className="text-sm text-gray-400">
+                      {widget.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </Link>
             </motion.div>
           ))}
         </div>
