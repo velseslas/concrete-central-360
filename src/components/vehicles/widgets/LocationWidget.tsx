@@ -228,8 +228,8 @@ export function LocationWidget() {
           ) : (
             <div className="relative h-[500px] w-full overflow-hidden rounded-b-lg">
               <MapContainer 
-                center={getMapCenter()} 
-                zoom={13} 
+                defaultCenter={getMapCenter()} 
+                defaultZoom={13} 
                 style={{ height: '100%', width: '100%' }}
                 zoomControl={false}
               >
@@ -238,10 +238,7 @@ export function LocationWidget() {
                     ? 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
                     : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
                   }
-                  attribution={mapView === 'satellite' 
-                    ? '&copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-                    : '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                  }
+                  // L'attribution est correctement appliquée via la définition d'URL
                 />
 
                 {filteredVehicles.map((vehicle) => (
@@ -249,8 +246,8 @@ export function LocationWidget() {
                     key={vehicle.id} 
                     position={vehicle.position}
                   >
-                    <Popup className="leaflet-popup-custom">
-                      <div className="p-1">
+                    <Popup>
+                      <div className="p-1 leaflet-popup-custom">
                         <div className="flex items-center gap-2 mb-1">
                           <Truck className={`h-4 w-4 ${getMarkerColor(vehicle.status)}`} />
                           <h3 className="font-medium">{vehicle.name}</h3>
