@@ -239,7 +239,6 @@ export function LocationWidget() {
               <MapContainer 
                 key={mapKey}
                 style={{ height: '100%', width: '100%' }}
-                zoomControl={false}
               >
                 <SetViewOnChange coords={mapCenter} />
                 <ZoomControl position="topright" />
