@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { MapPin, Truck, RefreshCw, List, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, ZoomControl } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { toast } from "sonner";
 import L from "leaflet";
@@ -33,6 +33,7 @@ export function LocationWidget() {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedVehicleType, setSelectedVehicleType] = useState<string>("all");
   const [mapView, setMapView] = useState<"satellite" | "street">("street");
+  const [mapKey, setMapKey] = useState(Date.now()); // Clé pour forcer le rechargement de la carte
 
   // Simuler le chargement des données de véhicules
   useEffect(() => {
@@ -112,6 +113,7 @@ export function LocationWidget() {
       );
       
       setIsLoading(false);
+      setMapKey(Date.now()); // Force le rechargement de la carte avec les nouvelles positions
       toast.success("Positions actualisées avec succès");
     }, 2000);
   };
@@ -121,7 +123,7 @@ export function LocationWidget() {
     : vehicles.filter(v => v.type === selectedVehicleType);
 
   // Obtenir le centre de la carte (moyenne des positions)
-  const getMapCenter = () => {
+  const mapCenter = (() => {
     if (filteredVehicles.length === 0) return [36.7525, 3.0420] as [number, number]; // Défaut sur Alger
     
     const latSum = filteredVehicles.reduce((sum, v) => sum + v.position[0], 0);
@@ -131,7 +133,7 @@ export function LocationWidget() {
       latSum / filteredVehicles.length,
       lngSum / filteredVehicles.length
     ] as [number, number];
-  };
+  })();
 
   // Fonction pour formater la date/heure de dernière mise à jour
   const formatLastUpdate = (dateString: string) => {
@@ -228,17 +230,18 @@ export function LocationWidget() {
           ) : (
             <div className="relative h-[500px] w-full overflow-hidden rounded-b-lg">
               <MapContainer 
-                defaultCenter={getMapCenter()} 
-                defaultZoom={13} 
+                key={mapKey}
+                center={mapCenter}
+                zoom={13}
                 style={{ height: '100%', width: '100%' }}
                 zoomControl={false}
               >
+                <ZoomControl position="topright" />
                 <TileLayer
                   url={mapView === 'satellite' 
                     ? 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
                     : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
                   }
-                  // L'attribution est correctement appliquée via la définition d'URL
                 />
 
                 {filteredVehicles.map((vehicle) => (
