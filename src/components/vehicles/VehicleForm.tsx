@@ -1,156 +1,183 @@
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
-// Define the schema to match Supabase's expected types
-const vehicleSchema = z.object({
-  brand: z.string().min(1, "La marque est requise"),
-  model: z.string().min(1, "Le modèle est requis"),
-  type: z.string().min(1, "Le type de véhicule est requis"),
-  year: z.string().min(1, "L'année est requise"),
-  license_plate: z.string().min(1, "L'immatriculation est requise"),
-  status: z.string().default("active"),
-});
-
-type VehicleFormData = z.infer<typeof vehicleSchema>;
-
-interface VehicleFormProps {
-  onClose: () => void;
-  initialData?: VehicleFormData;
+interface VehicleFormData {
+  brand: string;
+  model: string;
+  type: string;
+  license_plate: string;
+  year: string;
 }
 
-const VehicleForm = ({ onClose, initialData }: VehicleFormProps) => {
+interface VehicleFormProps {
+  onComplete?: () => void;
+  initialData?: Partial<VehicleFormData>;
+}
+
+const VehicleForm = ({ onComplete, initialData }: VehicleFormProps) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const form = useForm<VehicleFormData>({
-    resolver: zodResolver(vehicleSchema),
-    defaultValues: initialData || {
-      brand: "",
-      model: "",
-      type: "",
-      year: "",
-      license_plate: "",
-      status: "active",
+    defaultValues: {
+      brand: initialData?.brand || "",
+      model: initialData?.model || "",
+      type: initialData?.type || "",
+      license_plate: initialData?.license_plate || "",
+      year: initialData?.year || new Date().getFullYear().toString(),
     },
   });
 
-  const onSubmit = async (values: VehicleFormData) => {
+  const onSubmit = async (data: VehicleFormData) => {
     try {
-      const { error } = await supabase
-        .from('vehicles')
-        .insert({
-          brand: values.brand,
-          model: values.model,
-          type: values.type,
-          year: values.year,
-          license_plate: values.license_plate,
-          status: values.status
-        });
+      setIsSubmitting(true);
+      console.log("Form data:", data);
+      
+      // Simuler une connexion à Supabase pour l'ajout d'un véhicule
+      // En production, remplacer par un vrai appel API
+      // const { data: vehicle, error } = await supabase
+      //   .from("vehicles")
+      //   .insert([
+      //     {
+      //       brand: data.brand,
+      //       model: data.model,
+      //       type: data.type,
+      //       license_plate: data.license_plate,
+      //       year: data.year,
+      //       status: "active",
+      //     },
+      //   ])
+      //   .select();
+      
+      // if (error) throw error;
 
-      if (error) throw error;
-
-      toast.success("Véhicule ajouté avec succès");
-      onClose();
-      form.reset();
+      toast.success("Véhicule ajouté avec succès!");
+      
+      if (onComplete) {
+        onComplete();
+      }
     } catch (error) {
-      console.error("Error submitting vehicle:", error);
-      toast.error("Une erreur est survenue");
+      console.error("Erreur lors de l'ajout du véhicule:", error);
+      toast.error("Erreur lors de l'ajout du véhicule");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="brand"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Marque</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder="Ex: Renault" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="model"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Modèle</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder="Ex: Clio" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="type"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Type de véhicule</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="brand"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-white">Marque</FormLabel>
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Sélectionnez un type" />
-                  </SelectTrigger>
+                  <Input 
+                    placeholder="Volvo, Renault, etc."
+                    className="bg-gray-700/50 border-gray-600 text-white"
+                    {...field}
+                  />
                 </FormControl>
-                <SelectContent>
-                  <SelectItem value="car">Voiture</SelectItem>
-                  <SelectItem value="truck">Camion</SelectItem>
-                  <SelectItem value="van">Utilitaire</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="model"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-white">Modèle</FormLabel>
+                <FormControl>
+                  <Input 
+                    placeholder="FH16, T High, etc."
+                    className="bg-gray-700/50 border-gray-600 text-white"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
-        <FormField
-          control={form.control}
-          name="year"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Année</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder="Ex: 2020" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="type"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-white">Type de véhicule</FormLabel>
+                <FormControl>
+                  <Input 
+                    placeholder="Camion Benne, Chargeuse, etc."
+                    className="bg-gray-700/50 border-gray-600 text-white"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="year"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-white">Année</FormLabel>
+                <FormControl>
+                  <Input 
+                    placeholder="2023"
+                    className="bg-gray-700/50 border-gray-600 text-white"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <FormField
           control={form.control}
           name="license_plate"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Immatriculation</FormLabel>
+              <FormLabel className="text-white">Immatriculation</FormLabel>
               <FormControl>
-                <Input {...field} placeholder="Ex: AB-123-CD" />
+                <Input 
+                  placeholder="AB-123-CD"
+                  className="bg-gray-700/50 border-gray-600 text-white"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <div className="flex justify-end gap-2">
-          <Button variant="outline" type="button" onClick={onClose}>
+        <div className="flex justify-end gap-2 pt-4">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => onComplete && onComplete()}
+          >
             Annuler
           </Button>
-          <Button type="submit">
-            {initialData ? "Modifier" : "Ajouter"}
+          <Button 
+            type="submit" 
+            disabled={isSubmitting}
+            className="bg-[#9b87f5] hover:bg-[#8a76e5] text-white"
+          >
+            {isSubmitting ? "Enregistrement..." : "Enregistrer"}
           </Button>
         </div>
       </form>
