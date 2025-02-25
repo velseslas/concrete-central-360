@@ -1,6 +1,6 @@
 
 import { motion } from "framer-motion";
-import { ArrowLeft, Tool, AlertCircle, Clock, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, Wrench, AlertCircle, Clock, CheckCircle2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -10,7 +10,7 @@ const maintenanceStats = [
     title: "En maintenance",
     value: "3",
     status: "en-cours",
-    icon: Tool,
+    icon: Wrench,
     color: "text-orange-500"
   },
   {
@@ -86,7 +86,7 @@ const VehicleMaintenance = () => {
                 <div key={i} className="flex items-center justify-between p-4 bg-gray-700/50 rounded-lg">
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-gray-600 rounded-lg flex items-center justify-center">
-                      <Tool className="h-6 w-6 text-orange-500" />
+                      <Wrench className="h-6 w-6 text-orange-500" />
                     </div>
                     <div>
                       <h3 className="text-white font-medium">Camion #{i}</h3>
