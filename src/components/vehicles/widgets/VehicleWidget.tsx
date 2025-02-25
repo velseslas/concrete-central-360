@@ -13,6 +13,7 @@ import { useState } from "react";
 
 export function VehicleWidget() {
   const [isNewVehicleOpen, setIsNewVehicleOpen] = useState(false);
+  const [selectedVehicle, setSelectedVehicle] = useState<any>(null);
 
   const { data: vehicles, isLoading, refetch } = useQuery({
     queryKey: ['vehicles'],
@@ -61,7 +62,7 @@ export function VehicleWidget() {
                   <SheetTitle>Ajouter un véhicule</SheetTitle>
                 </SheetHeader>
                 <div className="mt-6">
-                  <VehicleForm onClose={() => {
+                  <VehicleForm onComplete={() => {
                     setIsNewVehicleOpen(false);
                     refetch();
                   }} />
@@ -97,10 +98,19 @@ export function VehicleWidget() {
                   </div>
                 </SheetTrigger>
                 <SheetContent>
-                  <SheetHeader>
-                    <SheetTitle>Détails du véhicule</SheetTitle>
-                  </SheetHeader>
-                  <VehicleSheetContent items={[vehicle]} type="active" />
+                  <VehicleSheetContent 
+                    vehicle={{
+                      id: Number(vehicle.id),
+                      name: `${vehicle.brand} ${vehicle.model}`,
+                      plate: vehicle.license_plate,
+                      status: vehicle.status,
+                      brand: vehicle.brand,
+                      model: vehicle.model,
+                      year: vehicle.year,
+                      type: vehicle.type
+                    }}
+                    onClose={() => {}}
+                  />
                 </SheetContent>
               </Sheet>
             ))}
