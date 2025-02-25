@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { MapPin, Truck, RefreshCw, List, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { MapContainer, TileLayer, Marker, Popup, ZoomControl } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, ZoomControl, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { toast } from "sonner";
 import L from "leaflet";
@@ -17,6 +17,13 @@ L.Icon.Default.mergeOptions({
   iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
 });
+
+// Composant auxiliaire pour réinitialiser la vue de la carte
+function SetViewOnChange({ coords }: { coords: [number, number] }) {
+  const map = useMap();
+  map.setView(coords, 13);
+  return null;
+}
 
 // Types d'interfaces pour les données
 interface Vehicle {
@@ -231,11 +238,10 @@ export function LocationWidget() {
             <div className="relative h-[500px] w-full overflow-hidden rounded-b-lg">
               <MapContainer 
                 key={mapKey}
-                center={mapCenter}
-                zoom={13}
                 style={{ height: '100%', width: '100%' }}
                 zoomControl={false}
               >
+                <SetViewOnChange coords={mapCenter} />
                 <ZoomControl position="topright" />
                 <TileLayer
                   url={mapView === 'satellite' 
