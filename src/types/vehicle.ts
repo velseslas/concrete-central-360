@@ -1,8 +1,12 @@
+
 export interface Vehicle {
-  licensePlate: string;
-  type: string;
+  id: number;
+  name: string;
+  plate: string;
+  status: string;
   brand: string;
   model: string;
-  year: string | number;
-  status: string;
+  year: string;
+  type: string;
+  vehicle_number: string;
 }
