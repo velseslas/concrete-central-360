@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Car, FileText, Calendar, Tool, AlertTriangle, Map, Settings } from "lucide-react";
+import { Car, FileText, Calendar, Wrench, AlertTriangle, Map, Settings } from "lucide-react";
 import { Vehicle } from "@/types/vehicle";
 import { toast } from "sonner";
 import { getStatusText } from "@/utils/vehicleUtils";
@@ -99,7 +99,7 @@ export const VehicleDetailSheet = ({
                 Planifier maintenance
               </Button>
               <Button variant="outline" className="w-full flex justify-start">
-                <Tool className="mr-2 h-5 w-5" />
+                <Wrench className="mr-2 h-5 w-5" />
                 Historique maintenance
               </Button>
               <Button variant="outline" className="w-full flex justify-start">
