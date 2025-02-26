@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { useState } from "react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import VehicleForm from "@/components/vehicles/VehicleForm";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const VehicleList = () => {
   const [vehicleDetailId, setVehicleDetailId] = useState<number | null>(null);
@@ -23,7 +24,8 @@ const VehicleList = () => {
       brand: "Volvo",
       model: "FH16",
       year: "2020",
-      type: "Camion Benne"
+      type: "Camion Benne",
+      vehicle_number: "V-123456"
     },
     {
       id: 2,
@@ -33,7 +35,8 @@ const VehicleList = () => {
       brand: "Renault",
       model: "T High",
       year: "2021", 
-      type: "Camion Benne"
+      type: "Camion Benne",
+      vehicle_number: "V-123457"
     },
     {
       id: 3,
@@ -43,7 +46,8 @@ const VehicleList = () => {
       brand: "Caterpillar",
       model: "966M",
       year: "2019",
-      type: "Chargeuse"
+      type: "Chargeuse",
+      vehicle_number: "V-123458"
     },
     {
       id: 4,
@@ -53,7 +57,8 @@ const VehicleList = () => {
       brand: "JCB",
       model: "3CX",
       year: "2022",
-      type: "Pelleteuse"
+      type: "Pelleteuse",
+      vehicle_number: "V-123459"
     },
     {
       id: 5,
@@ -63,7 +68,8 @@ const VehicleList = () => {
       brand: "Komatsu",
       model: "GD705-5",
       year: "2021",
-      type: "Niveleuse"
+      type: "Niveleuse",
+      vehicle_number: "V-123460"
     }
   ];
 
@@ -91,6 +97,12 @@ const VehicleList = () => {
       default:
         return "Inconnu";
     }
+  };
+
+  const handleStatusChange = (vehicleId: number, newStatus: string) => {
+    // Dans une application réelle, ceci mettrait à jour le statut dans la base de données
+    console.log(`Mise à jour du statut du véhicule ${vehicleId} à ${newStatus}`);
+    toast.success(`Le statut du véhicule a été mis à jour à "${getStatusText(newStatus)}"`);
   };
 
   return (
@@ -136,7 +148,11 @@ const VehicleList = () => {
 
       <div className="space-y-4">
         {vehicles.map((vehicle) => (
-          <Card key={vehicle.id} className="bg-gray-800/50 border-gray-700 hover:bg-gray-700/50 transition-colors">
+          <Card 
+            key={vehicle.id} 
+            className="bg-gray-800/50 border-gray-700 hover:bg-gray-700/50 transition-colors cursor-pointer"
+            onClick={() => setVehicleDetailId(vehicle.id)}
+          >
             <CardContent className="flex items-center justify-between p-4">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-gray-700 rounded-lg flex items-center justify-center">
@@ -151,13 +167,6 @@ const VehicleList = () => {
                 <span className={`px-2 py-1 rounded-full text-xs ${getStatusColor(vehicle.status)}`}>
                   {getStatusText(vehicle.status)}
                 </span>
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  onClick={() => setVehicleDetailId(vehicle.id)}
-                >
-                  Détails
-                </Button>
               </div>
             </CardContent>
           </Card>
@@ -193,9 +202,21 @@ const VehicleList = () => {
                         </div>
                         <div>
                           <h2 className="text-xl font-bold text-white">{vehicle.name}</h2>
-                          <span className={`mt-1 inline-block px-2 py-1 rounded-full text-xs ${getStatusColor(vehicle.status)}`}>
-                            {getStatusText(vehicle.status)}
-                          </span>
+                          <div className="mt-2">
+                            <Select 
+                              defaultValue={vehicle.status} 
+                              onValueChange={(value) => handleStatusChange(vehicle.id, value)}
+                            >
+                              <SelectTrigger className="bg-gray-700/50 border-gray-600 text-white w-[180px]">
+                                <SelectValue placeholder="Statut du véhicule" />
+                              </SelectTrigger>
+                              <SelectContent className="bg-gray-800 border-gray-700 text-white">
+                                <SelectItem value="available">Disponible</SelectItem>
+                                <SelectItem value="maintenance">En maintenance</SelectItem>
+                                <SelectItem value="unavailable">Indisponible</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
                         </div>
                       </div>
                       
@@ -215,6 +236,10 @@ const VehicleList = () => {
                         <div className="space-y-1">
                           <p className="text-sm text-gray-400">Type</p>
                           <p className="text-white">{vehicle.type}</p>
+                        </div>
+                        <div className="space-y-1 col-span-2">
+                          <p className="text-sm text-gray-400">Numéro véhicule</p>
+                          <p className="text-white">{vehicle.vehicle_number}</p>
                         </div>
                         <div className="space-y-1 col-span-2">
                           <p className="text-sm text-gray-400">Immatriculation</p>

@@ -12,7 +12,7 @@ interface VehicleFormData {
   model: string;
   type: string;
   license_plate: string;
-  year: string;
+  vehicle_number: string;
 }
 
 interface VehicleFormProps {
@@ -29,7 +29,7 @@ const VehicleForm = ({ onComplete, initialData }: VehicleFormProps) => {
       model: initialData?.model || "",
       type: initialData?.type || "",
       license_plate: initialData?.license_plate || "",
-      year: initialData?.year || new Date().getFullYear().toString(),
+      vehicle_number: initialData?.vehicle_number || "",
     },
   });
 
@@ -48,7 +48,7 @@ const VehicleForm = ({ onComplete, initialData }: VehicleFormProps) => {
       //       model: data.model,
       //       type: data.type,
       //       license_plate: data.license_plate,
-      //       year: data.year,
+      //       vehicle_number: data.vehicle_number,
       //       status: "active",
       //     },
       //   ])
@@ -129,13 +129,13 @@ const VehicleForm = ({ onComplete, initialData }: VehicleFormProps) => {
           />
           <FormField
             control={form.control}
-            name="year"
+            name="vehicle_number"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-white">Année</FormLabel>
+                <FormLabel className="text-white">Numéro véhicule</FormLabel>
                 <FormControl>
                   <Input 
-                    placeholder="2023"
+                    placeholder="V-123456"
                     className="bg-gray-700/50 border-gray-600 text-white"
                     {...field}
                   />
@@ -169,6 +169,7 @@ const VehicleForm = ({ onComplete, initialData }: VehicleFormProps) => {
             type="button"
             variant="outline"
             onClick={() => onComplete && onComplete()}
+            className="text-gray-300 border-gray-600 hover:bg-gray-700 hover:text-white"
           >
             Annuler
           </Button>
