@@ -10,6 +10,10 @@ interface VehicleCardProps {
 }
 
 export const VehicleCard = ({ vehicle, onClick }: VehicleCardProps) => {
+  // Extraire le type de véhicule et créer un nom basé sur le numéro de véhicule
+  const vehicleType = vehicle.type;
+  const vehicleName = `${vehicleType} ${vehicle.vehicle_number}`;
+
   return (
     <Card 
       className="bg-gray-800/50 border-gray-700 hover:bg-gray-700/50 transition-colors cursor-pointer"
@@ -21,7 +25,7 @@ export const VehicleCard = ({ vehicle, onClick }: VehicleCardProps) => {
             <Car className="h-6 w-6 text-[#9b87f5]" />
           </div>
           <div>
-            <h3 className="text-white font-medium">{vehicle.name}</h3>
+            <h3 className="text-white font-medium">{vehicleName}</h3>
             <p className="text-sm text-gray-400">Immatriculation: {vehicle.plate}</p>
           </div>
         </div>

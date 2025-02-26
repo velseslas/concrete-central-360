@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Car } from "lucide-react";
+import { Car, FileText, Calendar, Tool, AlertTriangle, Map, Settings } from "lucide-react";
 import { Vehicle } from "@/types/vehicle";
 import { toast } from "sonner";
 import { getStatusText } from "@/utils/vehicleUtils";
@@ -31,7 +31,20 @@ export const VehicleDetailSheet = ({
     }
   };
 
+  // Formatage de l'immatriculation en 00000-000-00
+  const formatPlate = (plate: string) => {
+    // Si le format est déjà correct, on le retourne tel quel
+    if (/^\d{5}-\d{3}-\d{2}$/.test(plate)) return plate;
+    
+    // Sinon, on retourne le format d'origine
+    return plate;
+  };
+
   if (!vehicle) return null;
+
+  // Extraire le type de véhicule et créer un nom basé sur le numéro de véhicule
+  const vehicleType = vehicle.type;
+  const vehicleName = `${vehicleType} ${vehicle.vehicle_number}`;
 
   return (
     <Sheet 
@@ -41,7 +54,7 @@ export const VehicleDetailSheet = ({
       }}
     >
       <SheetContent 
-        className="bg-gray-800 border-gray-700 text-white max-w-md"
+        className="bg-gray-800 border-gray-700 text-white max-w-md overflow-y-auto"
         side="right"
       >
         <SheetHeader className="pb-6">
@@ -54,7 +67,7 @@ export const VehicleDetailSheet = ({
               <Car className="h-8 w-8 text-[#9b87f5]" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-white">{vehicle.name}</h2>
+              <h2 className="text-xl font-bold text-white">{vehicleName}</h2>
               <div className="mt-2">
                 <Select 
                   defaultValue={vehicle.status} 
@@ -70,6 +83,37 @@ export const VehicleDetailSheet = ({
                   </SelectContent>
                 </Select>
               </div>
+            </div>
+          </div>
+          
+          {/* Actions déplacées en haut pour une meilleure visibilité */}
+          <div className="space-y-4 pt-2 pb-4 border-t border-b border-gray-700">
+            <h3 className="text-lg font-medium text-white pt-4">Actions</h3>
+            <div className="space-y-3">
+              <Button className="w-full bg-[#9b87f5] hover:bg-[#8a76e5] text-white flex justify-start">
+                <FileText className="mr-2 h-5 w-5" />
+                Voir documents
+              </Button>
+              <Button variant="outline" className="w-full flex justify-start">
+                <Calendar className="mr-2 h-5 w-5" />
+                Planifier maintenance
+              </Button>
+              <Button variant="outline" className="w-full flex justify-start">
+                <Tool className="mr-2 h-5 w-5" />
+                Historique maintenance
+              </Button>
+              <Button variant="outline" className="w-full flex justify-start">
+                <Map className="mr-2 h-5 w-5" />
+                Localiser véhicule
+              </Button>
+              <Button variant="outline" className="w-full flex justify-start">
+                <Settings className="mr-2 h-5 w-5" />
+                Modifier
+              </Button>
+              <Button variant="outline" className="w-full text-red-400 hover:text-red-300 hover:border-red-400 flex justify-start">
+                <AlertTriangle className="mr-2 h-5 w-5" />
+                Supprimer
+              </Button>
             </div>
           </div>
           
@@ -90,31 +134,14 @@ export const VehicleDetailSheet = ({
               <p className="text-sm text-gray-400">Type</p>
               <p className="text-white">{vehicle.type}</p>
             </div>
-            <div className="space-y-1 col-span-2">
+            {/* Numéro de véhicule et immatriculation sur la même ligne */}
+            <div className="space-y-1">
               <p className="text-sm text-gray-400">Numéro véhicule</p>
               <p className="text-white">{vehicle.vehicle_number}</p>
             </div>
-            <div className="space-y-1 col-span-2">
+            <div className="space-y-1">
               <p className="text-sm text-gray-400">Immatriculation</p>
-              <p className="text-white">{vehicle.plate}</p>
-            </div>
-          </div>
-          
-          <div className="pt-6 space-y-4">
-            <h3 className="text-lg font-medium text-white">Actions</h3>
-            <div className="grid grid-cols-2 gap-3">
-              <Button variant="outline" className="w-full">
-                Modifier
-              </Button>
-              <Button variant="outline" className="w-full text-red-400 hover:text-red-300 hover:border-red-400">
-                Supprimer
-              </Button>
-              <Button className="w-full col-span-2 bg-[#9b87f5] hover:bg-[#8a76e5] text-white">
-                Voir documents
-              </Button>
-              <Button variant="outline" className="w-full col-span-2">
-                Planifier maintenance
-              </Button>
+              <p className="text-white">{formatPlate(vehicle.plate)}</p>
             </div>
           </div>
         </div>
