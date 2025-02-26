@@ -86,37 +86,7 @@ export const VehicleDetailSheet = ({
             </div>
           </div>
           
-          {/* Actions déplacées en haut pour une meilleure visibilité */}
-          <div className="space-y-4 pt-2 pb-4 border-t border-b border-gray-700">
-            <h3 className="text-lg font-medium text-white pt-4">Actions</h3>
-            <div className="space-y-3">
-              <Button className="w-full bg-[#9b87f5] hover:bg-[#8a76e5] text-white flex justify-start">
-                <FileText className="mr-2 h-5 w-5" />
-                Voir documents
-              </Button>
-              <Button variant="outline" className="w-full flex justify-start">
-                <Calendar className="mr-2 h-5 w-5" />
-                Planifier maintenance
-              </Button>
-              <Button variant="outline" className="w-full flex justify-start">
-                <Wrench className="mr-2 h-5 w-5" />
-                Historique maintenance
-              </Button>
-              <Button variant="outline" className="w-full flex justify-start">
-                <Map className="mr-2 h-5 w-5" />
-                Localiser véhicule
-              </Button>
-              <Button variant="outline" className="w-full flex justify-start">
-                <Settings className="mr-2 h-5 w-5" />
-                Modifier
-              </Button>
-              <Button variant="outline" className="w-full text-red-400 hover:text-red-300 hover:border-red-400 flex justify-start">
-                <AlertTriangle className="mr-2 h-5 w-5" />
-                Supprimer
-              </Button>
-            </div>
-          </div>
-          
+          {/* Détails du véhicule placés avant la section Actions */}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1">
               <p className="text-sm text-gray-400">Marque</p>
@@ -142,6 +112,83 @@ export const VehicleDetailSheet = ({
             <div className="space-y-1">
               <p className="text-sm text-gray-400">Immatriculation</p>
               <p className="text-white">{formatPlate(vehicle.plate)}</p>
+            </div>
+          </div>
+          
+          {/* Section Actions */}
+          <div className="space-y-4 pt-2 pb-4 border-t border-b border-gray-700">
+            <h3 className="text-lg font-medium text-white pt-4">Actions</h3>
+            <div className="grid grid-cols-2 gap-3">
+              <Button 
+                className="bg-[#9b87f5] hover:bg-[#8a76e5] text-white" 
+                onClick={() => {
+                  console.log("Voir les documents du véhicule", vehicle.id);
+                  toast.info("Ouverture des documents...");
+                }}
+              >
+                <FileText className="mr-2 h-5 w-5" />
+                Documents
+              </Button>
+              
+              <Button 
+                variant="outline" 
+                className="border-gray-600 hover:bg-gray-700 text-white" 
+                onClick={() => {
+                  console.log("Planifier maintenance pour", vehicle.id);
+                  toast.info("Ouverture du planificateur de maintenance...");
+                }}
+              >
+                <Calendar className="mr-2 h-5 w-5" />
+                Planifier
+              </Button>
+              
+              <Button 
+                variant="outline" 
+                className="border-gray-600 hover:bg-gray-700 text-white" 
+                onClick={() => {
+                  console.log("Historique de maintenance pour", vehicle.id);
+                  toast.info("Chargement de l'historique de maintenance...");
+                }}
+              >
+                <Wrench className="mr-2 h-5 w-5" />
+                Historique
+              </Button>
+              
+              <Button 
+                variant="outline" 
+                className="border-gray-600 hover:bg-gray-700 text-white" 
+                onClick={() => {
+                  console.log("Localiser le véhicule", vehicle.id);
+                  toast.info("Chargement de la carte...");
+                }}
+              >
+                <Map className="mr-2 h-5 w-5" />
+                Localiser
+              </Button>
+              
+              <Button 
+                variant="outline" 
+                className="border-gray-600 hover:bg-gray-700 text-white" 
+                onClick={() => {
+                  console.log("Modifier le véhicule", vehicle.id);
+                  toast.info("Ouverture du formulaire de modification...");
+                }}
+              >
+                <Settings className="mr-2 h-5 w-5" />
+                Modifier
+              </Button>
+              
+              <Button 
+                variant="outline" 
+                className="text-red-400 hover:text-red-300 hover:border-red-400 hover:bg-red-400/10" 
+                onClick={() => {
+                  console.log("Demande de suppression du véhicule", vehicle.id);
+                  toast.error("Opération de suppression non autorisée");
+                }}
+              >
+                <AlertTriangle className="mr-2 h-5 w-5" />
+                Supprimer
+              </Button>
             </div>
           </div>
         </div>
