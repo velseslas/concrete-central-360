@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Users, Package, CreditCard, FileText, Truck, ShoppingCart, Factory } from "lucide-react";
 import { motion } from "framer-motion";
@@ -162,12 +163,9 @@ const Suppliers = () => {
 
   return (
     <motion.div 
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
       className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100"
     >
-      <div className="container mx-auto p-6 space-y-6">
+      <div className="container mx-auto space-y-6">
         {renderContent()}
       </div>
     </motion.div>

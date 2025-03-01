@@ -1,6 +1,6 @@
 
 import { motion } from "framer-motion";
-import { ArrowLeft, Search, Plus } from "lucide-react";
+import { Search, Plus } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
@@ -30,15 +30,6 @@ const VehicleList = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-end">
-        <Link to="/vehicles">
-          <Button variant="outline" className="gap-2">
-            <ArrowLeft className="h-4 w-4" />
-            Retour aux véhicules
-          </Button>
-        </Link>
-      </div>
-
       <div className="flex justify-end">
         <Dialog>
           <DialogTrigger asChild>

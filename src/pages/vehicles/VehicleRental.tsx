@@ -1,9 +1,7 @@
 
 import { motion } from "framer-motion";
-import { ClipboardList, CalendarDays, FileText, BarChart3, ArrowLeft } from "lucide-react";
+import { ClipboardList, CalendarDays, FileText, BarChart3 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
 
 const rentalStats = [
   {
@@ -39,15 +37,6 @@ const rentalStats = [
 const VehicleRental = () => {
   return (
     <div className="space-y-6">
-      <div className="flex justify-end">
-        <Link to="/vehicles">
-          <Button variant="outline" className="gap-2">
-            <ArrowLeft className="h-4 w-4" />
-            Retour aux véhicules
-          </Button>
-        </Link>
-      </div>
-
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
