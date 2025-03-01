@@ -498,7 +498,7 @@ export const VehicleDetailSheet = ({
       </Dialog>
 
       {/* AlertDialog pour la confirmation de suppression */}
-      <AlertDialog open={deleteOpen} onOpenChange={setDeleteOpen}>
+      <AlertDialog open={deleteOpen}>
         <AlertDialogContent className="bg-gray-800 text-white border-gray-700">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-white">Êtes-vous sûr ?</AlertDialogTitle>
@@ -508,7 +508,10 @@ export const VehicleDetailSheet = ({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="bg-gray-700 text-white border-gray-600 hover:bg-gray-600">
+            <AlertDialogCancel 
+              className="bg-gray-700 text-white border-gray-600 hover:bg-gray-600"
+              onClick={() => setDeleteOpen(false)}
+            >
               Annuler
             </AlertDialogCancel>
             <AlertDialogAction 
