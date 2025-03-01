@@ -1,14 +1,16 @@
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { FormulationBasicInfo } from "./FormulationBasicInfo";
 import { FormulationSablesSection } from "./FormulationSablesSection";
 import { FormulationGraviersSection } from "./FormulationGraviersSection";
 import { FormulationAdditionalSection } from "./FormulationAdditionalSection";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
 
 const formulationSchema = z.object({
   nom: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
@@ -50,6 +52,12 @@ export function FormulationForm({ open, onOpenChange, onSubmit }: FormulationFor
     },
   });
 
+  const handleSubmit = (data: FormulationFormValues) => {
+    onSubmit(data);
+    toast.success("Formulation créée avec succès!");
+    form.reset();
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[800px] max-h-[90vh] overflow-y-auto bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 backdrop-blur-xl border border-gray-700/50 text-white shadow-2xl">
@@ -57,9 +65,12 @@ export function FormulationForm({ open, onOpenChange, onSubmit }: FormulationFor
           <DialogTitle className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
             Nouvelle formulation
           </DialogTitle>
+          <DialogDescription className="text-gray-400">
+            Créez une nouvelle formulation de béton en renseignant les informations ci-dessous
+          </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6 mt-4">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}

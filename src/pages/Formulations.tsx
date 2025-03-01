@@ -6,11 +6,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Beaker, Plus, Calendar, ArrowUpRight, Printer } from "lucide-react";
 import { motion } from "framer-motion";
-import { FormulationForm } from "@/components/formulations/FormulationForm";
+import { FormulationForm, FormulationFormValues } from "@/components/formulations/FormulationForm";
 import { FormulationPreview } from "@/components/formulations/FormulationPreview";
+import { toast } from "sonner";
 
 const Formulations = () => {
-  const [formulations] = useState([
+  const [formulations, setFormulations] = useState([
     {
       id: "1",
       name: "B25",
@@ -48,9 +49,22 @@ const Formulations = () => {
     );
   };
 
-  const handleFormSubmit = (data: any) => {
+  const handleFormSubmit = (data: FormulationFormValues) => {
     console.log("Form data:", data);
+    
+    // Ajouter la nouvelle formulation à la liste
+    const newFormulation = {
+      id: (formulations.length + 1).toString(),
+      name: data.nom,
+      type: "Standard",
+      resistance: data.resistance,
+      status: "active" as "active",
+      lastModified: new Date().toISOString().split('T')[0],
+    };
+    
+    setFormulations([...formulations, newFormulation]);
     setIsFormOpen(false);
+    toast.success("Formulation créée avec succès!");
   };
 
   const handlePreview = (formulation: any) => {
