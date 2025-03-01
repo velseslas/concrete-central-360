@@ -29,31 +29,31 @@ const VehicleList = () => {
   };
 
   return (
-    <div className="space-y-6 p-6">
-      <div className="flex flex-col gap-4">
+    <div className="space-y-6">
+      <div className="flex justify-end">
         <Link to="/vehicles">
           <Button variant="outline" className="gap-2">
             <ArrowLeft className="h-4 w-4" />
             Retour aux véhicules
           </Button>
         </Link>
-        <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-bold text-white">Liste des Véhicules</h1>
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button className="gap-2 bg-[#9b87f5] hover:bg-[#8a76e5] text-white">
-                <Plus className="h-4 w-4" />
-                Nouveau véhicule
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="bg-gray-800 border-gray-700 text-white max-w-2xl">
-              <DialogHeader>
-                <DialogTitle className="text-white text-xl">Ajouter un nouveau véhicule</DialogTitle>
-              </DialogHeader>
-              <VehicleForm onComplete={() => navigate("/vehicles/list")} />
-            </DialogContent>
-          </Dialog>
-        </div>
+      </div>
+
+      <div className="flex justify-end">
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button className="gap-2 bg-[#9b87f5] hover:bg-[#8a76e5] text-white">
+              <Plus className="h-4 w-4" />
+              Nouveau véhicule
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="bg-gray-800 border-gray-700 text-white max-w-2xl">
+            <DialogHeader>
+              <DialogTitle className="text-white text-xl">Ajouter un nouveau véhicule</DialogTitle>
+            </DialogHeader>
+            <VehicleForm onComplete={() => navigate("/vehicles/list")} />
+          </DialogContent>
+        </Dialog>
       </div>
 
       <Card className="bg-gray-800/50 border-gray-700">

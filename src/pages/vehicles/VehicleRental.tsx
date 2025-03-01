@@ -38,17 +38,14 @@ const rentalStats = [
 
 const VehicleRental = () => {
   return (
-    <div className="space-y-6 p-6">
-      <div className="flex flex-col gap-4">
+    <div className="space-y-6">
+      <div className="flex justify-end">
         <Link to="/vehicles">
           <Button variant="outline" className="gap-2">
             <ArrowLeft className="h-4 w-4" />
             Retour aux véhicules
           </Button>
         </Link>
-        <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-bold text-white">Gestion des Locations</h1>
-        </div>
       </div>
 
       <motion.div 
