@@ -52,22 +52,58 @@ export function FormulationPreview({ open, onOpenChange, formulation }: Formulat
         <style>
           {`
             @media print {
-              .print-buttons, .dialog-header, .overflow-indicator {
+              /* Hide UI elements during print */
+              .print-buttons, 
+              .dialog-header, 
+              .overflow-indicator, 
+              #lovable-badge-root,
+              .dialog-close-button {
                 display: none !important;
               }
+              
+              /* Control page layout */
               body, html {
+                margin: 0 !important;
+                padding: 0 !important;
                 overflow: visible !important;
                 background: white !important;
+                height: auto !important;
+                width: auto !important;
+                box-shadow: none !important;
               }
+              
+              /* Single page printing */
               .print-content {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
+                position: relative !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
                 overflow: visible !important;
+                box-shadow: none !important;
+                page-break-inside: avoid !important;
               }
+              
+              /* Hide dialog container */
+              .fixed, .inset-0, [data-state] {
+                position: relative !important;
+                overflow: visible !important;
+                background: white !important;
+                border: none !important;
+                box-shadow: none !important;
+              }
+              
+              /* Hide scrollbars */
               ::-webkit-scrollbar {
                 display: none !important;
+                width: 0 !important;
+              }
+              
+              /* Reset transformations */
+              .translate-x-[-50%],
+              .translate-y-[-50%] {
+                transform: none !important;
               }
             }
           `}
