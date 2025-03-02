@@ -49,65 +49,80 @@ export function FormulationPreview({ open, onOpenChange, formulation }: Formulat
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[800px] max-h-[90vh] overflow-y-auto bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-700/50">
-        <style>
-          {`
-            @media print {
-              /* Hide UI elements during print */
-              .print-buttons, 
-              .dialog-header, 
-              .overflow-indicator, 
-              #lovable-badge-root,
-              .dialog-close-button {
-                display: none !important;
-              }
-              
-              /* Control page layout */
-              body, html {
-                margin: 0 !important;
-                padding: 0 !important;
-                overflow: visible !important;
-                background: white !important;
-                height: auto !important;
-                width: auto !important;
-                box-shadow: none !important;
-              }
-              
-              /* Single page printing */
-              .print-content {
-                position: relative !important;
-                left: 0 !important;
-                top: 0 !important;
-                width: 100% !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                overflow: visible !important;
-                box-shadow: none !important;
-                page-break-inside: avoid !important;
-              }
-              
-              /* Hide dialog container */
-              .fixed, .inset-0, [data-state] {
-                position: relative !important;
-                overflow: visible !important;
-                background: white !important;
-                border: none !important;
-                box-shadow: none !important;
-              }
-              
-              /* Hide scrollbars */
-              ::-webkit-scrollbar {
-                display: none !important;
-                width: 0 !important;
-              }
-              
-              /* Reset transformations */
-              .translate-x-[-50%],
-              .translate-y-[-50%] {
-                transform: none !important;
-              }
+        <style jsx global>{`
+          @media print {
+            /* Hide everything except for the print content */
+            body * {
+              visibility: hidden;
             }
-          `}
-        </style>
+            
+            /* Hide all Lovable UI elements */
+            #lovable-badge-root,
+            #lovable-loading-root {
+              display: none !important;
+            }
+            
+            /* Hide all UI navigation elements */
+            nav, 
+            header, 
+            .sidebar, 
+            .print-buttons, 
+            .dialog-header, 
+            .dialog-close-button, 
+            [data-radix-popper-content-wrapper] {
+              display: none !important;
+            }
+            
+            /* Show only the print content */
+            .print-content,
+            .print-content * {
+              visibility: visible;
+              position: static !important;
+              width: 100% !important;
+              height: auto !important;
+              overflow: visible !important;
+            }
+
+            /* Reset all fixed positioning */
+            .DialogContent,
+            .DialogOverlay,
+            .fixed,
+            .inset-0 {
+              position: relative !important;
+              top: 0 !important;
+              left: 0 !important;
+              right: auto !important;
+              bottom: auto !important;
+              transform: none !important;
+              box-shadow: none !important;
+              margin: 0 !important;
+              padding: 0 !important;
+              max-height: none !important;
+              max-width: none !important;
+              border: none !important;
+              background: white !important;
+            }
+            
+            /* Ensure clean page breaks */
+            .print-content {
+              page-break-inside: avoid;
+              break-inside: avoid;
+            }
+            
+            /* Remove all dialog portal and backdrop styles */
+            [data-state="open"] {
+              animation: none !important;
+              opacity: 1 !important;
+              transform: none !important;
+            }
+            
+            /* Remove any fixed width/height constraints */
+            .translate-x-[-50%],
+            .translate-y-[-50%] {
+              transform: none !important;
+            }
+          }
+        `}</style>
         
         <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4 dialog-header">
           <div className="flex-1">
