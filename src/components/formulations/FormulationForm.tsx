@@ -60,8 +60,8 @@ export function FormulationForm({ open, onOpenChange, onSubmit }: FormulationFor
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[800px] max-h-[90vh] overflow-y-auto bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 backdrop-blur-xl border border-gray-700/50 text-white shadow-2xl">
-        <DialogHeader>
+      <DialogContent className="sm:max-w-[800px] h-[90vh] overflow-y-auto bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 backdrop-blur-xl border border-gray-700/50 text-white shadow-2xl">
+        <DialogHeader className="sticky top-0 z-10 bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 pb-4">
           <DialogTitle className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
             Nouvelle formulation
           </DialogTitle>
@@ -70,48 +70,50 @@ export function FormulationForm({ open, onOpenChange, onSubmit }: FormulationFor
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6 mt-4">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 p-6"
-            >
-              <FormulationBasicInfo form={form} />
-            </motion.div>
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+            <div className="space-y-6 pb-20"> {/* Added container with padding-bottom to ensure all content is visible */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 p-6"
+              >
+                <FormulationBasicInfo form={form} />
+              </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 p-6"
-            >
-              <FormulationSablesSection form={form} />
-            </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 p-6"
+              >
+                <FormulationSablesSection form={form} />
+              </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 p-6"
-            >
-              <FormulationGraviersSection form={form} />
-            </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 p-6"
+              >
+                <FormulationGraviersSection form={form} />
+              </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 p-6"
-            >
-              <FormulationAdditionalSection form={form} />
-            </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 p-6"
+              >
+                <FormulationAdditionalSection form={form} />
+              </motion.div>
+            </div>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="flex justify-end space-x-3 pt-6 border-t border-gray-700/50"
+              className="flex justify-end space-x-3 pt-6 border-t border-gray-700/50 sticky bottom-0 bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 p-4"
             >
               <Button 
                 type="button"
