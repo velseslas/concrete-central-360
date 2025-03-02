@@ -49,13 +49,37 @@ export function FormulationPreview({ open, onOpenChange, formulation }: Formulat
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[800px] max-h-[90vh] overflow-y-auto bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-700/50">
-        <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+        <style>
+          {`
+            @media print {
+              .print-buttons, .dialog-header, .overflow-indicator {
+                display: none !important;
+              }
+              body, html {
+                overflow: visible !important;
+                background: white !important;
+              }
+              .print-content {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                overflow: visible !important;
+              }
+              ::-webkit-scrollbar {
+                display: none !important;
+              }
+            }
+          `}
+        </style>
+        
+        <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4 dialog-header">
           <div className="flex-1">
             <DialogTitle className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
               Formulation {formulation.name}
             </DialogTitle>
           </div>
-          <div className="flex gap-4 mr-8">
+          <div className="flex gap-4 mr-8 print-buttons">
             <Button 
               onClick={handlePrint}
               className="cursor-pointer bg-gradient-to-r from-[#9b87f5]/20 to-[#7E69AB]/20 hover:from-[#9b87f5]/30 hover:to-[#7E69AB]/30 text-[#9b87f5] hover:text-white border border-[#9b87f5]/30"
@@ -73,7 +97,7 @@ export function FormulationPreview({ open, onOpenChange, formulation }: Formulat
           </div>
         </DialogHeader>
 
-        <div ref={contentRef} className="bg-white text-black p-8 rounded-lg">
+        <div ref={contentRef} className="bg-white text-black p-8 rounded-lg print-content">
           <div className="space-y-6">
             <div className="border-b pb-4">
               <h2 className="text-2xl font-bold text-gray-900">{formulation.name}</h2>
