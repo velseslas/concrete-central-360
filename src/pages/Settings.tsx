@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -93,15 +94,19 @@ export default function Settings() {
 
   return (
     <div className="container mx-auto px-4 py-6">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
-        <div>
-          <h1 className="text-3xl font-bold text-white">Paramètres</h1>
-          <p className="text-gray-400 mt-2">Configurez votre application selon vos besoins</p>
+      <div className="relative mb-10 bg-gray-800 p-6 rounded-xl shadow-lg">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+          <div>
+            <h1 className="text-3xl font-bold text-white">Paramètres</h1>
+            <p className="text-gray-400 mt-2">Configurez votre application selon vos besoins</p>
+          </div>
+          <div className="sm:absolute sm:right-6 sm:top-1/2 sm:transform sm:-translate-y-1/2">
+            <PlantSwitcher 
+              selectedPlant={selectedPlant} 
+              setSelectedPlant={setSelectedPlant} 
+            />
+          </div>
         </div>
-        <PlantSwitcher 
-          selectedPlant={selectedPlant} 
-          setSelectedPlant={setSelectedPlant} 
-        />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -111,6 +116,9 @@ export default function Settings() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.05 }}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
+            className="h-full"
           >
             <SettingsCard 
               title={module.title}
@@ -140,9 +148,9 @@ type SettingsCardProps = {
 
 function SettingsCard({ title, description, icon: Icon, color, bgColor, path, plant }: SettingsCardProps) {
   return (
-    <Card className="bg-gray-800 border-gray-700 hover:border-gray-600 transition-all hover:shadow-xl cursor-pointer h-full">
-      <CardHeader className="flex flex-row items-center gap-4">
-        <div className={`p-3 rounded-lg ${bgColor}`}>
+    <Card className="bg-gray-800 border-gray-700 hover:border-gray-500 transition-all hover:shadow-lg hover:shadow-gray-900/30 cursor-pointer h-full overflow-hidden group">
+      <CardHeader className="flex flex-row items-center gap-4 pb-2">
+        <div className={`p-3 rounded-lg ${bgColor} transition-all duration-300 group-hover:scale-110`}>
           <Icon className={`h-6 w-6 ${color}`} />
         </div>
         <div>
@@ -151,8 +159,11 @@ function SettingsCard({ title, description, icon: Icon, color, bgColor, path, pl
       </CardHeader>
       <CardContent>
         <CardDescription className="text-gray-400 min-h-[2.5rem]">{description}</CardDescription>
-        <div className="mt-4 flex justify-end">
-          <Button variant="ghost" className="text-sm">
+        <div className="mt-6 flex justify-end">
+          <Button 
+            variant="ghost" 
+            className="text-sm text-blue-400 hover:text-blue-300 hover:bg-blue-950/30 transition-colors"
+          >
             Configurer
             <span className="sr-only">Configurer {title} pour {plant}</span>
           </Button>

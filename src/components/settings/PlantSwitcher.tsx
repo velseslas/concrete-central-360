@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
 
 type PlantSwitcherProps = {
   selectedPlant: string;
@@ -46,28 +47,37 @@ export function PlantSwitcher({ selectedPlant, setSelectedPlant }: PlantSwitcher
       <div className="flex items-center gap-4">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="bg-gray-800 border-gray-700 text-white">
-              <Factory className="mr-2 h-4 w-4 text-blue-400" />
-              {selectedPlant}
-              <ChevronDown className="ml-2 h-4 w-4 opacity-50" />
+            <Button variant="outline" className="bg-gray-800 border-gray-600 hover:bg-gray-700 hover:border-gray-500 text-white px-4 py-2 rounded-lg flex items-center gap-2 min-w-40 justify-between">
+              <div className="flex items-center gap-2">
+                <motion.div
+                  animate={{ rotate: [0, 10, -10, 0] }}
+                  transition={{ duration: 1, repeat: Infinity, repeatDelay: 5 }}
+                >
+                  <Factory className="h-5 w-5 text-blue-400" />
+                </motion.div>
+                <span className="font-medium">{selectedPlant}</span>
+              </div>
+              <ChevronDown className="h-4 w-4 opacity-70" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="bg-gray-800 border-gray-700 text-white">
+          <DropdownMenuContent align="end" className="bg-gray-800 border-gray-700 text-white w-52">
             {plants.map((plant) => (
               <DropdownMenuItem
                 key={plant}
                 onClick={() => setSelectedPlant(plant)}
-                className={selectedPlant === plant ? "bg-gray-700" : ""}
+                className={`flex items-center gap-2 px-3 py-2 text-sm rounded-md transition-colors ${
+                  selectedPlant === plant ? "bg-gray-700 text-blue-400" : "hover:bg-gray-700"
+                }`}
               >
-                <Factory className="mr-2 h-4 w-4 text-blue-400" />
+                <Factory className="h-4 w-4 text-blue-400" />
                 {plant}
               </DropdownMenuItem>
             ))}
             <DropdownMenuItem 
               onClick={() => setIsDialogOpen(true)}
-              className="text-green-400"
+              className="flex items-center gap-2 px-3 py-2 text-sm rounded-md mt-1 border-t border-gray-700 text-green-400 hover:bg-green-900/30 transition-colors"
             >
-              <Plus className="mr-2 h-4 w-4" />
+              <Plus className="h-4 w-4" />
               Ajouter une centrale
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -77,14 +87,17 @@ export function PlantSwitcher({ selectedPlant, setSelectedPlant }: PlantSwitcher
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="bg-gray-800 border-gray-700 text-white">
           <DialogHeader>
-            <DialogTitle>Ajouter une nouvelle centrale à béton</DialogTitle>
+            <DialogTitle className="text-xl font-bold flex items-center gap-2">
+              <Factory className="h-5 w-5 text-blue-400" />
+              Ajouter une nouvelle centrale
+            </DialogTitle>
             <DialogDescription className="text-gray-400">
               Créez une nouvelle centrale pour gérer des paramètres spécifiques.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
+              <Label htmlFor="name" className="text-right text-white">
                 Nom
               </Label>
               <Input
@@ -92,20 +105,31 @@ export function PlantSwitcher({ selectedPlant, setSelectedPlant }: PlantSwitcher
                 value={newPlantName}
                 onChange={(e) => setNewPlantName(e.target.value)}
                 placeholder="Nom de la centrale"
-                className="col-span-3 bg-gray-700 border-gray-600"
+                className="col-span-3 bg-gray-700 border-gray-600 text-white focus:border-blue-500"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleAddPlant();
+                  }
+                }}
               />
             </div>
           </div>
-          <DialogFooter>
+          <DialogFooter className="gap-2">
             <Button 
               type="button" 
               variant="outline" 
               onClick={() => setIsDialogOpen(false)}
-              className="bg-gray-700 border-gray-600 text-white"
+              className="bg-gray-700 border-gray-600 text-white hover:bg-gray-600"
             >
               Annuler
             </Button>
-            <Button type="button" onClick={handleAddPlant}>Ajouter</Button>
+            <Button 
+              type="button" 
+              onClick={handleAddPlant}
+              className="bg-blue-600 hover:bg-blue-500 text-white"
+            >
+              Ajouter
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
