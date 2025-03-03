@@ -1,8 +1,9 @@
+
 import { Link, useLocation } from "react-router-dom";
 import { 
   Home, Users, TestTube, Truck, Car, 
   DollarSign, FileSpreadsheet, Factory, Receipt, 
-  CreditCard, Building2, Calculator
+  CreditCard, Building2, Calculator, Settings, LogOut, UserCircle
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -45,6 +46,9 @@ export function Sidebar() {
         }
       ]
     },
+    { to: "/employees", icon: UserCircle, label: "Employés", iconColor: "text-amber-500" },
+    { to: "/settings", icon: Settings, label: "Paramètres", iconColor: "text-teal-500" },
+    { to: "/logout", icon: LogOut, label: "Quitter", iconColor: "text-red-600" },
   ];
 
   return (
