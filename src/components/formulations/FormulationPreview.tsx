@@ -49,7 +49,7 @@ export function FormulationPreview({ open, onOpenChange, formulation }: Formulat
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[800px] max-h-[90vh] overflow-y-auto bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-700/50">
-        <style jsx global>{`
+        <style dangerouslySetInnerHTML={{ __html: `
           @media print {
             /* Hide everything except for the print content */
             body * {
@@ -122,7 +122,7 @@ export function FormulationPreview({ open, onOpenChange, formulation }: Formulat
               transform: none !important;
             }
           }
-        `}</style>
+        `}} />
         
         <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4 dialog-header">
           <div className="flex-1">
