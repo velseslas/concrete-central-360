@@ -25,6 +25,7 @@ import VehicleDocuments from "./pages/vehicles/VehicleDocuments";
 import { LazyMotion, domAnimation } from "framer-motion";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
+import Settings from "./pages/Settings";
 
 const queryClient = new QueryClient();
 
@@ -68,7 +69,7 @@ function App() {
                     <Route path="/finance/reports" element={<Reports />} />
                     <Route path="/finance/quotes" element={<Quotes />} />
                     <Route path="/employees" element={<div className="p-4 bg-gray-800 rounded-lg text-white">Page des employés en construction</div>} />
-                    <Route path="/settings" element={<div className="p-4 bg-gray-800 rounded-lg text-white">Page des paramètres en construction</div>} />
+                    <Route path="/settings" element={<Settings />} />
                     <Route 
                       path="/logout" 
                       element={
