@@ -1,8 +1,7 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Building2, Percent, Accessibility, Factory, Database, FileText, Tool, Languages, MapPin, LayoutGrid } from "lucide-react";
+import { Building2, Percent, Accessibility, Factory, Database, FileText, Wrench, Languages, MapPin, LayoutGrid } from "lucide-react";
 import { PlantSwitcher } from "@/components/settings/PlantSwitcher";
 import { motion } from "framer-motion";
 
@@ -61,7 +60,7 @@ export default function Settings() {
     {
       title: "Maintenance",
       description: "Planification de maintenance",
-      icon: Tool,
+      icon: Wrench,
       color: "text-rose-500",
       bgColor: "bg-rose-100",
       path: "/settings/maintenance"
