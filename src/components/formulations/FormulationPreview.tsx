@@ -77,46 +77,66 @@ export function FormulationPreview({ open, onOpenChange, formulation }: Formulat
             .print-content,
             .print-content * {
               visibility: visible;
+              color: black !important;
               position: static !important;
               width: 100% !important;
               height: auto !important;
               overflow: visible !important;
+              background: white !important;
+              margin: 0 !important;
+              padding: 0 !important;
+              top: 0 !important;
+              left: 0 !important;
+              transform: none !important;
+              box-shadow: none !important;
+              border: none !important;
             }
-
-            /* Reset all fixed positioning */
+            
+            /* Ensure proper positioning and scaling for print */
+            .print-content {
+              display: block !important;
+              width: 100% !important;
+              max-width: 100% !important;
+              margin: 0 !important;
+              padding: 20px !important;
+              position: absolute !important;
+              left: 0 !important;
+              top: 0 !important;
+              page-break-inside: avoid !important;
+              page-break-before: avoid !important;
+              page-break-after: avoid !important;
+            }
+            
+            /* Reset all Dialog styles that might affect print layout */
             .DialogContent,
             .DialogOverlay,
             .fixed,
             .inset-0 {
-              position: relative !important;
-              top: 0 !important;
-              left: 0 !important;
-              right: auto !important;
-              bottom: auto !important;
+              position: static !important;
               transform: none !important;
-              box-shadow: none !important;
-              margin: 0 !important;
-              padding: 0 !important;
+              width: 100% !important;
+              height: auto !important;
               max-height: none !important;
               max-width: none !important;
-              border: none !important;
+              overflow: visible !important;
               background: white !important;
             }
             
-            /* Ensure clean page breaks */
-            .print-content {
-              page-break-inside: avoid;
-              break-inside: avoid;
+            /* Improve grid layout for print */
+            .grid {
+              display: block !important;
+              width: 100% !important;
             }
             
-            /* Remove all dialog portal and backdrop styles */
-            [data-state="open"] {
-              animation: none !important;
-              opacity: 1 !important;
-              transform: none !important;
+            /* Make cards display as inline-blocks for better print layout */
+            .grid > div {
+              display: inline-block !important;
+              width: 45% !important;
+              margin: 0.5em 2% !important;
+              page-break-inside: avoid !important;
             }
             
-            /* Remove any fixed width/height constraints */
+            /* Remove transformations that can cause duplication */
             .translate-x-[-50%],
             .translate-y-[-50%] {
               transform: none !important;
@@ -149,82 +169,82 @@ export function FormulationPreview({ open, onOpenChange, formulation }: Formulat
         </DialogHeader>
 
         <div ref={contentRef} className="bg-white text-black p-8 rounded-lg print-content">
-          <div className="space-y-6">
-            <div className="border-b pb-4">
-              <h2 className="text-2xl font-bold text-gray-900">{formulation.name}</h2>
-              <p className="text-gray-600">{formulation.type}</p>
+          <div className="space-y-4 max-w-[700px] mx-auto">
+            <div className="border-b pb-3">
+              <h2 className="text-xl font-bold text-gray-900 mb-1">{formulation.name}</h2>
+              <p className="text-gray-600 text-sm">{formulation.type}</p>
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-4">
               <div>
-                <h3 className="font-semibold text-gray-900 mb-3">Granulats</h3>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  <div className="p-3 bg-gray-50 rounded shadow hover:shadow-md transition-shadow">
-                    <p className="text-sm text-gray-600">Sable 0/1</p>
-                    <p className="font-medium">300 kg/m³</p>
+                <h3 className="font-semibold text-gray-900 mb-2 text-md">Granulats</h3>
+                <div className="grid grid-cols-3 gap-3">
+                  <div className="p-2 bg-[#F1F0FB] rounded shadow-sm">
+                    <p className="text-xs text-gray-600">Sable 0/1</p>
+                    <p className="font-medium text-sm">300 kg/m³</p>
                   </div>
-                  <div className="p-3 bg-gray-50 rounded shadow hover:shadow-md transition-shadow">
-                    <p className="text-sm text-gray-600">Sable 0/3</p>
-                    <p className="font-medium">400 kg/m³</p>
+                  <div className="p-2 bg-[#F1F0FB] rounded shadow-sm">
+                    <p className="text-xs text-gray-600">Sable 0/3</p>
+                    <p className="font-medium text-sm">400 kg/m³</p>
                   </div>
-                  <div className="p-3 bg-gray-50 rounded shadow hover:shadow-md transition-shadow">
-                    <p className="text-sm text-gray-600">Sable 0/4</p>
-                    <p className="font-medium">350 kg/m³</p>
+                  <div className="p-2 bg-[#F1F0FB] rounded shadow-sm">
+                    <p className="text-xs text-gray-600">Sable 0/4</p>
+                    <p className="font-medium text-sm">350 kg/m³</p>
                   </div>
-                  <div className="p-3 bg-gray-50 rounded shadow hover:shadow-md transition-shadow">
-                    <p className="text-sm text-gray-600">Gravier 3/8</p>
-                    <p className="font-medium">500 kg/m³</p>
+                  <div className="p-2 bg-[#F1F0FB] rounded shadow-sm">
+                    <p className="text-xs text-gray-600">Gravier 3/8</p>
+                    <p className="font-medium text-sm">500 kg/m³</p>
                   </div>
-                  <div className="p-3 bg-gray-50 rounded shadow hover:shadow-md transition-shadow">
-                    <p className="text-sm text-gray-600">Gravier 8/15</p>
-                    <p className="font-medium">550 kg/m³</p>
+                  <div className="p-2 bg-[#F1F0FB] rounded shadow-sm">
+                    <p className="text-xs text-gray-600">Gravier 8/15</p>
+                    <p className="font-medium text-sm">550 kg/m³</p>
                   </div>
-                  <div className="p-3 bg-gray-50 rounded shadow hover:shadow-md transition-shadow">
-                    <p className="text-sm text-gray-600">Gravier 15/25</p>
-                    <p className="font-medium">600 kg/m³</p>
+                  <div className="p-2 bg-[#F1F0FB] rounded shadow-sm">
+                    <p className="text-xs text-gray-600">Gravier 15/25</p>
+                    <p className="font-medium text-sm">600 kg/m³</p>
                   </div>
                 </div>
               </div>
 
               <div>
-                <h3 className="font-semibold text-gray-900 mb-3">Liants et Additifs</h3>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  <div className="p-3 bg-gray-50 rounded shadow hover:shadow-md transition-shadow">
-                    <p className="text-sm text-gray-600">Ciment</p>
-                    <p className="font-medium">350 kg/m³</p>
+                <h3 className="font-semibold text-gray-900 mb-2 text-md">Liants et Additifs</h3>
+                <div className="grid grid-cols-3 gap-3">
+                  <div className="p-2 bg-[#E5DEFF] rounded shadow-sm">
+                    <p className="text-xs text-gray-600">Ciment</p>
+                    <p className="font-medium text-sm">350 kg/m³</p>
                   </div>
-                  <div className="p-3 bg-gray-50 rounded shadow hover:shadow-md transition-shadow">
-                    <p className="text-sm text-gray-600">Eau</p>
-                    <p className="font-medium">175 L/m³</p>
+                  <div className="p-2 bg-[#E5DEFF] rounded shadow-sm">
+                    <p className="text-xs text-gray-600">Eau</p>
+                    <p className="font-medium text-sm">175 L/m³</p>
                   </div>
-                  <div className="p-3 bg-gray-50 rounded shadow hover:shadow-md transition-shadow">
-                    <p className="text-sm text-gray-600">Adjuvant</p>
-                    <p className="font-medium">2.5 kg/m³</p>
+                  <div className="p-2 bg-[#E5DEFF] rounded shadow-sm">
+                    <p className="text-xs text-gray-600">Adjuvant</p>
+                    <p className="font-medium text-sm">2.5 kg/m³</p>
                   </div>
                 </div>
               </div>
 
               <div>
-                <h3 className="font-semibold text-gray-900 mb-3">Ratios</h3>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  <div className="p-3 bg-gray-50 rounded shadow hover:shadow-md transition-shadow">
-                    <p className="text-sm text-gray-600">Poids Total</p>
-                    <p className="font-medium">2877.5 kg/m³</p>
+                <h3 className="font-semibold text-gray-900 mb-2 text-md">Ratios</h3>
+                <div className="grid grid-cols-3 gap-3">
+                  <div className="p-2 bg-[#D3E4FD] rounded shadow-sm">
+                    <p className="text-xs text-gray-600">Poids Total</p>
+                    <p className="font-medium text-sm">2877.5 kg/m³</p>
                   </div>
-                  <div className="p-3 bg-gray-50 rounded shadow hover:shadow-md transition-shadow">
-                    <p className="text-sm text-gray-600">G/S</p>
-                    <p className="font-medium">1.57</p>
+                  <div className="p-2 bg-[#D3E4FD] rounded shadow-sm">
+                    <p className="text-xs text-gray-600">G/S</p>
+                    <p className="font-medium text-sm">1.57</p>
                   </div>
-                  <div className="p-3 bg-gray-50 rounded shadow hover:shadow-md transition-shadow">
-                    <p className="text-sm text-gray-600">E/C</p>
-                    <p className="font-medium">0.5</p>
+                  <div className="p-2 bg-[#D3E4FD] rounded shadow-sm">
+                    <p className="text-xs text-gray-600">E/C</p>
+                    <p className="font-medium text-sm">0.5</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="border-t pt-4">
-              <p className="text-sm text-gray-500 text-center">
+            <div className="border-t pt-3 mt-4">
+              <p className="text-xs text-gray-500 text-center">
                 Document généré le {new Date().toLocaleDateString()}
               </p>
             </div>
