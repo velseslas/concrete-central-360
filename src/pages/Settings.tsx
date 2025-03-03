@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Building2, Percent, Accessibility, Factory, Database, FileText, Wrench, Languages, MapPin, LayoutGrid } from "lucide-react";
 import { PlantSwitcher } from "@/components/settings/PlantSwitcher";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 export default function Settings() {
   const [selectedPlant, setSelectedPlant] = useState("Centrale 1");
@@ -120,15 +121,17 @@ export default function Settings() {
             whileTap={{ scale: 0.98 }}
             className="h-full"
           >
-            <SettingsCard 
-              title={module.title}
-              description={module.description}
-              icon={module.icon}
-              color={module.color}
-              bgColor={module.bgColor}
-              path={module.path}
-              plant={selectedPlant}
-            />
+            <Link to={module.path} className="block h-full">
+              <SettingsCard 
+                title={module.title}
+                description={module.description}
+                icon={module.icon}
+                color={module.color}
+                bgColor={module.bgColor}
+                path={module.path}
+                plant={selectedPlant}
+              />
+            </Link>
           </motion.div>
         ))}
       </div>
