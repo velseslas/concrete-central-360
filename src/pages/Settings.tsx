@@ -1,7 +1,6 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Building2, Percent, Accessibility, Factory, Database, FileText, Wrench, Languages, MapPin, LayoutGrid } from "lucide-react";
+import { Building2, Percent, Accessibility, Factory, Database, FileText, Wrench, Languages, MapPin, LayoutGrid, Lock } from "lucide-react";
 import { PlantSwitcher } from "@/components/settings/PlantSwitcher";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -89,6 +88,14 @@ export default function Settings() {
       color: "text-amber-500",
       bgColor: "bg-amber-100",
       path: "/settings/ui"
+    },
+    {
+      title: "Authentification",
+      description: "Gérer les utilisateurs et les rôles",
+      icon: Lock,
+      color: "text-red-500",
+      bgColor: "bg-red-100",
+      path: "/settings/auth"
     }
   ];
 

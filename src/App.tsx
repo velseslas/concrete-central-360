@@ -35,6 +35,7 @@ import LanguagesSettings from "./pages/settings/LanguagesSettings";
 import TemplatesSettings from "./pages/settings/TemplatesSettings";
 import DatabaseSettings from "./pages/settings/DatabaseSettings";
 import MaintenanceSettings from "./pages/settings/MaintenanceSettings";
+import AuthSettings from "./pages/settings/AuthSettings";
 
 const queryClient = new QueryClient();
 
@@ -88,6 +89,7 @@ function App() {
                     <Route path="/settings/templates" element={<TemplatesSettings />} />
                     <Route path="/settings/database" element={<DatabaseSettings />} />
                     <Route path="/settings/maintenance" element={<MaintenanceSettings />} />
+                    <Route path="/settings/auth" element={<AuthSettings />} />
                     <Route path="/settings/ui" element={<div className="p-4 bg-gray-800 rounded-lg text-white">Interface utilisateur en cours de développement</div>} />
                     <Route 
                       path="/logout" 
