@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Building2, ArrowLeft, CheckCircle2 } from "lucide-react";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
@@ -15,8 +14,10 @@ import { Link, useNavigate } from "react-router-dom";
 interface CompanyFormValues {
   name: string;
   legalName: string;
-  siret: string;
-  vat: string;
+  rc: string;
+  articleImpo: string;
+  nif: string;
+  nis: string;
   address: string;
   city: string;
   postalCode: string;
@@ -24,7 +25,9 @@ interface CompanyFormValues {
   phone: string;
   email: string;
   website: string;
-  description: string;
+  rib: string;
+  bank: string;
+  bankAddress: string;
   logo: string;
 }
 
@@ -36,9 +39,11 @@ export default function CompanySettings() {
   const form = useForm<CompanyFormValues>({
     defaultValues: {
       name: "BetaPlus",
-      legalName: "BetaPlus Construction SARL",
-      siret: "12345678901234",
-      vat: "FR12345678901",
+      legalName: "5,000,000 DA",
+      rc: "12345678901234",
+      articleImpo: "FR12345678901",
+      nif: "123456789012345",
+      nis: "987654321098765",
       address: "123 Rue du Béton",
       city: "Lyon",
       postalCode: "69000",
@@ -46,7 +51,9 @@ export default function CompanySettings() {
       phone: "+33 4 56 78 90 12",
       email: "contact@betaplus.fr",
       website: "www.betaplus.fr",
-      description: "Spécialistes de la production de béton pour le secteur de la construction depuis 1985.",
+      rib: "12345678901234567890",
+      bank: "Banque Nationale",
+      bankAddress: "45 Avenue Financière, Lyon",
       logo: "",
     },
   });
@@ -135,10 +142,10 @@ export default function CompanySettings() {
                       name="legalName"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-white">Raison sociale</FormLabel>
+                          <FormLabel className="text-white">Capital social</FormLabel>
                           <FormControl>
                             <Input 
-                              placeholder="Raison sociale" 
+                              placeholder="Capital social" 
                               className="bg-gray-700 border-gray-600 text-white"
                               {...field} 
                             />
@@ -149,16 +156,16 @@ export default function CompanySettings() {
                     />
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <FormField
                       control={form.control}
-                      name="siret"
+                      name="rc"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-white">SIRET</FormLabel>
+                          <FormLabel className="text-white">RC</FormLabel>
                           <FormControl>
                             <Input 
-                              placeholder="SIRET" 
+                              placeholder="RC" 
                               className="bg-gray-700 border-gray-600 text-white"
                               {...field} 
                             />
@@ -170,13 +177,51 @@ export default function CompanySettings() {
                     
                     <FormField
                       control={form.control}
-                      name="vat"
+                      name="articleImpo"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-white">N° TVA</FormLabel>
+                          <FormLabel className="text-white">ARTICLE IMPO</FormLabel>
                           <FormControl>
                             <Input 
-                              placeholder="Numéro de TVA" 
+                              placeholder="ARTICLE IMPO" 
+                              className="bg-gray-700 border-gray-600 text-white"
+                              {...field} 
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="nif"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-white">NIF</FormLabel>
+                          <FormControl>
+                            <Input 
+                              placeholder="NIF" 
+                              className="bg-gray-700 border-gray-600 text-white"
+                              {...field} 
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <FormField
+                      control={form.control}
+                      name="nis"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-white">NIS</FormLabel>
+                          <FormControl>
+                            <Input 
+                              placeholder="NIS" 
                               className="bg-gray-700 border-gray-600 text-white"
                               {...field} 
                             />
@@ -327,23 +372,66 @@ export default function CompanySettings() {
                       </div>
                     </div>
 
-                    <FormField
-                      control={form.control}
-                      name="description"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-white">Description</FormLabel>
-                          <FormControl>
-                            <Textarea 
-                              placeholder="Description de l'entreprise" 
-                              className="bg-gray-700 border-gray-600 text-white min-h-[100px]"
-                              {...field} 
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                    <div>
+                      <h3 className="text-lg font-medium text-white mb-4">Coordonnées bancaires</h3>
+                      <div className="grid grid-cols-1 gap-4">
+                        <FormField
+                          control={form.control}
+                          name="rib"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-white">RIB</FormLabel>
+                              <FormControl>
+                                <Input 
+                                  placeholder="RIB" 
+                                  className="bg-gray-700 border-gray-600 text-white"
+                                  {...field} 
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <FormField
+                            control={form.control}
+                            name="bank"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel className="text-white">Banque</FormLabel>
+                                <FormControl>
+                                  <Input 
+                                    placeholder="Banque" 
+                                    className="bg-gray-700 border-gray-600 text-white"
+                                    {...field} 
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          
+                          <FormField
+                            control={form.control}
+                            name="bankAddress"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel className="text-white">Adresse de la banque</FormLabel>
+                                <FormControl>
+                                  <Input 
+                                    placeholder="Adresse de la banque" 
+                                    className="bg-gray-700 border-gray-600 text-white"
+                                    {...field} 
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
                   <div className="pt-4 flex justify-end">

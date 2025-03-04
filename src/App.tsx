@@ -27,6 +27,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import Settings from "./pages/Settings";
 import CompanySettings from "./pages/settings/CompanySettings";
+import VatSettings from "./pages/settings/VatSettings";
+import PlantsSettings from "./pages/settings/PlantsSettings";
+import AccessibilitySettings from "./pages/settings/AccessibilitySettings";
 
 const queryClient = new QueryClient();
 
@@ -72,6 +75,9 @@ function App() {
                     <Route path="/employees" element={<div className="p-4 bg-gray-800 rounded-lg text-white">Page des employés en construction</div>} />
                     <Route path="/settings" element={<Settings />} />
                     <Route path="/settings/company" element={<CompanySettings />} />
+                    <Route path="/settings/vat" element={<VatSettings />} />
+                    <Route path="/settings/plants" element={<PlantsSettings />} />
+                    <Route path="/settings/accessibility" element={<AccessibilitySettings />} />
                     <Route 
                       path="/logout" 
                       element={
