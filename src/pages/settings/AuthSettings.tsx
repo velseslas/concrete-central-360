@@ -1,10 +1,10 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, Lock, Save, User, Users, Shield, Check, Plus, Trash2 } from "lucide-react";
+import { ArrowLeft, Lock, Save, User, Users, Shield, Check, Plus, Trash2, Clock, FileText } from "lucide-react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -30,9 +30,30 @@ interface Role {
   permissions: string[];
 }
 
+interface AuthLog {
+  id: string;
+  userId: string;
+  userEmail: string;
+  action: "login" | "logout";
+  timestamp: string;
+  ipAddress: string;
+  deviceInfo: string;
+}
+
+interface UserAction {
+  id: string;
+  userId: string;
+  userEmail: string;
+  action: string;
+  details: string;
+  timestamp: string;
+  module: string;
+}
+
 export default function AuthSettings() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState("users");
   
   const [users, setUsers] = useState<User[]>([
     { id: "1", email: "admin@example.com", role: "admin", active: true, lastLogin: "2023-09-10" },
@@ -62,6 +83,84 @@ export default function AuthSettings() {
     },
   ]);
 
+  const [authLogs, setAuthLogs] = useState<AuthLog[]>([
+    {
+      id: "1",
+      userId: "1",
+      userEmail: "admin@example.com",
+      action: "login",
+      timestamp: "2023-09-10 08:30:15",
+      ipAddress: "192.168.1.1",
+      deviceInfo: "Chrome 98.0.4758.102 - Windows 10"
+    },
+    {
+      id: "2",
+      userId: "1",
+      userEmail: "admin@example.com",
+      action: "logout",
+      timestamp: "2023-09-10 12:45:22",
+      ipAddress: "192.168.1.1",
+      deviceInfo: "Chrome 98.0.4758.102 - Windows 10"
+    },
+    {
+      id: "3",
+      userId: "2",
+      userEmail: "manager@example.com",
+      action: "login",
+      timestamp: "2023-09-15 09:12:33",
+      ipAddress: "192.168.1.5",
+      deviceInfo: "Firefox 97.0 - macOS 12.2"
+    },
+    {
+      id: "4",
+      userId: "3",
+      userEmail: "user@example.com",
+      action: "login",
+      timestamp: "2023-09-18 14:05:44",
+      ipAddress: "192.168.1.10",
+      deviceInfo: "Safari 15.3 - iOS 15.3"
+    }
+  ]);
+
+  const [userActions, setUserActions] = useState<UserAction[]>([
+    {
+      id: "1",
+      userId: "1",
+      userEmail: "admin@example.com",
+      action: "create",
+      details: "A créé un nouveau client: Entreprise ABC",
+      timestamp: "2023-09-10 09:15:22",
+      module: "clients"
+    },
+    {
+      id: "2",
+      userId: "1",
+      userEmail: "admin@example.com",
+      action: "update",
+      details: "A modifié les paramètres de TVA",
+      timestamp: "2023-09-10 10:32:45",
+      module: "settings"
+    },
+    {
+      id: "3",
+      userId: "2",
+      userEmail: "manager@example.com",
+      action: "create",
+      details: "A créé une nouvelle facture: FAC-2023-0042",
+      timestamp: "2023-09-15 10:22:18",
+      module: "invoices"
+    },
+    {
+      id: "4",
+      userId: "3",
+      userEmail: "user@example.com",
+      action: "view",
+      details: "A consulté la liste des formulations",
+      timestamp: "2023-09-18 14:35:12",
+      module: "formulations"
+    }
+  ]);
+
   const [selectedRole, setSelectedRole] = useState<string | null>(null);
   const [showAddUserForm, setShowAddUserForm] = useState(false);
   const [showAddRoleForm, setShowAddRoleForm] = useState(false);
@@ -80,6 +179,39 @@ export default function AuthSettings() {
       description: ""
     }
   });
+
+  // List of all available modules in the application
+  const availableModules = [
+    { id: "dashboard", name: "Tableau de bord" },
+    { id: "clients", name: "Clients" },
+    { id: "suppliers", name: "Fournisseurs" },
+    { id: "finance", name: "Finances" },
+    { id: "invoices", name: "Factures" },
+    { id: "quotes", name: "Devis" },
+    { id: "orders", name: "Commandes" },
+    { id: "production", name: "Production" },
+    { id: "formulations", name: "Formulations" },
+    { id: "vehicles", name: "Véhicules" },
+    { id: "expenses", name: "Dépenses" },
+    { id: "payments", name: "Paiements" },
+    { id: "reports", name: "Rapports" },
+    { id: "employees", name: "Employés" },
+    { id: "settings", name: "Paramètres" }
+  ];
+
+  // List of all possible actions per module
+  const availableActions = [
+    { id: "view", name: "Consulter" },
+    { id: "create", name: "Créer" },
+    { id: "update", name: "Modifier" },
+    { id: "delete", name: "Supprimer" },
+    { id: "export", name: "Exporter" },
+    { id: "print", name: "Imprimer" },
+    { id: "approve", name: "Approuver" },
+    { id: "reject", name: "Rejeter" },
+    { id: "archive", name: "Archiver" },
+    { id: "restore", name: "Restaurer" }
+  ];
 
   const handleToggleUserStatus = (userId: string) => {
     setUsers(users.map(user => {
@@ -195,7 +327,7 @@ export default function AuthSettings() {
         </div>
       </div>
 
-      <Tabs defaultValue="users" className="space-y-6">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
         <TabsList className="bg-gray-900 border border-gray-700">
           <TabsTrigger value="users" className="data-[state=active]:bg-gray-800">
             <div className="flex items-center gap-2">
@@ -207,6 +339,18 @@ export default function AuthSettings() {
             <div className="flex items-center gap-2">
               <Shield className="h-4 w-4" />
               <span>Rôles & Permissions</span>
+            </div>
+          </TabsTrigger>
+          <TabsTrigger value="history" className="data-[state=active]:bg-gray-800">
+            <div className="flex items-center gap-2">
+              <Clock className="h-4 w-4" />
+              <span>Historique des connexions</span>
+            </div>
+          </TabsTrigger>
+          <TabsTrigger value="actions" className="data-[state=active]:bg-gray-800">
+            <div className="flex items-center gap-2">
+              <FileText className="h-4 w-4" />
+              <span>Journal d'activité</span>
             </div>
           </TabsTrigger>
         </TabsList>
@@ -522,58 +666,36 @@ export default function AuthSettings() {
                       </div>
                       
                       <div className="space-y-3">
-                        <div className="space-y-3">
-                          <div className="text-gray-300 font-medium">Modules</div>
-                          
-                          <div className="p-3 border border-gray-700 rounded-lg bg-gray-900 flex items-center justify-between">
-                            <div className="text-gray-300">Accès au tableau de bord</div>
-                            <Switch defaultChecked={true} />
+                        {availableModules.map((module) => (
+                          <div key={module.id} className="border border-gray-700 rounded-lg bg-gray-900 overflow-hidden">
+                            <div className="p-3 border-b border-gray-700 flex items-center justify-between">
+                              <div className="text-white font-medium">{module.name}</div>
+                              <Switch 
+                                defaultChecked={
+                                  roles.find(r => r.id === selectedRole)?.name === "admin" ||
+                                  (roles.find(r => r.id === selectedRole)?.name === "manager" && 
+                                   module.id !== "settings")
+                                } 
+                              />
+                            </div>
+                            <div className="p-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                              {availableActions.map((action) => (
+                                <div key={`${module.id}-${action.id}`} className="flex items-center justify-between">
+                                  <div className="text-gray-300 text-sm">{action.name}</div>
+                                  <Switch 
+                                    defaultChecked={
+                                      roles.find(r => r.id === selectedRole)?.name === "admin" ||
+                                      (roles.find(r => r.id === selectedRole)?.name === "manager" && 
+                                       !(module.id === "settings" && action.id === "delete")) ||
+                                      (roles.find(r => r.id === selectedRole)?.name === "user" && 
+                                       action.id === "view")
+                                    } 
+                                  />
+                                </div>
+                              ))}
+                            </div>
                           </div>
-                          
-                          <div className="p-3 border border-gray-700 rounded-lg bg-gray-900 flex items-center justify-between">
-                            <div className="text-gray-300">Accès aux clients</div>
-                            <Switch defaultChecked={true} />
-                          </div>
-                          
-                          <div className="p-3 border border-gray-700 rounded-lg bg-gray-900 flex items-center justify-between">
-                            <div className="text-gray-300">Accès aux fournisseurs</div>
-                            <Switch defaultChecked={true} />
-                          </div>
-                          
-                          <div className="p-3 border border-gray-700 rounded-lg bg-gray-900 flex items-center justify-between">
-                            <div className="text-gray-300">Accès aux finances</div>
-                            <Switch defaultChecked={roles.find(r => r.id === selectedRole)?.name !== "user"} />
-                          </div>
-                          
-                          <div className="p-3 border border-gray-700 rounded-lg bg-gray-900 flex items-center justify-between">
-                            <div className="text-gray-300">Accès aux paramètres</div>
-                            <Switch defaultChecked={roles.find(r => r.id === selectedRole)?.name === "admin"} />
-                          </div>
-                        </div>
-                        
-                        <div className="space-y-3 mt-6">
-                          <div className="text-gray-300 font-medium">Actions</div>
-                          
-                          <div className="p-3 border border-gray-700 rounded-lg bg-gray-900 flex items-center justify-between">
-                            <div className="text-gray-300">Créer des clients</div>
-                            <Switch defaultChecked={roles.find(r => r.id === selectedRole)?.name !== "user"} />
-                          </div>
-                          
-                          <div className="p-3 border border-gray-700 rounded-lg bg-gray-900 flex items-center justify-between">
-                            <div className="text-gray-300">Modifier des clients</div>
-                            <Switch defaultChecked={roles.find(r => r.id === selectedRole)?.name !== "user"} />
-                          </div>
-                          
-                          <div className="p-3 border border-gray-700 rounded-lg bg-gray-900 flex items-center justify-between">
-                            <div className="text-gray-300">Supprimer des clients</div>
-                            <Switch defaultChecked={roles.find(r => r.id === selectedRole)?.name === "admin"} />
-                          </div>
-                          
-                          <div className="p-3 border border-gray-700 rounded-lg bg-gray-900 flex items-center justify-between">
-                            <div className="text-gray-300">Gérer les factures</div>
-                            <Switch defaultChecked={roles.find(r => r.id === selectedRole)?.name !== "user"} />
-                          </div>
-                        </div>
+                        ))}
                       </div>
                       
                       <div className="flex justify-end pt-4">
@@ -609,6 +731,140 @@ export default function AuthSettings() {
               </Card>
             </div>
           </div>
+        </TabsContent>
+
+        <TabsContent value="history" className="space-y-6">
+          <Card className="bg-gray-800 border-gray-700 shadow-lg">
+            <CardHeader>
+              <CardTitle className="text-white">Historique des connexions</CardTitle>
+              <CardDescription className="text-gray-400">
+                Suivi des connexions et déconnexions des utilisateurs
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="rounded-md border border-gray-700 overflow-hidden">
+                <Table>
+                  <TableHeader className="bg-gray-900">
+                    <TableRow className="border-gray-700">
+                      <TableHead className="text-white">Utilisateur</TableHead>
+                      <TableHead className="text-white">Action</TableHead>
+                      <TableHead className="text-white">Date & Heure</TableHead>
+                      <TableHead className="text-white">Adresse IP</TableHead>
+                      <TableHead className="text-white">Appareil</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {authLogs.map((log) => (
+                      <TableRow key={log.id} className="border-gray-700">
+                        <TableCell className="font-medium text-white">
+                          {log.userEmail}
+                        </TableCell>
+                        <TableCell>
+                          <span className={`px-2 py-1 rounded text-xs font-medium ${
+                            log.action === 'login' 
+                              ? 'bg-green-900 text-green-300' 
+                              : 'bg-orange-900 text-orange-300'
+                          }`}>
+                            {log.action === 'login' ? 'Connexion' : 'Déconnexion'}
+                          </span>
+                        </TableCell>
+                        <TableCell className="text-gray-300">{log.timestamp}</TableCell>
+                        <TableCell className="text-gray-300">{log.ipAddress}</TableCell>
+                        <TableCell className="text-gray-300">{log.deviceInfo}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+              
+              <div className="flex justify-end mt-4">
+                <Button
+                  variant="outline"
+                  className="border-gray-700 text-gray-300"
+                >
+                  Exporter les logs
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="actions" className="space-y-6">
+          <Card className="bg-gray-800 border-gray-700 shadow-lg">
+            <CardHeader>
+              <CardTitle className="text-white">Journal d'activité</CardTitle>
+              <CardDescription className="text-gray-400">
+                Suivi des actions effectuées par les utilisateurs
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="rounded-md border border-gray-700 overflow-hidden">
+                <Table>
+                  <TableHeader className="bg-gray-900">
+                    <TableRow className="border-gray-700">
+                      <TableHead className="text-white">Utilisateur</TableHead>
+                      <TableHead className="text-white">Module</TableHead>
+                      <TableHead className="text-white">Action</TableHead>
+                      <TableHead className="text-white">Détails</TableHead>
+                      <TableHead className="text-white">Date & Heure</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {userActions.map((action) => (
+                      <TableRow key={action.id} className="border-gray-700">
+                        <TableCell className="font-medium text-white">
+                          {action.userEmail}
+                        </TableCell>
+                        <TableCell>
+                          <span className="px-2 py-1 rounded text-xs font-medium bg-blue-900 text-blue-300">
+                            {action.module}
+                          </span>
+                        </TableCell>
+                        <TableCell className="text-gray-300">
+                          <span className={`px-2 py-1 rounded text-xs font-medium ${
+                            action.action === 'create' 
+                              ? 'bg-green-900 text-green-300' 
+                              : action.action === 'update'
+                                ? 'bg-yellow-900 text-yellow-300'
+                                : action.action === 'delete'
+                                  ? 'bg-red-900 text-red-300'
+                                  : 'bg-blue-900 text-blue-300'
+                          }`}>
+                            {action.action}
+                          </span>
+                        </TableCell>
+                        <TableCell className="text-gray-300">{action.details}</TableCell>
+                        <TableCell className="text-gray-300">{action.timestamp}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+              
+              <div className="flex justify-end mt-4 gap-2">
+                <Select defaultValue="all">
+                  <SelectTrigger className="w-[180px] bg-gray-800 border-gray-700 text-white">
+                    <SelectValue placeholder="Filtrer par module" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-gray-800 border-gray-700 text-white">
+                    <SelectItem value="all">Tous les modules</SelectItem>
+                    {availableModules.map((module) => (
+                      <SelectItem key={module.id} value={module.id}>
+                        {module.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <Button
+                  variant="outline"
+                  className="border-gray-700 text-gray-300"
+                >
+                  Exporter le journal
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         </TabsContent>
       </Tabs>
     </div>
