@@ -30,6 +30,11 @@ import CompanySettings from "./pages/settings/CompanySettings";
 import VatSettings from "./pages/settings/VatSettings";
 import PlantsSettings from "./pages/settings/PlantsSettings";
 import AccessibilitySettings from "./pages/settings/AccessibilitySettings";
+import LocationsSettings from "./pages/settings/LocationsSettings";
+import LanguagesSettings from "./pages/settings/LanguagesSettings";
+import TemplatesSettings from "./pages/settings/TemplatesSettings";
+import DatabaseSettings from "./pages/settings/DatabaseSettings";
+import MaintenanceSettings from "./pages/settings/MaintenanceSettings";
 
 const queryClient = new QueryClient();
 
@@ -78,6 +83,12 @@ function App() {
                     <Route path="/settings/vat" element={<VatSettings />} />
                     <Route path="/settings/plants" element={<PlantsSettings />} />
                     <Route path="/settings/accessibility" element={<AccessibilitySettings />} />
+                    <Route path="/settings/locations" element={<LocationsSettings />} />
+                    <Route path="/settings/languages" element={<LanguagesSettings />} />
+                    <Route path="/settings/templates" element={<TemplatesSettings />} />
+                    <Route path="/settings/database" element={<DatabaseSettings />} />
+                    <Route path="/settings/maintenance" element={<MaintenanceSettings />} />
+                    <Route path="/settings/ui" element={<div className="p-4 bg-gray-800 rounded-lg text-white">Interface utilisateur en cours de développement</div>} />
                     <Route 
                       path="/logout" 
                       element={

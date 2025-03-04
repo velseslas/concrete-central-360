@@ -1,6 +1,5 @@
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Building2, Percent, Accessibility, Factory, Database, FileText, Wrench, Languages, MapPin, LayoutGrid } from "lucide-react";
 import { PlantSwitcher } from "@/components/settings/PlantSwitcher";
@@ -162,15 +161,6 @@ function SettingsCard({ title, description, icon: Icon, color, bgColor, path, pl
       </CardHeader>
       <CardContent>
         <CardDescription className="text-gray-400 min-h-[2.5rem]">{description}</CardDescription>
-        <div className="mt-6 flex justify-end">
-          <Button 
-            variant="ghost" 
-            className="text-sm text-blue-400 hover:text-blue-300 hover:bg-blue-950/30 transition-colors"
-          >
-            Configurer
-            <span className="sr-only">Configurer {title} pour {plant}</span>
-          </Button>
-        </div>
       </CardContent>
     </Card>
   );
