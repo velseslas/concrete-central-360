@@ -36,6 +36,7 @@ import TemplatesSettings from "./pages/settings/TemplatesSettings";
 import DatabaseSettings from "./pages/settings/DatabaseSettings";
 import MaintenanceSettings from "./pages/settings/MaintenanceSettings";
 import AuthSettings from "./pages/settings/AuthSettings";
+import Employees from "./pages/Employees";
 
 const queryClient = new QueryClient();
 
@@ -78,7 +79,7 @@ function App() {
                     <Route path="/finance/payments/suppliers" element={<SupplierPayments />} />
                     <Route path="/finance/reports" element={<Reports />} />
                     <Route path="/finance/quotes" element={<Quotes />} />
-                    <Route path="/employees" element={<div className="p-4 bg-gray-800 rounded-lg text-white">Page des employés en construction</div>} />
+                    <Route path="/employees" element={<Employees />} />
                     <Route path="/settings" element={<Settings />} />
                     <Route path="/settings/company" element={<CompanySettings />} />
                     <Route path="/settings/vat" element={<VatSettings />} />
