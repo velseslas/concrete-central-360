@@ -3,7 +3,10 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { DollarSign, Car, Building2, Globe, ListFilter, Plus, FileText } from "lucide-react";
+import { 
+  DollarSign, Car, Building2, Globe, ListFilter, 
+  Plus, FileText, Download, Calendar, Filter 
+} from "lucide-react";
 import ExpenseForm from "@/components/expenses/ExpenseForm";
 import ExpenseList from "@/components/expenses/ExpenseList";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
@@ -11,11 +14,15 @@ import { ExpenseCategoryWidget } from "@/components/expenses/widgets/ExpenseCate
 import { RollingStockExpenseWidget } from "@/components/expenses/widgets/RollingStockExpenseWidget";
 import { ConcreteExpenseWidget } from "@/components/expenses/widgets/ConcreteExpenseWidget";
 import { GlobalExpenseWidget } from "@/components/expenses/widgets/GlobalExpenseWidget";
+import { ExpenseSummaryWidget } from "@/components/expenses/widgets/ExpenseSummaryWidget";
+import { ExpenseFilters } from "@/components/expenses/widgets/ExpenseFilters";
+import { toast } from "sonner";
 
 const Expenses = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [editingExpense, setEditingExpense] = useState<any>(null);
   const [activeWidget, setActiveWidget] = useState<string | null>(null);
+  const [showFilters, setShowFilters] = useState(false);
 
   const handleEdit = (expense: any) => {
     setEditingExpense(expense);
@@ -27,7 +34,19 @@ const Expenses = () => {
     setEditingExpense(null);
   };
 
+  const handleExport = () => {
+    toast.success("Export des dépenses en cours...");
+    // Logique d'exportation à implémenter
+  };
+
   const widgets = [
+    {
+      id: 'summary',
+      title: 'Tableau de Bord',
+      icon: DollarSign,
+      color: 'text-emerald-400',
+      description: 'Vue d\'ensemble des dépenses'
+    },
     {
       id: 'global',
       title: 'Achat Générale',
@@ -67,6 +86,8 @@ const Expenses = () => {
 
   const renderWidget = (widgetId: string) => {
     switch (widgetId) {
+      case 'summary':
+        return <ExpenseSummaryWidget />;
       case 'global':
         return <GlobalExpenseWidget />;
       case 'categories':
@@ -96,15 +117,54 @@ const Expenses = () => {
 
       return (
         <div className="space-y-4">
-          <div className="flex items-center space-x-2">
-            <button
-              onClick={() => setActiveWidget(null)}
-              className="text-sm text-gray-400 hover:text-white transition-colors"
-            >
-              ← Retour
-            </button>
-            <h2 className="text-2xl font-bold text-white">{widget.title}</h2>
+          <div className="flex flex-col md:flex-row gap-4 justify-between items-start md:items-center">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setActiveWidget(null)}
+                className="text-sm text-gray-400 hover:text-white transition-colors"
+              >
+                ← Retour
+              </button>
+              <h2 className="text-2xl font-bold text-white">{widget.title}</h2>
+            </div>
+            
+            <div className="flex gap-2">
+              {activeWidget !== 'summary' && (
+                <>
+                  <Button 
+                    variant="outline" 
+                    className="bg-gray-800/50 text-gray-300 border-gray-700"
+                    onClick={() => setShowFilters(!showFilters)}
+                  >
+                    <Filter className="h-4 w-4 mr-2" />
+                    Filtres
+                  </Button>
+                  
+                  <Button 
+                    variant="outline" 
+                    className="bg-green-600/20 text-green-400 border-green-700/50 hover:bg-green-600/30"
+                    onClick={handleExport}
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    Exporter
+                  </Button>
+                </>
+              )}
+              
+              {(activeWidget === 'global' || activeWidget === 'mechanical' || activeWidget === 'concrete') && (
+                <Button
+                  onClick={() => setIsOpen(true)}
+                  className="bg-[#9b87f5] hover:bg-[#8a76e5]"
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  Nouvelle dépense
+                </Button>
+              )}
+            </div>
           </div>
+          
+          {showFilters && <ExpenseFilters />}
+          
           <div className="grid grid-cols-1 gap-6">
             {renderWidget(activeWidget)}
           </div>
