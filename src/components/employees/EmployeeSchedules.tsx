@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { WeeklySchedule } from "./schedules/WeeklySchedule";
 import { AttendanceManagement } from "./schedules/AttendanceManagement";
+import { OvertimeManagement } from "./schedules/OvertimeManagement";
 import { 
   mockEmployees, 
   timeSlots, 
@@ -19,9 +20,10 @@ export function EmployeeSchedules() {
   return (
     <div className="space-y-6">
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid grid-cols-2 bg-gray-700">
+        <TabsList className="grid grid-cols-3 bg-gray-700">
           <TabsTrigger value="week">Planning hebdomadaire</TabsTrigger>
           <TabsTrigger value="attendance">Gestion des présences</TabsTrigger>
+          <TabsTrigger value="overtime">Heures supplémentaires</TabsTrigger>
         </TabsList>
         
         <TabsContent value="week" className="space-y-6">
@@ -45,6 +47,16 @@ export function EmployeeSchedules() {
             setSelectedEmployee={setSelectedEmployee}
             employees={mockEmployees}
             timeSlots={timeSlots}
+          />
+        </TabsContent>
+        
+        <TabsContent value="overtime" className="space-y-6">
+          <OvertimeManagement 
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
+            selectedEmployee={selectedEmployee}
+            setSelectedEmployee={setSelectedEmployee}
+            employees={mockEmployees}
           />
         </TabsContent>
       </Tabs>

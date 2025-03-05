@@ -1,18 +1,18 @@
 
-import { EmployeeShift, Employee } from "./types";
+import { EmployeeShift, Employee, TimeSlot } from "./types";
 
 // Mock data for shifts
 const mockShifts: Record<string, EmployeeShift[]> = {
   "1": [
-    { date: "2023-05-01", shift: "morning", status: "present" },
+    { date: "2023-05-01", shift: "morning", status: "present", overtime: 2 },
     { date: "2023-05-02", shift: "morning", status: "present" },
-    { date: "2023-05-03", shift: "afternoon", status: "present" },
+    { date: "2023-05-03", shift: "afternoon", status: "present", overtime: 1.5 },
     { date: "2023-05-04", shift: "morning", status: "present" },
     { date: "2023-05-05", shift: "morning", status: "absent" },
   ],
   "2": [
     { date: "2023-05-01", shift: "afternoon", status: "present" },
-    { date: "2023-05-02", shift: "afternoon", status: "present" },
+    { date: "2023-05-02", shift: "afternoon", status: "present", overtime: 3 },
     { date: "2023-05-03", shift: "morning", status: "present" },
     { date: "2023-05-04", shift: "afternoon", status: "present" },
     { date: "2023-05-05", shift: "afternoon", status: "present" },
@@ -21,7 +21,7 @@ const mockShifts: Record<string, EmployeeShift[]> = {
     { date: "2023-05-01", shift: "morning", status: "present" },
     { date: "2023-05-02", shift: "morning", status: "present" },
     { date: "2023-05-03", shift: "morning", status: "absent" },
-    { date: "2023-05-04", shift: "morning", status: "present" },
+    { date: "2023-05-04", shift: "morning", status: "present", overtime: 2 },
     { date: "2023-05-05", shift: "morning", status: "present" },
   ],
   "4": [
@@ -50,11 +50,11 @@ export const mockEmployees: Employee[] = [
 ];
 
 // Mock data for time slots
-export const timeSlots = [
-  { id: "morning", label: "Matin (6h - 14h)" },
-  { id: "afternoon", label: "Après-midi (14h - 22h)" },
-  { id: "night", label: "Nuit (22h - 6h)" },
-  { id: "dayoff", label: "Jour de repos" },
+export const timeSlots: TimeSlot[] = [
+  { id: "morning", label: "Matin (6h - 14h)", duration: 8 },
+  { id: "afternoon", label: "Après-midi (14h - 22h)", duration: 8 },
+  { id: "night", label: "Nuit (22h - 6h)", duration: 8 },
+  { id: "dayoff", label: "Jour de repos", duration: 0 },
 ];
 
 export const getShiftForEmployee = (employeeId: string, date: Date): EmployeeShift | null => {
@@ -90,4 +90,10 @@ export const getStatusColorClass = (status: string): string => {
     default:
       return "bg-gray-500";
   }
+};
+
+// Fonction pour obtenir le total des heures supplémentaires pour un employé
+export const getTotalOvertimeForEmployee = (employeeId: string): number => {
+  const employeeShifts = mockShifts[employeeId as keyof typeof mockShifts] || [];
+  return employeeShifts.reduce((total, shift) => total + (shift.overtime || 0), 0);
 };

@@ -2,7 +2,7 @@
 import React from "react";
 
 interface ScheduleCellProps {
-  shift: { shift: string; status: string } | null;
+  shift: { shift: string; status: string; overtime?: number } | null;
   getShiftColorClass: (shift: string) => string;
   getStatusColorClass: (status: string) => string;
 }
@@ -28,6 +28,12 @@ export function ScheduleCell({ shift, getShiftColorClass, getStatusColorClass }:
          shift.status === 'absent' ? 'Absent' : 
          shift.status === 'late' ? 'En retard' : 'Non défini'}
       </span>
+      
+      {shift.overtime && shift.overtime > 0 && (
+        <span className="px-2 py-1 rounded text-xs bg-purple-600 mt-1">
+          +{shift.overtime}h supp.
+        </span>
+      )}
     </div>
   );
 }

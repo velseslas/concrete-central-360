@@ -3,8 +3,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { format, addDays } from "date-fns";
 import { fr } from "date-fns/locale";
-import { CalendarDays, Clock } from "lucide-react";
+import { CalendarDays, Clock, ClockPlus } from "lucide-react";
 import { Employee, TimeSlot } from "./types";
+import { getTotalOvertimeForEmployee } from "./scheduleService";
 
 interface AttendanceFormProps {
   selectedDate: Date | undefined;
@@ -20,6 +21,7 @@ export function AttendanceForm({
   timeSlots
 }: AttendanceFormProps) {
   const employee = employees.find(e => e.id === selectedEmployee);
+  const totalOvertime = selectedEmployee ? getTotalOvertimeForEmployee(selectedEmployee) : 0;
   
   if (!selectedEmployee) {
     return (
@@ -32,11 +34,22 @@ export function AttendanceForm({
   return (
     <div>
       <div className="bg-gray-600 p-4 rounded-lg mb-4">
-        <h4 className="font-medium mb-2">
-          {employee?.name}
-        </h4>
-        <div className="text-sm text-gray-400 mb-4">
-          {employee?.position} - {employee?.department}
+        <div className="flex justify-between items-start">
+          <div>
+            <h4 className="font-medium mb-2">
+              {employee?.name}
+            </h4>
+            <div className="text-sm text-gray-400 mb-4">
+              {employee?.position} - {employee?.department}
+            </div>
+          </div>
+          
+          {totalOvertime > 0 && (
+            <div className="bg-purple-600 px-3 py-2 rounded-md flex items-center gap-2">
+              <ClockPlus className="h-4 w-4" />
+              <span>{totalOvertime}h supplémentaires</span>
+            </div>
+          )}
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -98,6 +111,7 @@ export function AttendanceForm({
                   <Clock className="h-4 w-4 text-gray-400" />
                   <span className="text-sm">Matin (6h - 14h)</span>
                   <span className="px-2 py-1 text-xs rounded bg-green-600">Présent</span>
+                  {i === 1 && <span className="px-2 py-1 text-xs rounded bg-purple-600">+2h supp.</span>}
                 </div>
               </div>
             );
