@@ -1,9 +1,8 @@
-
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { format, addDays } from "date-fns";
 import { fr } from "date-fns/locale";
-import { CalendarDays, Clock, ClockPlus } from "lucide-react";
+import { CalendarDays, Clock, PlusCircle } from "lucide-react";
 import { Employee, TimeSlot } from "./types";
 import { getTotalOvertimeForEmployee } from "./scheduleService";
 
@@ -46,7 +45,7 @@ export function AttendanceForm({
           
           {totalOvertime > 0 && (
             <div className="bg-purple-600 px-3 py-2 rounded-md flex items-center gap-2">
-              <ClockPlus className="h-4 w-4" />
+              <PlusCircle className="h-4 w-4" />
               <span>{totalOvertime}h supplémentaires</span>
             </div>
           )}
