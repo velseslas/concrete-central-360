@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { 
   DollarSign, Car, Building2, Globe, ListFilter, 
-  Plus, FileText, Download, Calendar, Filter 
+  Plus, FileText, Download, Calendar, Filter, BarChart3
 } from "lucide-react";
 import ExpenseForm from "@/components/expenses/ExpenseForm";
 import ExpenseList from "@/components/expenses/ExpenseList";
@@ -17,6 +17,7 @@ import { GlobalExpenseWidget } from "@/components/expenses/widgets/GlobalExpense
 import { ExpenseSummaryWidget } from "@/components/expenses/widgets/ExpenseSummaryWidget";
 import { ExpenseFilters } from "@/components/expenses/widgets/ExpenseFilters";
 import { toast } from "sonner";
+import { ExpenseReportWidget } from "@/components/finance/widgets/reports/ExpenseReportWidget";
 
 const Expenses = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -96,6 +97,8 @@ const Expenses = () => {
         return <RollingStockExpenseWidget />;
       case 'concrete':
         return <ConcreteExpenseWidget />;
+      case 'reports':
+        return <ExpenseReportWidget />;
       default:
         return (
           <Card className="backdrop-blur-lg bg-gray-800/50 border-gray-700/50">
@@ -129,7 +132,7 @@ const Expenses = () => {
             </div>
             
             <div className="flex gap-2">
-              {activeWidget !== 'summary' && (
+              {activeWidget !== 'summary' && activeWidget !== 'reports' && (
                 <>
                   <Button 
                     variant="outline" 
@@ -163,7 +166,7 @@ const Expenses = () => {
             </div>
           </div>
           
-          {showFilters && <ExpenseFilters />}
+          {showFilters && activeWidget !== 'reports' && <ExpenseFilters />}
           
           <div className="grid grid-cols-1 gap-6">
             {renderWidget(activeWidget)}
