@@ -26,7 +26,7 @@ export function EmployeeSalary() {
   ];
 
   const bonusSettings = {
-    bonusPerCubicMeter: 1.5, // 1.5€ per cubic meter of concrete sold
+    bonusPerCubicMeter: 1.5, // 1.5€ par mètre cube de béton vendu
   };
 
   const handleAddAdvance = async () => {
@@ -36,7 +36,7 @@ export function EmployeeSalary() {
     }
 
     try {
-      // In a real implementation, this would save to Supabase
+      // Dans une vraie implémentation, cela sauvegarderait dans Supabase
       toast.success(`Acompte de ${advanceAmount}€ ajouté pour ${selectedEmployee.name}`);
       setIsAddAdvanceOpen(false);
       setAdvanceAmount("");
@@ -50,13 +50,13 @@ export function EmployeeSalary() {
   const calculateFinalSalary = (employee) => {
     const baseSalary = employee.baseSalary;
     const overtimeHours = employee.overtime || 0;
-    const overtimeRate = 1.25; // 25% extra for overtime
-    const hourlyRate = baseSalary / 160; // Assuming 160 working hours per month
+    const overtimeRate = 1.25; // 25% de plus pour les heures supplémentaires
+    const hourlyRate = baseSalary / 160; // En supposant 160 heures de travail par mois
     const overtimePay = overtimeHours * hourlyRate * overtimeRate;
     
     const advances = employee.advances || 0;
     
-    // Bonus calculation for sales staff
+    // Calcul de la prime pour les commerciaux
     let salesBonus = 0;
     if (employee.position === "Commercial" && employee.salesVolume) {
       salesBonus = employee.salesVolume * bonusSettings.bonusPerCubicMeter;
@@ -326,7 +326,7 @@ export function EmployeeSalary() {
         </TabsContent>
       </Tabs>
 
-      {/* Add Advance Dialog */}
+      {/* Dialog d'ajout d'acompte */}
       <Dialog open={isAddAdvanceOpen} onOpenChange={setIsAddAdvanceOpen}>
         <DialogContent className="bg-gray-800 text-white border-gray-700">
           <DialogHeader>

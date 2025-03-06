@@ -39,6 +39,33 @@ export type Database = {
         }
         Relationships: []
       }
+      employee_salaries: {
+        Row: {
+          base_salary: number
+          created_at: string | null
+          employee_id: string
+          id: string
+          tax_rate: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          base_salary: number
+          created_at?: string | null
+          employee_id: string
+          id?: string
+          tax_rate?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          base_salary?: number
+          created_at?: string | null
+          employee_id?: string
+          id?: string
+          tax_rate?: number | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       orders: {
         Row: {
           client: string
@@ -111,6 +138,69 @@ export type Database = {
           start_date?: string | null
           status?: string | null
           volume?: number
+        }
+        Relationships: []
+      }
+      salary_advances: {
+        Row: {
+          amount: number
+          created_at: string | null
+          date: string
+          description: string | null
+          employee_id: string
+          id: string
+          status: string | null
+        }
+        Insert: {
+          amount: number
+          created_at?: string | null
+          date: string
+          description?: string | null
+          employee_id: string
+          id?: string
+          status?: string | null
+        }
+        Update: {
+          amount?: number
+          created_at?: string | null
+          date?: string
+          description?: string | null
+          employee_id?: string
+          id?: string
+          status?: string | null
+        }
+        Relationships: []
+      }
+      sales_bonuses: {
+        Row: {
+          bonus_per_cubic_meter: number
+          created_at: string | null
+          employee_id: string
+          id: string
+          month: string
+          status: string | null
+          total_bonus: number
+          volume_sold: number
+        }
+        Insert: {
+          bonus_per_cubic_meter: number
+          created_at?: string | null
+          employee_id: string
+          id?: string
+          month: string
+          status?: string | null
+          total_bonus: number
+          volume_sold: number
+        }
+        Update: {
+          bonus_per_cubic_meter?: number
+          created_at?: string | null
+          employee_id?: string
+          id?: string
+          month?: string
+          status?: string | null
+          total_bonus?: number
+          volume_sold?: number
         }
         Relationships: []
       }
