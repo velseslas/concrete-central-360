@@ -27,3 +27,33 @@ export interface OvertimeRecord {
   reason: string;
   status: "pending" | "approved" | "rejected";
 }
+
+export interface EmployeeSalary {
+  id: string;
+  employeeId: string;
+  baseSalary: number;
+  taxRate: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SalaryAdvance {
+  id: string;
+  employeeId: string;
+  amount: number;
+  date: string;
+  description?: string;
+  status: "pending" | "approved" | "rejected";
+  createdAt: string;
+}
+
+export interface SalesBonus {
+  id: string;
+  employeeId: string;
+  month: string;
+  volumeSold: number;
+  bonusPerCubicMeter: number;
+  totalBonus: number;
+  status: "pending" | "calculated" | "paid";
+  createdAt: string;
+}

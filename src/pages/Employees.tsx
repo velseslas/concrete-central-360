@@ -7,6 +7,7 @@ import { EmployeeForm } from "@/components/employees/EmployeeForm";
 import { EmployeePositions } from "@/components/employees/EmployeePositions";
 import { EmployeeSchedules } from "@/components/employees/EmployeeSchedules";
 import { EmployeeStats } from "@/components/employees/EmployeeStats";
+import { EmployeeSalary } from "@/components/employees/EmployeeSalary";
 import { motion } from "framer-motion";
 
 export default function Employees() {
@@ -24,7 +25,7 @@ export default function Employees() {
       </motion.div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid grid-cols-5 gap-2 bg-gray-800 text-gray-400">
+        <TabsList className="grid grid-cols-6 gap-2 bg-gray-800 text-gray-400">
           <TabsTrigger value="list" className="data-[state=active]:bg-gray-700 data-[state=active]:text-white">
             Liste des employés
           </TabsTrigger>
@@ -36,6 +37,9 @@ export default function Employees() {
           </TabsTrigger>
           <TabsTrigger value="schedules" className="data-[state=active]:bg-gray-700 data-[state=active]:text-white">
             Horaires & Présence
+          </TabsTrigger>
+          <TabsTrigger value="salary" className="data-[state=active]:bg-gray-700 data-[state=active]:text-white">
+            Salaires & Primes
           </TabsTrigger>
           <TabsTrigger value="stats" className="data-[state=active]:bg-gray-700 data-[state=active]:text-white">
             Statistiques
@@ -82,6 +86,17 @@ export default function Employees() {
             </CardHeader>
             <CardContent>
               <EmployeeSchedules />
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="salary">
+          <Card className="bg-gray-800 border-gray-700">
+            <CardHeader>
+              <CardTitle className="text-xl text-white">Gestion des salaires et primes</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <EmployeeSalary />
             </CardContent>
           </Card>
         </TabsContent>
