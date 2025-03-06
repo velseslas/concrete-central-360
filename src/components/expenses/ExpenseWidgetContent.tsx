@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Download, Filter } from "lucide-react";
+import { Download, Filter, Plus } from "lucide-react";
 import { ExpenseSummaryWidget } from "./widgets/ExpenseSummaryWidget";
 import { GlobalExpenseWidget } from "./widgets/GlobalExpenseWidget";
 import { ExpenseCategoryWidget } from "./widgets/ExpenseCategoryWidget";
