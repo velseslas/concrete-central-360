@@ -1,6 +1,7 @@
 
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 export interface EmployeeFormData {
   firstName: string;
@@ -17,6 +18,7 @@ export interface EmployeeFormData {
   nationalId: string;
   birthDate: string;
   notes: string;
+  salary: string; // Added salary field
 }
 
 interface UseEmployeeFormProps {
@@ -40,19 +42,35 @@ export function useEmployeeForm({ employee, isEditing = false }: UseEmployeeForm
     nationalId: employee?.nationalId || "",
     birthDate: employee?.birthDate || "",
     notes: employee?.notes || "",
+    salary: employee?.salary || "", // Default value for salary
   };
 
   const form = useForm<EmployeeFormData>({ defaultValues });
 
-  const onSubmit = (data: EmployeeFormData) => {
-    if (isEditing) {
-      // Handle update logic here
-      toast.success("Employé mis à jour avec succès");
-    } else {
-      // Handle create logic here
-      toast.success("Nouvel employé ajouté avec succès");
+  const onSubmit = async (data: EmployeeFormData) => {
+    try {
+      if (isEditing) {
+        // Handle update logic here
+        toast.success("Employé mis à jour avec succès");
+      } else {
+        // Handle create logic here
+        // Also save the salary information to employee_salaries table
+        const salaryData = {
+          employee_id: `${data.firstName} ${data.lastName}`, // Using name as a simplistic ID
+          base_salary: parseFloat(data.salary) || 0
+        };
+
+        await supabase
+          .from('employee_salaries')
+          .insert(salaryData);
+          
+        toast.success("Nouvel employé ajouté avec succès");
+      }
+      console.log(data);
+    } catch (error) {
+      console.error("Error saving employee data:", error);
+      toast.error("Erreur lors de l'enregistrement des données de l'employé");
     }
-    console.log(data);
   };
 
   return {

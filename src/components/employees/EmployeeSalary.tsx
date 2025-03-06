@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -7,43 +7,147 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Calculator, DollarSign, Receipt, UserPlus, Clock, Percent, Trophy, FileText } from "lucide-react";
+import { Calculator, DollarSign, Receipt, UserPlus, Clock, Percent, Trophy, FileText, Calendar } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
 
 export function EmployeeSalary() {
   const [activeTab, setActiveTab] = useState("overview");
   const [isAddAdvanceOpen, setIsAddAdvanceOpen] = useState(false);
+  const [isBonusSettingsOpen, setIsBonusSettingsOpen] = useState(false);
+  const [isPaySlipOpen, setIsPaySlipOpen] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [selectedMonth, setSelectedMonth] = useState("");
   const [advanceAmount, setAdvanceAmount] = useState("");
   const [advanceDescription, setAdvanceDescription] = useState("");
+  const [advanceDate, setAdvanceDate] = useState(format(new Date(), "yyyy-MM-dd"));
+  const [bonusPerCubicMeter, setBonusPerCubicMeter] = useState("1.5");
+  const [employees, setEmployees] = useState([]);
+  const [advances, setAdvances] = useState([]);
+  const [bonuses, setBonuses] = useState([]);
   
-  // Mock data - would be fetched from Supabase in a real implementation
-  const employees = [
-    { id: "1", name: "Jean Dupont", position: "Chauffeur", baseSalary: 2500, attendance: 22, overtime: 8, advances: 300 },
-    { id: "2", name: "Marie Laurent", position: "Commercial", baseSalary: 2200, attendance: 21, overtime: 0, advances: 0, salesVolume: 450 },
-    { id: "3", name: "Pierre Martin", position: "Opérateur Centrale", baseSalary: 2300, attendance: 20, overtime: 12, advances: 500 }
-  ];
+  // Fetch data on load
+  useEffect(() => {
+    fetchEmployees();
+    fetchAdvances();
+    fetchBonuses();
+    fetchBonusSettings();
+  }, []);
 
-  const bonusSettings = {
-    bonusPerCubicMeter: 1.5, // 1.5€ par mètre cube de béton vendu
+  const fetchEmployees = async () => {
+    try {
+      // In a real implementation, this would fetch from the database
+      // For now, use mock data
+      setEmployees([
+        { id: "1", name: "Jean Dupont", position: "Chauffeur", baseSalary: 2500, attendance: 22, overtime: 8, advances: 300 },
+        { id: "2", name: "Marie Laurent", position: "Commercial", baseSalary: 2200, attendance: 21, overtime: 0, advances: 0, salesVolume: 450 },
+        { id: "3", name: "Pierre Martin", position: "Opérateur Centrale", baseSalary: 2300, attendance: 20, overtime: 12, advances: 500 }
+      ]);
+    } catch (error) {
+      console.error("Error fetching employees:", error);
+      toast.error("Erreur lors du chargement des employés");
+    }
+  };
+
+  const fetchAdvances = async () => {
+    try {
+      // In a real implementation, this would fetch from the database
+      const { data, error } = await supabase
+        .from('salary_advances')
+        .select('*')
+        .order('date', { ascending: false });
+      
+      if (error) throw error;
+      setAdvances(data || []);
+    } catch (error) {
+      console.error("Error fetching advances:", error);
+      // Use mock data if database is not yet set up
+      setAdvances([
+        { id: '1', employee_id: '1', employee_name: 'Jean Dupont', date: '2023-08-12', amount: 300, description: "Avance sur salaire d'août", status: 'pending' },
+        { id: '2', employee_id: '3', employee_name: 'Pierre Martin', date: '2023-08-05', amount: 500, description: 'Avance exceptionnelle', status: 'approved' }
+      ]);
+    }
+  };
+
+  const fetchBonuses = async () => {
+    try {
+      // In a real implementation, this would fetch from the database
+      const { data, error } = await supabase
+        .from('sales_bonuses')
+        .select('*')
+        .order('month', { ascending: false });
+      
+      if (error) throw error;
+      setBonuses(data || []);
+    } catch (error) {
+      console.error("Error fetching bonuses:", error);
+      // Use mock data if database is not yet set up
+      setBonuses([
+        { id: '1', employee_id: '2', employee_name: 'Marie Laurent', month: '2023-08-01', volume_sold: 450, bonus_per_cubic_meter: 1.5, total_bonus: 675, status: 'calculated' },
+        { id: '2', employee_id: '4', employee_name: 'Sophie Dubois', month: '2023-08-01', volume_sold: 320, bonus_per_cubic_meter: 1.5, total_bonus: 480, status: 'calculated' }
+      ]);
+    }
+  };
+
+  const fetchBonusSettings = async () => {
+    // This would fetch the current bonus rate from settings table
+    // For now, use the default value
+    setBonusPerCubicMeter("1.5");
   };
 
   const handleAddAdvance = async () => {
-    if (!selectedEmployee || !advanceAmount) {
+    if (!selectedEmployee || !advanceAmount || !advanceDate) {
       toast.error("Veuillez remplir tous les champs obligatoires");
       return;
     }
 
     try {
-      // Dans une vraie implémentation, cela sauvegarderait dans Supabase
+      const newAdvance = {
+        employee_id: selectedEmployee.id,
+        amount: parseFloat(advanceAmount),
+        date: advanceDate,
+        description: advanceDescription || undefined,
+        status: 'pending'
+      };
+
+      const { error } = await supabase
+        .from('salary_advances')
+        .insert(newAdvance);
+
+      if (error) throw error;
+
       toast.success(`Acompte de ${advanceAmount}€ ajouté pour ${selectedEmployee.name}`);
       setIsAddAdvanceOpen(false);
       setAdvanceAmount("");
       setAdvanceDescription("");
+      setAdvanceDate(format(new Date(), "yyyy-MM-dd"));
+      
+      // Refresh advances list
+      fetchAdvances();
     } catch (error) {
+      console.error("Error adding advance:", error);
       toast.error("Erreur lors de l'ajout de l'acompte");
-      console.error(error);
+    }
+  };
+
+  const handleUpdateBonusRate = async () => {
+    if (!bonusPerCubicMeter || parseFloat(bonusPerCubicMeter) <= 0) {
+      toast.error("Veuillez entrer un taux de prime valide");
+      return;
+    }
+
+    try {
+      // In a real implementation, this would update the settings in the database
+      toast.success(`Taux de prime mis à jour à ${bonusPerCubicMeter}€ par m³`);
+      setIsBonusSettingsOpen(false);
+      
+      // Refresh bonuses with the new rate
+      fetchBonuses();
+    } catch (error) {
+      console.error("Error updating bonus rate:", error);
+      toast.error("Erreur lors de la mise à jour du taux de prime");
     }
   };
 
@@ -59,7 +163,7 @@ export function EmployeeSalary() {
     // Calcul de la prime pour les commerciaux
     let salesBonus = 0;
     if (employee.position === "Commercial" && employee.salesVolume) {
-      salesBonus = employee.salesVolume * bonusSettings.bonusPerCubicMeter;
+      salesBonus = employee.salesVolume * parseFloat(bonusPerCubicMeter);
     }
     
     const finalSalary = baseSalary + overtimePay + salesBonus - advances;
@@ -71,6 +175,14 @@ export function EmployeeSalary() {
       advances,
       finalSalary: finalSalary.toFixed(2)
     };
+  };
+
+  const formatDate = (dateString) => {
+    try {
+      return format(new Date(dateString), 'dd/MM/yyyy', { locale: fr });
+    } catch (e) {
+      return dateString;
+    }
   };
 
   return (
@@ -141,6 +253,11 @@ export function EmployeeSalary() {
                               variant="outline" 
                               size="sm" 
                               className="h-8 bg-gray-700 hover:bg-gray-600"
+                              onClick={() => {
+                                setSelectedEmployee(employee);
+                                setSelectedMonth(format(new Date(), "yyyy-MM"));
+                                setIsPaySlipOpen(true);
+                              }}
                             >
                               <FileText className="h-4 w-4 mr-1" />
                               Fiche
@@ -184,38 +301,36 @@ export function EmployeeSalary() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  <TableRow className="border-gray-700">
-                    <TableCell>Jean Dupont</TableCell>
-                    <TableCell>12/08/2023</TableCell>
-                    <TableCell>300€</TableCell>
-                    <TableCell>Avance sur salaire d'août</TableCell>
-                    <TableCell>
-                      <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded-full text-xs">
-                        En attente
-                      </span>
-                    </TableCell>
-                    <TableCell>
-                      <Button variant="outline" size="sm" className="h-8 bg-gray-700 hover:bg-gray-600">
-                        <FileText className="h-4 w-4" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow className="border-gray-700">
-                    <TableCell>Pierre Martin</TableCell>
-                    <TableCell>05/08/2023</TableCell>
-                    <TableCell>500€</TableCell>
-                    <TableCell>Avance exceptionnelle</TableCell>
-                    <TableCell>
-                      <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded-full text-xs">
-                        Validé
-                      </span>
-                    </TableCell>
-                    <TableCell>
-                      <Button variant="outline" size="sm" className="h-8 bg-gray-700 hover:bg-gray-600">
-                        <FileText className="h-4 w-4" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
+                  {advances.length > 0 ? (
+                    advances.map((advance) => (
+                      <TableRow key={advance.id} className="border-gray-700">
+                        <TableCell>{advance.employee_name || 'Employé'}</TableCell>
+                        <TableCell>{formatDate(advance.date)}</TableCell>
+                        <TableCell>{advance.amount}€</TableCell>
+                        <TableCell>{advance.description || '-'}</TableCell>
+                        <TableCell>
+                          <span className={`${
+                            advance.status === 'approved' 
+                              ? 'bg-green-500/20 text-green-400' 
+                              : 'bg-orange-500/20 text-orange-400'
+                          } px-2 py-1 rounded-full text-xs`}>
+                            {advance.status === 'approved' ? 'Validé' : 'En attente'}
+                          </span>
+                        </TableCell>
+                        <TableCell>
+                          <Button variant="outline" size="sm" className="h-8 bg-gray-700 hover:bg-gray-600">
+                            <FileText className="h-4 w-4" />
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={6} className="text-center py-4">
+                        Aucun acompte trouvé
+                      </TableCell>
+                    </TableRow>
+                  )}
                 </TableBody>
               </Table>
             </CardContent>
@@ -231,8 +346,12 @@ export function EmployeeSalary() {
               </CardTitle>
               <div className="flex items-center gap-2 text-white">
                 <span>Prime actuelle:</span>
-                <span className="font-bold text-green-400">{bonusSettings.bonusPerCubicMeter}€ / m³</span>
-                <Button variant="outline" className="h-8 bg-gray-700 hover:bg-gray-600">
+                <span className="font-bold text-green-400">{bonusPerCubicMeter}€ / m³</span>
+                <Button 
+                  variant="outline" 
+                  className="h-8 bg-gray-700 hover:bg-gray-600"
+                  onClick={() => setIsBonusSettingsOpen(true)}
+                >
                   <Percent className="h-4 w-4 mr-1" />
                   Modifier
                 </Button>
@@ -251,30 +370,28 @@ export function EmployeeSalary() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  <TableRow className="border-gray-700">
-                    <TableCell>Marie Laurent</TableCell>
-                    <TableCell>Août 2023</TableCell>
-                    <TableCell>450 m³</TableCell>
-                    <TableCell>{bonusSettings.bonusPerCubicMeter}€ / m³</TableCell>
-                    <TableCell className="font-bold text-green-400">675€</TableCell>
-                    <TableCell>
-                      <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded-full text-xs">
-                        Calculé
-                      </span>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow className="border-gray-700">
-                    <TableCell>Sophie Dubois</TableCell>
-                    <TableCell>Août 2023</TableCell>
-                    <TableCell>320 m³</TableCell>
-                    <TableCell>{bonusSettings.bonusPerCubicMeter}€ / m³</TableCell>
-                    <TableCell className="font-bold text-green-400">480€</TableCell>
-                    <TableCell>
-                      <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded-full text-xs">
-                        Calculé
-                      </span>
-                    </TableCell>
-                  </TableRow>
+                  {bonuses.length > 0 ? (
+                    bonuses.map((bonus) => (
+                      <TableRow key={bonus.id} className="border-gray-700">
+                        <TableCell>{bonus.employee_name || 'Vendeur'}</TableCell>
+                        <TableCell>{formatDate(bonus.month)}</TableCell>
+                        <TableCell>{bonus.volume_sold} m³</TableCell>
+                        <TableCell>{bonus.bonus_per_cubic_meter}€ / m³</TableCell>
+                        <TableCell className="font-bold text-green-400">{bonus.total_bonus}€</TableCell>
+                        <TableCell>
+                          <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded-full text-xs">
+                            {bonus.status === 'calculated' ? 'Calculé' : bonus.status}
+                          </span>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={6} className="text-center py-4">
+                        Aucune prime trouvée
+                      </TableCell>
+                    </TableRow>
+                  )}
                 </TableBody>
               </Table>
             </CardContent>
@@ -291,6 +408,24 @@ export function EmployeeSalary() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
+                <div className="flex items-center gap-4 mb-6">
+                  <Label htmlFor="month-select" className="whitespace-nowrap">Sélectionner un mois:</Label>
+                  <Input
+                    id="month-select"
+                    type="month"
+                    className="w-48 bg-gray-700 border-gray-600"
+                    value={selectedMonth}
+                    onChange={(e) => setSelectedMonth(e.target.value)}
+                  />
+                  <Button 
+                    className="bg-[#9b87f5] hover:bg-[#8a76e5]"
+                    disabled={!selectedMonth}
+                  >
+                    <FileText className="h-4 w-4 mr-2" />
+                    Générer toutes les fiches
+                  </Button>
+                </div>
+                
                 <div className="flex flex-wrap gap-4">
                   <Card className="w-full sm:w-64 bg-gray-700 border-gray-600 cursor-pointer hover:bg-gray-600 transition-colors">
                     <CardContent className="p-4">
@@ -353,6 +488,16 @@ export function EmployeeSalary() {
               </select>
             </div>
             <div className="space-y-2">
+              <Label htmlFor="date">Date</Label>
+              <Input 
+                id="date" 
+                type="date" 
+                value={advanceDate}
+                onChange={(e) => setAdvanceDate(e.target.value)}
+                className="bg-gray-700 border-gray-600"
+              />
+            </div>
+            <div className="space-y-2">
               <Label htmlFor="amount">Montant (€)</Label>
               <Input 
                 id="amount" 
@@ -389,6 +534,174 @@ export function EmployeeSalary() {
               Enregistrer
             </Button>
           </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Dialog de configuration des primes */}
+      <Dialog open={isBonusSettingsOpen} onOpenChange={setIsBonusSettingsOpen}>
+        <DialogContent className="bg-gray-800 text-white border-gray-700">
+          <DialogHeader>
+            <DialogTitle className="text-white">
+              Configurer les primes de vente
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="bonus-rate">Prime par mètre cube (€)</Label>
+              <Input 
+                id="bonus-rate" 
+                type="number" 
+                step="0.1"
+                value={bonusPerCubicMeter}
+                onChange={(e) => setBonusPerCubicMeter(e.target.value)}
+                className="bg-gray-700 border-gray-600"
+              />
+              <p className="text-sm text-gray-400">
+                Ce montant sera multiplié par le volume de béton vendu pour calculer la prime.
+              </p>
+            </div>
+          </div>
+          <div className="flex justify-end gap-3">
+            <Button 
+              variant="outline" 
+              onClick={() => setIsBonusSettingsOpen(false)}
+              className="bg-gray-700 hover:bg-gray-600 border-gray-600"
+            >
+              Annuler
+            </Button>
+            <Button 
+              onClick={handleUpdateBonusRate}
+              className="bg-[#9b87f5] hover:bg-[#8a76e5]"
+            >
+              Enregistrer
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Dialog de fiche de paie */}
+      <Dialog open={isPaySlipOpen} onOpenChange={setIsPaySlipOpen}>
+        <DialogContent className="bg-gray-800 text-white border-gray-700 max-w-3xl">
+          <DialogHeader>
+            <DialogTitle className="text-white">
+              Fiche de paie
+            </DialogTitle>
+          </DialogHeader>
+          {selectedEmployee && (
+            <div className="py-4">
+              <div className="bg-gray-700 p-6 rounded-lg">
+                <div className="flex justify-between items-start mb-6">
+                  <div>
+                    <h2 className="text-xl font-bold">SARL BÉTON</h2>
+                    <p className="text-gray-400">123 Rue du Béton</p>
+                    <p className="text-gray-400">75000 Paris</p>
+                  </div>
+                  <div className="text-right">
+                    <h3 className="text-lg font-semibold">Fiche de paie</h3>
+                    <p className="text-gray-400">
+                      {selectedMonth ? 
+                        format(new Date(selectedMonth + "-01"), 'MMMM yyyy', { locale: fr }) : 
+                        "Août 2023"}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="border-t border-b border-gray-600 py-4 mb-6">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <h4 className="font-semibold mb-2">Informations employé</h4>
+                      <p><span className="text-gray-400">Nom:</span> {selectedEmployee.name}</p>
+                      <p><span className="text-gray-400">Poste:</span> {selectedEmployee.position}</p>
+                      <p><span className="text-gray-400">Matricule:</span> EMP-{selectedEmployee.id}</p>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold mb-2">Période</h4>
+                      <p><span className="text-gray-400">Du:</span> 01/08/2023</p>
+                      <p><span className="text-gray-400">Au:</span> 31/08/2023</p>
+                      <p><span className="text-gray-400">Jours travaillés:</span> {selectedEmployee.attendance}/22</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mb-6">
+                  <h4 className="font-semibold mb-3">Rémunération</h4>
+                  <Table className="text-white">
+                    <TableHeader className="bg-gray-600">
+                      <TableRow>
+                        <TableHead>Description</TableHead>
+                        <TableHead className="text-right">Montant</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      <TableRow className="border-gray-600">
+                        <TableCell>Salaire de base</TableCell>
+                        <TableCell className="text-right">{selectedEmployee.baseSalary.toFixed(2)}€</TableCell>
+                      </TableRow>
+                      {selectedEmployee.overtime > 0 && (
+                        <TableRow className="border-gray-600">
+                          <TableCell>Heures supplémentaires ({selectedEmployee.overtime}h)</TableCell>
+                          <TableCell className="text-right">{calculateFinalSalary(selectedEmployee).overtimePay}€</TableCell>
+                        </TableRow>
+                      )}
+                      {selectedEmployee.position === "Commercial" && selectedEmployee.salesVolume && (
+                        <TableRow className="border-gray-600">
+                          <TableCell>Prime de vente ({selectedEmployee.salesVolume} m³)</TableCell>
+                          <TableCell className="text-right">{calculateFinalSalary(selectedEmployee).salesBonus}€</TableCell>
+                        </TableRow>
+                      )}
+                    </TableBody>
+                  </Table>
+                </div>
+
+                <div className="mb-6">
+                  <h4 className="font-semibold mb-3">Déductions</h4>
+                  <Table className="text-white">
+                    <TableHeader className="bg-gray-600">
+                      <TableRow>
+                        <TableHead>Description</TableHead>
+                        <TableHead className="text-right">Montant</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      <TableRow className="border-gray-600">
+                        <TableCell>Sécurité sociale (20%)</TableCell>
+                        <TableCell className="text-right">-{(selectedEmployee.baseSalary * 0.2).toFixed(2)}€</TableCell>
+                      </TableRow>
+                      {selectedEmployee.advances > 0 && (
+                        <TableRow className="border-gray-600">
+                          <TableCell>Acomptes</TableCell>
+                          <TableCell className="text-right">-{selectedEmployee.advances.toFixed(2)}€</TableCell>
+                        </TableRow>
+                      )}
+                    </TableBody>
+                  </Table>
+                </div>
+
+                <div className="border-t border-gray-600 pt-4">
+                  <div className="flex justify-between items-center font-bold text-lg">
+                    <span>Salaire net à payer</span>
+                    <span>{calculateFinalSalary(selectedEmployee).finalSalary}€</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex justify-end mt-6 gap-3">
+                <Button 
+                  variant="outline" 
+                  className="bg-gray-700 hover:bg-gray-600"
+                >
+                  <FileText className="h-4 w-4 mr-2" />
+                  Télécharger PDF
+                </Button>
+                <Button 
+                  className="bg-[#9b87f5] hover:bg-[#8a76e5]"
+                  onClick={() => setIsPaySlipOpen(false)}
+                >
+                  Fermer
+                </Button>
+              </div>
+            </div>
+          )}
         </DialogContent>
       </Dialog>
     </div>

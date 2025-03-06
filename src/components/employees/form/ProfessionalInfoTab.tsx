@@ -116,6 +116,25 @@ export function ProfessionalInfoTab({ form }: ProfessionalInfoTabProps) {
           </FormItem>
         )}
       />
+
+      <FormField
+        control={form.control}
+        name="salary"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Salaire de base (€)</FormLabel>
+            <FormControl>
+              <Input 
+                type="number" 
+                placeholder="Ex: 2500" 
+                {...field} 
+                className="bg-gray-700 border-gray-600" 
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
     </div>
   );
 }
