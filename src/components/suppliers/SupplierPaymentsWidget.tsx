@@ -106,7 +106,7 @@ export function SupplierPaymentsWidget() {
                 size="sm" 
                 variant="outline" 
                 onClick={handleViewAll}
-                className="bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 hover:text-amber-300 border-amber-500/20"
+                className="bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 hover:text-amber-300 border-amber-500/20 transition-all duration-200 hover:scale-105"
               >
                 <Eye className="h-4 w-4 mr-2" />
                 Voir tout
@@ -115,7 +115,7 @@ export function SupplierPaymentsWidget() {
                 size="sm" 
                 variant="outline" 
                 onClick={handleNewPayment}
-                className="bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 hover:text-amber-300 border-amber-500/20"
+                className="bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 hover:text-amber-300 border-amber-500/20 transition-all duration-200 hover:scale-105"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Nouveau
