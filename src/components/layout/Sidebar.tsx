@@ -1,3 +1,4 @@
+
 import { Link, useLocation } from "react-router-dom";
 import { 
   Home, Users, TestTube, Truck, Car, 
@@ -8,10 +9,27 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
+// Define the type for sub menu items
+interface SubMenuItem {
+  to: string;
+  label: string;
+  icon?: React.ComponentType;
+  subItems?: SubMenuItem[];
+}
+
+// Define the type for menu items
+interface MenuItem {
+  to: string;
+  icon: React.ComponentType;
+  label: string;
+  iconColor: string;
+  subItems?: SubMenuItem[];
+}
+
 export function Sidebar() {
   const location = useLocation();
 
-  const menuItems = [
+  const menuItems: MenuItem[] = [
     { to: "/", icon: Home, label: "Tableau de bord", iconColor: "text-blue-500" },
     { 
       to: "/clients", 
