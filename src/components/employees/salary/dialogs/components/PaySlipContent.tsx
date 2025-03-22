@@ -83,13 +83,6 @@ export function PaySlipContent({
                 <p><span className="font-semibold">Poste:</span> {selectedEmployee?.position}</p>
                 <p><span className="font-semibold">Date d'embauche:</span> 01/01/2023</p>
               </div>
-              
-              <div className="employee-details">
-                <h3 className="font-bold">Détails du paiement</h3>
-                <p><span className="font-semibold">Jours travaillés:</span> {selectedEmployee?.attendance || 22}/22</p>
-                <p><span className="font-semibold">Heures supplémentaires:</span> {selectedEmployee?.overtime || 0}h</p>
-                <p><span className="font-semibold">Absences:</span> {selectedEmployee?.absences || 0} jour(s)</p>
-              </div>
             </div>
           </div>
           
