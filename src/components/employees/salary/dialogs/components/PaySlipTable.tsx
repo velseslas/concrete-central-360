@@ -34,13 +34,13 @@ export function PaySlipTable({
         )}
         {selectedEmployee.position === "Commercial" && (selectedEmployee.salesVolume || 0) > 0 && (
           <tr>
-            <td className="py-2 px-2">Volume des ventes ({selectedEmployee.salesVolume} m³ × {bonusPerCubicMeter} DA)</td>
+            <td className="py-2 px-2">Volume des ventes ({selectedEmployee.salesVolume} m³ × {bonusPerCubicMeter} DA) - Prime commerciale</td>
             <td className="text-right py-2 px-2">{parseInt(salary.salesBonus).toLocaleString('fr-FR')}</td>
           </tr>
         )}
         {(selectedEmployee.absences || 0) > 0 && (
           <tr>
-            <td className="py-2 px-2 text-red-500">Absences ({selectedEmployee.absences} jour(s))</td>
+            <td className="py-2 px-2 text-red-500">Absences ({selectedEmployee.absences} jour(s) - Pénalité)</td>
             <td className="text-right py-2 px-2 text-red-500">-{salary.absencesDeduction.toLocaleString('fr-FR')}</td>
           </tr>
         )}
