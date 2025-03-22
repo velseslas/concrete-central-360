@@ -3,7 +3,6 @@ import { useState } from "react";
 import { EmployeeSalaryManager } from "./salary/EmployeeSalaryManager";
 import { Dialog } from "@/components/ui/dialog";
 import { Employee } from "./salary/types";
-import { Button } from "@/components/ui/button";
 import { PaySlipDialog } from "./salary/dialogs/PaySlipDialog";
 import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
