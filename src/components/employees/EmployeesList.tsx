@@ -2,14 +2,13 @@ import { useState } from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Edit, Eye, Search, Trash2, UserCircle } from "lucide-react";
 import { EmployeeDetails } from "./EmployeeDetails";
 import { EmployeeForm } from "./EmployeeForm";
 import { EmployeeDeleteDialog } from "./EmployeeDeleteDialog";
 
-// Temporary mock data until we connect to the backend
 const mockEmployees = [
   {
     id: "1",
