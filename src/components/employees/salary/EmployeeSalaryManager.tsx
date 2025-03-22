@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog } from "@/components/ui/dialog";
@@ -6,10 +5,8 @@ import { format } from "date-fns";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
-// Import types
 import { Employee, SalaryAdvance, SalesBonus, Client, Project } from "./types";
 
-// Import components
 import { SalaryOverviewTab } from "./SalaryOverviewTab";
 import { AdvancesTab } from "./AdvancesTab";
 import { BonusesTab } from "./BonusesTab";
@@ -20,33 +17,26 @@ import { BonusRateDialog } from "./dialogs/BonusRateDialog";
 import { PaySlipDialog } from "./dialogs/PaySlipDialog";
 
 export function EmployeeSalaryManager() {
-  // State for active tab
   const [activeTab, setActiveTab] = useState("overview");
   
-  // Dialog states
   const [isAddAdvanceOpen, setIsAddAdvanceOpen] = useState(false);
   const [isAddSalesVolumeOpen, setIsAddSalesVolumeOpen] = useState(false);
   const [isBonusSettingsOpen, setIsBonusSettingsOpen] = useState(false);
   const [isPaySlipOpen, setIsPaySlipOpen] = useState(false);
   
-  // Form states
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
   const [selectedMonth, setSelectedMonth] = useState("");
   
-  // Advance form states
   const [advanceAmount, setAdvanceAmount] = useState("");
   const [advanceDescription, setAdvanceDescription] = useState("");
   const [advanceDate, setAdvanceDate] = useState(format(new Date(), "yyyy-MM-dd"));
   
-  // Bonus settings
   const [bonusPerCubicMeter, setBonusPerCubicMeter] = useState("1.5");
   
-  // Data states
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [advances, setAdvances] = useState<SalaryAdvance[]>([]);
   const [bonuses, setBonuses] = useState<SalesBonus[]>([]);
   
-  // Sales volume form states
   const [salesVolume, setSalesVolume] = useState("");
   const [salesMonth, setSalesMonth] = useState(format(new Date(), "yyyy-MM"));
   const [selectedClient, setSelectedClient] = useState("");
@@ -54,15 +44,12 @@ export function EmployeeSalaryManager() {
   const [clients, setClients] = useState<Client[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
   
-  // Refs
   const paySlipRef = useRef<HTMLDivElement>(null);
   
-  // Filter projects based on selected client
   const filteredProjects = selectedClient 
     ? projects.filter(project => project.client_id === selectedClient) 
     : projects;
   
-  // Fetch data on component mount
   useEffect(() => {
     fetchEmployees();
     fetchAdvances();
@@ -72,9 +59,7 @@ export function EmployeeSalaryManager() {
     fetchProjects();
   }, []);
   
-  // Fetch data functions
   const fetchClients = async () => {
-    // Mock clients data - in a real app, this would come from Supabase
     setClients([
       { id: "1", name: "Client A" },
       { id: "2", name: "Client B" },
@@ -83,7 +68,6 @@ export function EmployeeSalaryManager() {
   };
   
   const fetchProjects = async () => {
-    // Mock projects data - in a real app, this would come from Supabase
     setProjects([
       { id: "1", name: "Projet 1", client_id: "1" },
       { id: "2", name: "Projet 2", client_id: "1" },
@@ -114,13 +98,17 @@ export function EmployeeSalaryManager() {
       
       if (error) throw error;
       
-      // Add employee_name to each advance by looking up the employee
       const advancesWithNames = (data || []).map(advance => {
-        // Find the employee with matching id
         const employee = employees.find(emp => emp.id === advance.employee_id);
+        
+        let typedStatus: 'pending' | 'approved' | 'rejected' = 'pending';
+        if (advance.status === 'approved') typedStatus = 'approved';
+        else if (advance.status === 'rejected') typedStatus = 'rejected';
+        
         return {
           ...advance,
-          employee_name: employee?.name || "Unknown Employee"
+          employee_name: employee?.name || "Unknown Employee",
+          status: typedStatus
         };
       });
       
@@ -143,9 +131,7 @@ export function EmployeeSalaryManager() {
       
       if (error) throw error;
       
-      // Add employee_name to each bonus by looking up the employee
       const bonusesWithNames = (data || []).map(bonus => {
-        // Find the employee with matching id
         const employee = employees.find(emp => emp.id === bonus.employee_id);
         return {
           ...bonus,
@@ -167,7 +153,6 @@ export function EmployeeSalaryManager() {
     setBonusPerCubicMeter("1.5");
   };
   
-  // Event handlers
   const handleAddAdvance = async () => {
     if (!selectedEmployee || !advanceAmount || !advanceDate) {
       toast.error("Veuillez remplir tous les champs obligatoires");
@@ -177,11 +162,10 @@ export function EmployeeSalaryManager() {
     try {
       const newAdvance = {
         employee_id: selectedEmployee.id,
-        employee_name: selectedEmployee.name, // Add employee_name to the record
         amount: parseFloat(advanceAmount),
         date: advanceDate,
         description: advanceDescription || undefined,
-        status: 'pending'
+        status: 'pending' as const
       };
 
       const { error } = await supabase
@@ -230,22 +214,18 @@ export function EmployeeSalaryManager() {
       const volume = parseFloat(salesVolume);
       const bonus = volume * parseFloat(bonusPerCubicMeter);
       
-      // Find the client and project names for the record
       const client = clients.find(c => c.id === selectedClient);
       const project = projects.find(p => p.id === selectedProject);
       
       const newBonus = {
         employee_id: selectedEmployee.id,
-        employee_name: selectedEmployee.name, // Add employee_name to the record
         month: `${salesMonth}-01`,
         volume_sold: volume,
         bonus_per_cubic_meter: parseFloat(bonusPerCubicMeter),
         total_bonus: bonus,
         status: 'calculated',
         client_id: selectedClient,
-        client_name: client?.name || "",
-        project_id: selectedProject,
-        project_name: project?.name || ""
+        project_id: selectedProject
       };
 
       const { error } = await supabase
@@ -387,7 +367,6 @@ export function EmployeeSalaryManager() {
         </TabsContent>
       </Tabs>
 
-      {/* Dialogs */}
       <Dialog open={isAddAdvanceOpen} onOpenChange={setIsAddAdvanceOpen}>
         <AdvanceDialog 
           employees={employees}
