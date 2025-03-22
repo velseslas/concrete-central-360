@@ -26,7 +26,6 @@ export function ExpenseReportWidget() {
 
   const handleExport = () => {
     toast.success("Exportation du rapport en cours...");
-    // Open preview dialog which handles export functionality
     setShowPreview(true);
   };
 

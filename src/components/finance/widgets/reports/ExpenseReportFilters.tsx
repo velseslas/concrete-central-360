@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CalendarDays } from "lucide-react";
-import { useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
@@ -51,6 +50,12 @@ export function ExpenseReportFilters({
       case "quarterly": return "Sélectionner un trimestre";
       case "yearly": return "Sélectionner une année";
       default: return "Sélectionner une date";
+    }
+  };
+
+  const handleDateSelect = (date: Date | undefined) => {
+    if (date && onDateChange) {
+      onDateChange(date);
     }
   };
 
@@ -110,11 +115,11 @@ export function ExpenseReportFilters({
                 {selectedDate ? format(selectedDate, 'd MMMM yyyy', { locale: fr }) : getDatePlaceholder()}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0 bg-gray-800 border-gray-700">
+            <PopoverContent className="w-auto p-0 bg-gray-800 border-gray-700 z-50">
               <Calendar
                 mode="single"
                 selected={selectedDate}
-                onSelect={(date) => date && onDateChange && onDateChange(date)}
+                onSelect={handleDateSelect}
                 initialFocus
                 className="bg-gray-800 text-white pointer-events-auto"
               />
