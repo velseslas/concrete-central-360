@@ -1,9 +1,8 @@
 
-import { useRef } from "react";
 import { DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Printer, Download, FileText } from "lucide-react";
+import { Printer, Download } from "lucide-react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { Employee } from "../types";
@@ -71,7 +70,7 @@ export function PaySlipDialog({
         <DialogTitle className="text-white text-xl">
           Fiche de paie - {selectedEmployee?.name || "Employé"}
         </DialogTitle>
-        <div className="flex gap-2">
+        <div className="flex gap-2 mr-8">
           <Button 
             variant="outline" 
             size="icon"
@@ -124,10 +123,7 @@ export function PaySlipDialog({
               <p>Tél: +213 (0) 99 999 9999</p>
             </div>
             <div className="text-right">
-              <div className="flex items-center justify-end mb-2">
-                <FileText className="h-5 w-5 mr-2 text-gray-600" />
-                <h2 className="text-xl font-bold">Fiche de paie</h2>
-              </div>
+              <h2 className="text-xl font-bold mb-2">Fiche de paie</h2>
               <p>Mois: {selectedMonth ? format(new Date(selectedMonth), 'MMMM yyyy', { locale: fr }) : ''}</p>
               <p>Date d'émission: {format(new Date(), 'dd/MM/yyyy')}</p>
             </div>
@@ -146,6 +142,7 @@ export function PaySlipDialog({
                 <h3 className="font-bold">Détails du paiement</h3>
                 <p><span className="font-semibold">Jours travaillés:</span> {selectedEmployee?.attendance || 22}/22</p>
                 <p><span className="font-semibold">Heures supplémentaires:</span> {selectedEmployee?.overtime || 0}h</p>
+                <p><span className="font-semibold">Absences:</span> {selectedEmployee?.absences || 0} jour(s)</p>
               </div>
             </div>
           </div>
@@ -172,6 +169,12 @@ export function PaySlipDialog({
                 <tr>
                   <td className="py-2 px-2">Prime de vente ({selectedEmployee.salesVolume} m³ × {bonusPerCubicMeter} DA)</td>
                   <td className="text-right py-2 px-2">{parseInt(salary.salesBonus).toLocaleString('fr-FR')}</td>
+                </tr>
+              )}
+              {(selectedEmployee.absences || 0) > 0 && (
+                <tr>
+                  <td className="py-2 px-2 text-red-500">Déduction absences ({selectedEmployee.absences} jour(s))</td>
+                  <td className="text-right py-2 px-2 text-red-500">-{salary.absencesDeduction.toLocaleString('fr-FR')}</td>
                 </tr>
               )}
               {(selectedEmployee.advances || 0) > 0 && (

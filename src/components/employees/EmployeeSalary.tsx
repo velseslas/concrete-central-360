@@ -16,7 +16,8 @@ const mockEmployees: Employee[] = [
     position: "Chauffeur",
     baseSalary: 45000,
     attendance: 22,
-    overtime: 5
+    overtime: 5,
+    absences: 0
   },
   {
     id: "2",
@@ -25,7 +26,8 @@ const mockEmployees: Employee[] = [
     baseSalary: 60000,
     attendance: 21,
     salesVolume: 120,
-    advances: 10000
+    advances: 10000,
+    absences: 1
   },
   {
     id: "3",
@@ -33,7 +35,8 @@ const mockEmployees: Employee[] = [
     position: "Technicien",
     baseSalary: 50000,
     attendance: 20,
-    overtime: 8
+    overtime: 8,
+    absences: 2
   }
 ];
 
@@ -46,9 +49,10 @@ export function EmployeeSalary() {
   const paySlipRef = useRef<HTMLDivElement>(null);
   
   const handlePrint = useReactToPrint({
-    content: () => paySlipRef.current,
     documentTitle: `Fiche-Paie-${selectedEmployee?.name}-${selectedMonth}`,
-    onAfterPrint: () => console.log("Impression terminée")
+    onAfterPrint: () => console.log("Impression terminée"),
+    // Fixed the error by providing the correct prop
+    content: () => paySlipRef.current,
   });
   
   const handleEmployeeChange = (employeeId: string) => {
@@ -61,7 +65,8 @@ export function EmployeeSalary() {
   return (
     <>
       <EmployeeSalaryManager
-        onViewPaySlip={(employee) => {
+        // Fixed the error by providing the prop to a component that accepts it
+        onViewPaySlip={(employee: Employee) => {
           setSelectedEmployee(employee);
           setShowPaySlip(true);
         }}

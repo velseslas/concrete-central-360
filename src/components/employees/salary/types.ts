@@ -1,4 +1,3 @@
-
 export interface Employee {
   id: string;
   name: string;
@@ -8,6 +7,7 @@ export interface Employee {
   overtime?: number;
   advances?: number;
   salesVolume?: number;
+  absences?: number;
 }
 
 export interface SalaryAdvance {
@@ -51,5 +51,6 @@ export interface SalaryDetails {
   overtimePay: string;
   salesBonus: string;
   advances: number;
+  absencesDeduction: number;
   finalSalary: string;
 }
