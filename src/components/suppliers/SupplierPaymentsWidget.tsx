@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Building2, CreditCard, Plus, DollarSign, Calculator } from "lucide-react";
+import { Building2, CreditCard, Plus, DollarSign, Calculator, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
@@ -108,6 +108,7 @@ export function SupplierPaymentsWidget() {
                 onClick={handleViewAll}
                 className="bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 hover:text-amber-300 border-amber-500/20"
               >
+                <Eye className="h-4 w-4 mr-2" />
                 Voir tout
               </Button>
               <Button 
