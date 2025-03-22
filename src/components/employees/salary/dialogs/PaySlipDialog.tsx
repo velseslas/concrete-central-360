@@ -70,7 +70,7 @@ export function PaySlipDialog({
         <DialogTitle className="text-white text-xl">
           Fiche de paie - {selectedEmployee?.name || "Employé"}
         </DialogTitle>
-        <div className="flex gap-2 mr-8">
+        <div className="flex gap-2 mr-2">
           <Button 
             variant="outline" 
             size="icon"

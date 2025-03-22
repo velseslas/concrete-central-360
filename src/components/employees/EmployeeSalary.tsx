@@ -51,7 +51,6 @@ export function EmployeeSalary() {
   const handlePrint = useReactToPrint({
     documentTitle: `Fiche-Paie-${selectedEmployee?.name}-${selectedMonth}`,
     onAfterPrint: () => console.log("Impression terminée"),
-    // Fixed the error by providing the correct prop
     content: () => paySlipRef.current,
   });
   
@@ -61,15 +60,16 @@ export function EmployeeSalary() {
       setSelectedEmployee(employee);
     }
   };
+
+  const handleViewPaySlip = (employee: Employee) => {
+    setSelectedEmployee(employee);
+    setShowPaySlip(true);
+  };
   
   return (
     <>
       <EmployeeSalaryManager
-        // Fixed the error by providing the prop to a component that accepts it
-        onViewPaySlip={(employee: Employee) => {
-          setSelectedEmployee(employee);
-          setShowPaySlip(true);
-        }}
+        onViewPaySlip={handleViewPaySlip}
       />
       
       <Dialog open={showPaySlip} onOpenChange={setShowPaySlip}>
