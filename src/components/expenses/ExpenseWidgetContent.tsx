@@ -122,4 +122,4 @@ export const ExpenseWidgetContent = ({
       </div>
     </div>
   );
-};
+}

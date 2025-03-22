@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Download, Printer } from "lucide-react";
 import { ExpenseReportTable } from "./ExpenseReportTable";
+import { toast } from "sonner";
 
 type ReportPeriod = "daily" | "weekly" | "monthly" | "quarterly" | "yearly";
 type ExpenseCategory = "general" | "vehicles" | "concrete" | "all";
@@ -12,21 +13,23 @@ interface ExpenseReportPreviewDialogProps {
   onOpenChange: (open: boolean) => void;
   reportPeriod: ReportPeriod;
   expenseCategory: ExpenseCategory;
+  selectedDate?: Date;
 }
 
 export function ExpenseReportPreviewDialog({
   open,
   onOpenChange,
   reportPeriod,
-  expenseCategory
+  expenseCategory,
+  selectedDate = new Date()
 }: ExpenseReportPreviewDialogProps) {
   const handleDownload = () => {
-    console.log("Downloading report...");
+    toast.success("Téléchargement du rapport en cours...");
     // Implement download logic here
   };
 
   const handlePrint = () => {
-    console.log("Printing report...");
+    toast.success("Impression du rapport en cours...");
     window.print();
   };
 
@@ -63,6 +66,7 @@ export function ExpenseReportPreviewDialog({
           <ExpenseReportTable 
             reportPeriod={reportPeriod}
             expenseCategory={expenseCategory}
+            selectedDate={selectedDate}
             preview
           />
         </div>

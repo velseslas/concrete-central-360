@@ -10,6 +10,7 @@ type ExpenseCategory = "general" | "vehicles" | "concrete" | "all";
 interface ExpenseReportTableProps {
   reportPeriod: ReportPeriod;
   expenseCategory: ExpenseCategory;
+  selectedDate?: Date;
   preview?: boolean;
 }
 
@@ -68,6 +69,7 @@ const mockExpensesData = [
 export function ExpenseReportTable({ 
   reportPeriod,
   expenseCategory,
+  selectedDate = new Date(),
   preview = false
 }: ExpenseReportTableProps) {
   // Filtrer les dépenses en fonction de la période et de la catégorie
@@ -76,19 +78,19 @@ export function ExpenseReportTable({
     
     switch (reportPeriod) {
       case "daily":
-        startDate = subDays(new Date(), 1);
+        startDate = subDays(selectedDate, 1);
         break;
       case "weekly":
-        startDate = subWeeks(new Date(), 1);
+        startDate = subWeeks(selectedDate, 1);
         break;
       case "monthly":
-        startDate = subMonths(new Date(), 1);
+        startDate = subMonths(selectedDate, 1);
         break;
       case "quarterly":
-        startDate = subQuarters(new Date(), 1);
+        startDate = subQuarters(selectedDate, 1);
         break;
       case "yearly":
-        startDate = subYears(new Date(), 1);
+        startDate = subYears(selectedDate, 1);
         break;
     }
     
@@ -138,6 +140,9 @@ export function ExpenseReportTable({
         <h2 className={`text-2xl font-bold ${preview ? "text-gray-800" : "text-white"}`}>
           {getPeriodTitle()} - {getCategoryTitle()}
         </h2>
+        <p className={`${preview ? "text-gray-600" : "text-gray-400"}`}>
+          Période: {format(selectedDate, "d MMMM yyyy", { locale: fr })}
+        </p>
         <p className={`${preview ? "text-gray-600" : "text-gray-400"}`}>
           Généré le {format(new Date(), "d MMMM yyyy 'à' HH:mm", { locale: fr })}
         </p>

@@ -13,6 +13,7 @@ import { ExpenseReportFilters } from "./ExpenseReportFilters";
 import { ExpenseReportTable } from "./ExpenseReportTable";
 import { ExpenseReportPreviewDialog } from "./ExpenseReportPreviewDialog";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
 
 type ReportPeriod = "daily" | "weekly" | "monthly" | "quarterly" | "yearly";
 type ExpenseCategory = "general" | "vehicles" | "concrete" | "all";
@@ -20,16 +21,17 @@ type ExpenseCategory = "general" | "vehicles" | "concrete" | "all";
 export function ExpenseReportWidget() {
   const [reportPeriod, setReportPeriod] = useState<ReportPeriod>("monthly");
   const [expenseCategory, setExpenseCategory] = useState<ExpenseCategory>("all");
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [showPreview, setShowPreview] = useState(false);
 
   const handleExport = () => {
-    console.log("Exporting report as PDF");
+    toast.success("Exportation du rapport en cours...");
     // Implement export functionality
   };
 
   const handlePrint = () => {
-    console.log("Printing report");
-    window.print();
+    toast.success("Ouverture de l'aperçu avant impression...");
+    setShowPreview(true);
   };
 
   return (
@@ -45,7 +47,7 @@ export function ExpenseReportWidget() {
             <Button
               variant="outline"
               className="bg-gray-800/50 hover:bg-gray-700/50 border-gray-700/50 text-white"
-              onClick={() => setShowPreview(true)}
+              onClick={handlePrint}
             >
               <Printer className="mr-2 h-4 w-4" />
               Aperçu
@@ -66,12 +68,15 @@ export function ExpenseReportWidget() {
           expenseCategory={expenseCategory}
           onReportPeriodChange={setReportPeriod}
           onExpenseCategoryChange={setExpenseCategory}
+          selectedDate={selectedDate}
+          onDateChange={setSelectedDate}
         />
 
         <div className="expense-report-content printable-content">
           <ExpenseReportTable 
             reportPeriod={reportPeriod}
             expenseCategory={expenseCategory}
+            selectedDate={selectedDate}
           />
         </div>
       </CardContent>
@@ -81,6 +86,7 @@ export function ExpenseReportWidget() {
         onOpenChange={setShowPreview}
         reportPeriod={reportPeriod}
         expenseCategory={expenseCategory}
+        selectedDate={selectedDate}
       />
     </Card>
   );
