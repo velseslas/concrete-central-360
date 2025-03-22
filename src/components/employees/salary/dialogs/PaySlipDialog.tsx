@@ -5,7 +5,6 @@ import { calculateFinalSalary } from "../salaryUtils";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { toast } from "sonner";
-import { useRef } from "react";
 import { PaySlipHeader } from "./components/PaySlipHeader";
 import { PaySlipContent } from "./components/PaySlipContent";
 

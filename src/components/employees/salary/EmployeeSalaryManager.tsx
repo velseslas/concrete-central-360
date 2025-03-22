@@ -16,7 +16,11 @@ import { SalesVolumeDialog } from "./dialogs/SalesVolumeDialog";
 import { BonusRateDialog } from "./dialogs/BonusRateDialog";
 import { PaySlipDialog } from "./dialogs/PaySlipDialog";
 
-export function EmployeeSalaryManager() {
+interface EmployeeSalaryManagerProps {
+  onViewPaySlip: (employee: Employee) => void;
+}
+
+export function EmployeeSalaryManager({ onViewPaySlip }: EmployeeSalaryManagerProps) {
   const [activeTab, setActiveTab] = useState("overview");
   
   const [isAddAdvanceOpen, setIsAddAdvanceOpen] = useState(false);
