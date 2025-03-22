@@ -1,9 +1,8 @@
-
 import { useState } from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Edit, Eye, Search, Trash2, UserCircle } from "lucide-react";
 import { EmployeeDetails } from "./EmployeeDetails";
@@ -116,9 +115,6 @@ export function EmployeesList() {
           <Button onClick={() => setShowNewEmployeeForm(true)}>Nouveau</Button>
           <Dialog open={showNewEmployeeForm} onOpenChange={setShowNewEmployeeForm}>
             <DialogContent className="max-w-4xl bg-gray-800 text-white border-gray-700">
-              <DialogHeader>
-                <DialogTitle className="text-center text-xl">Nouvel employé</DialogTitle>
-              </DialogHeader>
               <EmployeeForm onSuccess={() => setShowNewEmployeeForm(false)} />
             </DialogContent>
           </Dialog>
