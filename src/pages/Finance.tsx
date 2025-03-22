@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { 
@@ -16,6 +15,7 @@ import { BillingListWidget } from "@/components/finance/widgets/BillingListWidge
 import { BillingReportsWidget } from "@/components/finance/widgets/BillingReportsWidget";
 import { DailyExpenseWidget } from "@/components/finance/widgets/DailyExpenseWidget";
 import { QuoteWidget } from "@/components/finance/widgets/QuoteWidget";
+import { SupplierPaymentsWidget } from "@/components/suppliers/SupplierPaymentsWidget";
 
 export default function Finance() {
   const [activeWidget, setActiveWidget] = useState<string | null>(null);
@@ -33,7 +33,7 @@ export default function Finance() {
       title: 'Paiements Fournisseurs',
       icon: Building2,
       color: 'text-amber-400',
-      component: DailyExpenseWidget
+      component: SupplierPaymentsWidget
     },
     {
       id: 'billing',

@@ -50,8 +50,7 @@ export function EmployeeSalary() {
   const handlePrint = useReactToPrint({
     documentTitle: `Fiche-Paie-${selectedEmployee?.name}-${selectedMonth}`,
     onAfterPrint: () => console.log("Impression terminée"),
-    // Pass the ref directly instead of a function
-    content: paySlipRef,
+    content: () => paySlipRef.current,
   });
   
   const handleEmployeeChange = (employeeId: string) => {
