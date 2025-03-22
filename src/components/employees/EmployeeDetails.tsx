@@ -21,6 +21,7 @@ interface EmployeeDetailsProps {
     nationalId?: string;
     birthDate?: string;
     notes?: string;
+    salary?: string;
   };
 }
 
@@ -30,7 +31,7 @@ export function EmployeeDetails({ employee }: EmployeeDetailsProps) {
   };
 
   return (
-    <div className="py-4">
+    <div className="py-4 px-2">
       <div className="flex flex-col items-center mb-6">
         {employee.imageUrl ? (
           <img 
@@ -43,67 +44,73 @@ export function EmployeeDetails({ employee }: EmployeeDetailsProps) {
             <UserCircle className="h-16 w-16 text-gray-400" />
           </div>
         )}
-        <h2 className="mt-4 text-xl font-bold">{employee.firstName} {employee.lastName}</h2>
-        <div className="text-gray-400">{employee.position}</div>
+        <h2 className="mt-4 text-2xl font-bold">{employee.firstName} {employee.lastName}</h2>
+        <div className="text-xl text-gray-400 mt-1">{employee.position}</div>
         <Badge 
           variant={employee.status === 'active' ? 'default' : 'destructive'}
-          className={`mt-2 ${employee.status === 'active' ? 'bg-green-600' : 'bg-red-600'}`}
+          className={`mt-3 px-3 py-1 text-md ${employee.status === 'active' ? 'bg-green-600' : 'bg-red-600'}`}
         >
           {employee.status === 'active' ? 'Actif' : 'Inactif'}
         </Badge>
       </div>
       
-      <Separator className="my-4 bg-gray-700" />
+      <Separator className="my-6 bg-gray-700" />
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="space-y-3">
-          <h3 className="text-lg font-medium">Informations personnelles</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="space-y-5">
+          <h3 className="text-xl font-medium mb-4">Informations personnelles</h3>
           
-          <div className="flex items-center gap-2 text-gray-300">
-            <Mail className="h-4 w-4 text-gray-400" />
-            <span>{employee.email}</span>
+          <div className="flex items-center gap-3 text-gray-300">
+            <Mail className="h-5 w-5 text-gray-400" />
+            <span className="text-lg">{employee.email}</span>
           </div>
           
-          <div className="flex items-center gap-2 text-gray-300">
-            <Phone className="h-4 w-4 text-gray-400" />
-            <span>{employee.phone}</span>
+          <div className="flex items-center gap-3 text-gray-300">
+            <Phone className="h-5 w-5 text-gray-400" />
+            <span className="text-lg">{employee.phone}</span>
           </div>
           
           {employee.address && (
-            <div className="flex items-center gap-2 text-gray-300">
-              <MapPin className="h-4 w-4 text-gray-400" />
-              <span>{employee.address}</span>
+            <div className="flex items-center gap-3 text-gray-300">
+              <MapPin className="h-5 w-5 text-gray-400" />
+              <span className="text-lg">{employee.address}</span>
             </div>
           )}
           
           {employee.birthDate && (
-            <div className="flex items-center gap-2 text-gray-300">
-              <CalendarDays className="h-4 w-4 text-gray-400" />
-              <span>Né(e) le {formatDate(employee.birthDate)}</span>
+            <div className="flex items-center gap-3 text-gray-300">
+              <CalendarDays className="h-5 w-5 text-gray-400" />
+              <span className="text-lg">Né(e) le {formatDate(employee.birthDate)}</span>
             </div>
           )}
         </div>
         
-        <div className="space-y-3">
-          <h3 className="text-lg font-medium">Informations professionnelles</h3>
+        <div className="space-y-5">
+          <h3 className="text-xl font-medium mb-4">Informations professionnelles</h3>
           
-          <div className="text-gray-300">
+          <div className="text-gray-300 text-lg">
             <span className="text-gray-400">Département:</span> {employee.department}
           </div>
           
-          <div className="text-gray-300">
+          <div className="text-gray-300 text-lg">
             <span className="text-gray-400">Date d'embauche:</span> {formatDate(employee.startDate)}
           </div>
           
           {employee.nationalId && (
-            <div className="text-gray-300">
+            <div className="text-gray-300 text-lg">
               <span className="text-gray-400">N° d'identité:</span> {employee.nationalId}
             </div>
           )}
           
           {employee.bankDetails && (
-            <div className="text-gray-300">
+            <div className="text-gray-300 text-lg">
               <span className="text-gray-400">Coordonnées bancaires:</span> {employee.bankDetails}
+            </div>
+          )}
+
+          {employee.salary && (
+            <div className="text-gray-300 text-lg">
+              <span className="text-gray-400">Salaire de base:</span> {employee.salary} DA
             </div>
           )}
         </div>
@@ -111,20 +118,20 @@ export function EmployeeDetails({ employee }: EmployeeDetailsProps) {
       
       {employee.emergencyContact && (
         <>
-          <Separator className="my-4 bg-gray-700" />
+          <Separator className="my-6 bg-gray-700" />
           <div>
-            <h3 className="text-lg font-medium mb-2">Contact d'urgence</h3>
-            <p className="text-gray-300">{employee.emergencyContact}</p>
+            <h3 className="text-xl font-medium mb-4">Contact d'urgence</h3>
+            <p className="text-gray-300 text-lg">{employee.emergencyContact}</p>
           </div>
         </>
       )}
       
       {employee.notes && (
         <>
-          <Separator className="my-4 bg-gray-700" />
+          <Separator className="my-6 bg-gray-700" />
           <div>
-            <h3 className="text-lg font-medium mb-2">Notes</h3>
-            <p className="text-gray-300">{employee.notes}</p>
+            <h3 className="text-xl font-medium mb-4">Notes</h3>
+            <p className="text-gray-300 text-lg">{employee.notes}</p>
           </div>
         </>
       )}

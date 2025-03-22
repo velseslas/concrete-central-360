@@ -81,6 +81,7 @@ export function EmployeesList() {
   const [showDetails, setShowDetails] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [showNewEmployeeForm, setShowNewEmployeeForm] = useState(false);
   
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -112,7 +113,17 @@ export function EmployeesList() {
         </div>
         <div className="flex gap-2">
           <Button variant="outline">Exporter</Button>
-          <Button>Nouveau</Button>
+          <Dialog open={showNewEmployeeForm} onOpenChange={setShowNewEmployeeForm}>
+            <DialogTrigger asChild>
+              <Button>Nouveau</Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-3xl bg-gray-800 text-white border-gray-700">
+              <DialogHeader>
+                <DialogTitle>Nouvel employé</DialogTitle>
+              </DialogHeader>
+              <EmployeeForm onSuccess={() => setShowNewEmployeeForm(false)} />
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
       
@@ -185,7 +196,7 @@ export function EmployeesList() {
                             <Eye className="h-4 w-4" />
                           </Button>
                         </DialogTrigger>
-                        <DialogContent className="sm:max-w-md bg-gray-800 text-white border-gray-700">
+                        <DialogContent className="sm:max-w-3xl bg-gray-800 text-white border-gray-700">
                           <DialogHeader>
                             <DialogTitle>Détails de l'employé</DialogTitle>
                           </DialogHeader>
@@ -208,11 +219,17 @@ export function EmployeesList() {
                             <Edit className="h-4 w-4" />
                           </Button>
                         </DialogTrigger>
-                        <DialogContent className="sm:max-w-xl bg-gray-800 text-white border-gray-700">
+                        <DialogContent className="sm:max-w-3xl bg-gray-800 text-white border-gray-700">
                           <DialogHeader>
                             <DialogTitle>Modifier l'employé</DialogTitle>
                           </DialogHeader>
-                          {selectedEmployee && <EmployeeForm employee={selectedEmployee} isEditing />}
+                          {selectedEmployee && 
+                            <EmployeeForm 
+                              employee={selectedEmployee} 
+                              isEditing 
+                              onSuccess={() => setShowEditForm(false)}
+                            />
+                          }
                         </DialogContent>
                       </Dialog>
                       

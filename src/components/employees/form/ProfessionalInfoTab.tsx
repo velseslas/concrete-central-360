@@ -10,17 +10,19 @@ interface ProfessionalInfoTabProps {
 
 export function ProfessionalInfoTab({ form }: ProfessionalInfoTabProps) {
   return (
-    <div className="space-y-4 mt-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="space-y-5 mt-5">
+      <h3 className="text-xl font-semibold text-center mb-4">Informations professionnelles</h3>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <FormField
           control={form.control}
           name="position"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Poste</FormLabel>
+              <FormLabel className="text-base">Poste</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
+                  <SelectTrigger className="bg-gray-700 border-gray-600 text-white text-base">
                     <SelectValue placeholder="Sélectionner un poste" />
                   </SelectTrigger>
                 </FormControl>
@@ -43,10 +45,10 @@ export function ProfessionalInfoTab({ form }: ProfessionalInfoTabProps) {
           name="department"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Département</FormLabel>
+              <FormLabel className="text-base">Département</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
+                  <SelectTrigger className="bg-gray-700 border-gray-600 text-white text-base">
                     <SelectValue placeholder="Sélectionner un département" />
                   </SelectTrigger>
                 </FormControl>
@@ -65,15 +67,15 @@ export function ProfessionalInfoTab({ form }: ProfessionalInfoTabProps) {
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <FormField
           control={form.control}
           name="startDate"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Date d'embauche</FormLabel>
+              <FormLabel className="text-base">Date d'embauche</FormLabel>
               <FormControl>
-                <Input type="date" {...field} className="bg-gray-700 border-gray-600" />
+                <Input type="date" {...field} className="bg-gray-700 border-gray-600 text-base" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -85,10 +87,10 @@ export function ProfessionalInfoTab({ form }: ProfessionalInfoTabProps) {
           name="status"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Statut</FormLabel>
+              <FormLabel className="text-base">Statut</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
+                  <SelectTrigger className="bg-gray-700 border-gray-600 text-white text-base">
                     <SelectValue placeholder="Sélectionner un statut" />
                   </SelectTrigger>
                 </FormControl>
@@ -108,9 +110,9 @@ export function ProfessionalInfoTab({ form }: ProfessionalInfoTabProps) {
         name="nationalId"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Numéro d'identité</FormLabel>
+            <FormLabel className="text-base">Numéro d'identité</FormLabel>
             <FormControl>
-              <Input placeholder="Numéro de carte d'identité ou de passeport" {...field} className="bg-gray-700 border-gray-600" />
+              <Input placeholder="Numéro de carte d'identité ou de passeport" {...field} className="bg-gray-700 border-gray-600 text-base" />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -122,13 +124,13 @@ export function ProfessionalInfoTab({ form }: ProfessionalInfoTabProps) {
         name="salary"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Salaire de base (€)</FormLabel>
+            <FormLabel className="text-base">Salaire de base (DA)</FormLabel>
             <FormControl>
               <Input 
                 type="number" 
-                placeholder="Ex: 2500" 
+                placeholder="Ex: 50000" 
                 {...field} 
-                className="bg-gray-700 border-gray-600" 
+                className="bg-gray-700 border-gray-600 text-base" 
               />
             </FormControl>
             <FormMessage />

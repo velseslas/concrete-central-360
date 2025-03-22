@@ -10,49 +10,47 @@ interface AdditionalInfoTabProps {
 
 export function AdditionalInfoTab({ form }: AdditionalInfoTabProps) {
   return (
-    <div className="space-y-4 mt-4">
+    <div className="space-y-5 mt-5">
+      <h3 className="text-xl font-semibold text-center mb-4">Informations complémentaires</h3>
+      
       <FormField
         control={form.control}
         name="emergencyContact"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Contact d'urgence</FormLabel>
+            <FormLabel className="text-base">Contact d'urgence</FormLabel>
             <FormControl>
-              <Textarea
-                placeholder="Nom, relation, numéro de téléphone"
-                className="resize-none bg-gray-700 border-gray-600"
-                {...field}
-              />
+              <Input placeholder="Nom, relation et numéro de téléphone" {...field} className="bg-gray-700 border-gray-600 text-base" />
             </FormControl>
             <FormMessage />
           </FormItem>
         )}
       />
-
+      
       <FormField
         control={form.control}
         name="bankDetails"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Coordonnées bancaires</FormLabel>
+            <FormLabel className="text-base">Coordonnées bancaires</FormLabel>
             <FormControl>
-              <Input placeholder="IBAN" {...field} className="bg-gray-700 border-gray-600" />
+              <Input placeholder="Détails du compte bancaire" {...field} className="bg-gray-700 border-gray-600 text-base" />
             </FormControl>
             <FormMessage />
           </FormItem>
         )}
       />
-
+      
       <FormField
         control={form.control}
         name="notes"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Notes</FormLabel>
+            <FormLabel className="text-base">Notes</FormLabel>
             <FormControl>
-              <Textarea
+              <Textarea 
                 placeholder="Informations supplémentaires"
-                className="resize-none bg-gray-700 border-gray-600"
+                className="resize-none bg-gray-700 border-gray-600 min-h-[120px] text-base"
                 {...field}
               />
             </FormControl>

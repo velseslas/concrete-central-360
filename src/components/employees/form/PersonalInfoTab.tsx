@@ -10,16 +10,18 @@ interface PersonalInfoTabProps {
 
 export function PersonalInfoTab({ form }: PersonalInfoTabProps) {
   return (
-    <div className="space-y-4 mt-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="space-y-5 mt-5">
+      <h3 className="text-xl font-semibold text-center mb-4">Informations personnelles</h3>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <FormField
           control={form.control}
           name="firstName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Prénom</FormLabel>
+              <FormLabel className="text-base">Prénom</FormLabel>
               <FormControl>
-                <Input placeholder="Prénom" {...field} className="bg-gray-700 border-gray-600" />
+                <Input placeholder="Prénom" {...field} className="bg-gray-700 border-gray-600 text-base" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -31,9 +33,9 @@ export function PersonalInfoTab({ form }: PersonalInfoTabProps) {
           name="lastName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nom</FormLabel>
+              <FormLabel className="text-base">Nom</FormLabel>
               <FormControl>
-                <Input placeholder="Nom" {...field} className="bg-gray-700 border-gray-600" />
+                <Input placeholder="Nom" {...field} className="bg-gray-700 border-gray-600 text-base" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -41,15 +43,15 @@ export function PersonalInfoTab({ form }: PersonalInfoTabProps) {
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <FormField
           control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel className="text-base">Email</FormLabel>
               <FormControl>
-                <Input type="email" placeholder="email@example.com" {...field} className="bg-gray-700 border-gray-600" />
+                <Input type="email" placeholder="email@example.com" {...field} className="bg-gray-700 border-gray-600 text-base" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -61,9 +63,9 @@ export function PersonalInfoTab({ form }: PersonalInfoTabProps) {
           name="phone"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Téléphone</FormLabel>
+              <FormLabel className="text-base">Téléphone</FormLabel>
               <FormControl>
-                <Input placeholder="+33 6 12 34 56 78" {...field} className="bg-gray-700 border-gray-600" />
+                <Input placeholder="+213 00 00 00 00" {...field} className="bg-gray-700 border-gray-600 text-base" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -76,11 +78,11 @@ export function PersonalInfoTab({ form }: PersonalInfoTabProps) {
         name="address"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Adresse</FormLabel>
+            <FormLabel className="text-base">Adresse</FormLabel>
             <FormControl>
               <Textarea
                 placeholder="Adresse complète"
-                className="resize-none bg-gray-700 border-gray-600"
+                className="resize-none bg-gray-700 border-gray-600 text-base"
                 {...field}
               />
             </FormControl>
@@ -94,9 +96,9 @@ export function PersonalInfoTab({ form }: PersonalInfoTabProps) {
         name="birthDate"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Date de naissance</FormLabel>
+            <FormLabel className="text-base">Date de naissance</FormLabel>
             <FormControl>
-              <Input type="date" {...field} className="bg-gray-700 border-gray-600" />
+              <Input type="date" {...field} className="bg-gray-700 border-gray-600 text-base" />
             </FormControl>
             <FormMessage />
           </FormItem>

@@ -18,15 +18,16 @@ export interface EmployeeFormData {
   nationalId: string;
   birthDate: string;
   notes: string;
-  salary: string; // Added salary field
+  salary: string;
 }
 
 interface UseEmployeeFormProps {
   employee?: Partial<EmployeeFormData>;
   isEditing?: boolean;
+  onSuccess?: () => void;
 }
 
-export function useEmployeeForm({ employee, isEditing = false }: UseEmployeeFormProps = {}) {
+export function useEmployeeForm({ employee, isEditing = false, onSuccess }: UseEmployeeFormProps = {}) {
   const defaultValues: EmployeeFormData = {
     firstName: employee?.firstName || "",
     lastName: employee?.lastName || "",
@@ -42,7 +43,7 @@ export function useEmployeeForm({ employee, isEditing = false }: UseEmployeeForm
     nationalId: employee?.nationalId || "",
     birthDate: employee?.birthDate || "",
     notes: employee?.notes || "",
-    salary: employee?.salary || "", // Default value for salary
+    salary: employee?.salary || "",
   };
 
   const form = useForm<EmployeeFormData>({ defaultValues });
@@ -50,7 +51,53 @@ export function useEmployeeForm({ employee, isEditing = false }: UseEmployeeForm
   const onSubmit = async (data: EmployeeFormData) => {
     try {
       if (isEditing) {
-        // Handle update logic here
+        // Handle update logic for editing existing employee
+        // Pour l'instant, nous simulons la mise à jour avec localStorage
+        const existingEmployees = JSON.parse(localStorage.getItem('employees') || '[]');
+        const updatedEmployees = existingEmployees.map((emp: any) => {
+          if (emp.id === employee?.id) {
+            return {
+              ...emp,
+              first_name: data.firstName,
+              last_name: data.lastName,
+              email: data.email,
+              phone: data.phone,
+              position: data.position,
+              department: data.department,
+              status: data.status,
+              start_date: data.startDate,
+              address: data.address,
+              emergency_contact: data.emergencyContact,
+              bank_details: data.bankDetails,
+              national_id: data.nationalId,
+              birth_date: data.birthDate,
+              notes: data.notes
+            };
+          }
+          return emp;
+        });
+        
+        localStorage.setItem('employees', JSON.stringify(updatedEmployees));
+        
+        // Update salary in employee_salaries table if changed
+        if (data.salary && data.salary !== employee?.salary) {
+          // Convert salary to number and ensure employee_id is a string
+          const employeeId = String(employee?.id);
+          const salaryData = {
+            employee_id: employeeId,
+            base_salary: parseFloat(data.salary) || 0
+          };
+
+          const { error: salaryError } = await supabase
+            .from('employee_salaries')
+            .upsert(salaryData);
+            
+          if (salaryError) {
+            console.error("Error updating salary data:", salaryError);
+            throw salaryError;
+          }
+        }
+        
         toast.success("Employé mis à jour avec succès");
       } else {
         // Instead of using a non-existent "employees" table, we'll create a custom table structure
@@ -101,6 +148,11 @@ export function useEmployeeForm({ employee, isEditing = false }: UseEmployeeForm
           
         toast.success("Nouvel employé ajouté avec succès");
         console.log("Employee data saved:", employeeData);
+      }
+      
+      // Call onSuccess callback if provided
+      if (onSuccess) {
+        onSuccess();
       }
     } catch (error) {
       console.error("Error saving employee data:", error);
