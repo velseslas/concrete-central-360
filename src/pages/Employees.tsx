@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EmployeesList } from "@/components/employees/EmployeesList";
-import { EmployeeForm } from "@/components/employees/EmployeeForm";
 import { EmployeePositions } from "@/components/employees/EmployeePositions";
 import { EmployeeSalary } from "@/components/employees/EmployeeSalary";
 import { motion } from "framer-motion";
@@ -23,12 +22,9 @@ export default function Employees() {
       </motion.div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid grid-cols-4 gap-2 bg-gray-800 text-gray-400">
+        <TabsList className="grid grid-cols-3 gap-2 bg-gray-800 text-gray-400">
           <TabsTrigger value="list" className="data-[state=active]:bg-gray-700 data-[state=active]:text-white">
             Liste des employés
-          </TabsTrigger>
-          <TabsTrigger value="new" className="data-[state=active]:bg-gray-700 data-[state=active]:text-white">
-            Nouvel employé
           </TabsTrigger>
           <TabsTrigger value="positions" className="data-[state=active]:bg-gray-700 data-[state=active]:text-white">
             Postes & Rôles
@@ -45,17 +41,6 @@ export default function Employees() {
             </CardHeader>
             <CardContent>
               <EmployeesList />
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="new">
-          <Card className="bg-gray-800 border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-xl text-white">Ajouter un nouvel employé</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <EmployeeForm />
             </CardContent>
           </Card>
         </TabsContent>
