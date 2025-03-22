@@ -1,9 +1,8 @@
-
 import { Link, useLocation } from "react-router-dom";
 import { 
   Home, Users, TestTube, Truck, Car, 
   DollarSign, FileSpreadsheet, Factory, Receipt, 
-  CreditCard, Building2, Calculator, Settings, LogOut, UserCircle
+  Building2, Settings, LogOut, UserCircle
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -29,22 +28,6 @@ export function Sidebar() {
       icon: Receipt, 
       label: "Finance",
       iconColor: "text-indigo-500",
-      subItems: [
-        { 
-          to: "/finance/payments", 
-          label: "Paiements", 
-          icon: CreditCard,
-          subItems: [
-            { to: "/finance/payments/clients", label: "Clients" },
-            { to: "/finance/payments/suppliers", label: "Fournisseurs" }
-          ]
-        },
-        {
-          to: "/finance/quotes",
-          label: "Devis",
-          icon: Calculator
-        }
-      ]
     },
     { to: "/employees", icon: UserCircle, label: "Employés", iconColor: "text-amber-500" },
     { to: "/settings", icon: Settings, label: "Paramètres", iconColor: "text-teal-500" },

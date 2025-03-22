@@ -1,20 +1,15 @@
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { 
   DollarSign, 
   CreditCard, 
   FileText, 
-  TrendingUp, 
-  PieChart,
   Receipt,
   Building2,
-  Factory,
   Calculator
 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { CashFlowWidget } from "@/components/finance/CashFlowWidget";
-import { ExpensesWidget } from "@/components/finance/ExpensesWidget";
-import { TransactionsWidget } from "@/components/finance/TransactionsWidget";
 import { FinanceStats } from "@/components/finance/FinanceStats";
 import { PaymentTrackingWidget } from "@/components/finance/widgets/PaymentTrackingWidget";
 import { BillingListWidget } from "@/components/finance/widgets/BillingListWidget";
@@ -26,27 +21,6 @@ export default function Finance() {
   const [activeWidget, setActiveWidget] = useState<string | null>(null);
 
   const widgets = [
-    {
-      id: 'cashflow',
-      title: 'Flux de Trésorerie',
-      icon: TrendingUp,
-      color: 'text-green-400',
-      component: CashFlowWidget
-    },
-    {
-      id: 'expenses',
-      title: 'Dépenses',
-      icon: PieChart,
-      color: 'text-red-400',
-      component: ExpensesWidget
-    },
-    {
-      id: 'transactions',
-      title: 'Transactions',
-      icon: DollarSign,
-      color: 'text-blue-400',
-      component: TransactionsWidget
-    },
     {
       id: 'client-payments',
       title: 'Paiements Clients',
@@ -67,13 +41,6 @@ export default function Finance() {
       icon: Receipt,
       color: 'text-emerald-400',
       component: BillingListWidget
-    },
-    {
-      id: 'production',
-      title: 'Production',
-      icon: Factory,
-      color: 'text-indigo-400',
-      component: BillingReportsWidget
     },
     {
       id: 'reports',
