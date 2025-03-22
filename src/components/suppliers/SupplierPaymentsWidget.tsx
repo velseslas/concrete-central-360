@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,8 +7,8 @@ import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
+import { SupplierPaymentForm } from "./forms/SupplierPaymentForm";
 
-// Données mockées pour les paiements fournisseurs
 const mockSupplierPayments = [
   {
     id: "SP001",
@@ -56,6 +55,7 @@ const mockSupplierPayments = [
 export function SupplierPaymentsWidget() {
   const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(false);
+  const [showPaymentForm, setShowPaymentForm] = useState(false);
 
   const totalDue = mockSupplierPayments.reduce((acc, payment) => acc + payment.remainingAmount, 0);
   const urgentDue = mockSupplierPayments.filter(payment => {
@@ -67,8 +67,7 @@ export function SupplierPaymentsWidget() {
   }).reduce((acc, payment) => acc + payment.remainingAmount, 0);
 
   const handleNewPayment = () => {
-    navigate("/finance/supplier-payments");
-    toast.success("Redirection vers la page de paiement fournisseur");
+    setShowPaymentForm(true);
   };
 
   const handleViewAll = () => {
@@ -215,6 +214,11 @@ export function SupplierPaymentsWidget() {
           </div>
         </CardContent>
       </Card>
+
+      <SupplierPaymentForm
+        open={showPaymentForm}
+        onOpenChange={setShowPaymentForm}
+      />
     </motion.div>
   );
 }

@@ -1,9 +1,7 @@
-
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Plus, Download, Filter, CreditCard, FileText, Building2 } from "lucide-react";
 import { useState } from "react";
-import { PaymentForm } from "@/components/payments/PaymentForm";
 import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,6 +14,7 @@ import {
   TableHeader, 
   TableRow 
 } from "@/components/ui/table";
+import { SupplierPaymentForm } from "@/components/suppliers/forms/SupplierPaymentForm";
 
 const mockSupplierPayments = [
   {
@@ -132,8 +131,12 @@ export default function SupplierPayments() {
   const [showPaymentForm, setShowPaymentForm] = useState(false);
   const [selectedTab, setSelectedTab] = useState("overview");
   const [selectedSupplier, setSelectedSupplier] = useState<string | null>(null);
+  const [selectedInvoiceId, setSelectedInvoiceId] = useState<string | null>(null);
+  const [selectedSupplierId, setSelectedSupplierId] = useState<string | null>(null);
 
-  const handleNewPayment = () => {
+  const handleNewPayment = (supplierId?: string, invoiceId?: string) => {
+    setSelectedSupplierId(supplierId || null);
+    setSelectedInvoiceId(invoiceId || null);
     setShowPaymentForm(true);
   };
 
@@ -198,7 +201,7 @@ export default function SupplierPayments() {
           </Button>
           <Button
             className="bg-blue-500 hover:bg-blue-600 text-white"
-            onClick={handleNewPayment}
+            onClick={() => handleNewPayment()}
           >
             <Plus className="h-4 w-4 mr-2" />
             Nouveau Paiement
@@ -206,9 +209,11 @@ export default function SupplierPayments() {
         </div>
       </motion.div>
 
-      <PaymentForm
+      <SupplierPaymentForm
         open={showPaymentForm}
         onOpenChange={setShowPaymentForm}
+        supplierId={selectedSupplierId || undefined}
+        invoiceId={selectedInvoiceId || undefined}
       />
 
       <motion.div
@@ -343,7 +348,10 @@ export default function SupplierPayments() {
                     </Table>
                     <div className="flex justify-end mt-4">
                       <Button 
-                        onClick={handleNewPayment}
+                        onClick={() => handleNewPayment(
+                          (mockSupplierPayments.find(p => p.id === selectedSupplier)?.id || "1"), 
+                          mockSupplierPayments.find(p => p.id === selectedSupplier)?.invoiceNumber
+                        )}
                         className="bg-blue-500 hover:bg-blue-600 text-white"
                       >
                         <Plus className="h-4 w-4 mr-2" />
@@ -397,3 +405,4 @@ export default function SupplierPayments() {
     </div>
   );
 }
+
