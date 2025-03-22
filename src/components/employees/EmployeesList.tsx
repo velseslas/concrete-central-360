@@ -113,13 +113,11 @@ export function EmployeesList() {
         </div>
         <div className="flex gap-2">
           <Button variant="outline">Exporter</Button>
+          <Button onClick={() => setShowNewEmployeeForm(true)}>Nouveau</Button>
           <Dialog open={showNewEmployeeForm} onOpenChange={setShowNewEmployeeForm}>
-            <DialogTrigger asChild>
-              <Button>Nouveau</Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-3xl bg-gray-800 text-white border-gray-700">
+            <DialogContent className="max-w-4xl bg-gray-800 text-white border-gray-700">
               <DialogHeader>
-                <DialogTitle>Nouvel employé</DialogTitle>
+                <DialogTitle className="text-center text-xl">Nouvel employé</DialogTitle>
               </DialogHeader>
               <EmployeeForm onSuccess={() => setShowNewEmployeeForm(false)} />
             </DialogContent>
@@ -196,9 +194,9 @@ export function EmployeesList() {
                             <Eye className="h-4 w-4" />
                           </Button>
                         </DialogTrigger>
-                        <DialogContent className="sm:max-w-3xl bg-gray-800 text-white border-gray-700">
+                        <DialogContent className="max-w-4xl bg-gray-800 text-white border-gray-700">
                           <DialogHeader>
-                            <DialogTitle>Détails de l'employé</DialogTitle>
+                            <DialogTitle className="text-center text-xl">Détails de l'employé</DialogTitle>
                           </DialogHeader>
                           {selectedEmployee && <EmployeeDetails employee={selectedEmployee} />}
                         </DialogContent>
@@ -219,9 +217,9 @@ export function EmployeesList() {
                             <Edit className="h-4 w-4" />
                           </Button>
                         </DialogTrigger>
-                        <DialogContent className="sm:max-w-3xl bg-gray-800 text-white border-gray-700">
+                        <DialogContent className="max-w-4xl bg-gray-800 text-white border-gray-700">
                           <DialogHeader>
-                            <DialogTitle>Modifier l'employé</DialogTitle>
+                            <DialogTitle className="text-center text-xl">Modifier l'employé</DialogTitle>
                           </DialogHeader>
                           {selectedEmployee && 
                             <EmployeeForm 

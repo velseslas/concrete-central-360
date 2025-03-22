@@ -30,6 +30,10 @@ export function EmployeeSalary() {
   const [bonuses, setBonuses] = useState<any[]>([]);
   const [salesVolume, setSalesVolume] = useState("");
   const [salesMonth, setSalesMonth] = useState(format(new Date(), "yyyy-MM"));
+  const [selectedClient, setSelectedClient] = useState("");
+  const [selectedProject, setSelectedProject] = useState("");
+  const [clients, setClients] = useState<any[]>([]);
+  const [projects, setProjects] = useState<any[]>([]);
   const paySlipRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
@@ -37,7 +41,33 @@ export function EmployeeSalary() {
     fetchAdvances();
     fetchBonuses();
     fetchBonusSettings();
+    fetchClients();
+    fetchProjects();
   }, []);
+
+  const fetchClients = async () => {
+    // Mock clients data - in a real app, this would come from Supabase
+    setClients([
+      { id: "1", name: "Client A" },
+      { id: "2", name: "Client B" },
+      { id: "3", name: "Client C" },
+    ]);
+  };
+
+  const fetchProjects = async () => {
+    // Mock projects data - in a real app, this would come from Supabase
+    setProjects([
+      { id: "1", name: "Projet 1", client_id: "1" },
+      { id: "2", name: "Projet 2", client_id: "1" },
+      { id: "3", name: "Projet 3", client_id: "2" },
+      { id: "4", name: "Projet 4", client_id: "3" },
+    ]);
+  };
+
+  // Filter projects based on selected client
+  const filteredProjects = selectedClient 
+    ? projects.filter(project => project.client_id === selectedClient) 
+    : projects;
 
   const fetchEmployees = async () => {
     try {
@@ -82,8 +112,8 @@ export function EmployeeSalary() {
     } catch (error) {
       console.error("Error fetching bonuses:", error);
       setBonuses([
-        { id: '1', employee_id: '2', employee_name: 'Marie Laurent', month: '2023-08-01', volume_sold: 450, bonus_per_cubic_meter: 1.5, total_bonus: 675, status: 'calculated' },
-        { id: '2', employee_id: '4', employee_name: 'Sophie Dubois', month: '2023-08-01', volume_sold: 320, bonus_per_cubic_meter: 1.5, total_bonus: 480, status: 'calculated' }
+        { id: '1', employee_id: '2', employee_name: 'Marie Laurent', month: '2023-08-01', volume_sold: 450, bonus_per_cubic_meter: 1.5, total_bonus: 675, status: 'calculated', client_name: 'Client A', project_name: 'Projet 1' },
+        { id: '2', employee_id: '4', employee_name: 'Sophie Dubois', month: '2023-08-01', volume_sold: 320, bonus_per_cubic_meter: 1.5, total_bonus: 480, status: 'calculated', client_name: 'Client B', project_name: 'Projet 3' }
       ]);
     }
   };
@@ -114,7 +144,7 @@ export function EmployeeSalary() {
 
       if (error) throw error;
 
-      toast.success(`Acompte de ${advanceAmount}€ ajouté pour ${selectedEmployee.name}`);
+      toast.success(`Acompte de ${advanceAmount} DA ajouté pour ${selectedEmployee.name}`);
       setIsAddAdvanceOpen(false);
       setAdvanceAmount("");
       setAdvanceDescription("");
@@ -134,7 +164,7 @@ export function EmployeeSalary() {
     }
 
     try {
-      toast.success(`Taux de prime mis à jour à ${bonusPerCubicMeter}€ par m³`);
+      toast.success(`Taux de prime mis à jour à ${bonusPerCubicMeter} DA par m³`);
       setIsBonusSettingsOpen(false);
       
       fetchBonuses();
@@ -145,7 +175,7 @@ export function EmployeeSalary() {
   };
 
   const handleAddSalesVolume = async () => {
-    if (!selectedEmployee || !salesVolume || !salesMonth) {
+    if (!selectedEmployee || !salesVolume || !salesMonth || !selectedClient || !selectedProject) {
       toast.error("Veuillez remplir tous les champs obligatoires");
       return;
     }
@@ -154,6 +184,10 @@ export function EmployeeSalary() {
       const volume = parseFloat(salesVolume);
       const bonus = volume * parseFloat(bonusPerCubicMeter);
       
+      // Find the client and project names for the record
+      const client = clients.find(c => c.id === selectedClient);
+      const project = projects.find(p => p.id === selectedProject);
+      
       const newBonus = {
         employee_id: selectedEmployee.id,
         employee_name: selectedEmployee.name,
@@ -161,7 +195,11 @@ export function EmployeeSalary() {
         volume_sold: volume,
         bonus_per_cubic_meter: parseFloat(bonusPerCubicMeter),
         total_bonus: bonus,
-        status: 'calculated'
+        status: 'calculated',
+        client_id: selectedClient,
+        client_name: client?.name || "",
+        project_id: selectedProject,
+        project_name: project?.name || ""
       };
 
       const { error } = await supabase
@@ -173,6 +211,8 @@ export function EmployeeSalary() {
       toast.success(`Volume de vente de ${salesVolume}m³ enregistré pour ${selectedEmployee.name}`);
       setIsAddSalesVolumeOpen(false);
       setSalesVolume("");
+      setSelectedClient("");
+      setSelectedProject("");
       setSelectedEmployee(null);
       
       fetchBonuses();
@@ -386,7 +426,7 @@ export function EmployeeSalary() {
                       <TableRow key={advance.id} className="border-gray-700">
                         <TableCell>{advance.employee_name || 'Employé'}</TableCell>
                         <TableCell>{formatDate(advance.date)}</TableCell>
-                        <TableCell>{advance.amount}€</TableCell>
+                        <TableCell>{advance.amount} DA</TableCell>
                         <TableCell>{advance.description || '-'}</TableCell>
                         <TableCell>
                           <span className={`${
@@ -451,7 +491,7 @@ export function EmployeeSalary() {
               </CardTitle>
               <div className="flex items-center gap-2 text-white">
                 <span>Prime actuelle:</span>
-                <span className="font-bold text-green-400">{bonusPerCubicMeter}€ / m³</span>
+                <span className="font-bold text-green-400">{bonusPerCubicMeter} DA / m³</span>
                 <Button 
                   variant="outline" 
                   className="h-8 bg-gray-700 hover:bg-gray-600"
@@ -475,6 +515,8 @@ export function EmployeeSalary() {
                   <TableRow>
                     <TableHead>Vendeur</TableHead>
                     <TableHead>Mois</TableHead>
+                    <TableHead>Client</TableHead>
+                    <TableHead>Chantier</TableHead>
                     <TableHead>Volume vendu (m³)</TableHead>
                     <TableHead>Taux de prime</TableHead>
                     <TableHead>Prime totale</TableHead>
@@ -487,9 +529,11 @@ export function EmployeeSalary() {
                       <TableRow key={bonus.id} className="border-gray-700">
                         <TableCell>{bonus.employee_name || 'Vendeur'}</TableCell>
                         <TableCell>{formatDate(bonus.month)}</TableCell>
+                        <TableCell>{bonus.client_name || '-'}</TableCell>
+                        <TableCell>{bonus.project_name || '-'}</TableCell>
                         <TableCell>{bonus.volume_sold} m³</TableCell>
-                        <TableCell>{bonus.bonus_per_cubic_meter}€ / m³</TableCell>
-                        <TableCell className="font-bold text-green-400">{bonus.total_bonus}€</TableCell>
+                        <TableCell>{bonus.bonus_per_cubic_meter} DA / m³</TableCell>
+                        <TableCell className="font-bold text-green-400">{bonus.total_bonus} DA</TableCell>
                         <TableCell>
                           <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded-full text-xs">
                             {bonus.status === 'calculated' ? 'Calculé' : bonus.status}
@@ -499,7 +543,7 @@ export function EmployeeSalary() {
                     ))
                   ) : (
                     <TableRow>
-                      <TableCell colSpan={6} className="text-center py-4">
+                      <TableCell colSpan={8} className="text-center py-4">
                         Aucune prime trouvée
                       </TableCell>
                     </TableRow>
@@ -609,7 +653,7 @@ export function EmployeeSalary() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="amount">Montant (€)</Label>
+              <Label htmlFor="amount">Montant (DA)</Label>
               <Input 
                 id="amount" 
                 type="number" 
@@ -676,238 +720,41 @@ export function EmployeeSalary() {
               </select>
             </div>
             <div className="space-y-2">
+              <Label htmlFor="client">Client</Label>
+              <select 
+                id="client"
+                className="w-full rounded-md border border-gray-700 bg-gray-700 p-2"
+                value={selectedClient}
+                onChange={(e) => {
+                  setSelectedClient(e.target.value);
+                  setSelectedProject(""); // Reset project when client changes
+                }}
+              >
+                <option value="">Sélectionner un client</option>
+                {clients.map(client => (
+                  <option key={client.id} value={client.id}>{client.name}</option>
+                ))}
+              </select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="project">Chantier</Label>
+              <select 
+                id="project"
+                className="w-full rounded-md border border-gray-700 bg-gray-700 p-2"
+                value={selectedProject}
+                onChange={(e) => setSelectedProject(e.target.value)}
+                disabled={!selectedClient}
+              >
+                <option value="">Sélectionner un chantier</option>
+                {filteredProjects.map(project => (
+                  <option key={project.id} value={project.id}>{project.name}</option>
+                ))}
+              </select>
+            </div>
+            <div className="space-y-2">
               <Label htmlFor="sales-month">Mois</Label>
               <Input 
                 id="sales-month" 
                 type="month" 
                 value={salesMonth}
-                onChange={(e) => setSalesMonth(e.target.value)}
-                className="bg-gray-700 border-gray-600"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="sales-volume">Volume vendu (m³)</Label>
-              <Input 
-                id="sales-volume" 
-                type="number" 
-                step="0.1"
-                value={salesVolume}
-                onChange={(e) => setSalesVolume(e.target.value)}
-                placeholder="Volume en mètres cubes" 
-                className="bg-gray-700 border-gray-600"
-              />
-            </div>
-            <div className="p-3 bg-gray-700/50 rounded-md">
-              <div className="flex justify-between items-center">
-                <span>Taux de prime:</span>
-                <span className="font-bold text-green-400">{bonusPerCubicMeter}€ / m³</span>
-              </div>
-              {salesVolume && (
-                <div className="flex justify-between items-center mt-2 pt-2 border-t border-gray-600">
-                  <span>Prime totale estimée:</span>
-                  <span className="font-bold text-green-400">
-                    {(parseFloat(salesVolume || "0") * parseFloat(bonusPerCubicMeter)).toFixed(2)}€
-                  </span>
-                </div>
-              )}
-            </div>
-          </div>
-          <div className="flex justify-end gap-3">
-            <Button 
-              variant="outline" 
-              onClick={() => setIsAddSalesVolumeOpen(false)}
-              className="bg-gray-700 hover:bg-gray-600 border-gray-600"
-            >
-              Annuler
-            </Button>
-            <Button 
-              onClick={handleAddSalesVolume}
-              className="bg-[#9b87f5] hover:bg-[#8a76e5]"
-              disabled={!selectedEmployee || !salesVolume}
-            >
-              Enregistrer
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      <Dialog open={isBonusSettingsOpen} onOpenChange={setIsBonusSettingsOpen}>
-        <DialogContent className="bg-gray-800 text-white border-gray-700">
-          <DialogHeader>
-            <DialogTitle className="text-white">
-              Configurer les primes de vente
-            </DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4 py-4">
-            <div className="space-y-2">
-              <Label htmlFor="bonus-rate">Prime par mètre cube (€)</Label>
-              <Input 
-                id="bonus-rate" 
-                type="number" 
-                step="0.1"
-                value={bonusPerCubicMeter}
-                onChange={(e) => setBonusPerCubicMeter(e.target.value)}
-                className="bg-gray-700 border-gray-600"
-              />
-              <p className="text-sm text-gray-400">
-                Ce montant sera multiplié par le volume de béton vendu pour calculer la prime.
-              </p>
-            </div>
-          </div>
-          <div className="flex justify-end gap-3">
-            <Button 
-              variant="outline" 
-              onClick={() => setIsBonusSettingsOpen(false)}
-              className="bg-gray-700 hover:bg-gray-600 border-gray-600"
-            >
-              Annuler
-            </Button>
-            <Button 
-              onClick={handleUpdateBonusRate}
-              className="bg-[#9b87f5] hover:bg-[#8a76e5]"
-            >
-              Enregistrer
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      <Dialog open={isPaySlipOpen} onOpenChange={setIsPaySlipOpen}>
-        <DialogContent className="bg-gray-800 text-white border-gray-700 max-w-3xl">
-          <DialogHeader>
-            <DialogTitle className="text-white flex justify-between items-center">
-              <span>Fiche de paie</span>
-              <Button 
-                variant="outline" 
-                className="bg-gray-700 hover:bg-gray-600 mr-12"
-                onClick={handlePrintPaySlip}
-              >
-                <Printer className="h-4 w-4 mr-2" />
-                Imprimer
-              </Button>
-            </DialogTitle>
-          </DialogHeader>
-          {selectedEmployee && (
-            <ScrollArea className="h-[500px] pr-4">
-              <div ref={paySlipRef} className="py-4">
-                <div className="bg-gray-700 p-4 rounded-lg">
-                  <div className="flex justify-between items-start mb-4">
-                    <div>
-                      <h2 className="text-xl font-bold">SARL BÉTON</h2>
-                      <p className="text-gray-400 text-sm">123 Rue du Béton</p>
-                      <p className="text-gray-400 text-sm">16000 Alger, Algérie</p>
-                    </div>
-                    <div className="text-right">
-                      <h3 className="text-lg font-semibold">Fiche de paie</h3>
-                      <p className="text-gray-400 text-sm">
-                        {selectedMonth ? 
-                          format(new Date(selectedMonth + "-01"), 'MMMM yyyy', { locale: fr }) : 
-                          "Août 2023"}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="border-t border-b border-gray-600 py-3 mb-4">
-                    <div className="grid grid-cols-2 gap-2">
-                      <div>
-                        <h4 className="font-semibold mb-1 text-sm">Informations employé</h4>
-                        <p className="text-sm"><span className="text-gray-400">Nom:</span> {selectedEmployee.name}</p>
-                        <p className="text-sm"><span className="text-gray-400">Poste:</span> {selectedEmployee.position}</p>
-                        <p className="text-sm"><span className="text-gray-400">Matricule:</span> EMP-{selectedEmployee.id}</p>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold mb-1 text-sm">Période</h4>
-                        <p className="text-sm"><span className="text-gray-400">Du:</span> 01/08/2023</p>
-                        <p className="text-sm"><span className="text-gray-400">Au:</span> 31/08/2023</p>
-                        <p className="text-sm"><span className="text-gray-400">Jours travaillés:</span> {selectedEmployee.attendance}/22</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mb-3">
-                    <h4 className="font-semibold mb-2 text-sm">Rémunération</h4>
-                    <Table className="text-white">
-                      <TableHeader className="bg-gray-600">
-                        <TableRow>
-                          <TableHead className="py-1 text-xs">Description</TableHead>
-                          <TableHead className="text-right py-1 text-xs">Montant</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        <TableRow className="border-gray-600">
-                          <TableCell className="py-1 text-sm">Salaire de base</TableCell>
-                          <TableCell className="text-right py-1 text-sm">{selectedEmployee.baseSalary.toFixed(2)} DA</TableCell>
-                        </TableRow>
-                        {selectedEmployee.overtime > 0 && (
-                          <TableRow className="border-gray-600">
-                            <TableCell className="py-1 text-sm">Heures supplémentaires ({selectedEmployee.overtime}h)</TableCell>
-                            <TableCell className="text-right py-1 text-sm">{calculateFinalSalary(selectedEmployee).overtimePay} DA</TableCell>
-                          </TableRow>
-                        )}
-                        {selectedEmployee.position === "Commercial" && selectedEmployee.salesVolume && (
-                          <TableRow className="border-gray-600">
-                            <TableCell className="py-1 text-sm">Prime de vente ({selectedEmployee.salesVolume} m³)</TableCell>
-                            <TableCell className="text-right py-1 text-sm">{calculateFinalSalary(selectedEmployee).salesBonus} DA</TableCell>
-                          </TableRow>
-                        )}
-                        <TableRow className="border-gray-600 font-bold">
-                          <TableCell className="py-1 text-sm">Total brut</TableCell>
-                          <TableCell className="text-right py-1 text-sm">
-                            {(
-                              selectedEmployee.baseSalary + 
-                              parseFloat(calculateFinalSalary(selectedEmployee).overtimePay) + 
-                              parseFloat(calculateFinalSalary(selectedEmployee).salesBonus)
-                            ).toFixed(2)} DA
-                          </TableCell>
-                        </TableRow>
-                      </TableBody>
-                    </Table>
-                  </div>
-
-                  <div className="mb-3">
-                    <h4 className="font-semibold mb-2 text-sm">Déductions</h4>
-                    <Table className="text-white">
-                      <TableHeader className="bg-gray-600">
-                        <TableRow>
-                          <TableHead className="py-1 text-xs">Description</TableHead>
-                          <TableHead className="text-right py-1 text-xs">Montant</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {selectedEmployee.advances > 0 && (
-                          <TableRow className="border-gray-600">
-                            <TableCell className="py-1 text-sm">Acomptes</TableCell>
-                            <TableCell className="text-right py-1 text-sm">-{selectedEmployee.advances.toFixed(2)} DA</TableCell>
-                          </TableRow>
-                        )}
-                        <TableRow className="border-gray-600 font-bold">
-                          <TableCell className="py-1 text-sm">Total déductions</TableCell>
-                          <TableCell className="text-right py-1 text-sm">-{selectedEmployee.advances.toFixed(2)} DA</TableCell>
-                        </TableRow>
-                      </TableBody>
-                    </Table>
-                  </div>
-
-                  <div className="border-t border-gray-600 pt-3">
-                    <div className="flex justify-between items-center font-bold">
-                      <span className="text-sm">Salaire net à payer</span>
-                      <span className="text-sm">{calculateFinalSalary(selectedEmployee).finalSalary} DA</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </ScrollArea>
-          )}
-          <div className="flex justify-end mt-2 gap-3">
-            <Button 
-              className="bg-[#9b87f5] hover:bg-[#8a76e5]"
-              onClick={() => setIsPaySlipOpen(false)}
-            >
-              Fermer
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
-    </div>
-  );
-}
+                onChange={(e) => setSalesMonth(

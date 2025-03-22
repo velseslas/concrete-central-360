@@ -1,25 +1,31 @@
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { toast } from "sonner";
+import { v4 as uuidv4 } from 'uuid';
 import { supabase } from "@/integrations/supabase/client";
 
-export interface EmployeeFormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  position: string;
-  department: string;
-  status: string;
-  startDate: string;
-  address: string;
-  emergencyContact: string;
-  bankDetails: string;
-  nationalId: string;
-  birthDate: string;
-  notes: string;
-  salary: string;
-}
+// Define the schema for the form
+export const employeeSchema = z.object({
+  firstName: z.string().min(1, "Le prénom est requis"),
+  lastName: z.string().min(1, "Le nom est requis"),
+  email: z.string().email("Email invalide"),
+  phone: z.string().min(1, "Le numéro de téléphone est requis"),
+  address: z.string().optional(),
+  birthDate: z.string().optional(),
+  position: z.string().min(1, "Le poste est requis"),
+  department: z.string().min(1, "Le département est requis"),
+  startDate: z.string().min(1, "La date d'embauche est requise"),
+  status: z.string().min(1, "Le statut est requis"),
+  salary: z.string().min(1, "Le salaire est requis"),
+  bankDetails: z.string().optional(),
+  emergencyContact: z.string().optional(),
+  notes: z.string().optional(),
+});
+
+// Export the type for the form data
+export type EmployeeFormData = z.infer<typeof employeeSchema>;
 
 interface UseEmployeeFormProps {
   employee?: Partial<EmployeeFormData>;
@@ -27,141 +33,104 @@ interface UseEmployeeFormProps {
   onSuccess?: () => void;
 }
 
-export function useEmployeeForm({ employee, isEditing = false, onSuccess }: UseEmployeeFormProps = {}) {
-  const defaultValues: EmployeeFormData = {
-    firstName: employee?.firstName || "",
-    lastName: employee?.lastName || "",
-    email: employee?.email || "",
-    phone: employee?.phone || "",
-    position: employee?.position || "",
-    department: employee?.department || "",
-    status: employee?.status || "active",
-    startDate: employee?.startDate || new Date().toISOString().split('T')[0],
-    address: employee?.address || "",
-    emergencyContact: employee?.emergencyContact || "",
-    bankDetails: employee?.bankDetails || "",
-    nationalId: employee?.nationalId || "",
-    birthDate: employee?.birthDate || "",
-    notes: employee?.notes || "",
-    salary: employee?.salary || "",
+export const useEmployeeForm = ({ employee, isEditing = false, onSuccess }: UseEmployeeFormProps) => {
+  // Initialize the form with the schema and default values
+  const form = useForm<EmployeeFormData>({
+    resolver: zodResolver(employeeSchema),
+    defaultValues: {
+      firstName: employee?.firstName || "",
+      lastName: employee?.lastName || "",
+      email: employee?.email || "",
+      phone: employee?.phone || "",
+      address: employee?.address || "",
+      birthDate: employee?.birthDate || "",
+      position: employee?.position || "",
+      department: employee?.department || "",
+      startDate: employee?.startDate || new Date().toISOString().split("T")[0],
+      status: employee?.status || "active",
+      salary: employee?.salary || "",
+      bankDetails: employee?.bankDetails || "",
+      emergencyContact: employee?.emergencyContact || "",
+      notes: employee?.notes || "",
+    },
+  });
+
+  const saveToLocalStorage = (formData: EmployeeFormData, employeeId: string = uuidv4()) => {
+    // Get existing employees from localStorage
+    const existingEmployees = JSON.parse(localStorage.getItem('employees') || '[]');
+    
+    // If editing, update the existing employee
+    if (isEditing && employee) {
+      const employeeIndex = existingEmployees.findIndex(
+        (emp: any) => emp.id === employeeId
+      );
+      
+      if (employeeIndex !== -1) {
+        existingEmployees[employeeIndex] = { 
+          ...existingEmployees[employeeIndex], 
+          ...formData,
+          id: employeeId
+        };
+      }
+    } else {
+      // Add the new employee
+      existingEmployees.push({
+        ...formData,
+        id: employeeId,
+        createdAt: new Date().toISOString()
+      });
+    }
+    
+    // Save back to localStorage
+    localStorage.setItem('employees', JSON.stringify(existingEmployees));
+    
+    return employeeId;
   };
 
-  const form = useForm<EmployeeFormData>({ defaultValues });
-
-  const onSubmit = async (data: EmployeeFormData) => {
+  const saveToSupabase = async (formData: EmployeeFormData, employeeId: string) => {
     try {
-      if (isEditing) {
-        // Handle update logic for editing existing employee
-        // Pour l'instant, nous simulons la mise à jour avec localStorage
-        const existingEmployees = JSON.parse(localStorage.getItem('employees') || '[]');
-        const updatedEmployees = existingEmployees.map((emp: any) => {
-          if (emp.id === employee?.id) {
-            return {
-              ...emp,
-              first_name: data.firstName,
-              last_name: data.lastName,
-              email: data.email,
-              phone: data.phone,
-              position: data.position,
-              department: data.department,
-              status: data.status,
-              start_date: data.startDate,
-              address: data.address,
-              emergency_contact: data.emergencyContact,
-              bank_details: data.bankDetails,
-              national_id: data.nationalId,
-              birth_date: data.birthDate,
-              notes: data.notes
-            };
-          }
-          return emp;
+      // Save the employee salary data
+      const { error: salaryError } = await supabase
+        .from('employee_salaries')
+        .insert({
+          employee_id: employeeId,
+          base_salary: parseFloat(formData.salary)
         });
-        
-        localStorage.setItem('employees', JSON.stringify(updatedEmployees));
-        
-        // Update salary in employee_salaries table if changed
-        if (data.salary && data.salary !== employee?.salary) {
-          // Convert salary to number and ensure employee_id is a string
-          const employeeId = String(employee?.id);
-          const salaryData = {
-            employee_id: employeeId,
-            base_salary: parseFloat(data.salary) || 0
-          };
 
-          const { error: salaryError } = await supabase
-            .from('employee_salaries')
-            .upsert(salaryData);
-            
-          if (salaryError) {
-            console.error("Error updating salary data:", salaryError);
-            throw salaryError;
-          }
-        }
-        
-        toast.success("Employé mis à jour avec succès");
-      } else {
-        // Instead of using a non-existent "employees" table, we'll create a custom table structure
-        // First, let's create an employee record with a UUID
-        const employeeId = crypto.randomUUID();
-        
-        // Create an object with employee data that we can store in other tables or localStorage
-        const employeeData = {
-          id: employeeId,
-          first_name: data.firstName,
-          last_name: data.lastName,
-          email: data.email,
-          phone: data.phone,
-          position: data.position,
-          department: data.department,
-          status: data.status,
-          start_date: data.startDate,
-          address: data.address,
-          emergency_contact: data.emergencyContact,
-          bank_details: data.bankDetails,
-          national_id: data.nationalId,
-          birth_date: data.birthDate,
-          notes: data.notes
-        };
-        
-        // For now, save in localStorage as a workaround
-        // In a real app, you would have an appropriate table structure in Supabase
-        const existingEmployees = JSON.parse(localStorage.getItem('employees') || '[]');
-        existingEmployees.push(employeeData);
-        localStorage.setItem('employees', JSON.stringify(existingEmployees));
-        
-        // Still save the salary information to employee_salaries table in Supabase
-        if (data.salary) {
-          const salaryData = {
-            employee_id: employeeId, // Using the string UUID
-            base_salary: parseFloat(data.salary) || 0
-          };
-
-          const { error: salaryError } = await supabase
-            .from('employee_salaries')
-            .insert(salaryData);
-            
-          if (salaryError) {
-            console.error("Error saving salary data:", salaryError);
-            throw salaryError;
-          }
-        }
-          
-        toast.success("Nouvel employé ajouté avec succès");
-        console.log("Employee data saved:", employeeData);
-      }
+      if (salaryError) throw salaryError;
       
-      // Call onSuccess callback if provided
-      if (onSuccess) {
-        onSuccess();
-      }
+      return employeeId;
     } catch (error) {
-      console.error("Error saving employee data:", error);
-      toast.error("Erreur lors de l'enregistrement des données de l'employé");
+      console.error("Error saving to Supabase:", error);
+      throw error;
     }
   };
 
-  return {
-    form,
-    onSubmit,
+  const onSubmit = async (data: EmployeeFormData) => {
+    try {
+      // First save to localStorage
+      const employeeId = saveToLocalStorage(data, isEditing && employee ? (employee as any).id : undefined);
+      
+      // Then attempt to save to Supabase
+      try {
+        await saveToSupabase(data, employeeId);
+      } catch (error) {
+        console.error("Failed to save to Supabase, but data is saved locally:", error);
+        // We don't rethrow here since we've already saved to localStorage
+      }
+      
+      toast.success(
+        isEditing 
+          ? `${data.firstName} ${data.lastName} a été mis à jour` 
+          : `${data.firstName} ${data.lastName} a été ajouté`
+      );
+      
+      if (onSuccess) onSuccess();
+    } catch (error) {
+      console.error("Error in form submission:", error);
+      toast.error("Une erreur est survenue lors de l'enregistrement");
+    }
   };
-}
+
+  return { form, onSubmit };
+};
