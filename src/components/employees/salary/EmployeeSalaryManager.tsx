@@ -113,7 +113,18 @@ export function EmployeeSalaryManager() {
         .order('date', { ascending: false });
       
       if (error) throw error;
-      setAdvances(data || []);
+      
+      // Add employee_name to each advance by looking up the employee
+      const advancesWithNames = (data || []).map(advance => {
+        // Find the employee with matching id
+        const employee = employees.find(emp => emp.id === advance.employee_id);
+        return {
+          ...advance,
+          employee_name: employee?.name || "Unknown Employee"
+        };
+      });
+      
+      setAdvances(advancesWithNames);
     } catch (error) {
       console.error("Error fetching advances:", error);
       setAdvances([
@@ -131,7 +142,18 @@ export function EmployeeSalaryManager() {
         .order('month', { ascending: false });
       
       if (error) throw error;
-      setBonuses(data || []);
+      
+      // Add employee_name to each bonus by looking up the employee
+      const bonusesWithNames = (data || []).map(bonus => {
+        // Find the employee with matching id
+        const employee = employees.find(emp => emp.id === bonus.employee_id);
+        return {
+          ...bonus,
+          employee_name: employee?.name || "Unknown Employee"
+        };
+      });
+      
+      setBonuses(bonusesWithNames);
     } catch (error) {
       console.error("Error fetching bonuses:", error);
       setBonuses([
@@ -155,7 +177,7 @@ export function EmployeeSalaryManager() {
     try {
       const newAdvance = {
         employee_id: selectedEmployee.id,
-        employee_name: selectedEmployee.name,
+        employee_name: selectedEmployee.name, // Add employee_name to the record
         amount: parseFloat(advanceAmount),
         date: advanceDate,
         description: advanceDescription || undefined,
@@ -214,7 +236,7 @@ export function EmployeeSalaryManager() {
       
       const newBonus = {
         employee_id: selectedEmployee.id,
-        employee_name: selectedEmployee.name,
+        employee_name: selectedEmployee.name, // Add employee_name to the record
         month: `${salesMonth}-01`,
         volume_sold: volume,
         bonus_per_cubic_meter: parseFloat(bonusPerCubicMeter),
