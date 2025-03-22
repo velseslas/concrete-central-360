@@ -26,12 +26,18 @@ export function ExpenseReportWidget() {
 
   const handleExport = () => {
     toast.success("Exportation du rapport en cours...");
-    // Implement export functionality
+    // Open preview dialog which handles export functionality
+    setShowPreview(true);
   };
 
   const handlePrint = () => {
     toast.success("Ouverture de l'aperçu avant impression...");
     setShowPreview(true);
+  };
+
+  const handleDateChange = (date: Date) => {
+    console.log("Date changed:", date);
+    setSelectedDate(date);
   };
 
   return (
@@ -69,7 +75,7 @@ export function ExpenseReportWidget() {
           onReportPeriodChange={setReportPeriod}
           onExpenseCategoryChange={setExpenseCategory}
           selectedDate={selectedDate}
-          onDateChange={setSelectedDate}
+          onDateChange={handleDateChange}
         />
 
         <div className="expense-report-content printable-content">

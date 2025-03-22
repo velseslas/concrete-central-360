@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Download, Printer } from "lucide-react";
 import { ExpenseReportTable } from "./ExpenseReportTable";
 import { toast } from "sonner";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 type ReportPeriod = "daily" | "weekly" | "monthly" | "quarterly" | "yearly";
 type ExpenseCategory = "general" | "vehicles" | "concrete" | "all";
@@ -25,7 +27,23 @@ export function ExpenseReportPreviewDialog({
 }: ExpenseReportPreviewDialogProps) {
   const handleDownload = () => {
     toast.success("Téléchargement du rapport en cours...");
-    // Implement download logic here
+    const reportElement = document.getElementById('expense-report-preview');
+    if (reportElement) {
+      html2canvas(reportElement).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+        const imgWidth = canvas.width;
+        const imgHeight = canvas.height;
+        const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+        const imgX = (pdfWidth - imgWidth * ratio) / 2;
+        const imgY = 30;
+        
+        pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+        pdf.save(`Rapport-Dépenses-${reportPeriod}-${new Date().toISOString().slice(0, 10)}.pdf`);
+      });
+    }
   };
 
   const handlePrint = () => {
@@ -62,7 +80,7 @@ export function ExpenseReportPreviewDialog({
           </Button>
         </div>
 
-        <div className="bg-white text-gray-900 p-6 rounded-lg">
+        <div id="expense-report-preview" className="bg-white text-gray-900 p-6 rounded-lg">
           <ExpenseReportTable 
             reportPeriod={reportPeriod}
             expenseCategory={expenseCategory}

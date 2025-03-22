@@ -116,7 +116,7 @@ export function ExpenseReportFilters({
                 selected={selectedDate}
                 onSelect={(date) => date && onDateChange && onDateChange(date)}
                 initialFocus
-                className="bg-gray-800 text-white"
+                className="bg-gray-800 text-white pointer-events-auto"
               />
             </PopoverContent>
           </Popover>
