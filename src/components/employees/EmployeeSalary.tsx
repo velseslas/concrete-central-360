@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -33,7 +32,6 @@ export function EmployeeSalary() {
   const [salesMonth, setSalesMonth] = useState(format(new Date(), "yyyy-MM"));
   const paySlipRef = useRef<HTMLDivElement>(null);
   
-  // Fetch data on load
   useEffect(() => {
     fetchEmployees();
     fetchAdvances();
@@ -43,8 +41,6 @@ export function EmployeeSalary() {
 
   const fetchEmployees = async () => {
     try {
-      // In a real implementation, this would fetch from the database
-      // For now, use mock data
       setEmployees([
         { id: "1", name: "Jean Dupont", position: "Chauffeur", baseSalary: 2500, attendance: 22, overtime: 8, advances: 300 },
         { id: "2", name: "Marie Laurent", position: "Commercial", baseSalary: 2200, attendance: 21, overtime: 0, advances: 0, salesVolume: 450 },
@@ -58,7 +54,6 @@ export function EmployeeSalary() {
 
   const fetchAdvances = async () => {
     try {
-      // In a real implementation, this would fetch from the database
       const { data, error } = await supabase
         .from('salary_advances')
         .select('*')
@@ -68,7 +63,6 @@ export function EmployeeSalary() {
       setAdvances(data || []);
     } catch (error) {
       console.error("Error fetching advances:", error);
-      // Use mock data if database is not yet set up
       setAdvances([
         { id: '1', employee_id: '1', employee_name: 'Jean Dupont', date: '2023-08-12', amount: 300, description: "Avance sur salaire d'août", status: 'pending' },
         { id: '2', employee_id: '3', employee_name: 'Pierre Martin', date: '2023-08-05', amount: 500, description: 'Avance exceptionnelle', status: 'approved' }
@@ -78,7 +72,6 @@ export function EmployeeSalary() {
 
   const fetchBonuses = async () => {
     try {
-      // In a real implementation, this would fetch from the database
       const { data, error } = await supabase
         .from('sales_bonuses')
         .select('*')
@@ -88,7 +81,6 @@ export function EmployeeSalary() {
       setBonuses(data || []);
     } catch (error) {
       console.error("Error fetching bonuses:", error);
-      // Use mock data if database is not yet set up
       setBonuses([
         { id: '1', employee_id: '2', employee_name: 'Marie Laurent', month: '2023-08-01', volume_sold: 450, bonus_per_cubic_meter: 1.5, total_bonus: 675, status: 'calculated' },
         { id: '2', employee_id: '4', employee_name: 'Sophie Dubois', month: '2023-08-01', volume_sold: 320, bonus_per_cubic_meter: 1.5, total_bonus: 480, status: 'calculated' }
@@ -97,8 +89,6 @@ export function EmployeeSalary() {
   };
 
   const fetchBonusSettings = async () => {
-    // This would fetch the current bonus rate from settings table
-    // For now, use the default value
     setBonusPerCubicMeter("1.5");
   };
 
@@ -130,7 +120,6 @@ export function EmployeeSalary() {
       setAdvanceDescription("");
       setAdvanceDate(format(new Date(), "yyyy-MM-dd"));
       
-      // Refresh advances list
       fetchAdvances();
     } catch (error) {
       console.error("Error adding advance:", error);
@@ -145,11 +134,9 @@ export function EmployeeSalary() {
     }
 
     try {
-      // In a real implementation, this would update the settings in the database
       toast.success(`Taux de prime mis à jour à ${bonusPerCubicMeter}€ par m³`);
       setIsBonusSettingsOpen(false);
       
-      // Refresh bonuses with the new rate
       fetchBonuses();
     } catch (error) {
       console.error("Error updating bonus rate:", error);
@@ -188,7 +175,6 @@ export function EmployeeSalary() {
       setSalesVolume("");
       setSelectedEmployee(null);
       
-      // Refresh bonuses list
       fetchBonuses();
     } catch (error) {
       console.error("Error adding sales volume:", error);
@@ -233,13 +219,12 @@ export function EmployeeSalary() {
   const calculateFinalSalary = (employee) => {
     const baseSalary = employee.baseSalary;
     const overtimeHours = employee.overtime || 0;
-    const overtimeRate = 1.25; // 25% de plus pour les heures supplémentaires
-    const hourlyRate = baseSalary / 160; // En supposant 160 heures de travail par mois
+    const overtimeRate = 1.25;
+    const hourlyRate = baseSalary / 160;
     const overtimePay = overtimeHours * hourlyRate * overtimeRate;
     
     const advances = employee.advances || 0;
     
-    // Calcul de la prime pour les commerciaux
     let salesBonus = 0;
     if (employee.position === "Commercial" && employee.salesVolume) {
       salesBonus = employee.salesVolume * parseFloat(bonusPerCubicMeter);
@@ -267,7 +252,7 @@ export function EmployeeSalary() {
         .company-info, .employee-info { margin-bottom: 15px; }
         h1, h2, h3 { color: #444; margin: 10px 0; }
         table { width: 100%; border-collapse: collapse; margin: 10px 0; }
-        th, td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; }
+        th, td { padding: 6px; text-align: left; border-bottom: 1px solid #ddd; }
         th { background-color: #f5f5f5; }
         .total { font-weight: bold; margin-top: 15px; text-align: right; font-size: 1.1em; }
         @page { size: auto; margin: 10mm; }
@@ -334,16 +319,16 @@ export function EmployeeSalary() {
                       <TableRow key={employee.id} className="border-gray-700">
                         <TableCell>{employee.name}</TableCell>
                         <TableCell>{employee.position}</TableCell>
-                        <TableCell>{employee.baseSalary}€</TableCell>
+                        <TableCell>{employee.baseSalary} DA</TableCell>
                         <TableCell>{employee.attendance}/22</TableCell>
                         <TableCell>{employee.overtime || 0}h</TableCell>
-                        <TableCell className="text-red-400">{employee.advances || 0}€</TableCell>
+                        <TableCell className="text-red-400">{employee.advances || 0} DA</TableCell>
                         <TableCell className="text-green-400">
                           {employee.position === "Commercial" ? 
-                            `${salary.salesBonus}€ (${employee.salesVolume || 0}m³)` : 
+                            `${salary.salesBonus} DA (${employee.salesVolume || 0}m³)` : 
                             "N/A"}
                         </TableCell>
-                        <TableCell className="font-bold">{salary.finalSalary}€</TableCell>
+                        <TableCell className="font-bold">{salary.finalSalary} DA</TableCell>
                         <TableCell>
                           <Button 
                             variant="outline" 
@@ -588,7 +573,6 @@ export function EmployeeSalary() {
         </TabsContent>
       </Tabs>
 
-      {/* Dialog d'ajout d'acompte */}
       <Dialog open={isAddAdvanceOpen} onOpenChange={setIsAddAdvanceOpen}>
         <DialogContent className="bg-gray-800 text-white border-gray-700">
           <DialogHeader>
@@ -664,7 +648,6 @@ export function EmployeeSalary() {
         </DialogContent>
       </Dialog>
 
-      {/* Dialog d'ajout de volume de vente */}
       <Dialog open={isAddSalesVolumeOpen} onOpenChange={setIsAddSalesVolumeOpen}>
         <DialogContent className="bg-gray-800 text-white border-gray-700">
           <DialogHeader>
@@ -748,7 +731,6 @@ export function EmployeeSalary() {
         </DialogContent>
       </Dialog>
 
-      {/* Dialog de configuration des primes */}
       <Dialog open={isBonusSettingsOpen} onOpenChange={setIsBonusSettingsOpen}>
         <DialogContent className="bg-gray-800 text-white border-gray-700">
           <DialogHeader>
@@ -790,7 +772,6 @@ export function EmployeeSalary() {
         </DialogContent>
       </Dialog>
 
-      {/* Dialog de fiche de paie */}
       <Dialog open={isPaySlipOpen} onOpenChange={setIsPaySlipOpen}>
         <DialogContent className="bg-gray-800 text-white border-gray-700 max-w-3xl">
           <DialogHeader>
@@ -798,7 +779,7 @@ export function EmployeeSalary() {
               <span>Fiche de paie</span>
               <Button 
                 variant="outline" 
-                className="bg-gray-700 hover:bg-gray-600 mr-6"
+                className="bg-gray-700 hover:bg-gray-600 mr-12"
                 onClick={handlePrintPaySlip}
               >
                 <Printer className="h-4 w-4 mr-2" />
@@ -809,16 +790,16 @@ export function EmployeeSalary() {
           {selectedEmployee && (
             <ScrollArea className="h-[500px] pr-4">
               <div ref={paySlipRef} className="py-4">
-                <div className="bg-gray-700 p-6 rounded-lg">
-                  <div className="flex justify-between items-start mb-6">
+                <div className="bg-gray-700 p-4 rounded-lg">
+                  <div className="flex justify-between items-start mb-4">
                     <div>
                       <h2 className="text-xl font-bold">SARL BÉTON</h2>
-                      <p className="text-gray-400">123 Rue du Béton</p>
-                      <p className="text-gray-400">75000 Paris</p>
+                      <p className="text-gray-400 text-sm">123 Rue du Béton</p>
+                      <p className="text-gray-400 text-sm">16000 Alger, Algérie</p>
                     </div>
                     <div className="text-right">
                       <h3 className="text-lg font-semibold">Fiche de paie</h3>
-                      <p className="text-gray-400">
+                      <p className="text-gray-400 text-sm">
                         {selectedMonth ? 
                           format(new Date(selectedMonth + "-01"), 'MMMM yyyy', { locale: fr }) : 
                           "Août 2023"}
@@ -826,91 +807,91 @@ export function EmployeeSalary() {
                     </div>
                   </div>
 
-                  <div className="border-t border-b border-gray-600 py-4 mb-6">
-                    <div className="grid grid-cols-2 gap-4">
+                  <div className="border-t border-b border-gray-600 py-3 mb-4">
+                    <div className="grid grid-cols-2 gap-2">
                       <div>
-                        <h4 className="font-semibold mb-2">Informations employé</h4>
-                        <p><span className="text-gray-400">Nom:</span> {selectedEmployee.name}</p>
-                        <p><span className="text-gray-400">Poste:</span> {selectedEmployee.position}</p>
-                        <p><span className="text-gray-400">Matricule:</span> EMP-{selectedEmployee.id}</p>
+                        <h4 className="font-semibold mb-1 text-sm">Informations employé</h4>
+                        <p className="text-sm"><span className="text-gray-400">Nom:</span> {selectedEmployee.name}</p>
+                        <p className="text-sm"><span className="text-gray-400">Poste:</span> {selectedEmployee.position}</p>
+                        <p className="text-sm"><span className="text-gray-400">Matricule:</span> EMP-{selectedEmployee.id}</p>
                       </div>
                       <div>
-                        <h4 className="font-semibold mb-2">Période</h4>
-                        <p><span className="text-gray-400">Du:</span> 01/08/2023</p>
-                        <p><span className="text-gray-400">Au:</span> 31/08/2023</p>
-                        <p><span className="text-gray-400">Jours travaillés:</span> {selectedEmployee.attendance}/22</p>
+                        <h4 className="font-semibold mb-1 text-sm">Période</h4>
+                        <p className="text-sm"><span className="text-gray-400">Du:</span> 01/08/2023</p>
+                        <p className="text-sm"><span className="text-gray-400">Au:</span> 31/08/2023</p>
+                        <p className="text-sm"><span className="text-gray-400">Jours travaillés:</span> {selectedEmployee.attendance}/22</p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="mb-6">
-                    <h4 className="font-semibold mb-3">Rémunération</h4>
+                  <div className="mb-3">
+                    <h4 className="font-semibold mb-2 text-sm">Rémunération</h4>
                     <Table className="text-white">
                       <TableHeader className="bg-gray-600">
                         <TableRow>
-                          <TableHead>Description</TableHead>
-                          <TableHead className="text-right">Montant</TableHead>
+                          <TableHead className="py-1 text-xs">Description</TableHead>
+                          <TableHead className="text-right py-1 text-xs">Montant</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
                         <TableRow className="border-gray-600">
-                          <TableCell>Salaire de base</TableCell>
-                          <TableCell className="text-right">{selectedEmployee.baseSalary.toFixed(2)}€</TableCell>
+                          <TableCell className="py-1 text-sm">Salaire de base</TableCell>
+                          <TableCell className="text-right py-1 text-sm">{selectedEmployee.baseSalary.toFixed(2)} DA</TableCell>
                         </TableRow>
                         {selectedEmployee.overtime > 0 && (
                           <TableRow className="border-gray-600">
-                            <TableCell>Heures supplémentaires ({selectedEmployee.overtime}h)</TableCell>
-                            <TableCell className="text-right">{calculateFinalSalary(selectedEmployee).overtimePay}€</TableCell>
+                            <TableCell className="py-1 text-sm">Heures supplémentaires ({selectedEmployee.overtime}h)</TableCell>
+                            <TableCell className="text-right py-1 text-sm">{calculateFinalSalary(selectedEmployee).overtimePay} DA</TableCell>
                           </TableRow>
                         )}
                         {selectedEmployee.position === "Commercial" && selectedEmployee.salesVolume && (
                           <TableRow className="border-gray-600">
-                            <TableCell>Prime de vente ({selectedEmployee.salesVolume} m³)</TableCell>
-                            <TableCell className="text-right">{calculateFinalSalary(selectedEmployee).salesBonus}€</TableCell>
+                            <TableCell className="py-1 text-sm">Prime de vente ({selectedEmployee.salesVolume} m³)</TableCell>
+                            <TableCell className="text-right py-1 text-sm">{calculateFinalSalary(selectedEmployee).salesBonus} DA</TableCell>
                           </TableRow>
                         )}
                         <TableRow className="border-gray-600 font-bold">
-                          <TableCell>Total brut</TableCell>
-                          <TableCell className="text-right">
+                          <TableCell className="py-1 text-sm">Total brut</TableCell>
+                          <TableCell className="text-right py-1 text-sm">
                             {(
                               selectedEmployee.baseSalary + 
                               parseFloat(calculateFinalSalary(selectedEmployee).overtimePay) + 
                               parseFloat(calculateFinalSalary(selectedEmployee).salesBonus)
-                            ).toFixed(2)}€
+                            ).toFixed(2)} DA
                           </TableCell>
                         </TableRow>
                       </TableBody>
                     </Table>
                   </div>
 
-                  <div className="mb-6">
-                    <h4 className="font-semibold mb-3">Déductions</h4>
+                  <div className="mb-3">
+                    <h4 className="font-semibold mb-2 text-sm">Déductions</h4>
                     <Table className="text-white">
                       <TableHeader className="bg-gray-600">
                         <TableRow>
-                          <TableHead>Description</TableHead>
-                          <TableHead className="text-right">Montant</TableHead>
+                          <TableHead className="py-1 text-xs">Description</TableHead>
+                          <TableHead className="text-right py-1 text-xs">Montant</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
                         {selectedEmployee.advances > 0 && (
                           <TableRow className="border-gray-600">
-                            <TableCell>Acomptes</TableCell>
-                            <TableCell className="text-right">-{selectedEmployee.advances.toFixed(2)}€</TableCell>
+                            <TableCell className="py-1 text-sm">Acomptes</TableCell>
+                            <TableCell className="text-right py-1 text-sm">-{selectedEmployee.advances.toFixed(2)} DA</TableCell>
                           </TableRow>
                         )}
                         <TableRow className="border-gray-600 font-bold">
-                          <TableCell>Total déductions</TableCell>
-                          <TableCell className="text-right">-{selectedEmployee.advances.toFixed(2)}€</TableCell>
+                          <TableCell className="py-1 text-sm">Total déductions</TableCell>
+                          <TableCell className="text-right py-1 text-sm">-{selectedEmployee.advances.toFixed(2)} DA</TableCell>
                         </TableRow>
                       </TableBody>
                     </Table>
                   </div>
 
-                  <div className="border-t border-gray-600 pt-4">
-                    <div className="flex justify-between items-center font-bold text-lg">
-                      <span>Salaire net à payer</span>
-                      <span>{calculateFinalSalary(selectedEmployee).finalSalary}€</span>
+                  <div className="border-t border-gray-600 pt-3">
+                    <div className="flex justify-between items-center font-bold">
+                      <span className="text-sm">Salaire net à payer</span>
+                      <span className="text-sm">{calculateFinalSalary(selectedEmployee).finalSalary} DA</span>
                     </div>
                   </div>
                 </div>
