@@ -1,57 +1,16 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Building2, CreditCard, Plus, DollarSign, Calculator, Eye } from "lucide-react";
-import { toast } from "sonner";
+import { Building2, Eye, Plus } from "lucide-react";
 import { motion } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 import { SupplierPaymentForm } from "./forms/SupplierPaymentForm";
 import { SupplierPaymentDetails } from "./forms/SupplierPaymentDetails";
-
-const mockSupplierPayments = [
-  {
-    id: "SP001",
-    supplier: "SARL CIMENT PLUS",
-    totalAmount: 850000,
-    paidAmount: 500000,
-    remainingAmount: 350000,
-    lastPaymentDate: "2024-07-10",
-    dueDate: "2024-07-30",
-    status: "partiel"
-  },
-  {
-    id: "SP002",
-    supplier: "EURL AGREGATS",
-    totalAmount: 325000,
-    paidAmount: 325000,
-    remainingAmount: 0,
-    lastPaymentDate: "2024-07-05",
-    dueDate: "2024-07-15",
-    status: "payé"
-  },
-  {
-    id: "SP003",
-    supplier: "ETS COMPTOIR METALLIQUE",
-    totalAmount: 1200000,
-    paidAmount: 600000,
-    remainingAmount: 600000,
-    lastPaymentDate: "2024-06-28",
-    dueDate: "2024-07-20",
-    status: "partiel"
-  },
-  {
-    id: "SP004",
-    supplier: "SPA EQUIPEMENTS BTP",
-    totalAmount: 430000,
-    paidAmount: 0,
-    remainingAmount: 430000,
-    lastPaymentDate: "-",
-    dueDate: "2024-08-05",
-    status: "impayé"
-  }
-];
+import { SupplierPaymentSummary } from "./widgets/SupplierPaymentSummary";
+import { SupplierPaymentTable } from "./widgets/SupplierPaymentTable";
+import { SupplierPaymentCollapsedList } from "./widgets/SupplierPaymentCollapsedList";
+import { mockSupplierPayments } from "./data/supplierPaymentsData";
 
 export function SupplierPaymentsWidget() {
   const navigate = useNavigate();
@@ -83,19 +42,6 @@ export function SupplierPaymentsWidget() {
       name: payment.supplier
     });
     setShowPaymentDetails(true);
-  };
-
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case "payé":
-        return <Badge className="bg-green-500/20 text-green-500 hover:bg-green-500/30 border-green-500/20">Payé</Badge>;
-      case "partiel":
-        return <Badge className="bg-amber-500/20 text-amber-500 hover:bg-amber-500/30 border-amber-500/20">Partiel</Badge>;
-      case "impayé":
-        return <Badge className="bg-red-500/20 text-red-500 hover:bg-red-500/30 border-red-500/20">Impayé</Badge>;
-      default:
-        return <Badge>{status}</Badge>;
-    }
   };
 
   return (
@@ -135,97 +81,20 @@ export function SupplierPaymentsWidget() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="p-4 rounded-lg bg-gray-800/50 border border-gray-700/50 group hover:bg-gray-700/30 transition-colors">
-                <div className="flex justify-between items-center mb-2">
-                  <p className="text-sm text-gray-400">Total à payer</p>
-                  <DollarSign className="h-5 w-5 text-amber-400 group-hover:scale-110 transition-transform" />
-                </div>
-                <p className="text-xl font-bold text-white">{totalDue.toLocaleString('fr-FR')} DA</p>
-              </div>
-              <div className="p-4 rounded-lg bg-gray-800/50 border border-gray-700/50 group hover:bg-gray-700/30 transition-colors">
-                <div className="flex justify-between items-center mb-2">
-                  <p className="text-sm text-gray-400">Urgent (7 jours)</p>
-                  <Calculator className="h-5 w-5 text-red-400 group-hover:scale-110 transition-transform" />
-                </div>
-                <p className="text-xl font-bold text-red-400">{urgentDue.toLocaleString('fr-FR')} DA</p>
-              </div>
-            </div>
+            <SupplierPaymentSummary totalDue={totalDue} urgentDue={urgentDue} />
             
             {isExpanded ? (
-              <div className="mt-6">
-                <Table>
-                  <TableHeader className="bg-gray-800/50">
-                    <TableRow className="hover:bg-gray-700/50 border-gray-700">
-                      <TableHead className="text-gray-300">Fournisseur</TableHead>
-                      <TableHead className="text-gray-300 text-right">Montant total</TableHead>
-                      <TableHead className="text-gray-300 text-right">Payé</TableHead>
-                      <TableHead className="text-gray-300 text-right">Reste</TableHead>
-                      <TableHead className="text-gray-300 text-center">Statut</TableHead>
-                      <TableHead className="text-gray-300 text-right">Échéance</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {mockSupplierPayments.map((payment) => (
-                      <TableRow 
-                        key={payment.id} 
-                        className="hover:bg-gray-700/50 border-gray-700 cursor-pointer"
-                        onClick={() => handleRowClick(payment)}
-                      >
-                        <TableCell className="font-medium text-gray-200">{payment.supplier}</TableCell>
-                        <TableCell className="text-right text-gray-300">{payment.totalAmount.toLocaleString('fr-FR')}</TableCell>
-                        <TableCell className="text-right text-green-400">{payment.paidAmount.toLocaleString('fr-FR')}</TableCell>
-                        <TableCell className="text-right text-amber-400">{payment.remainingAmount.toLocaleString('fr-FR')}</TableCell>
-                        <TableCell className="text-center">{getStatusBadge(payment.status)}</TableCell>
-                        <TableCell className="text-right text-gray-300">{payment.dueDate}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-                <div className="flex justify-center mt-4">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setIsExpanded(false)}
-                    className="text-gray-400 hover:text-gray-300"
-                  >
-                    Voir moins
-                  </Button>
-                </div>
-              </div>
+              <SupplierPaymentTable 
+                payments={mockSupplierPayments} 
+                handleRowClick={handleRowClick} 
+                setIsExpanded={setIsExpanded} 
+              />
             ) : (
-              <div>
-                <div className="space-y-3 mt-4">
-                  {mockSupplierPayments.slice(0, 2).map((payment) => (
-                    <div 
-                      key={payment.id}
-                      className="p-3 rounded-lg bg-gray-800/50 border border-gray-700/50 flex justify-between items-center group hover:bg-gray-700/30 transition-colors cursor-pointer"
-                      onClick={() => handleRowClick(payment)}
-                    >
-                      <div>
-                        <p className="text-sm font-medium text-gray-200">{payment.supplier}</p>
-                        <p className="text-xs text-gray-400">Échéance: {payment.dueDate}</p>
-                      </div>
-                      <div className="flex flex-col items-end">
-                        <span className="text-sm font-medium text-amber-400">
-                          {payment.remainingAmount.toLocaleString('fr-FR')} DA
-                        </span>
-                        {getStatusBadge(payment.status)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="flex justify-center mt-4">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setIsExpanded(true)}
-                    className="text-gray-400 hover:text-gray-300"
-                  >
-                    Voir plus
-                  </Button>
-                </div>
-              </div>
+              <SupplierPaymentCollapsedList 
+                payments={mockSupplierPayments} 
+                handleRowClick={handleRowClick} 
+                setIsExpanded={setIsExpanded} 
+              />
             )}
           </div>
         </CardContent>
