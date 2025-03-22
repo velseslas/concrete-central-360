@@ -9,18 +9,18 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-// Define the type for sub menu items
+// Define the type for sub menu items with proper component props handling
 interface SubMenuItem {
   to: string;
   label: string;
-  icon?: React.ComponentType;
+  icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   subItems?: SubMenuItem[];
 }
 
 // Define the type for menu items
 interface MenuItem {
   to: string;
-  icon: React.ComponentType;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   label: string;
   iconColor: string;
   subItems?: SubMenuItem[];
