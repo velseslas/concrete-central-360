@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 import { SupplierPaymentForm } from "./forms/SupplierPaymentForm";
+import { SupplierPaymentDetails } from "./forms/SupplierPaymentDetails";
 
 const mockSupplierPayments = [
   {
@@ -56,6 +57,8 @@ export function SupplierPaymentsWidget() {
   const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(false);
   const [showPaymentForm, setShowPaymentForm] = useState(false);
+  const [showPaymentDetails, setShowPaymentDetails] = useState(false);
+  const [supplierForDetails, setSupplierForDetails] = useState<{id: string, name: string} | null>(null);
 
   const totalDue = mockSupplierPayments.reduce((acc, payment) => acc + payment.remainingAmount, 0);
   const urgentDue = mockSupplierPayments.filter(payment => {
@@ -72,6 +75,14 @@ export function SupplierPaymentsWidget() {
 
   const handleViewAll = () => {
     navigate("/finance/supplier-payments");
+  };
+
+  const handleRowClick = (payment: any) => {
+    setSupplierForDetails({
+      id: payment.id,
+      name: payment.supplier
+    });
+    setShowPaymentDetails(true);
   };
 
   const getStatusBadge = (status: string) => {
@@ -156,7 +167,11 @@ export function SupplierPaymentsWidget() {
                   </TableHeader>
                   <TableBody>
                     {mockSupplierPayments.map((payment) => (
-                      <TableRow key={payment.id} className="hover:bg-gray-700/50 border-gray-700">
+                      <TableRow 
+                        key={payment.id} 
+                        className="hover:bg-gray-700/50 border-gray-700 cursor-pointer"
+                        onClick={() => handleRowClick(payment)}
+                      >
                         <TableCell className="font-medium text-gray-200">{payment.supplier}</TableCell>
                         <TableCell className="text-right text-gray-300">{payment.totalAmount.toLocaleString('fr-FR')}</TableCell>
                         <TableCell className="text-right text-green-400">{payment.paidAmount.toLocaleString('fr-FR')}</TableCell>
@@ -184,7 +199,8 @@ export function SupplierPaymentsWidget() {
                   {mockSupplierPayments.slice(0, 2).map((payment) => (
                     <div 
                       key={payment.id}
-                      className="p-3 rounded-lg bg-gray-800/50 border border-gray-700/50 flex justify-between items-center group hover:bg-gray-700/30 transition-colors"
+                      className="p-3 rounded-lg bg-gray-800/50 border border-gray-700/50 flex justify-between items-center group hover:bg-gray-700/30 transition-colors cursor-pointer"
+                      onClick={() => handleRowClick(payment)}
                     >
                       <div>
                         <p className="text-sm font-medium text-gray-200">{payment.supplier}</p>
@@ -218,6 +234,12 @@ export function SupplierPaymentsWidget() {
       <SupplierPaymentForm
         open={showPaymentForm}
         onOpenChange={setShowPaymentForm}
+      />
+
+      <SupplierPaymentDetails
+        open={showPaymentDetails}
+        onOpenChange={setShowPaymentDetails}
+        supplier={supplierForDetails}
       />
     </motion.div>
   );

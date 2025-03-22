@@ -15,6 +15,7 @@ import {
   TableRow 
 } from "@/components/ui/table";
 import { SupplierPaymentForm } from "@/components/suppliers/forms/SupplierPaymentForm";
+import { SupplierPaymentDetails } from "@/components/suppliers/forms/SupplierPaymentDetails";
 
 const mockSupplierPayments = [
   {
@@ -129,10 +130,12 @@ const paymentHistory = [
 
 export default function SupplierPayments() {
   const [showPaymentForm, setShowPaymentForm] = useState(false);
+  const [showPaymentDetails, setShowPaymentDetails] = useState(false);
   const [selectedTab, setSelectedTab] = useState("overview");
   const [selectedSupplier, setSelectedSupplier] = useState<string | null>(null);
   const [selectedInvoiceId, setSelectedInvoiceId] = useState<string | null>(null);
   const [selectedSupplierId, setSelectedSupplierId] = useState<string | null>(null);
+  const [supplierForDetails, setSupplierForDetails] = useState<{id: string, name: string} | null>(null);
 
   const handleNewPayment = (supplierId?: string, invoiceId?: string) => {
     setSelectedSupplierId(supplierId || null);
@@ -170,8 +173,12 @@ export default function SupplierPayments() {
     return diffDays <= 7 && payment.remainingAmount > 0;
   }).reduce((acc, payment) => acc + payment.remainingAmount, 0);
 
-  const handleRowClick = (supplierId: string) => {
-    setSelectedSupplier(supplierId === selectedSupplier ? null : supplierId);
+  const handleRowClick = (payment: any) => {
+    setSupplierForDetails({
+      id: payment.id,
+      name: payment.supplier
+    });
+    setShowPaymentDetails(true);
   };
 
   return (
@@ -214,6 +221,12 @@ export default function SupplierPayments() {
         onOpenChange={setShowPaymentForm}
         supplierId={selectedSupplierId || undefined}
         invoiceId={selectedInvoiceId || undefined}
+      />
+
+      <SupplierPaymentDetails
+        open={showPaymentDetails}
+        onOpenChange={setShowPaymentDetails}
+        supplier={supplierForDetails}
       />
 
       <motion.div
@@ -299,8 +312,8 @@ export default function SupplierPayments() {
                     {mockSupplierPayments.map((payment) => (
                       <TableRow 
                         key={payment.id} 
-                        className={`hover:bg-gray-700/50 border-gray-700 cursor-pointer ${selectedSupplier === payment.id ? 'bg-gray-700/70' : ''}`}
-                        onClick={() => handleRowClick(payment.id)}
+                        className="hover:bg-gray-700/50 border-gray-700 cursor-pointer"
+                        onClick={() => handleRowClick(payment)}
                       >
                         <TableCell className="font-medium text-gray-200">{payment.supplier}</TableCell>
                         <TableCell className="text-gray-300">{payment.invoiceNumber}</TableCell>
@@ -386,7 +399,17 @@ export default function SupplierPayments() {
                   </TableHeader>
                   <TableBody>
                     {paymentHistory.map((payment) => (
-                      <TableRow key={payment.id} className="hover:bg-gray-700/50 border-gray-700">
+                      <TableRow 
+                        key={payment.id} 
+                        className="hover:bg-gray-700/50 border-gray-700 cursor-pointer"
+                        onClick={() => {
+                          setSupplierForDetails({
+                            id: mockSupplierPayments.find(s => s.invoiceNumber === payment.invoiceReference)?.id || "",
+                            name: payment.supplier
+                          });
+                          setShowPaymentDetails(true);
+                        }}
+                      >
                         <TableCell className="text-gray-300">{payment.date}</TableCell>
                         <TableCell className="font-medium text-gray-200">{payment.supplier}</TableCell>
                         <TableCell className="text-gray-300">{payment.invoiceReference}</TableCell>
@@ -405,4 +428,3 @@ export default function SupplierPayments() {
     </div>
   );
 }
-
