@@ -4,11 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Calculator, DollarSign, Receipt, UserPlus, Clock, Percent, Trophy, FileText, Calendar, Printer } from "lucide-react";
+import { Calculator, DollarSign, Receipt, UserPlus, Percent, Trophy, FileText, Printer } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { format } from "date-fns";
@@ -20,18 +20,18 @@ export function EmployeeSalary() {
   const [isAddSalesVolumeOpen, setIsAddSalesVolumeOpen] = useState(false);
   const [isBonusSettingsOpen, setIsBonusSettingsOpen] = useState(false);
   const [isPaySlipOpen, setIsPaySlipOpen] = useState(false);
-  const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [selectedEmployee, setSelectedEmployee] = useState<any>(null);
   const [selectedMonth, setSelectedMonth] = useState("");
   const [advanceAmount, setAdvanceAmount] = useState("");
   const [advanceDescription, setAdvanceDescription] = useState("");
   const [advanceDate, setAdvanceDate] = useState(format(new Date(), "yyyy-MM-dd"));
   const [bonusPerCubicMeter, setBonusPerCubicMeter] = useState("1.5");
-  const [employees, setEmployees] = useState([]);
-  const [advances, setAdvances] = useState([]);
-  const [bonuses, setBonuses] = useState([]);
+  const [employees, setEmployees] = useState<any[]>([]);
+  const [advances, setAdvances] = useState<any[]>([]);
+  const [bonuses, setBonuses] = useState<any[]>([]);
   const [salesVolume, setSalesVolume] = useState("");
   const [salesMonth, setSalesMonth] = useState(format(new Date(), "yyyy-MM"));
-  const paySlipRef = useRef(null);
+  const paySlipRef = useRef<HTMLDivElement>(null);
   
   // Fetch data on load
   useEffect(() => {
@@ -186,6 +186,7 @@ export function EmployeeSalary() {
       toast.success(`Volume de vente de ${salesVolume}m³ enregistré pour ${selectedEmployee.name}`);
       setIsAddSalesVolumeOpen(false);
       setSalesVolume("");
+      setSelectedEmployee(null);
       
       // Refresh bonuses list
       fetchBonuses();
@@ -261,14 +262,18 @@ export function EmployeeSalary() {
       printWindow.document.write('<html><head><title>Fiche de paie</title>');
       printWindow.document.write('<style>');
       printWindow.document.write(`
-        body { font-family: Arial, sans-serif; padding: 20px; color: #333; }
+        body { font-family: Arial, sans-serif; padding: 20px; color: #333; margin: 0; }
         .header { display: flex; justify-content: space-between; margin-bottom: 20px; }
-        .company-info, .employee-info { margin-bottom: 20px; }
-        h1, h2, h3 { color: #444; }
-        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
-        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+        .company-info, .employee-info { margin-bottom: 15px; }
+        h1, h2, h3 { color: #444; margin: 10px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; }
         th { background-color: #f5f5f5; }
-        .total { font-weight: bold; margin-top: 20px; text-align: right; font-size: 1.1em; }
+        .total { font-weight: bold; margin-top: 15px; text-align: right; font-size: 1.1em; }
+        @page { size: auto; margin: 10mm; }
+        @media print {
+          body { max-width: 100%; }
+        }
       `);
       printWindow.document.write('</style></head><body>');
       printWindow.document.write(paySlipRef.current.innerHTML);
@@ -793,7 +798,7 @@ export function EmployeeSalary() {
               <span>Fiche de paie</span>
               <Button 
                 variant="outline" 
-                className="bg-gray-700 hover:bg-gray-600"
+                className="bg-gray-700 hover:bg-gray-600 mr-6"
                 onClick={handlePrintPaySlip}
               >
                 <Printer className="h-4 w-4 mr-2" />

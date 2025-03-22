@@ -55,14 +55,41 @@ export function useEmployeeForm({ employee, isEditing = false }: UseEmployeeForm
       } else {
         // Handle create logic here
         // Also save the salary information to employee_salaries table
-        const salaryData = {
-          employee_id: `${data.firstName} ${data.lastName}`, // Using name as a simplistic ID
-          base_salary: parseFloat(data.salary) || 0
-        };
+        const { data: employeeData, error: employeeError } = await supabase
+          .from('employees')
+          .insert({
+            first_name: data.firstName,
+            last_name: data.lastName,
+            email: data.email,
+            phone: data.phone,
+            position: data.position,
+            department: data.department,
+            status: data.status,
+            start_date: data.startDate,
+            address: data.address,
+            emergency_contact: data.emergencyContact,
+            bank_details: data.bankDetails,
+            national_id: data.nationalId,
+            birth_date: data.birthDate,
+            notes: data.notes
+          })
+          .select()
+          .single();
+        
+        if (employeeError) throw employeeError;
+        
+        if (employeeData && data.salary) {
+          const salaryData = {
+            employee_id: employeeData.id,
+            base_salary: parseFloat(data.salary) || 0
+          };
 
-        await supabase
-          .from('employee_salaries')
-          .insert(salaryData);
+          const { error: salaryError } = await supabase
+            .from('employee_salaries')
+            .insert(salaryData);
+            
+          if (salaryError) console.error("Error saving salary data:", salaryError);
+        }
           
         toast.success("Nouvel employé ajouté avec succès");
       }

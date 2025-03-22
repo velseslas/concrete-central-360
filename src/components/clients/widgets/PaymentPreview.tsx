@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Printer } from "lucide-react";
@@ -28,13 +29,13 @@ export function PaymentPreview({ open, onOpenChange, selectedDocument, selectedC
                 display: none !important;
               }
               @page {
-                size: 14in auto;
-                margin: 0;
+                size: auto;
+                margin: 15mm;
               }
               .print-preview {
-                width: 1344px !important;
+                width: 100% !important;
                 margin: 0 auto;
-                padding: 1rem;
+                padding: 0;
               }
             }
           `}
@@ -43,13 +44,13 @@ export function PaymentPreview({ open, onOpenChange, selectedDocument, selectedC
           <DialogTitle className="text-2xl font-bold">
             Aperçu - {selectedDocument}
           </DialogTitle>
-          <Button onClick={handlePrint} variant="outline" className="no-print mr-8">
+          <Button onClick={handlePrint} variant="outline" className="no-print">
             <Printer className="mr-2 h-4 w-4" />
             Imprimer
           </Button>
         </DialogHeader>
         <div className="flex justify-center overflow-auto py-4">
-          <div className="print-preview w-[1344px] min-h-[600px] bg-white rounded-lg shadow-lg p-4 space-y-4">
+          <div className="print-preview w-[1000px] min-h-[600px] bg-white rounded-lg shadow-lg p-4 space-y-4">
             <div className="border-b pb-4">
               <h3 className="text-lg font-bold text-center">Bon de paiement</h3>
               <p className="text-sm text-gray-600 text-center">Ref: {selectedDocument}</p>
