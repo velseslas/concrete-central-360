@@ -1,11 +1,13 @@
+
 import { Button } from "@/components/ui/button";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { FileText, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { motion } from "framer-motion";
 
 interface Document {
-  id: string;  // Changed from number to string to match UUID type
+  id: string;
   title: string;
 }
 
@@ -32,26 +34,36 @@ export function DocumentList({ documents, onDocumentClick }: DocumentListProps) 
   };
 
   return (
-    <div className="space-y-4">
-      {documents.map((doc) => (
-        <div
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
+      className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4"
+    >
+      {documents.map((doc, index) => (
+        <motion.div
           key={doc.id}
-          className="p-4 rounded-lg bg-gradient-to-br from-gray-800/50 via-gray-800/30 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 hover:border-indigo-500/30 transition-all group relative overflow-hidden"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: index * 0.1 }}
+          className="bg-[#101422] rounded-lg p-6 border border-[#1F2232] hover:border-[#7C3AED] transition-all"
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          <div className="flex justify-between items-center relative z-10">
-            <div 
-              className="space-y-1 cursor-pointer flex-grow"
-              onClick={() => onDocumentClick(doc)}
-            >
-              <h4 className="font-medium text-gray-100 group-hover:text-white transition-colors flex items-center gap-2">
-                <FileText className="h-4 w-4 text-indigo-400" />
-                {doc.title}
-              </h4>
-              <p className="text-sm text-gray-400">
-                Document #{doc.id}
-              </p>
+          <div className="flex items-start justify-between">
+            <div className="flex items-start">
+              <div className="h-10 w-10 flex items-center justify-center rounded-md bg-[#1F2232] text-[#7C3AED] mr-3">
+                <FileText className="h-5 w-5" />
+              </div>
+              <div>
+                <h3 
+                  className="text-xl font-semibold text-white cursor-pointer hover:text-[#7C3AED]"
+                  onClick={() => onDocumentClick(doc)}
+                >
+                  {doc.title}
+                </h3>
+                <p className="text-sm text-gray-400">Document #{doc.id.substring(0, 8)}</p>
+              </div>
             </div>
+            
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <Button
@@ -83,8 +95,18 @@ export function DocumentList({ documents, onDocumentClick }: DocumentListProps) 
               </AlertDialogContent>
             </AlertDialog>
           </div>
-        </div>
+          
+          <div className="flex justify-end mt-4">
+            <Button 
+              variant="ghost" 
+              className="text-[#7C3AED] hover:text-[#6D28D9] hover:bg-[#7C3AED]/10"
+              onClick={() => onDocumentClick(doc)}
+            >
+              Voir le document
+            </Button>
+          </div>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 }

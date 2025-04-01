@@ -1,13 +1,7 @@
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Edit, Trash2 } from "lucide-react";
+import { Edit, Trash2, Construction } from "lucide-react";
 
 interface Project {
   id: number;
@@ -44,48 +38,56 @@ export function ProjectList({ onEdit }: ProjectListProps) {
   };
 
   return (
-    <div className="rounded-md border border-gray-700/50">
-      <Table>
-        <TableHeader className="bg-gray-900/50 backdrop-blur-xl">
-          <TableRow className="border-b border-gray-700">
-            <TableHead className="text-gray-300">Client</TableHead>
-            <TableHead className="text-gray-300">Nom du chantier</TableHead>
-            <TableHead className="text-gray-300">Adresse</TableHead>
-            <TableHead className="text-gray-300">Volume</TableHead>
-            <TableHead className="text-right text-gray-300">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {mockProjects.map((project) => (
-            <TableRow key={project.id} className="border-b border-gray-700/50 hover:bg-gray-800/50 backdrop-blur-xl transition-colors">
-              <TableCell className="text-gray-300">{project.clientName}</TableCell>
-              <TableCell className="text-gray-300">{project.name}</TableCell>
-              <TableCell className="text-gray-300">{project.address}</TableCell>
-              <TableCell className="text-gray-300">{project.volume}</TableCell>
-              <TableCell className="text-right">
-                <div className="flex justify-end space-x-2">
-                  <Button 
-                    variant="ghost" 
-                    size="icon"
-                    onClick={() => onEdit(project)}
-                    className="hover:bg-gray-700/50"
-                  >
-                    <Edit className="h-4 w-4 text-gray-300" />
-                  </Button>
-                  <Button 
-                    variant="ghost" 
-                    size="icon"
-                    onClick={() => handleDelete(project.id)}
-                    className="hover:bg-gray-700/50"
-                  >
-                    <Trash2 className="h-4 w-4 text-gray-300" />
-                  </Button>
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
+      className="grid grid-cols-1 md:grid-cols-2 gap-4"
+    >
+      {mockProjects.map((project, index) => (
+        <motion.div
+          key={project.id}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: index * 0.1 }}
+          className="bg-[#101422] rounded-lg p-6 border border-[#1F2232] hover:border-[#7C3AED] transition-all"
+        >
+          <div className="flex items-start mb-4">
+            <div className="h-10 w-10 flex items-center justify-center rounded-md bg-[#1F2232] text-[#7C3AED] mr-3">
+              <Construction className="h-5 w-5" />
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold text-white">{project.name}</h3>
+              <p className="text-sm text-gray-400 mt-1">Client: {project.clientName}</p>
+            </div>
+          </div>
+          
+          <div className="space-y-2 mb-4">
+            <p className="text-sm text-gray-300">Adresse: {project.address}</p>
+            <p className="text-sm text-gray-300">Volume: {project.volume}</p>
+          </div>
+          
+          <div className="flex justify-between items-center">
+            <Button 
+              variant="ghost" 
+              size="sm"
+              className="text-red-400 hover:text-red-300 hover:bg-red-400/10"
+              onClick={() => handleDelete(project.id)}
+            >
+              <Trash2 className="h-4 w-4 mr-2" />
+              Supprimer
+            </Button>
+            <Button 
+              variant="ghost" 
+              className="text-[#7C3AED] hover:text-[#6D28D9] hover:bg-[#7C3AED]/10"
+              onClick={() => onEdit(project)}
+            >
+              <Edit className="h-4 w-4 mr-2" />
+              Modifier
+            </Button>
+          </div>
+        </motion.div>
+      ))}
+    </motion.div>
   );
 }

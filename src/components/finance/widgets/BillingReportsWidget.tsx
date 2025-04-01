@@ -1,8 +1,9 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { FileText, Eye, Download, Printer } from "lucide-react";
+import { FileText, Eye, Download, Printer, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
 
 export function BillingReportsWidget() {
@@ -24,6 +25,12 @@ export function BillingReportsWidget() {
     setPreviewOpen(true);
   };
 
+  const reports = [
+    { title: "Rapport mensuel", date: "Mars 2024" },
+    { title: "Rapport trimestriel", date: "Q1 2024" },
+    { title: "Rapport annuel", date: "2024" }
+  ];
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -40,32 +47,46 @@ export function BillingReportsWidget() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            {[
-              { title: "Rapport mensuel", date: "Mars 2024" },
-              { title: "Rapport trimestriel", date: "Q1 2024" },
-              { title: "Rapport annuel", date: "2024" }
-            ].map((report, index) => (
-              <div
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+            className="grid grid-cols-1 gap-4"
+          >
+            {reports.map((report, index) => (
+              <motion.div
                 key={index}
-                className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 flex justify-between items-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+                className="bg-[#101422] rounded-lg p-4 border border-[#1F2232] hover:border-[#7C3AED] transition-all"
               >
-                <div>
-                  <h3 className="text-white font-medium">{report.title}</h3>
-                  <p className="text-gray-400 text-sm">{report.date}</p>
+                <div className="flex items-start mb-2">
+                  <div className="h-8 w-8 flex items-center justify-center rounded-md bg-[#1F2232] text-[#7C3AED] mr-2">
+                    <FileText className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-white">{report.title}</h3>
+                    <div className="flex items-center text-gray-400 text-xs mt-1">
+                      <Calendar className="h-3 w-3 mr-1" />
+                      {report.date}
+                    </div>
+                  </div>
                 </div>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="text-white"
-                  onClick={() => handlePreview(report)}
-                >
-                  <Eye className="h-4 w-4 mr-2" />
-                  Aperçu
-                </Button>
-              </div>
+                <div className="flex justify-end mt-2">
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="text-[#7C3AED] hover:text-[#6D28D9] hover:bg-[#7C3AED]/10"
+                    onClick={() => handlePreview(report)}
+                  >
+                    <Eye className="h-4 w-4 mr-2" />
+                    Aperçu
+                  </Button>
+                </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </CardContent>
       </Card>
 

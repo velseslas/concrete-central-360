@@ -1,5 +1,6 @@
+
 import { motion } from "framer-motion";
-import { Edit2 } from "lucide-react";
+import { Edit2, CreditCard, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Tooltip,
@@ -27,43 +28,57 @@ interface PaymentListProps {
 
 export function PaymentList({ clients, onViewDetails }: PaymentListProps) {
   return (
-    <div className="space-y-4">
-      {clients.map((client) => (
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+    >
+      {clients.map((client, index) => (
         <motion.div
           key={client.id}
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="p-4 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: index * 0.1 }}
+          className="bg-[#101422] rounded-lg p-6 border border-[#1F2232] hover:border-[#7C3AED] transition-all"
         >
-          <div className="flex justify-between items-center">
+          <div className="flex items-start mb-4">
+            <div className="h-10 w-10 flex items-center justify-center rounded-md bg-[#1F2232] text-[#7C3AED] mr-3">
+              <CreditCard className="h-5 w-5" />
+            </div>
             <div>
-              <h3 className="text-lg font-semibold text-white">{client.name}</h3>
-              <p className="text-sm text-white/80">
-                Dernier paiement: {client.lastPayment}
-              </p>
+              <h3 className="text-xl font-semibold text-white">{client.name}</h3>
+              <div className="flex items-center mt-1 text-gray-400">
+                <User className="h-4 w-4 mr-1" />
+                <span className="text-sm">Dernier paiement: {client.lastPayment}</span>
+              </div>
             </div>
-            <div className="flex items-center gap-4">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button 
-                      variant="ghost" 
-                      size="icon"
-                      className="text-white hover:bg-white/20"
-                      onClick={() => onViewDetails(client)}
-                    >
-                      <Edit2 className="h-4 w-4" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Modifier les paiements</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </div>
+          </div>
+          
+          <div className="flex justify-between items-center mt-4">
+            <p className="text-lg font-bold text-blue-400">
+              {client.totalPaid.toLocaleString()} DA
+            </p>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    className="text-[#7C3AED] hover:text-[#6D28D9] hover:bg-[#7C3AED]/10"
+                    onClick={() => onViewDetails(client)}
+                  >
+                    <Edit2 className="h-4 w-4 mr-2" />
+                    Voir les détails
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Modifier les paiements</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 }

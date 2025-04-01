@@ -1,5 +1,6 @@
+
 import { motion } from "framer-motion";
-import { Clock, CheckCircle } from "lucide-react";
+import { Clock, CheckCircle, Construction } from "lucide-react";
 
 interface Project {
   id: number;
@@ -39,30 +40,41 @@ export function ProjectListSection({ projects }: ProjectListSectionProps) {
   return (
     <div className="space-y-4">
       <h3 className="font-semibold text-gray-200">Liste des chantiers</h3>
-      <div className="space-y-3">
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+        className="grid grid-cols-1 md:grid-cols-2 gap-4"
+      >
         {projects.map((project, index) => (
           <motion.div
             key={project.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: index * 0.1 }}
-            className="p-4 rounded-lg bg-gray-800/30 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-700/30 transition-colors"
+            className="bg-[#101422] rounded-lg p-6 border border-[#1F2232] hover:border-[#7C3AED] transition-all"
           >
-            <div className="flex justify-between items-center">
-              <div className="space-y-1">
-                <h4 className="font-medium text-gray-100">{project.name}</h4>
-                <p className="text-sm text-gray-400">
+            <div className="flex items-start mb-4">
+              <div className="h-10 w-10 flex items-center justify-center rounded-md bg-[#1F2232] text-[#7C3AED] mr-3">
+                <Construction className="h-5 w-5" />
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold text-white">{project.name}</h3>
+                <p className="text-sm text-gray-400 mt-1">
                   Client: {project.client} - {project.concreteQuantity}m³
                 </p>
               </div>
-              <div className={`px-3 py-1 rounded-full text-xs border flex items-center gap-2 ${getStatusColor(project.status)}`}>
+            </div>
+            
+            <div className="flex justify-end mt-4">
+              <div className={`px-3 py-1 rounded-full text-xs flex items-center gap-2 ${getStatusColor(project.status)}`}>
                 {getStatusIcon(project.status)}
                 {project.status}
               </div>
             </div>
           </motion.div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 }

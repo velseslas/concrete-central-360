@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { ClientPaymentListItem } from "./ClientPaymentListItem";
 import { ChevronDown } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface ClientPaymentCollapsedListProps {
   payments: Array<{
@@ -26,21 +27,32 @@ export function ClientPaymentCollapsedList({
   
   return (
     <div>
-      <div className="space-y-3 mt-4">
-        {payments.slice(0, 2).map((payment) => (
-          <ClientPaymentListItem 
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+        className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4"
+      >
+        {payments.slice(0, 2).map((payment, index) => (
+          <motion.div
             key={payment.id}
-            payment={payment}
-            handleRowClick={handleRowClick}
-          />
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: index * 0.1 }}
+          >
+            <ClientPaymentListItem 
+              payment={payment}
+              handleRowClick={handleRowClick}
+            />
+          </motion.div>
         ))}
-      </div>
-      <div className="flex justify-center mt-4">
+      </motion.div>
+      <div className="flex justify-center mt-6">
         <Button
           variant="ghost"
           size="sm"
           onClick={() => setIsExpanded(true)}
-          className="text-primary-300 hover:text-primary-200 hover:bg-primary/10 flex items-center gap-1"
+          className="text-primary-300 hover:text-primary-200 hover:bg-primary/10 flex items-center gap-2"
         >
           Voir plus
           <ChevronDown className="h-4 w-4" />

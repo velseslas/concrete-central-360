@@ -1,6 +1,8 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+
+import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Production } from "./types";
+import { Factory, Calendar } from "lucide-react";
 
 interface ProductionListProps {
   productions: Production[];
@@ -23,35 +25,45 @@ export function ProductionList({ productions }: ProductionListProps) {
   };
 
   return (
-    <div className="rounded-lg overflow-hidden border border-gray-700/50">
-      <Table>
-        <TableHeader className="bg-gray-800/50">
-          <TableRow>
-            <TableHead className="text-gray-300">ID</TableHead>
-            <TableHead className="text-gray-300">Client</TableHead>
-            <TableHead className="text-gray-300">Projet</TableHead>
-            <TableHead className="text-gray-300">Formulation</TableHead>
-            <TableHead className="text-gray-300">Volume (m³)</TableHead>
-            <TableHead className="text-gray-300">Statut</TableHead>
-            <TableHead className="text-gray-300">Date début</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {productions.map((production) => (
-            <TableRow key={production.id} className="hover:bg-gray-800/30">
-              <TableCell className="font-medium text-white">{production.order_id}</TableCell>
-              <TableCell className="text-gray-300">{production.client}</TableCell>
-              <TableCell className="text-gray-300">{production.project}</TableCell>
-              <TableCell className="text-gray-300">{production.formulation}</TableCell>
-              <TableCell className="text-gray-300">{production.volume}</TableCell>
-              <TableCell>{getStatusBadge(production.status)}</TableCell>
-              <TableCell className="text-gray-300">
-                {new Date(production.start_date).toLocaleDateString()}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
+      className="grid grid-cols-1 md:grid-cols-2 gap-4"
+    >
+      {productions.map((production, index) => (
+        <motion.div
+          key={production.id}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: index * 0.1 }}
+          className="bg-[#101422] rounded-lg p-6 border border-[#1F2232] hover:border-[#7C3AED] transition-all"
+        >
+          <div className="flex items-start mb-4">
+            <div className="h-10 w-10 flex items-center justify-center rounded-md bg-[#1F2232] text-[#7C3AED] mr-3">
+              <Factory className="h-5 w-5" />
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold text-white">Commande #{production.order_id}</h3>
+              <p className="text-sm text-gray-400 mt-1">{production.formulation}</p>
+            </div>
+          </div>
+          
+          <div className="space-y-2 mb-4">
+            <p className="text-sm text-gray-300">Client: {production.client}</p>
+            <p className="text-sm text-gray-300">Projet: {production.project}</p>
+            <p className="text-sm text-gray-300">Volume: {production.volume} m³</p>
+            <div className="flex items-center gap-2 text-sm text-gray-300">
+              <Calendar className="h-4 w-4 text-gray-400" />
+              {new Date(production.start_date).toLocaleDateString()}
+            </div>
+          </div>
+          
+          <div className="flex justify-end">
+            {getStatusBadge(production.status)}
+          </div>
+        </motion.div>
+      ))}
+    </motion.div>
   );
 }
