@@ -1,14 +1,33 @@
+
 import { ClientActions } from "./ClientActions";
 import { useState } from "react";
 import { DetailView } from "./DetailView";
 import { motion } from "framer-motion";
 import { Card } from "../ui/card";
 
+interface Client {
+  id: number;
+  nom: string;
+  contactName: string;
+  email: string;
+  telephone: string;
+  ville: string;
+  region: string;
+  raisonSociale: string;
+  adresse: string;
+  codePostal: string;
+  nif: string;
+  nis: string;
+  numeroArticle: string;
+  categorieClient: string;
+  projectCount: number;
+}
+
 interface ClientTableProps {
-  clients: any[];
-  onEdit: (client: any) => void;
-  onViewProjects: (client: any) => void;
-  onDocumentUpload: (client: any) => void;
+  clients: Client[];
+  onEdit: (client: Client) => void;
+  onViewProjects: (client: Client) => void;
+  onDocumentUpload: (client: Client) => void;
   onDelete: (clientId: number) => void;
 }
 

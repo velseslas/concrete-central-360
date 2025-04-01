@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ClientPaymentListItem } from "./ClientPaymentListItem";
+import { ChevronDown } from "lucide-react";
 
 interface ClientPaymentCollapsedListProps {
   payments: Array<{
@@ -39,9 +40,10 @@ export function ClientPaymentCollapsedList({
           variant="ghost"
           size="sm"
           onClick={() => setIsExpanded(true)}
-          className="text-primary-300 hover:text-primary-200 hover:bg-primary/10"
+          className="text-primary-300 hover:text-primary-200 hover:bg-primary/10 flex items-center gap-1"
         >
           Voir plus
+          <ChevronDown className="h-4 w-4" />
         </Button>
       </div>
     </div>
