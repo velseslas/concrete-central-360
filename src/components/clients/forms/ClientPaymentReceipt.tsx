@@ -56,15 +56,17 @@ export function ClientPaymentReceipt({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="w-[90%] max-w-[800px] h-[90vh] max-h-[800px] overflow-y-auto print:!p-0 bg-white">
-        <style jsx global>{`
-          @media print {
-            @page { size: A4; margin: 20mm; }
-            body * { visibility: hidden; }
-            .print-content, .print-content * { visibility: visible; }
-            .no-print, .no-print * { display: none !important; }
-            .print-content { position: absolute; left: 0; top: 0; width: 100%; }
-          }
-        `}</style>
+        <style>
+          {`
+            @media print {
+              @page { size: A4; margin: 20mm; }
+              body * { visibility: hidden; }
+              .print-content, .print-content * { visibility: visible; }
+              .no-print, .no-print * { display: none !important; }
+              .print-content { position: absolute; left: 0; top: 0; width: 100%; }
+            }
+          `}
+        </style>
         
         <div className="flex justify-end gap-2 mb-4 no-print">
           <Button onClick={handleDownload} variant="outline" size="sm">
