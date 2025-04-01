@@ -30,36 +30,41 @@ export function Sidebar() {
   const location = useLocation();
 
   const menuItems: MenuItem[] = [
-    { to: "/", icon: Home, label: "Tableau de bord", iconColor: "text-blue-500" },
+    { to: "/", icon: Home, label: "Tableau de bord", iconColor: "text-primary-300" },
     { 
       to: "/clients", 
       icon: Users, 
       label: "Clients", 
-      iconColor: "text-purple-500"
+      iconColor: "text-primary-400"
     },
-    { to: "/formulations", icon: TestTube, label: "Formulations", iconColor: "text-pink-500" },
-    { to: "/suppliers", icon: Truck, label: "Fournisseurs", iconColor: "text-yellow-500" },
-    { to: "/vehicles", icon: Car, label: "Parc roulant", iconColor: "text-red-500" },
-    { to: "/expenses", icon: DollarSign, label: "Dépenses", iconColor: "text-emerald-500" },
+    { to: "/formulations", icon: TestTube, label: "Formulations", iconColor: "text-pink-400" },
+    { to: "/suppliers", icon: Truck, label: "Fournisseurs", iconColor: "text-yellow-400" },
+    { to: "/vehicles", icon: Car, label: "Parc roulant", iconColor: "text-red-400" },
+    { to: "/expenses", icon: DollarSign, label: "Dépenses", iconColor: "text-emerald-400" },
     { 
       to: "/finance", 
       icon: Receipt, 
       label: "Finance",
-      iconColor: "text-indigo-500",
+      iconColor: "text-indigo-400",
     },
-    { to: "/employees", icon: UserCircle, label: "Employés", iconColor: "text-amber-500" },
-    { to: "/settings", icon: Settings, label: "Paramètres", iconColor: "text-teal-500" },
-    { to: "/logout", icon: LogOut, label: "Quitter", iconColor: "text-red-600" },
+    { to: "/employees", icon: UserCircle, label: "Employés", iconColor: "text-amber-400" },
+    { to: "/settings", icon: Settings, label: "Paramètres", iconColor: "text-teal-400" },
+    { to: "/logout", icon: LogOut, label: "Quitter", iconColor: "text-red-500" },
   ];
 
   return (
     <div className="sticky top-0 h-screen">
-      <ScrollArea className="h-full py-6 px-4 bg-gray-900">
+      <ScrollArea className="h-full py-6 px-4 bg-[#111827] border-r border-gray-800/30">
         <div className="flex flex-col gap-6">
           <div className="px-2">
-            <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight text-white">
-              Menu Principal
-            </h2>
+            <div className="flex items-center gap-2 px-4 mb-6">
+              <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
+                <span className="text-white font-medium text-sm">LC</span>
+              </div>
+              <h2 className="text-lg font-semibold tracking-tight text-white">
+                LabControl
+              </h2>
+            </div>
           </div>
 
           <nav className="space-y-1">
@@ -82,9 +87,9 @@ export function Sidebar() {
                   <Link
                     to={item.to}
                     className={cn(
-                      "flex items-center gap-3 rounded-lg px-3 py-2 transition-all",
+                      "flex items-center gap-3 rounded-lg px-3 py-2 transition-all sidebar-menu-item",
                       isActive 
-                        ? "bg-gray-800 text-white" 
+                        ? "bg-primary/20 text-white" 
                         : "text-gray-400 hover:text-white hover:bg-gray-800/50"
                     )}
                   >
@@ -125,9 +130,9 @@ export function Sidebar() {
                           <Link
                             to={subItem.to}
                             className={cn(
-                              "flex items-center gap-2 px-4 py-2 text-sm rounded-lg transition-colors duration-200",
+                              "flex items-center gap-2 px-4 py-2 text-sm rounded-lg transition-colors duration-200 sidebar-menu-item",
                               location.pathname === subItem.to
-                                ? "text-white bg-gray-800/50"
+                                ? "bg-primary/20 text-white"
                                 : "text-gray-400 hover:text-white hover:bg-gray-800/30"
                             )}
                           >
@@ -148,9 +153,9 @@ export function Sidebar() {
                                   key={subSubItem.to}
                                   to={subSubItem.to}
                                   className={cn(
-                                    "block px-4 py-2 text-sm rounded-lg transition-colors duration-200",
+                                    "block px-4 py-2 text-sm rounded-lg transition-colors duration-200 sidebar-menu-item",
                                     location.pathname === subSubItem.to
-                                      ? "text-white bg-gray-800/50"
+                                      ? "bg-primary/20 text-white"
                                       : "text-gray-400 hover:text-white hover:bg-gray-800/30"
                                   )}
                                 >

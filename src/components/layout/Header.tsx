@@ -126,7 +126,7 @@ export const Header = () => {
     <motion.header 
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="border-b border-gray-800/50 bg-gradient-to-r from-gray-900/95 to-gray-800/95 backdrop-blur-xl p-6 shadow-lg sticky top-0 z-50"
+      className="border-b border-gray-800/50 bg-[#111827] p-6 shadow-lg sticky top-0 z-50"
     >
       <div className="flex items-center justify-between">
         <motion.div 
@@ -135,7 +135,7 @@ export const Header = () => {
           transition={{ delay: 0.2 }}
           className="space-y-1"
         >
-          <h2 className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent text-xl font-semibold">
+          <h2 className="text-xl font-semibold text-white">
             {getPageTitle(location.pathname)}
           </h2>
           <p className="text-gray-400">
@@ -151,12 +151,12 @@ export const Header = () => {
         >
           <button className="relative rounded-full p-2 hover:bg-gray-800/50 transition-colors duration-200">
             <Bell className="h-5 w-5 text-gray-400" />
-            <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400"></span>
+            <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-primary"></span>
           </button>
           
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 text-white flex items-center justify-center shadow-lg">
-              <span className="text-sm font-medium">AB</span>
+            <div className="h-10 w-10 rounded-full bg-primary text-white flex items-center justify-center shadow-lg">
+              <span className="text-sm font-medium">JD</span>
             </div>
           </div>
         </motion.div>

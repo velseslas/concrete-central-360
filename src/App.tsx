@@ -53,7 +53,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <LazyMotion features={domAnimation}>
         <BrowserRouter>
-          <div className="min-h-screen bg-gray-900">
+          <div className="min-h-screen bg-[#0B0F19]">
             <div className="flex">
               <Sidebar />
               <div className="flex-1">
@@ -91,11 +91,11 @@ function App() {
                     <Route path="/settings/database" element={<DatabaseSettings />} />
                     <Route path="/settings/maintenance" element={<MaintenanceSettings />} />
                     <Route path="/settings/auth" element={<AuthSettings />} />
-                    <Route path="/settings/ui" element={<div className="p-4 bg-gray-800 rounded-lg text-white">Interface utilisateur en cours de développement</div>} />
+                    <Route path="/settings/ui" element={<div className="p-4 bg-[#111827] rounded-lg text-white">Interface utilisateur en cours de développement</div>} />
                     <Route 
                       path="/logout" 
                       element={
-                        <div className="p-4 bg-gray-800 rounded-lg text-white">
+                        <div className="p-4 bg-[#111827] rounded-lg text-white">
                           <button 
                             onClick={handleLogout}
                             className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"

@@ -69,11 +69,11 @@ export function ClientPaymentReceipt({
         </style>
         
         <div className="flex justify-end gap-2 mb-4 no-print">
-          <Button onClick={handleDownload} variant="outline" size="sm">
+          <Button onClick={handleDownload} variant="outline" size="sm" className="border-gray-300">
             <Download className="h-4 w-4 mr-2" />
             Télécharger
           </Button>
-          <Button onClick={handlePrint} variant="outline" size="sm">
+          <Button onClick={handlePrint} variant="outline" size="sm" className="border-gray-300">
             <Printer className="h-4 w-4 mr-2" />
             Imprimer
           </Button>

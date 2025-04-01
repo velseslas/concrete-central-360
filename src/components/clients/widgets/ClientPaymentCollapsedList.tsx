@@ -39,7 +39,7 @@ export function ClientPaymentCollapsedList({
           variant="ghost"
           size="sm"
           onClick={() => setIsExpanded(true)}
-          className="text-gray-400 hover:text-gray-300"
+          className="text-primary-300 hover:text-primary-200 hover:bg-primary/10"
         >
           Voir plus
         </Button>
