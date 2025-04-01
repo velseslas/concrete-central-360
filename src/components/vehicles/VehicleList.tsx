@@ -69,10 +69,10 @@ export function VehicleList({ onEdit }: VehicleListProps) {
                     </div>
                     <div>
                       <h3 className="text-xl font-semibold text-white">{vehicle.brand} {vehicle.model}</h3>
-                      <span className="text-sm px-2 py-1 rounded-full text-xs font-medium mt-1 inline-block
+                      <span className={`text-sm px-2 py-1 rounded-full text-xs font-medium mt-1 inline-block
                         ${vehicle.status === "active" ? "bg-green-500/20 text-green-400" :
                         vehicle.status === "maintenance" ? "bg-yellow-500/20 text-yellow-400" :
-                        "bg-red-500/20 text-red-400"}"
+                        "bg-red-500/20 text-red-400"}`}
                       >
                         {vehicle.status}
                       </span>
