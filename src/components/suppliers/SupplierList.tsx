@@ -64,81 +64,67 @@ export function SupplierList({ onEdit, onDelete }: SupplierListProps) {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center p-8">
-        <div className="text-gray-400">Chargement des fournisseurs...</div>
-      </div>
+      <div className="text-center text-gray-400 py-8">Chargement des fournisseurs...</div>
     );
   }
 
   return (
-    <motion.div 
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
-      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-    >
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
       {suppliers.map((supplier, index) => (
         <motion.div
           key={supplier.id}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: index * 0.1 }}
-          className="bg-[#101422] rounded-lg p-6 border border-[#1F2232] hover:border-[#7C3AED] transition-all"
+          className="bg-[#101422] rounded-lg p-6 hover:border-[#7C3AED] transition-all"
         >
-          <div className="flex items-start mb-4">
-            <div className="h-10 w-10 flex items-center justify-center rounded-md bg-[#1F2232] text-[#7C3AED] mr-3">
-              <Building2 className="h-5 w-5" />
-            </div>
-            <div>
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <Building2 className="h-5 w-5 text-[#9b87f5]" />
               <h3 className="text-xl font-semibold text-white">{supplier.name}</h3>
-              {supplier.status && (
-                <span className="text-sm px-2 py-1 rounded-full bg-[#1F2232] text-gray-300 mt-1 inline-block">
-                  {supplier.status}
-                </span>
+            </div>
+            
+            <div className="space-y-2">
+              {supplier.email && (
+                <div className="flex items-center text-gray-300">
+                  <Mail className="h-4 w-4 mr-2 text-gray-400" />
+                  <span className="text-sm truncate">{supplier.email}</span>
+                </div>
+              )}
+              
+              {supplier.phone && (
+                <div className="flex items-center text-gray-300">
+                  <Phone className="h-4 w-4 mr-2 text-gray-400" />
+                  <span className="text-sm">{supplier.phone}</span>
+                </div>
+              )}
+              
+              {supplier.address && (
+                <div className="flex items-center text-gray-300">
+                  <MapPin className="h-4 w-4 mr-2 text-gray-400" />
+                  <span className="text-sm">{supplier.address}</span>
+                </div>
               )}
             </div>
-          </div>
-          
-          <div className="space-y-3 mb-4">
-            {supplier.email && (
-              <div className="flex items-center text-gray-300">
-                <Mail className="h-4 w-4 mr-2 text-gray-400" />
-                <span className="text-sm truncate">{supplier.email}</span>
+            
+            {supplier.status && (
+              <div className="pt-2">
+                <span className="text-sm px-2 py-1 rounded-full bg-[#1F2232] text-gray-300 inline-block">
+                  {supplier.status}
+                </span>
               </div>
             )}
-            {supplier.phone && (
-              <div className="flex items-center text-gray-300">
-                <Phone className="h-4 w-4 mr-2 text-gray-400" />
-                <span className="text-sm">{supplier.phone}</span>
-              </div>
-            )}
-            {supplier.address && (
-              <div className="flex items-center text-gray-300">
-                <MapPin className="h-4 w-4 mr-2 text-gray-400" />
-                <span className="text-sm">{supplier.address}</span>
-              </div>
-            )}
-          </div>
-          
-          <div className="flex justify-between items-center">
+            
             <Button 
               variant="ghost" 
-              size="sm"
-              className="text-red-400 hover:text-red-300 hover:bg-red-400/10"
-              onClick={() => onDelete(supplier.id)}
-            >
-              Supprimer
-            </Button>
-            <Button 
-              variant="ghost" 
-              className="text-[#7C3AED] hover:text-[#6D28D9] hover:bg-[#7C3AED]/10"
+              className="w-full mt-2 bg-[#1e293b] hover:bg-[#334155] text-white"
               onClick={() => onEdit(supplier)}
             >
-              Modifier
+              Voir les détails
             </Button>
           </div>
         </motion.div>
       ))}
-    </motion.div>
+    </div>
   );
 }

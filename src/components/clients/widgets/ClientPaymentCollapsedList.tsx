@@ -27,13 +27,8 @@ export function ClientPaymentCollapsedList({
   
   return (
     <div>
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.3 }}
-        className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4"
-      >
-        {payments.slice(0, 2).map((payment, index) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+        {payments.slice(0, 3).map((payment, index) => (
           <motion.div
             key={payment.id}
             initial={{ opacity: 0, y: 20 }}
@@ -46,18 +41,20 @@ export function ClientPaymentCollapsedList({
             />
           </motion.div>
         ))}
-      </motion.div>
-      <div className="flex justify-center mt-6">
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => setIsExpanded(true)}
-          className="text-primary-300 hover:text-primary-200 hover:bg-primary/10 flex items-center gap-2"
-        >
-          Voir plus
-          <ChevronDown className="h-4 w-4" />
-        </Button>
       </div>
+      {payments.length > 3 && (
+        <div className="flex justify-center mt-6">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsExpanded(true)}
+            className="text-primary-300 hover:text-primary-200 hover:bg-primary/10 flex items-center gap-2"
+          >
+            Voir plus
+            <ChevronDown className="h-4 w-4" />
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

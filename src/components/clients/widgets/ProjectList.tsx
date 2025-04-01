@@ -1,7 +1,7 @@
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Edit, Trash2, Construction } from "lucide-react";
+import { Construction, MapPin, ChartBar, User } from "lucide-react";
 
 interface Project {
   id: number;
@@ -33,61 +33,49 @@ const mockProjects: Project[] = [
 ];
 
 export function ProjectList({ onEdit }: ProjectListProps) {
-  const handleDelete = (projectId: number) => {
-    console.log("Delete project:", projectId);
-  };
-
   return (
-    <motion.div 
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
-      className="grid grid-cols-1 md:grid-cols-2 gap-4"
-    >
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
       {mockProjects.map((project, index) => (
         <motion.div
           key={project.id}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: index * 0.1 }}
-          className="bg-[#101422] rounded-lg p-6 border border-[#1F2232] hover:border-[#7C3AED] transition-all"
+          className="bg-[#101422] rounded-lg p-6 hover:border-[#7C3AED] transition-all"
         >
-          <div className="flex items-start mb-4">
-            <div className="h-10 w-10 flex items-center justify-center rounded-md bg-[#1F2232] text-[#7C3AED] mr-3">
-              <Construction className="h-5 w-5" />
-            </div>
-            <div>
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <Construction className="h-5 w-5 text-[#9b87f5]" />
               <h3 className="text-xl font-semibold text-white">{project.name}</h3>
-              <p className="text-sm text-gray-400 mt-1">Client: {project.clientName}</p>
             </div>
-          </div>
-          
-          <div className="space-y-2 mb-4">
-            <p className="text-sm text-gray-300">Adresse: {project.address}</p>
-            <p className="text-sm text-gray-300">Volume: {project.volume}</p>
-          </div>
-          
-          <div className="flex justify-between items-center">
+            
+            <div className="space-y-2">
+              <div className="flex items-center text-gray-300">
+                <User className="h-4 w-4 mr-2 text-gray-400" />
+                <span className="text-sm">Client: {project.clientName}</span>
+              </div>
+              
+              <div className="flex items-center text-gray-300">
+                <MapPin className="h-4 w-4 mr-2 text-gray-400" />
+                <span className="text-sm">Adresse: {project.address}</span>
+              </div>
+              
+              <div className="flex items-center text-gray-300">
+                <ChartBar className="h-4 w-4 mr-2 text-gray-400" />
+                <span className="text-sm">Volume: {project.volume}</span>
+              </div>
+            </div>
+            
             <Button 
               variant="ghost" 
-              size="sm"
-              className="text-red-400 hover:text-red-300 hover:bg-red-400/10"
-              onClick={() => handleDelete(project.id)}
-            >
-              <Trash2 className="h-4 w-4 mr-2" />
-              Supprimer
-            </Button>
-            <Button 
-              variant="ghost" 
-              className="text-[#7C3AED] hover:text-[#6D28D9] hover:bg-[#7C3AED]/10"
+              className="w-full mt-2 bg-[#1e293b] hover:bg-[#334155] text-white"
               onClick={() => onEdit(project)}
             >
-              <Edit className="h-4 w-4 mr-2" />
-              Modifier
+              Voir les détails
             </Button>
           </div>
         </motion.div>
       ))}
-    </motion.div>
+    </div>
   );
 }

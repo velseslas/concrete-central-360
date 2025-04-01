@@ -1,6 +1,7 @@
 
 import { motion } from "framer-motion";
-import { Clock, CheckCircle, Construction } from "lucide-react";
+import { Clock, CheckCircle, Construction, User, ChartBar } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface Project {
   id: number;
@@ -38,43 +39,49 @@ export function ProjectListSection({ projects }: ProjectListSectionProps) {
   };
 
   return (
-    <div className="space-y-4">
-      <h3 className="font-semibold text-gray-200">Liste des chantiers</h3>
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.3 }}
-        className="grid grid-cols-1 md:grid-cols-2 gap-4"
-      >
-        {projects.map((project, index) => (
-          <motion.div
-            key={project.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: index * 0.1 }}
-            className="bg-[#101422] rounded-lg p-6 border border-[#1F2232] hover:border-[#7C3AED] transition-all"
-          >
-            <div className="flex items-start mb-4">
-              <div className="h-10 w-10 flex items-center justify-center rounded-md bg-[#1F2232] text-[#7C3AED] mr-3">
-                <Construction className="h-5 w-5" />
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+      {projects.map((project, index) => (
+        <motion.div
+          key={project.id}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: index * 0.1 }}
+          className="bg-[#101422] rounded-lg p-6 hover:border-[#7C3AED] transition-all"
+        >
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <Construction className="h-5 w-5 text-[#9b87f5]" />
+              <h3 className="text-xl font-semibold text-white">{project.name}</h3>
+            </div>
+            
+            <div className="space-y-2">
+              <div className="flex items-center text-gray-300">
+                <User className="h-4 w-4 mr-2 text-gray-400" />
+                <span className="text-sm">Client: {project.client}</span>
               </div>
-              <div>
-                <h3 className="text-xl font-semibold text-white">{project.name}</h3>
-                <p className="text-sm text-gray-400 mt-1">
-                  Client: {project.client} - {project.concreteQuantity}m³
-                </p>
+              
+              <div className="flex items-center text-gray-300">
+                <ChartBar className="h-4 w-4 mr-2 text-gray-400" />
+                <span className="text-sm">Quantité: {project.concreteQuantity}m³</span>
               </div>
             </div>
             
-            <div className="flex justify-end mt-4">
-              <div className={`px-3 py-1 rounded-full text-xs flex items-center gap-2 ${getStatusColor(project.status)}`}>
+            <div className="pt-2">
+              <span className={`px-3 py-1 rounded-full text-xs flex items-center gap-2 ${getStatusColor(project.status)}`}>
                 {getStatusIcon(project.status)}
                 {project.status}
-              </div>
+              </span>
             </div>
-          </motion.div>
-        ))}
-      </motion.div>
+            
+            <Button 
+              variant="ghost" 
+              className="w-full mt-2 bg-[#1e293b] hover:bg-[#334155] text-white"
+            >
+              Voir les détails
+            </Button>
+          </div>
+        </motion.div>
+      ))}
     </div>
   );
 }

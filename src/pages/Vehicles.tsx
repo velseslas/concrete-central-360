@@ -1,7 +1,6 @@
 
 import { motion } from "framer-motion";
 import { Car, FileText, AlertTriangle, Settings, MapPin, ClipboardCheck, Wrench, Calendar, List, FileArchive } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 
 const widgets = [
@@ -100,15 +99,14 @@ const Vehicles = () => {
               transition={{ duration: 0.3, delay: index * 0.1 }}
             >
               <Link to={widget.route} className="block w-full">
-                <Card className={`w-full group bg-gray-800/50 backdrop-blur-lg border ${widget.borderColor} hover:bg-gray-700/50 transition-all duration-300 cursor-pointer`}>
-                  <div className={`absolute inset-0 bg-gradient-to-br ${widget.bgGradient} opacity-50 group-hover:opacity-70 transition-opacity duration-300 rounded-lg`} />
-                  <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0 relative">
-                    <CardTitle className="text-sm font-medium text-gray-300">
+                <div className="w-full group bg-[#101422] rounded-lg p-4 hover:bg-gray-700/50 transition-all duration-300 cursor-pointer">
+                  <div className="flex flex-row items-center justify-between pb-2 space-y-0">
+                    <div className="text-sm font-medium text-gray-300">
                       {widget.title}
-                    </CardTitle>
+                    </div>
                     <widget.icon className={`h-5 w-5 ${widget.color}`} />
-                  </CardHeader>
-                  <CardContent className="relative">
+                  </div>
+                  <div>
                     {widget.value && (
                       <div className={`text-2xl font-bold mb-1 ${widget.color}`}>
                         {widget.value}
@@ -117,8 +115,8 @@ const Vehicles = () => {
                     <p className="text-sm text-gray-400">
                       {widget.description}
                     </p>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               </Link>
             </motion.div>
           ))}
@@ -126,6 +124,6 @@ const Vehicles = () => {
       </motion.div>
     </div>
   );
-};
+}
 
 export default Vehicles;
