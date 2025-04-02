@@ -46,7 +46,7 @@ export function ProjectListSection({ projects }: ProjectListSectionProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: index * 0.1 }}
-          className="bg-[#101422] rounded-lg p-6 hover:border-[#7C3AED] transition-all"
+          className="rounded-lg p-6 hover:border-[#7C3AED] transition-all"
         >
           <div className="space-y-4">
             <div className="flex items-center gap-2">

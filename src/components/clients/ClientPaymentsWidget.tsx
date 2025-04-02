@@ -50,7 +50,7 @@ export function ClientPaymentsWidget() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <Card className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 cursor-pointer hover:bg-gray-800/50 transition-colors">
+      <Card className="border-gray-800 cursor-pointer hover:bg-gray-800/50 transition-colors">
         <CardHeader>
           <CardTitle className="text-lg font-medium flex items-center justify-between">
             <span className="flex items-center gap-2">
