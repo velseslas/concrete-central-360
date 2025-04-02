@@ -130,7 +130,7 @@ export const ClientList = () => {
             placeholder="Rechercher un client..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 pr-4 py-2 bg-[#101422] border-[#1F2232] rounded-lg w-full text-white"
+            className="pl-10 pr-4 py-2 bg-[#101422] rounded-lg w-full text-white"
           />
         </div>
         
@@ -141,45 +141,46 @@ export const ClientList = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
-              className="bg-[#101422] rounded-lg p-6 border border-[#1F2232] hover:border-[#7C3AED] transition-all"
             >
-              <div className="flex items-start mb-4">
-                <div className="h-10 w-10 flex items-center justify-center rounded-md bg-[#1F2232] text-[#7C3AED] mr-3">
-                  <Building className="h-5 w-5" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-white">{client.nom}</h3>
-                  <div className="flex items-center mt-1 text-gray-400">
-                    <User className="h-4 w-4 mr-1" />
-                    <span className="text-sm">{client.contactName}</span>
+              <div className="p-6">
+                <div className="flex items-start mb-4">
+                  <div className="h-10 w-10 flex items-center justify-center rounded-md text-[#7C3AED] mr-3">
+                    <Building className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold text-white">{client.nom}</h3>
+                    <div className="flex items-center mt-1 text-gray-400">
+                      <User className="h-4 w-4 mr-1" />
+                      <span className="text-sm">{client.contactName}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-              
-              <div className="space-y-3 mb-4">
-                <div className="flex items-center text-gray-300">
-                  <Mail className="h-4 w-4 mr-2 text-gray-400" />
-                  <span className="text-sm truncate">{client.email}</span>
+                
+                <div className="space-y-3 mb-4">
+                  <div className="flex items-center text-gray-300">
+                    <Mail className="h-4 w-4 mr-2 text-gray-400" />
+                    <span className="text-sm truncate">{client.email}</span>
+                  </div>
+                  <div className="flex items-center text-gray-300">
+                    <Phone className="h-4 w-4 mr-2 text-gray-400" />
+                    <span className="text-sm">{client.telephone}</span>
+                  </div>
+                  <div className="flex items-center text-gray-300">
+                    <MapPin className="h-4 w-4 mr-2 text-gray-400" />
+                    <span className="text-sm">{client.ville}, {client.region}</span>
+                  </div>
                 </div>
-                <div className="flex items-center text-gray-300">
-                  <Phone className="h-4 w-4 mr-2 text-gray-400" />
-                  <span className="text-sm">{client.telephone}</span>
+                
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-400">{client.projectCount} projets</span>
+                  <Button 
+                    variant="ghost" 
+                    className="text-[#7C3AED] hover:text-[#6D28D9] hover:bg-[#7C3AED]/10"
+                    onClick={() => handleViewDetails(client)}
+                  >
+                    Voir les détails
+                  </Button>
                 </div>
-                <div className="flex items-center text-gray-300">
-                  <MapPin className="h-4 w-4 mr-2 text-gray-400" />
-                  <span className="text-sm">{client.ville}, {client.region}</span>
-                </div>
-              </div>
-              
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-400">{client.projectCount} projets</span>
-                <Button 
-                  variant="ghost" 
-                  className="text-[#7C3AED] hover:text-[#6D28D9] hover:bg-[#7C3AED]/10"
-                  onClick={() => handleViewDetails(client)}
-                >
-                  Voir les détails
-                </Button>
               </div>
             </motion.div>
           ))}
