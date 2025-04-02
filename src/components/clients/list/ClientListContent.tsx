@@ -36,7 +36,6 @@ export function ClientListContent({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: 0.2 }}
-      className="p-6"
     >
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {clients.map((client) => (
@@ -45,10 +44,11 @@ export function ClientListContent({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
+            className="bg-[#0d111a] border border-gray-800 rounded-lg"
           >
             <div className="p-6">
               <div className="flex items-start mb-4">
-                <div className="h-10 w-10 flex items-center justify-center rounded-md text-[#7C3AED] mr-3">
+                <div className="h-10 w-10 flex items-center justify-center text-purple-400 mr-3">
                   <Building className="h-5 w-5" />
                 </div>
                 <div>
@@ -75,11 +75,11 @@ export function ClientListContent({
                 </div>
               </div>
               
-              <div className="flex justify-between items-center">
+              <div className="mt-4 flex justify-between items-center">
                 <span className="text-sm text-gray-400">{client.projectCount} projets</span>
                 <Button 
                   variant="ghost" 
-                  className="text-[#7C3AED] hover:text-[#6D28D9] hover:bg-[#7C3AED]/10"
+                  className="text-[#7C3AED] hover:text-white hover:bg-[#7C3AED]/20 px-0"
                   onClick={() => onViewDetails(client)}
                 >
                   Voir les détails
