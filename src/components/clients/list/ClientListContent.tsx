@@ -36,7 +36,7 @@ export function ClientListContent({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
-      className="space-y-8 mt-8"
+      className="flex flex-wrap gap-6 mt-6"
     >
       {clients.map((client) => (
         <motion.div
@@ -44,7 +44,7 @@ export function ClientListContent({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg hover:shadow-xl transition-all max-w-2xl mx-auto"
+          className="bg-gray-800/50 backdrop-blur-sm rounded-xl w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] shadow-lg hover:shadow-xl transition-all"
         >
           <div className="p-6">
             <div className="flex items-start mb-4">
