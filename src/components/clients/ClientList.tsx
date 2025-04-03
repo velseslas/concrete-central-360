@@ -103,7 +103,7 @@ export const ClientList = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0B1023] to-[#111936] text-white">
+    <div className="min-h-screen bg-gradient-to-b from-[#070B1A] to-[#0B1023] text-white">
       <div className="container mx-auto px-4 py-8">
         <ClientListHeader
           searchQuery={searchQuery}

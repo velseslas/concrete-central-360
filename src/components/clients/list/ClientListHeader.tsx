@@ -17,21 +17,8 @@ export function ClientListHeader({
   setIsNewClientDialogOpen,
 }: ClientListHeaderProps) {
   return (
-    <div className="mb-6">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
-        <div>
-          <h1 className="text-3xl font-bold text-white">Clients</h1>
-          <p className="text-gray-400 mt-1">Gérez vos clients et leurs projets</p>
-        </div>
-        <Button
-          className="bg-violet-600 hover:bg-violet-700 text-white rounded-full shadow-md hover:shadow-lg transition-all"
-          onClick={() => setIsNewClientDialogOpen(true)}
-        >
-          <Plus className="h-4 w-4 mr-2" />
-          Nouveau client
-        </Button>
-      </div>
-      <div className="relative max-w-md w-full">
+    <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
+      <div className="relative w-full md:w-80">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
         <Input
           type="text"
@@ -41,6 +28,13 @@ export function ClientListHeader({
           className="pl-10 pr-4 py-2 bg-gray-800/40 border-none shadow-inner rounded-lg w-full text-white focus:ring-2 focus:ring-violet-500 transition-all"
         />
       </div>
+      <Button
+        className="bg-violet-600 hover:bg-violet-700 text-white rounded-full shadow-md hover:shadow-lg transition-all w-full md:w-auto"
+        onClick={() => setIsNewClientDialogOpen(true)}
+      >
+        <Plus className="h-4 w-4 mr-2" />
+        Nouveau client
+      </Button>
     </div>
   );
 }

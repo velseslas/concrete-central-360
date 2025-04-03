@@ -36,19 +36,19 @@ export function ClientListContent({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
-      className="flex flex-wrap gap-6 mt-6"
+      className="flex flex-wrap justify-center gap-8 mt-8"
     >
-      {clients.map((client) => (
+      {clients.map((client, index) => (
         <motion.div
           key={client.id}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="bg-gray-800/50 backdrop-blur-sm rounded-xl w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] shadow-lg hover:shadow-xl transition-all"
+          transition={{ duration: 0.3, delay: index * 0.1 }}
+          className="bg-gray-800/70 backdrop-blur-md rounded-xl w-full max-w-md shadow-lg hover:shadow-xl transition-all"
         >
           <div className="p-6">
             <div className="flex items-start mb-4">
-              <div className="h-12 w-12 flex items-center justify-center bg-indigo-900/30 rounded-full text-purple-400 mr-4">
+              <div className="h-12 w-12 flex items-center justify-center bg-indigo-900/50 rounded-full text-purple-400 mr-4">
                 <Building className="h-6 w-6" />
               </div>
               <div>
@@ -75,8 +75,7 @@ export function ClientListContent({
               </div>
             </div>
             
-            <div className="mt-4 flex justify-between items-center">
-              <span className="text-sm text-gray-400">{client.projectCount} projets</span>
+            <div className="mt-4 flex justify-end">
               <Button 
                 variant="ghost" 
                 className="text-indigo-400 hover:text-white hover:bg-indigo-600/40 px-4 py-2 rounded-lg transition-all"
