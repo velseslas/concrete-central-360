@@ -102,25 +102,7 @@ const Clients = () => {
             transition={{ duration: 0.3 }}
             className="space-y-4"
           >
-            <div className="flex items-center space-x-2">
-              <button 
-                onClick={() => setActiveWidget(null)}
-                className="text-sm text-gray-300 hover:text-white transition-colors"
-              >
-                ← Retour
-              </button>
-              <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
-                {widget.title}
-              </h2>
-            </div>
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, delay: 0.1 }}
-              className="bg-gray-800/50 backdrop-blur-lg border border-gray-700 rounded-lg p-6"
-            >
-              <WidgetComponent />
-            </motion.div>
+            <WidgetComponent />
           </motion.div>
         );
       }
@@ -173,13 +155,12 @@ const Clients = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
-        className="container mx-auto p-6 space-y-6"
+        className="container mx-auto p-6"
       >
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="flex flex-col gap-6"
         >
           {renderContent()}
         </motion.div>
