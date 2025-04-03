@@ -24,21 +24,21 @@ export function ClientListHeader({
           <p className="text-gray-400 mt-1">Gérez vos clients et leurs projets</p>
         </div>
         <Button
-          className="bg-[#7C3AED] hover:bg-[#6D28D9] text-white rounded-full"
+          className="bg-violet-600 hover:bg-violet-700 text-white rounded-full shadow-md hover:shadow-lg transition-all"
           onClick={() => setIsNewClientDialogOpen(true)}
         >
           <Plus className="h-4 w-4 mr-2" />
           Nouveau client
         </Button>
       </div>
-      <div className="relative">
+      <div className="relative max-w-md w-full">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
         <Input
           type="text"
           placeholder="Rechercher un client..."
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="pl-10 pr-4 py-2 bg-[#0d111a] border border-gray-800 rounded-lg w-full text-white"
+          className="pl-10 pr-4 py-2 bg-gray-800/40 border-none shadow-inner rounded-lg w-full text-white focus:ring-2 focus:ring-violet-500 transition-all"
         />
       </div>
     </div>

@@ -33,10 +33,10 @@ export function ClientListContent({
 }: ClientListContentProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, delay: 0.2 }}
-      className="space-y-6"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4 }}
+      className="flex flex-wrap gap-6 mt-6"
     >
       {clients.map((client) => (
         <motion.div
@@ -44,15 +44,15 @@ export function ClientListContent({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="bg-[#0d111a] border border-gray-800 rounded-lg"
+          className="bg-gray-800/50 backdrop-blur-sm rounded-xl w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] shadow-lg hover:shadow-xl transition-all"
         >
           <div className="p-6">
             <div className="flex items-start mb-4">
-              <div className="h-10 w-10 flex items-center justify-center text-purple-400 mr-3">
-                <Building className="h-5 w-5" />
+              <div className="h-12 w-12 flex items-center justify-center bg-indigo-900/30 rounded-full text-purple-400 mr-4">
+                <Building className="h-6 w-6" />
               </div>
               <div>
-                <h3 className="text-xl font-semibold text-white">{client.nom}</h3>
+                <h3 className="text-xl font-bold text-white">{client.nom}</h3>
                 <div className="flex items-center mt-1 text-gray-400">
                   <User className="h-4 w-4 mr-1" />
                   <span className="text-sm">{client.contactName}</span>
@@ -60,17 +60,17 @@ export function ClientListContent({
               </div>
             </div>
             
-            <div className="space-y-3 mb-4">
+            <div className="space-y-3 mb-5 pl-2">
               <div className="flex items-center text-gray-300">
-                <Mail className="h-4 w-4 mr-2 text-gray-400" />
+                <Mail className="h-4 w-4 mr-3 text-indigo-400" />
                 <span className="text-sm truncate">{client.email}</span>
               </div>
               <div className="flex items-center text-gray-300">
-                <Phone className="h-4 w-4 mr-2 text-gray-400" />
+                <Phone className="h-4 w-4 mr-3 text-indigo-400" />
                 <span className="text-sm">{client.telephone}</span>
               </div>
               <div className="flex items-center text-gray-300">
-                <MapPin className="h-4 w-4 mr-2 text-gray-400" />
+                <MapPin className="h-4 w-4 mr-3 text-indigo-400" />
                 <span className="text-sm">{client.ville}, {client.region}</span>
               </div>
             </div>
@@ -79,7 +79,7 @@ export function ClientListContent({
               <span className="text-sm text-gray-400">{client.projectCount} projets</span>
               <Button 
                 variant="ghost" 
-                className="text-[#7C3AED] hover:text-white hover:bg-[#7C3AED]/20 px-0"
+                className="text-indigo-400 hover:text-white hover:bg-indigo-600/40 px-4 py-2 rounded-lg transition-all"
                 onClick={() => onViewDetails(client)}
               >
                 Voir les détails
