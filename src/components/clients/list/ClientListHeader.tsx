@@ -6,15 +6,13 @@ import { Plus, Search } from "lucide-react";
 interface ClientListHeaderProps {
   searchQuery: string;
   onSearchChange: (value: string) => void;
-  isNewClientDialogOpen: boolean;
-  setIsNewClientDialogOpen: (value: boolean) => void;
+  onNewClient: () => void;
 }
 
 export function ClientListHeader({
   searchQuery,
   onSearchChange,
-  isNewClientDialogOpen,
-  setIsNewClientDialogOpen,
+  onNewClient,
 }: ClientListHeaderProps) {
   return (
     <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
@@ -30,7 +28,7 @@ export function ClientListHeader({
       </div>
       <Button
         className="bg-violet-600 hover:bg-violet-700 text-white rounded-full shadow-md hover:shadow-lg transition-all w-full md:w-auto"
-        onClick={() => setIsNewClientDialogOpen(true)}
+        onClick={onNewClient}
       >
         <Plus className="h-4 w-4 mr-2" />
         Nouveau client

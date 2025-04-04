@@ -1,12 +1,8 @@
 
 import { useState } from "react";
-import { Sheet, SheetContent } from "../ui/sheet";
-import { ClientForm } from "./ClientForm";
-import { DocumentsWidget } from "./widgets/DocumentsWidget";
-import { ProjectListSection } from "./widgets/ProjectListSection";
+import { useNavigate } from "react-router-dom";
 import { ClientListHeader } from "./list/ClientListHeader";
 import { ClientListContent } from "./list/ClientListContent";
-import { Dialog, DialogContent } from "../ui/dialog";
 
 const mockClients = [
   {
@@ -62,33 +58,31 @@ const mockClients = [
 ];
 
 export const ClientList = () => {
-  const [selectedClient, setSelectedClient] = useState<any>(null);
-  const [showProjectList, setShowProjectList] = useState(false);
-  const [showDocuments, setShowDocuments] = useState(false);
-  const [isNewClientDialogOpen, setIsNewClientDialogOpen] = useState(false);
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+
+  const handleEdit = (client: any) => {
+    navigate(`/client/${client.id}`);
+  };
+
+  const handleViewProjects = (client: any) => {
+    navigate(`/client/${client.id}/projects`);
+  };
+
+  const handleDocumentUpload = (client: any) => {
+    navigate(`/client/${client.id}/documents`);
+  };
 
   const handleDelete = (clientId: number) => {
     console.log("Deleting client:", clientId);
   };
 
-  const handleEdit = (client: any) => {
-    setSelectedClient(client);
-  };
-
-  const handleViewProjects = (client: any) => {
-    setSelectedClient(client);
-    setShowProjectList(true);
-  };
-
-  const handleDocumentUpload = (client: any) => {
-    setSelectedClient(client);
-    setShowDocuments(true);
-  };
-
   const handleViewDetails = (client: any) => {
-    console.log("Viewing details for client:", client);
-    setSelectedClient(client);
+    navigate(`/client/${client.id}`);
+  };
+
+  const handleNewClient = () => {
+    navigate("/client/new");
   };
 
   const filteredClients = mockClients.filter((client) => {
@@ -108,8 +102,7 @@ export const ClientList = () => {
         <ClientListHeader
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
-          isNewClientDialogOpen={isNewClientDialogOpen}
-          setIsNewClientDialogOpen={setIsNewClientDialogOpen}
+          onNewClient={handleNewClient}
         />
         
         <ClientListContent
@@ -121,38 +114,6 @@ export const ClientList = () => {
           onViewDetails={handleViewDetails}
         />
       </div>
-      
-      {selectedClient && (
-        <>
-          <Sheet open={!!selectedClient} onOpenChange={() => setSelectedClient(null)}>
-            <SheetContent side="right" className="w-[400px] sm:w-[540px] bg-[#101422] border-[#1F2232]">
-              <ClientForm clientToEdit={selectedClient} onSuccess={() => setSelectedClient(null)} />
-            </SheetContent>
-          </Sheet>
-          
-          {showProjectList && (
-            <Sheet open={showProjectList} onOpenChange={setShowProjectList}>
-              <SheetContent side="right" className="w-[400px] sm:w-[540px] bg-[#101422] border-[#1F2232]">
-                <ProjectListSection projects={[]} />
-              </SheetContent>
-            </Sheet>
-          )}
-
-          {showDocuments && (
-            <Sheet open={showDocuments} onOpenChange={setShowDocuments}>
-              <SheetContent side="right" className="w-[400px] sm:w-[540px] bg-[#101422] border-[#1F2232]">
-                <DocumentsWidget />
-              </SheetContent>
-            </Sheet>
-          )}
-        </>
-      )}
-
-      <Dialog open={isNewClientDialogOpen} onOpenChange={setIsNewClientDialogOpen}>
-        <DialogContent className="max-w-[800px] max-h-[90vh] overflow-y-auto bg-[#101422] border-[#1F2232]">
-          <ClientForm onSuccess={() => setIsNewClientDialogOpen(false)} />
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }

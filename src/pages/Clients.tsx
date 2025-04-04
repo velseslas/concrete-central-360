@@ -1,4 +1,6 @@
+
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Users, FileText, Construction, Building2, Package, DollarSign, ShoppingCart, CreditCard, Factory } from "lucide-react";
 import { motion } from "framer-motion";
 import { ClientList } from "@/components/clients/ClientList";
@@ -16,6 +18,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 const Clients = () => {
   const [activeWidget, setActiveWidget] = useState<string | null>(null);
   const [selectedClientId, setSelectedClientId] = useState<number>(1);
+  const navigate = useNavigate();
   
   const widgets = [
     {
