@@ -44,7 +44,7 @@ const ClientFormPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
         >
-          <Tabs defaultValue={activeTab} onValueChange={setActiveTab} className="w-full">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="grid grid-cols-3 mb-8 bg-gray-800/50 border border-gray-700/30">
               <TabsTrigger 
                 value="info" 

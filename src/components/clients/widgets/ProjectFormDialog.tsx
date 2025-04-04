@@ -1,7 +1,6 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -53,11 +52,9 @@ export function ProjectFormDialog({ onSuccess, clientId }: ProjectFormDialogProp
 
   return (
     <div className="p-4">
-      <DialogHeader className="mb-6">
-        <DialogTitle className="text-xl font-semibold text-white">
-          Nouveau chantier
-        </DialogTitle>
-      </DialogHeader>
+      <h2 className="text-xl font-semibold text-white mb-6">
+        Nouveau chantier
+      </h2>
       
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

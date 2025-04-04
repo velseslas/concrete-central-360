@@ -3,8 +3,9 @@ import { motion } from "framer-motion";
 import { Clock, CheckCircle, Construction, User, ChartBar, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { ProjectFormDialog } from "./ProjectFormDialog";
+import { useParams } from "react-router-dom";
 
 interface Project {
   id: number;
@@ -20,6 +21,9 @@ interface ProjectListSectionProps {
 
 export function ProjectListSection({ projects = [] }: ProjectListSectionProps) {
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const { clientId } = useParams();
+  
+  const currentClientId = clientId ? parseInt(clientId) : undefined;
 
   const getStatusIcon = (status: string) => {
     switch (status?.toLowerCase()) {
@@ -124,14 +128,17 @@ export function ProjectListSection({ projects = [] }: ProjectListSectionProps) {
         </div>
       )}
 
-      <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-        <DialogContent className="max-w-3xl bg-gray-900/95 border border-gray-700/50">
-          <ProjectFormDialog 
-            onSuccess={() => setIsFormOpen(false)}
-            clientId={1} // This would come from the parent component in a real scenario
-          />
-        </DialogContent>
-      </Dialog>
+      {/* Use a separate Dialog component that doesn't interfere with the parent component's context */}
+      {isFormOpen && (
+        <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
+          <DialogContent className="max-w-3xl bg-gray-900/95 border border-gray-700/50">
+            <ProjectFormDialog 
+              onSuccess={() => setIsFormOpen(false)}
+              clientId={currentClientId || 1} 
+            />
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 }
