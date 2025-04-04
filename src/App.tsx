@@ -16,28 +16,38 @@ import Formulations from "./pages/Formulations";
 import Production from "./pages/Production";
 import Payments from "./pages/Payments";
 import Settings from "./pages/Settings";
+import { Sidebar } from "./components/layout/Sidebar";
+import { Header } from "./components/layout/Header";
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/clients" element={<Clients />} />
-        <Route path="/client/new" element={<ClientForm />} />
-        <Route path="/client/:clientId" element={<ClientForm />} />
-        <Route path="/suppliers" element={<Suppliers />} />
-        <Route path="/finance" element={<Finance />} />
-        <Route path="/invoices" element={<Invoices />} />
-        <Route path="/orders" element={<Orders />} />
-        <Route path="/employees" element={<Employees />} />
-        <Route path="/vehicles" element={<Vehicles />} />
-        <Route path="/expenses" element={<Expenses />} />
-        <Route path="/formulations" element={<Formulations />} />
-        <Route path="/production" element={<Production />} />
-        <Route path="/payments" element={<Payments />} />
-        <Route path="/settings" element={<Settings />} />
-      </Routes>
+      <div className="flex min-h-screen bg-[#0B1023]">
+        <Sidebar />
+        <div className="flex-1 flex flex-col">
+          <Header />
+          <main className="flex-1 p-4 overflow-auto">
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/clients" element={<Clients />} />
+              <Route path="/client/new" element={<ClientForm />} />
+              <Route path="/client/:clientId" element={<ClientForm />} />
+              <Route path="/suppliers" element={<Suppliers />} />
+              <Route path="/finance" element={<Finance />} />
+              <Route path="/invoices" element={<Invoices />} />
+              <Route path="/orders" element={<Orders />} />
+              <Route path="/employees" element={<Employees />} />
+              <Route path="/vehicles" element={<Vehicles />} />
+              <Route path="/expenses" element={<Expenses />} />
+              <Route path="/formulations" element={<Formulations />} />
+              <Route path="/production" element={<Production />} />
+              <Route path="/payments" element={<Payments />} />
+              <Route path="/settings" element={<Settings />} />
+            </Routes>
+          </main>
+        </div>
+      </div>
       <Toaster position="top-right" />
     </Router>
   );
