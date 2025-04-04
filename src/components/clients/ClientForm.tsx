@@ -12,6 +12,7 @@ import { SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { toast } from "sonner";
 
 const clientSchema = z.object({
+  id: z.number().optional(),
   categorieClient: z.string().min(1, "La catégorie client est requise"),
   raisonSociale: z.string().min(2, "La raison sociale est requise"),
   nom: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
@@ -30,7 +31,7 @@ const clientSchema = z.object({
 export type ClientFormValues = z.infer<typeof clientSchema>;
 
 interface ClientFormProps {
-  clientToEdit?: ClientFormValues;
+  clientToEdit?: Partial<ClientFormValues>;
   onSuccess?: () => void;
 }
 
@@ -38,6 +39,7 @@ export function ClientForm({ clientToEdit, onSuccess }: ClientFormProps) {
   const form = useForm<ClientFormValues>({
     resolver: zodResolver(clientSchema),
     defaultValues: clientToEdit || {
+      id: undefined,
       categorieClient: "",
       raisonSociale: "",
       nom: "",
