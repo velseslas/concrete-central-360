@@ -18,6 +18,10 @@ const ClientFormPage = () => {
     navigate("/clients");
   };
 
+  // We'll add an empty array as a placeholder for projects
+  // In a real application, you would fetch this data from an API
+  const projects = [];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
       <motion.div 
@@ -40,7 +44,7 @@ const ClientFormPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
         >
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <Tabs defaultValue={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="grid grid-cols-3 mb-8 bg-gray-800/50 border border-gray-700/30">
               <TabsTrigger 
                 value="info" 
@@ -70,7 +74,7 @@ const ClientFormPage = () => {
             </TabsContent>
 
             <TabsContent value="projects" className="mt-6">
-              <ProjectListSection projects={[]} />
+              <ProjectListSection projects={projects} />
             </TabsContent>
 
             <TabsContent value="documents" className="mt-6">
