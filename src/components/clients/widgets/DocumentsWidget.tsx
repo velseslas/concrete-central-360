@@ -1,27 +1,36 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { FileText, Printer, Plus } from "lucide-react";
+import { FileText, Printer, Plus, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { DocumentList } from "./DocumentList";
+import { Input } from "@/components/ui/input";
 
 const mockDocuments = [
-  { id: 1, title: "Contrat commercial" },
-  { id: 2, title: "Facture 2024-001" },
-  { id: 3, title: "Bon de commande" },
+  { id: 1, title: "Contrat commercial", type: "contract" },
+  { id: 2, title: "Facture 2024-001", type: "invoice" },
+  { id: 3, title: "Bon de commande", type: "order" },
+  { id: 4, title: "Reçu de paiement 2024-001", type: "receipt" },
+  { id: 5, title: "Reçu de paiement 2024-002", type: "receipt" },
 ];
 
 interface Document {
   id: number;
   title: string;
+  type?: string;
 }
 
 export function DocumentsWidget() {
   const [showUploadDialog, setShowUploadDialog] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [selectedDoc, setSelectedDoc] = useState<Document | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  
+  const filteredDocuments = mockDocuments.filter(doc => 
+    doc.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const handleDocumentClick = (doc: Document) => {
     setSelectedDoc(doc);
@@ -31,6 +40,15 @@ export function DocumentsWidget() {
   const handlePrint = () => {
     console.log("Impression du document:", selectedDoc?.title);
     toast.success("Document envoyé à l'impression");
+  };
+
+  const handleClosePreview = () => {
+    setPreviewOpen(false);
+    setSelectedDoc(null);
+  };
+
+  const handleCloseUpload = () => {
+    setShowUploadDialog(false);
   };
 
   return (
@@ -54,31 +72,67 @@ export function DocumentsWidget() {
           </Button>
         </div>
         
+        <div className="mb-4 relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 h-4 w-4" />
+          <Input 
+            placeholder="Rechercher un document..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10 bg-gray-800/50 border-gray-700 text-white"
+          />
+        </div>
+        
         <div className="space-y-3">
-          {mockDocuments.map((doc) => (
-            <motion.div
-              key={doc.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              whileHover={{ scale: 1.01 }}
-              className="p-4 rounded-lg bg-gradient-to-br from-gray-800/50 via-gray-800/30 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 hover:border-indigo-500/30 transition-all cursor-pointer group relative overflow-hidden"
-              onClick={() => handleDocumentClick(doc)}
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="flex items-center justify-between relative z-10">
-                <div className="flex items-center gap-3">
-                  <FileText className="h-5 w-5 text-indigo-400" />
-                  <span className="text-gray-200 group-hover:text-white transition-colors">{doc.title}</span>
+          {filteredDocuments.length > 0 ? (
+            filteredDocuments.map((doc) => (
+              <motion.div
+                key={doc.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                whileHover={{ scale: 1.01 }}
+                className="p-4 rounded-lg bg-gradient-to-br from-gray-800/50 via-gray-800/30 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 hover:border-indigo-500/30 transition-all cursor-pointer group relative overflow-hidden"
+                onClick={() => handleDocumentClick(doc)}
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="flex items-center justify-between relative z-10">
+                  <div className="flex items-center gap-3">
+                    <FileText className="h-5 w-5 text-indigo-400" />
+                    <span className="text-gray-200 group-hover:text-white transition-colors">{doc.title}</span>
+                  </div>
+                  {doc.type === "receipt" && (
+                    <span className="text-xs px-2 py-1 bg-green-500/20 text-green-400 rounded-full">
+                      Reçu
+                    </span>
+                  )}
+                  {doc.type === "invoice" && (
+                    <span className="text-xs px-2 py-1 bg-blue-500/20 text-blue-400 rounded-full">
+                      Facture
+                    </span>
+                  )}
+                  {doc.type === "contract" && (
+                    <span className="text-xs px-2 py-1 bg-purple-500/20 text-purple-400 rounded-full">
+                      Contrat
+                    </span>
+                  )}
+                  {doc.type === "order" && (
+                    <span className="text-xs px-2 py-1 bg-amber-500/20 text-amber-400 rounded-full">
+                      Commande
+                    </span>
+                  )}
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))
+          ) : (
+            <div className="text-center p-8 text-gray-400">
+              Aucun document ne correspond à votre recherche
+            </div>
+          )}
         </div>
       </div>
 
       {/* Upload Dialog */}
       {showUploadDialog && (
-        <Dialog open={showUploadDialog} onOpenChange={setShowUploadDialog}>
+        <Dialog open={showUploadDialog} onOpenChange={handleCloseUpload}>
           <DialogContent className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-700/50 backdrop-blur-xl">
             <DialogHeader>
               <DialogTitle className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
@@ -91,6 +145,15 @@ export function DocumentsWidget() {
                 <div>
                   <label className="text-sm text-gray-400">Titre du document</label>
                   <input type="text" className="w-full p-2 bg-gray-800 border border-gray-700 rounded-md text-white mt-1" />
+                </div>
+                <div>
+                  <label className="text-sm text-gray-400">Type de document</label>
+                  <select className="w-full p-2 bg-gray-800 border border-gray-700 rounded-md text-white mt-1">
+                    <option value="contract">Contrat</option>
+                    <option value="invoice">Facture</option>
+                    <option value="order">Bon de commande</option>
+                    <option value="receipt">Reçu de paiement</option>
+                  </select>
                 </div>
                 <div>
                   <label className="text-sm text-gray-400">Fichier</label>
@@ -110,8 +173,8 @@ export function DocumentsWidget() {
       )}
 
       {/* Preview Dialog */}
-      {selectedDoc && previewOpen && (
-        <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
+      {selectedDoc && (
+        <Dialog open={previewOpen} onOpenChange={handleClosePreview}>
           <DialogContent className="max-h-[90vh] w-[90vw] max-w-[800px] overflow-y-auto bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 border-gray-700/50 backdrop-blur-xl">
             <DialogHeader className="flex flex-row items-center justify-between space-y-0">
               <DialogTitle className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
