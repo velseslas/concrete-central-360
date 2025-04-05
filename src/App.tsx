@@ -16,6 +16,8 @@ import Formulations from "./pages/Formulations";
 import Production from "./pages/Production";
 import Payments from "./pages/Payments";
 import Settings from "./pages/Settings";
+import ClientPayments from "./pages/finance/ClientPayments";
+import SupplierPayments from "./pages/finance/SupplierPayments";
 import { Sidebar } from "./components/layout/Sidebar";
 import { Header } from "./components/layout/Header";
 
@@ -35,6 +37,8 @@ function App() {
               <Route path="/client/:clientId" element={<ClientForm />} />
               <Route path="/suppliers" element={<Suppliers />} />
               <Route path="/finance" element={<Finance />} />
+              <Route path="/finance/client-payments" element={<ClientPayments />} />
+              <Route path="/finance/supplier-payments" element={<SupplierPayments />} />
               <Route path="/invoices" element={<Invoices />} />
               <Route path="/orders" element={<Orders />} />
               <Route path="/employees" element={<Employees />} />

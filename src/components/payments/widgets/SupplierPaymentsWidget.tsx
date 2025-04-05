@@ -7,43 +7,49 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { SupplierPaymentDetails } from "@/components/suppliers/forms/SupplierPaymentDetails";
+import { SupplierPaymentForm } from "@/components/suppliers/forms/SupplierPaymentForm";
 
 // Mock data for supplier payments
 const mockSupplierPayments = [
   {
     id: "SP001",
-    supplier: "SARL CIMENT PLUS",
-    totalAmount: 850000,
-    paidAmount: 500000,
-    remainingAmount: 350000,
-    dueDate: "2024-07-30",
+    supplier: "CIMENT LAFARGE",
+    project: "Fourniture Ciment",
+    totalAmount: 650000,
+    paidAmount: 450000,
+    remainingAmount: 200000,
+    dueDate: "2024-07-15",
     status: "partiel"
   },
   {
     id: "SP002",
-    supplier: "EURL AGREGATS",
-    totalAmount: 325000,
-    paidAmount: 325000,
-    remainingAmount: 0,
-    dueDate: "2024-07-15",
-    status: "payé"
-  },
-  {
-    id: "SP003",
-    supplier: "ETS COMPTOIR METALLIQUE",
-    totalAmount: 1200000,
-    paidAmount: 600000,
-    remainingAmount: 600000,
-    dueDate: "2024-07-20",
+    supplier: "ACIER MODERNE",
+    project: "Fourniture Acier Construction",
+    totalAmount: 840000,
+    paidAmount: 200000,
+    remainingAmount: 640000,
+    dueDate: "2024-07-05",
     status: "partiel"
   },
   {
+    id: "SP003",
+    supplier: "AGREGATS SARL",
+    project: "Fourniture Gravier",
+    totalAmount: 320000,
+    paidAmount: 320000,
+    remainingAmount: 0,
+    dueDate: "2024-06-25",
+    status: "payé"
+  },
+  {
     id: "SP004",
-    supplier: "SPA EQUIPEMENTS BTP",
-    totalAmount: 430000,
+    supplier: "EQUIPEMENT PRO",
+    project: "Location Équipement",
+    totalAmount: 450000,
     paidAmount: 0,
-    remainingAmount: 430000,
-    dueDate: "2024-08-05",
+    remainingAmount: 450000,
+    dueDate: "2024-07-30",
     status: "impayé"
   }
 ];
@@ -51,6 +57,9 @@ const mockSupplierPayments = [
 export function SupplierPaymentsWidget() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
+  const [showPaymentForm, setShowPaymentForm] = useState(false);
+  const [showPaymentDetails, setShowPaymentDetails] = useState(false);
+  const [supplierForDetails, setSupplierForDetails] = useState<{id: string, name: string} | null>(null);
   
   const totalDue = mockSupplierPayments.reduce((acc, payment) => acc + payment.remainingAmount, 0);
   const urgentDue = mockSupplierPayments.filter(payment => {
@@ -62,15 +71,25 @@ export function SupplierPaymentsWidget() {
   }).reduce((acc, payment) => acc + payment.remainingAmount, 0);
 
   const filteredSuppliers = mockSupplierPayments.filter(payment => 
-    payment.supplier.toLowerCase().includes(searchTerm.toLowerCase())
+    payment.supplier.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    payment.project.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleNewPayment = () => {
     console.log("Opening new supplier payment form");
+    setShowPaymentForm(true);
   };
 
   const handleViewAll = () => {
     navigate("/finance/supplier-payments");
+  };
+
+  const handleRowClick = (payment: any) => {
+    setSupplierForDetails({
+      id: payment.id,
+      name: payment.supplier
+    });
+    setShowPaymentDetails(true);
   };
 
   const getStatusBadge = (status: string) => {
@@ -139,7 +158,7 @@ export function SupplierPaymentsWidget() {
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 h-4 w-4" />
               <Input 
-                placeholder="Rechercher un fournisseur..."
+                placeholder="Rechercher un fournisseur ou un projet..."
                 className="pl-10 bg-gray-800/50 border-gray-700 text-white"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -156,11 +175,14 @@ export function SupplierPaymentsWidget() {
                     animate={{ opacity: 1, y: 0 }}
                     whileHover={{ scale: 1.01 }}
                     className="p-4 rounded-lg bg-gradient-to-br from-gray-800/50 via-gray-800/30 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 hover:border-amber-500/30 cursor-pointer group overflow-hidden"
+                    onClick={() => handleRowClick(payment)}
                   >
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <div className="space-y-0.5">
                         <div className="flex items-center">
                           <h3 className="font-medium text-white">{payment.supplier}</h3>
+                          <span className="mx-2 text-gray-500">•</span>
+                          <span className="text-sm text-gray-400">{payment.project}</span>
                         </div>
                         <p className="text-sm text-gray-400">Échéance: {payment.dueDate}</p>
                       </div>
@@ -168,7 +190,7 @@ export function SupplierPaymentsWidget() {
                       <div className="flex items-center">
                         <span className="mr-2 text-right">
                           {payment.status === "payé" ? (
-                            <p className="font-semibold text-green-400">0 DA</p>
+                            <p className="font-semibold text-amber-400">0 DA</p>
                           ) : (
                             <p className="font-semibold text-amber-400">
                               {payment.remainingAmount.toLocaleString('fr-FR')} DA
@@ -201,6 +223,19 @@ export function SupplierPaymentsWidget() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Payment Form Dialog */}
+      <SupplierPaymentForm
+        open={showPaymentForm}
+        onOpenChange={setShowPaymentForm}
+      />
+
+      {/* Payment Details Dialog */}
+      <SupplierPaymentDetails
+        open={showPaymentDetails}
+        onOpenChange={setShowPaymentDetails}
+        supplier={supplierForDetails}
+      />
     </motion.div>
   );
 }

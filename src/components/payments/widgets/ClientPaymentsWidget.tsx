@@ -2,11 +2,14 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Users, Eye, Plus, Search } from "lucide-react";
+import { Users, Eye, Plus, Search, Printer } from "lucide-react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { ClientPaymentHistoryDialog } from "@/components/finance/payment/ClientPaymentHistoryDialog";
+import { PaymentForm } from "@/components/payments/PaymentForm";
+import { toast } from "sonner";
 
 // Mock data for client payments
 const mockClientPayments = [
@@ -18,7 +21,23 @@ const mockClientPayments = [
     paidAmount: 600000,
     remainingAmount: 300000,
     dueDate: "2024-07-25",
-    status: "partiel"
+    status: "partiel",
+    transactions: [
+      {
+        id: "T001",
+        amount: 300000,
+        date: "2024-05-15",
+        method: "Virement",
+        reference: "VIR-2024-098"
+      },
+      {
+        id: "T002",
+        amount: 300000,
+        date: "2024-06-20",
+        method: "Chèque",
+        reference: "CHQ-2024-076"
+      }
+    ]
   },
   {
     id: "CP002",
@@ -28,7 +47,16 @@ const mockClientPayments = [
     paidAmount: 400000,
     remainingAmount: 800000,
     dueDate: "2024-08-15",
-    status: "partiel"
+    status: "partiel",
+    transactions: [
+      {
+        id: "T003",
+        amount: 400000,
+        date: "2024-06-10",
+        method: "Virement",
+        reference: "VIR-2024-112"
+      }
+    ]
   },
   {
     id: "CP003",
@@ -38,7 +66,23 @@ const mockClientPayments = [
     paidAmount: 600000,
     remainingAmount: 0,
     dueDate: "2024-06-30",
-    status: "payé"
+    status: "payé",
+    transactions: [
+      {
+        id: "T004",
+        amount: 300000,
+        date: "2024-05-05",
+        method: "Chèque",
+        reference: "CHQ-2024-045"
+      },
+      {
+        id: "T005",
+        amount: 300000,
+        date: "2024-06-01",
+        method: "Virement",
+        reference: "VIR-2024-087"
+      }
+    ]
   },
   {
     id: "CP004",
@@ -48,13 +92,17 @@ const mockClientPayments = [
     paidAmount: 0,
     remainingAmount: 850000,
     dueDate: "2024-07-05",
-    status: "impayé"
+    status: "impayé",
+    transactions: []
   }
 ];
 
 export function ClientPaymentsWidget() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
+  const [showPaymentForm, setShowPaymentForm] = useState(false);
+  const [showHistoryDialog, setShowHistoryDialog] = useState(false);
+  const [selectedPayment, setSelectedPayment] = useState<any>(null);
   
   const totalDue = mockClientPayments.reduce((acc, payment) => acc + payment.remainingAmount, 0);
   const urgentDue = mockClientPayments.filter(payment => {
@@ -72,10 +120,21 @@ export function ClientPaymentsWidget() {
 
   const handleNewPayment = () => {
     console.log("Opening new client payment form");
+    setShowPaymentForm(true);
   };
 
   const handleViewAll = () => {
     navigate("/finance/client-payments");
+  };
+
+  const handleViewHistory = (payment: any) => {
+    setSelectedPayment(payment);
+    setShowHistoryDialog(true);
+  };
+
+  const handleAddPayment = () => {
+    setShowHistoryDialog(false);
+    setShowPaymentForm(true);
   };
 
   const getStatusBadge = (status: string) => {
@@ -161,6 +220,7 @@ export function ClientPaymentsWidget() {
                     animate={{ opacity: 1, y: 0 }}
                     whileHover={{ scale: 1.01 }}
                     className="p-4 rounded-lg bg-gradient-to-br from-gray-800/50 via-gray-800/30 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 hover:border-green-500/30 cursor-pointer group overflow-hidden"
+                    onClick={() => handleViewHistory(payment)}
                   >
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <div className="space-y-0.5">
@@ -208,6 +268,20 @@ export function ClientPaymentsWidget() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Payment Form Dialog */}
+      <PaymentForm
+        open={showPaymentForm}
+        onOpenChange={setShowPaymentForm}
+      />
+
+      {/* Payment History Dialog */}
+      <ClientPaymentHistoryDialog
+        open={showHistoryDialog}
+        onOpenChange={setShowHistoryDialog}
+        paymentData={selectedPayment}
+        onAddPayment={handleAddPayment}
+      />
     </motion.div>
   );
 }
