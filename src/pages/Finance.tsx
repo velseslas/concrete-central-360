@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { 
@@ -6,16 +7,17 @@ import {
   FileText, 
   Receipt,
   Building2,
-  Calculator
+  Calculator,
+  Users
 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { FinanceStats } from "@/components/finance/FinanceStats";
-import { PaymentTrackingWidget } from "@/components/finance/widgets/PaymentTrackingWidget";
+import { ClientPaymentsWidget } from "@/components/payments/widgets/ClientPaymentsWidget";
 import { BillingListWidget } from "@/components/finance/widgets/BillingListWidget";
 import { BillingReportsWidget } from "@/components/finance/widgets/BillingReportsWidget";
 import { DailyExpenseWidget } from "@/components/finance/widgets/DailyExpenseWidget";
 import { QuoteWidget } from "@/components/finance/widgets/QuoteWidget";
-import { SupplierPaymentsWidget } from "@/components/suppliers/SupplierPaymentsWidget";
+import { SupplierPaymentsWidget } from "@/components/payments/widgets/SupplierPaymentsWidget";
 
 export default function Finance() {
   const [activeWidget, setActiveWidget] = useState<string | null>(null);
@@ -24,9 +26,9 @@ export default function Finance() {
     {
       id: 'client-payments',
       title: 'Paiements Clients',
-      icon: CreditCard,
-      color: 'text-purple-400',
-      component: PaymentTrackingWidget
+      icon: Users,
+      color: 'text-green-400',
+      component: ClientPaymentsWidget
     },
     {
       id: 'supplier-payments',
