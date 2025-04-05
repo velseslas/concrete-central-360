@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Upload } from "lucide-react";
+import { Upload, Receipt } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
 import { ClientPaymentReceipt } from "./ClientPaymentReceipt";
@@ -94,6 +94,17 @@ export function ClientPaymentForm({
     });
     
     setShowReceipt(true);
+  };
+
+  const handleGenerateReceipt = () => {
+    const { clientId, amount, paymentMethod, paymentDate } = form.getValues();
+    
+    if (!clientId || !amount || !paymentMethod || !paymentDate) {
+      toast.error("Veuillez remplir tous les champs obligatoires avant de générer un reçu");
+      return;
+    }
+    
+    generateReceipt(form.getValues());
   };
 
   const onSubmit = (data: z.infer<typeof paymentSchema>) => {
@@ -254,6 +265,20 @@ export function ClientPaymentForm({
                   </Button>
                 </div>
               </div>
+
+              {form.watch("paymentMethod") === "especes" && (
+                <div className="flex justify-center mt-2">
+                  <Button
+                    type="button"
+                    onClick={handleGenerateReceipt}
+                    variant="outline"
+                    className="bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 hover:text-blue-300 border-blue-500/20 transition-all duration-200 hover:scale-105 w-full"
+                  >
+                    <Receipt className="h-4 w-4 mr-2" />
+                    Générer un reçu de paiement
+                  </Button>
+                </div>
+              )}
 
               <div className="flex justify-end space-x-2 pt-4">
                 <Button variant="outline" onClick={() => onOpenChange(false)}>

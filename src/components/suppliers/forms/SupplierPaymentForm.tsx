@@ -130,7 +130,12 @@ export function SupplierPaymentForm({
       }
     );
     
-    onOpenChange(false);
+    // Automatically show receipt for cash payments
+    if (data.paymentMethod === "especes" && !paymentToEdit) {
+      setShowReceipt(true);
+    } else {
+      onOpenChange(false);
+    }
   };
 
   return (
