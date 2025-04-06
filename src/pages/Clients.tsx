@@ -1,7 +1,6 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Users, FileText, Construction, Building2, Package, DollarSign, ShoppingCart, CreditCard, Factory } from "lucide-react";
+import { Users, FileText, Construction, Building2, Package, DollarSign, ShoppingCart, Factory } from "lucide-react";
 import { motion } from "framer-motion";
 import { ClientList } from "@/components/clients/ClientList";
 import { ProductCategoryWidget } from "@/components/clients/widgets/ProductCategoryWidget";
@@ -11,7 +10,6 @@ import { PriceWidget } from "@/components/clients/widgets/PriceWidget";
 import { AdminDocumentsWidget } from "@/components/clients/widgets/AdminDocumentsWidget";
 import { ReportsWidget } from "@/components/clients/widgets/ReportsWidget";
 import { OrderWidget } from "@/components/clients/widgets/OrderWidget";
-import { PaymentWidget } from "@/components/clients/widgets/PaymentWidget";
 import { ProductionWidget } from "@/components/production/ProductionWidget";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
@@ -23,7 +21,7 @@ const Clients = () => {
   const widgets = [
     {
       id: 'clients',
-      title: 'Clients',
+      title: 'Gestion des Clients',
       icon: Users,
       color: 'text-blue-400',
       component: ClientList
@@ -76,13 +74,6 @@ const Clients = () => {
       icon: FileText,
       color: 'text-gray-400',
       component: ReportsWidget
-    },
-    {
-      id: 'paiements',
-      title: 'Paiements des Clients',
-      icon: CreditCard,
-      color: 'text-emerald-400',
-      component: PaymentWidget
     },
     {
       id: 'production',
