@@ -9,7 +9,6 @@ import { DocumentFormFields } from "./DocumentFormFields";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { FileText } from "lucide-react";
 
 interface DocumentFormProps {
   onSuccess?: () => void;
@@ -77,12 +76,6 @@ export function DocumentForm({ onSuccess, onCancel, clients }: DocumentFormProps
           transition={{ duration: 0.3 }}
           className="space-y-6"
         >
-          <div className="flex items-center justify-center mb-4">
-            <div className="p-3 rounded-full bg-gradient-to-br from-indigo-500/20 to-purple-500/20">
-              <FileText className="h-8 w-8 text-indigo-400" />
-            </div>
-          </div>
-          
           <DocumentFormFields form={form} clients={clients} />
           
           <div className="flex justify-end space-x-3 pt-4 border-t border-gray-700/50">
