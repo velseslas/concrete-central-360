@@ -8,6 +8,7 @@ import { ProjectListSection } from "@/components/clients/widgets/ProjectListSect
 import { DocumentsWidget } from "@/components/clients/widgets/DocumentsWidget";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ProductPriceForm } from "@/components/clients/ProductPriceForm";
 
 const ClientFormPage = () => {
   const { clientId } = useParams();
@@ -45,7 +46,7 @@ const ClientFormPage = () => {
           transition={{ duration: 0.3 }}
         >
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid grid-cols-3 mb-8 bg-gray-800/50 border border-gray-700/30">
+            <TabsList className="grid grid-cols-4 mb-8 bg-gray-800/50 border border-gray-700/30">
               <TabsTrigger 
                 value="info" 
                 className="data-[state=active]:bg-violet-600/30 data-[state=active]:text-white text-gray-400"
@@ -64,6 +65,12 @@ const ClientFormPage = () => {
               >
                 Documents
               </TabsTrigger>
+              <TabsTrigger 
+                value="prices" 
+                className="data-[state=active]:bg-violet-600/30 data-[state=active]:text-white text-gray-400"
+              >
+                Prix produit
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="info" className="mt-6">
@@ -79,6 +86,10 @@ const ClientFormPage = () => {
 
             <TabsContent value="documents" className="mt-6">
               <DocumentsWidget />
+            </TabsContent>
+            
+            <TabsContent value="prices" className="mt-6">
+              <ProductPriceForm clientId={clientId ? parseInt(clientId) : undefined} />
             </TabsContent>
           </Tabs>
         </motion.div>
