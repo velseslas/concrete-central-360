@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Toaster } from "sonner";
 import Index from "./pages/Index";
@@ -19,9 +20,11 @@ import ClientPayments from "./pages/finance/ClientPayments";
 import SupplierPayments from "./pages/finance/SupplierPayments";
 import { Sidebar } from "./components/layout/Sidebar";
 import { Header } from "./components/layout/Header";
+
 function App() {
-  return <Router>
-      <div className="flex min-h-screen bg-[#0B1023] rounded-full">
+  return (
+    <Router>
+      <div className="flex min-h-screen bg-[#0B1023]">
         <Sidebar />
         <div className="flex-1 flex flex-col">
           <Header />
@@ -50,6 +53,8 @@ function App() {
         </div>
       </div>
       <Toaster position="top-right" />
-    </Router>;
+    </Router>
+  );
 }
+
 export default App;
