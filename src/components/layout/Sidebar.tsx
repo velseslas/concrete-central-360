@@ -74,7 +74,7 @@ export function Sidebar() {
     iconColor: "text-red-500"
   }];
   return <div className="sticky top-0 h-screen">
-      <ScrollArea className="h-full py-6 px-4 bg-[#111827] border-r border-gray-800/30">
+      <ScrollArea className="h-full py-6 px-4 bg-[#111827] border-r border-gray-800/30 rounded">
         <div className="flex flex-col gap-6">
           <div className="px-2">
             <div className="flex items-center gap-2 px-4 mb-6">
