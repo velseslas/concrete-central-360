@@ -1,119 +1,79 @@
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { ClientListHeader } from "./list/ClientListHeader";
+import { motion } from "framer-motion";
+import { Card, CardContent } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ClientListContent } from "./list/ClientListContent";
+import { DocumentsWidget } from "./widgets/DocumentsWidget";
+import { ProjectWidget } from "./widgets/ProjectWidget";
+import { ProductPriceForm } from "./ProductPriceForm";
 
-const mockClients = [
-  {
-    id: 1,
-    nom: "Constructions Modernes",
-    contactName: "Jean Dupont",
-    email: "j.dupont@construmod.fr",
-    telephone: "01 23 45 67 89",
-    ville: "Alger",
-    region: "Alger",
-    projectCount: 5,
-  },
-  {
-    id: 2,
-    nom: "BatiBéton",
-    contactName: "Marie Leroy",
-    email: "m.leroy@batibeton.fr",
-    telephone: "01 34 56 78 90",
-    ville: "Oran",
-    region: "Oran",
-    projectCount: 3,
-  },
-  {
-    id: 3,
-    nom: "ConstruPro",
-    contactName: "Paul Martin",
-    email: "p.martin@construpro.fr",
-    telephone: "01 45 67 89 01",
-    ville: "Constantine",
-    region: "Constantine",
-    projectCount: 7,
-  },
-  {
-    id: 4,
-    nom: "TechBuild",
-    contactName: "Sophie Richard",
-    email: "s.richard@techbuild.fr",
-    telephone: "01 56 78 90 12",
-    ville: "Annaba",
-    region: "Annaba",
-    projectCount: 2,
-  },
-  {
-    id: 5,
-    nom: "ImmoBat",
-    contactName: "Thomas Bernard",
-    email: "t.bernard@immobat.fr",
-    telephone: "01 67 89 01 23",
-    ville: "Blida",
-    region: "Blida",
-    projectCount: 4,
-  },
-];
-
-export const ClientList = () => {
-  const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const handleEdit = (client: any) => {
-    navigate(`/client/${client.id}`);
-  };
-
-  const handleViewProjects = (client: any) => {
-    navigate(`/client/${client.id}/projects`);
-  };
-
-  const handleDocumentUpload = (client: any) => {
-    navigate(`/client/${client.id}/documents`);
-  };
-
-  const handleDelete = (clientId: number) => {
-    console.log("Deleting client:", clientId);
-  };
-
-  const handleViewDetails = (client: any) => {
-    navigate(`/client/${client.id}`);
-  };
-
-  const handleNewClient = () => {
-    navigate("/client/new");
-  };
-
-  const filteredClients = mockClients.filter((client) => {
-    const searchLower = searchQuery.toLowerCase();
-    return (
-      client.nom.toLowerCase().includes(searchLower) ||
-      client.contactName.toLowerCase().includes(searchLower) ||
-      client.email.toLowerCase().includes(searchLower) ||
-      client.telephone.includes(searchQuery) ||
-      client.ville.toLowerCase().includes(searchLower)
-    );
-  });
+export function ClientList() {
+  const [activeTab, setActiveTab] = useState("clients");
+  const [selectedClientId, setSelectedClientId] = useState<number | null>(null);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#070B1A] to-[#0B1023] text-white">
-      <div className="container mx-auto px-4 py-8">
-        <ClientListHeader
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          onNewClient={handleNewClient}
-        />
-        
-        <ClientListContent
-          clients={filteredClients}
-          onEdit={handleEdit}
-          onViewProjects={handleViewProjects}
-          onDocumentUpload={handleDocumentUpload}
-          onDelete={handleDelete}
-          onViewDetails={handleViewDetails}
-        />
-      </div>
-    </div>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <Card className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-800 shadow-xl">
+        <CardContent className="p-6">
+          <Tabs 
+            defaultValue="clients" 
+            value={activeTab} 
+            onValueChange={setActiveTab} 
+            className="w-full"
+          >
+            <TabsList className="grid grid-cols-4 mb-6 bg-gray-800/50">
+              <TabsTrigger 
+                value="clients" 
+                className="data-[state=active]:bg-gray-700 data-[state=active]:text-white"
+              >
+                Clients
+              </TabsTrigger>
+              <TabsTrigger 
+                value="documents" 
+                className="data-[state=active]:bg-gray-700 data-[state=active]:text-white"
+              >
+                Documents
+              </TabsTrigger>
+              <TabsTrigger 
+                value="projects" 
+                className="data-[state=active]:bg-gray-700 data-[state=active]:text-white"
+              >
+                Chantiers
+              </TabsTrigger>
+              <TabsTrigger 
+                value="prices" 
+                className="data-[state=active]:bg-gray-700 data-[state=active]:text-white"
+              >
+                Prix Produits
+              </TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="clients">
+              <ClientListContent 
+                onClientSelect={(clientId) => setSelectedClientId(clientId)} 
+                selectedClientId={selectedClientId}
+              />
+            </TabsContent>
+            
+            <TabsContent value="documents">
+              <DocumentsWidget clientId={selectedClientId} />
+            </TabsContent>
+            
+            <TabsContent value="projects">
+              <ProjectWidget clientId={selectedClientId} />
+            </TabsContent>
+            
+            <TabsContent value="prices">
+              <ProductPriceForm clientId={selectedClientId} />
+            </TabsContent>
+          </Tabs>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 }
