@@ -67,6 +67,14 @@ export function DocumentsWidget({ clientId }: DocumentsWidgetProps) {
     const matchesType = documentType === "all" || doc.documentType === documentType;
     const matchesClient = clientFilter === "all" || doc.clientName === mockClients.find(c => c.id === clientFilter)?.nom;
     
+    // If a specific client is passed as a prop, only show documents for that client
+    if (clientId) {
+      const clientName = mockClients.find(c => parseInt(c.id) === clientId)?.nom;
+      if (clientName && doc.clientName !== clientName) {
+        return false;
+      }
+    }
+    
     return matchesSearch && matchesType && matchesClient;
   });
 
@@ -124,19 +132,21 @@ export function DocumentsWidget({ clientId }: DocumentsWidgetProps) {
             </SelectContent>
           </Select>
           
-          <Select value={clientFilter} onValueChange={setClientFilter}>
-            <SelectTrigger className="w-[180px] bg-gray-800/50 border-gray-700/50 text-white">
-              <SelectValue placeholder="Client" />
-            </SelectTrigger>
-            <SelectContent className="bg-gray-800 border-gray-700">
-              <SelectItem value="all" className="text-gray-200">Tous les clients</SelectItem>
-              {mockClients.map(client => (
-                <SelectItem key={client.id} value={client.id} className="text-gray-200">
-                  {client.nom}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          {!clientId && (
+            <Select value={clientFilter} onValueChange={setClientFilter}>
+              <SelectTrigger className="w-[180px] bg-gray-800/50 border-gray-700/50 text-white">
+                <SelectValue placeholder="Client" />
+              </SelectTrigger>
+              <SelectContent className="bg-gray-800 border-gray-700">
+                <SelectItem value="all" className="text-gray-200">Tous les clients</SelectItem>
+                {mockClients.map(client => (
+                  <SelectItem key={client.id} value={client.id} className="text-gray-200">
+                    {client.nom}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
         </div>
       </div>
       

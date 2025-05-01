@@ -6,12 +6,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { ProjectFormDialog } from "./ProjectFormDialog";
-import { ProjectList } from "./ProjectList";
+import { ProjectList, Project } from "./project/ProjectList";
 import { ProjectFilters } from "./project/ProjectFilters";
 import { ProjectStats } from "./project/ProjectStats";
 
 // Mock data for projects
-const mockProjects = [
+const mockProjects: Project[] = [
   {
     id: 1,
     name: "Projet Résidentiel Alger",
