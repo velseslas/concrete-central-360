@@ -4,11 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ClientForm as ClientFormComponent } from "@/components/clients/ClientForm";
-import { ProjectListSection } from "@/components/clients/widgets/ProjectListSection";
-import { DocumentsWidget } from "@/components/clients/widgets/DocumentsWidget";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ProductPriceForm } from "@/components/clients/ProductPriceForm";
 
 const ClientFormPage = () => {
   const { clientId } = useParams();
@@ -18,10 +15,6 @@ const ClientFormPage = () => {
   const handleSuccess = () => {
     navigate("/clients");
   };
-
-  // We'll add an empty array as a placeholder for projects
-  // In a real application, you would fetch this data from an API
-  const projects = [];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
@@ -46,30 +39,12 @@ const ClientFormPage = () => {
           transition={{ duration: 0.3 }}
         >
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid grid-cols-4 mb-8 bg-gray-800/50 border border-gray-700/30">
+            <TabsList className="grid grid-cols-1 mb-8 bg-gray-800/50 border border-gray-700/30">
               <TabsTrigger 
                 value="info" 
                 className="data-[state=active]:bg-violet-600/30 data-[state=active]:text-white text-gray-400"
               >
                 Informations
-              </TabsTrigger>
-              <TabsTrigger 
-                value="projects" 
-                className="data-[state=active]:bg-violet-600/30 data-[state=active]:text-white text-gray-400"
-              >
-                Chantiers
-              </TabsTrigger>
-              <TabsTrigger 
-                value="documents" 
-                className="data-[state=active]:bg-violet-600/30 data-[state=active]:text-white text-gray-400"
-              >
-                Documents
-              </TabsTrigger>
-              <TabsTrigger 
-                value="prices" 
-                className="data-[state=active]:bg-violet-600/30 data-[state=active]:text-white text-gray-400"
-              >
-                Prix produit
               </TabsTrigger>
             </TabsList>
 
@@ -79,23 +54,11 @@ const ClientFormPage = () => {
                 onSuccess={handleSuccess}
               />
             </TabsContent>
-
-            <TabsContent value="projects" className="mt-6">
-              <ProjectListSection projects={projects} />
-            </TabsContent>
-
-            <TabsContent value="documents" className="mt-6">
-              <DocumentsWidget />
-            </TabsContent>
-            
-            <TabsContent value="prices" className="mt-6">
-              <ProductPriceForm clientId={clientId ? parseInt(clientId) : undefined} />
-            </TabsContent>
           </Tabs>
         </motion.div>
       </motion.div>
     </div>
   );
-};
+}
 
 export default ClientFormPage;
