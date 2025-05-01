@@ -1,142 +1,169 @@
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 
-const projectFormSchema = z.object({
-  name: z.string().min(2, "Le nom du chantier est requis"),
-  concreteQuantity: z.string().min(1, "La quantité de béton est requise"),
-  status: z.string().min(1, "Le statut est requis")
-});
-
-type ProjectFormValues = z.infer<typeof projectFormSchema>;
-
-interface ProjectFormDialogProps {
-  onSuccess: () => void;
-  clientId: number;
+export interface ProjectFormDialogProps {
+  onOpenChange?: (open: boolean) => void;
+  clientId?: number;
+  onSuccess?: () => void;
 }
 
-export function ProjectFormDialog({ onSuccess, clientId }: ProjectFormDialogProps) {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const form = useForm<ProjectFormValues>({
-    resolver: zodResolver(projectFormSchema),
-    defaultValues: {
-      name: "",
-      concreteQuantity: "",
-      status: "En cours"
-    }
+export function ProjectFormDialog({ onOpenChange, clientId, onSuccess }: ProjectFormDialogProps) {
+  const [formData, setFormData] = useState({
+    name: "",
+    client: "",
+    address: "",
+    concreteQuantity: "",
+    status: "En cours",
+    description: ""
   });
 
-  const onSubmit = async (data: ProjectFormValues) => {
-    setIsSubmitting(true);
-    try {
-      console.log("Project data:", { ...data, clientId });
-      // Here you would typically send the data to your API
-      
-      toast.success("Chantier créé avec succès");
-      onSuccess();
-    } catch (error) {
-      toast.error("Erreur lors de la création du chantier");
-      console.error(error);
-    } finally {
-      setIsSubmitting(false);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSelectChange = (name: string, value: string) => {
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Validate form
+    if (!formData.name || !formData.concreteQuantity) {
+      toast.error("Veuillez remplir tous les champs obligatoires");
+      return;
     }
+
+    // Here we would normally submit data to the backend
+    console.log("Submitting project:", formData);
+    
+    // Show success message
+    toast.success("Chantier ajouté avec succès");
+    
+    // Close dialog and reset form
+    if (onSuccess) onSuccess();
+    if (onOpenChange) onOpenChange(false);
   };
 
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-semibold text-white mb-6">
-        Nouveau chantier
-      </h2>
+    <DialogContent className="max-w-2xl bg-gray-900/95 border-gray-800">
+      <DialogHeader>
+        <DialogTitle className="text-white text-xl">Nouveau Chantier</DialogTitle>
+      </DialogHeader>
       
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Nom du chantier</FormLabel>
-                <FormControl>
-                  <Input 
-                    placeholder="Entrez le nom du chantier" 
-                    className="bg-gray-800/50 border-gray-700/50 text-white"
-                    {...field} 
-                  />
-                </FormControl>
-                <FormMessage className="text-red-400" />
-              </FormItem>
-            )}
-          />
-          
-          <FormField
-            control={form.control}
-            name="concreteQuantity"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Quantité de béton (m³)</FormLabel>
-                <FormControl>
-                  <Input 
-                    type="number" 
-                    placeholder="Entrez la quantité de béton" 
-                    className="bg-gray-800/50 border-gray-700/50 text-white"
-                    {...field} 
-                  />
-                </FormControl>
-                <FormMessage className="text-red-400" />
-              </FormItem>
-            )}
-          />
-          
-          <FormField
-            control={form.control}
-            name="status"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Statut</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger className="bg-gray-800/50 border-gray-700/50 text-white">
-                      <SelectValue placeholder="Sélectionnez un statut" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent className="bg-gray-800 border-gray-700 text-white">
-                    <SelectItem value="En cours">En cours</SelectItem>
-                    <SelectItem value="Terminé">Terminé</SelectItem>
-                    <SelectItem value="Planifié">Planifié</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage className="text-red-400" />
-              </FormItem>
-            )}
-          />
-          
-          <div className="flex justify-end gap-2 pt-4">
-            <Button 
-              type="button"
-              variant="outline" 
-              onClick={onSuccess}
-              className="bg-gray-800 hover:bg-gray-700 text-gray-200 border-gray-600"
-            >
-              Annuler
-            </Button>
-            <Button 
-              type="submit"
-              disabled={isSubmitting}
-              className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white"
-            >
-              {isSubmitting ? "Création..." : "Créer le chantier"}
-            </Button>
+      <form onSubmit={handleSubmit} className="space-y-6 mt-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <Label htmlFor="name" className="text-gray-300">Nom du Chantier *</Label>
+            <Input
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Saisir le nom du chantier"
+              className="mt-1 bg-gray-800/50 border-gray-700/50 text-white"
+              required
+            />
           </div>
-        </form>
-      </Form>
-    </div>
+          
+          <div>
+            <Label htmlFor="client" className="text-gray-300">Client</Label>
+            <Select
+              value={formData.client}
+              onValueChange={(value) => handleSelectChange("client", value)}
+            >
+              <SelectTrigger className="w-full mt-1 bg-gray-800/50 border-gray-700/50 text-white">
+                <SelectValue placeholder="Sélectionner un client" />
+              </SelectTrigger>
+              <SelectContent className="bg-gray-800 border-gray-700">
+                <SelectItem value="SARL Construction" className="text-gray-200">SARL Construction</SelectItem>
+                <SelectItem value="SPA Promotech" className="text-gray-200">SPA Promotech</SelectItem>
+                <SelectItem value="EURL Architectura" className="text-gray-200">EURL Architectura</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          
+          <div>
+            <Label htmlFor="address" className="text-gray-300">Adresse</Label>
+            <Input
+              id="address"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              placeholder="Adresse du chantier"
+              className="mt-1 bg-gray-800/50 border-gray-700/50 text-white"
+            />
+          </div>
+          
+          <div>
+            <Label htmlFor="concreteQuantity" className="text-gray-300">Volume de Béton (m³) *</Label>
+            <Input
+              id="concreteQuantity"
+              name="concreteQuantity"
+              type="number"
+              value={formData.concreteQuantity}
+              onChange={handleChange}
+              placeholder="Ex: 500"
+              className="mt-1 bg-gray-800/50 border-gray-700/50 text-white"
+              required
+            />
+          </div>
+          
+          <div>
+            <Label htmlFor="status" className="text-gray-300">Statut</Label>
+            <Select
+              value={formData.status}
+              onValueChange={(value) => handleSelectChange("status", value)}
+            >
+              <SelectTrigger className="w-full mt-1 bg-gray-800/50 border-gray-700/50 text-white">
+                <SelectValue placeholder="Statut du chantier" />
+              </SelectTrigger>
+              <SelectContent className="bg-gray-800 border-gray-700">
+                <SelectItem value="En cours" className="text-gray-200">En cours</SelectItem>
+                <SelectItem value="Terminé" className="text-gray-200">Terminé</SelectItem>
+                <SelectItem value="En attente" className="text-gray-200">En attente</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+        
+        <div>
+          <Label htmlFor="description" className="text-gray-300">Description</Label>
+          <Textarea
+            id="description"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            placeholder="Description du chantier"
+            className="mt-1 bg-gray-800/50 border-gray-700/50 text-white h-32"
+          />
+        </div>
+        
+        <DialogFooter>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => onOpenChange && onOpenChange(false)}
+            className="bg-gray-800/50 border-gray-700/50 text-white hover:bg-gray-700/50"
+          >
+            Annuler
+          </Button>
+          <Button
+            type="submit"
+            className="bg-indigo-600 hover:bg-indigo-700 text-white"
+          >
+            Enregistrer
+          </Button>
+        </DialogFooter>
+      </form>
+    </DialogContent>
   );
 }

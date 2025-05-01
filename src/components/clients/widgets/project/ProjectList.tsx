@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Construction } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
-interface Project {
+export interface Project {
   id: number;
   name: string;
   client: string;
@@ -13,7 +13,7 @@ interface Project {
   createdAt: string;
 }
 
-interface ProjectListProps {
+export interface ProjectListProps {
   projects: Project[];
 }
 

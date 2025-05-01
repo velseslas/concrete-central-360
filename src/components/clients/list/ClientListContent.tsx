@@ -15,21 +15,47 @@ interface Client {
 }
 
 interface ClientListContentProps {
-  clients: Client[];
-  onEdit: (client: Client) => void;
-  onViewProjects: (client: Client) => void;
-  onDocumentUpload: (client: Client) => void;
-  onDelete: (clientId: number) => void;
-  onViewDetails: (client: Client) => void;
+  onClientSelect: (clientId: number) => void;
+  selectedClientId: number | null;
 }
 
+// Mock data for clients
+const mockClients: Client[] = [
+  {
+    id: 1,
+    nom: "SARL Construction",
+    contactName: "Ahmed Benaissa",
+    email: "contact@sarlconstruction.dz",
+    telephone: "021-45-67-89",
+    ville: "Alger",
+    region: "Centre",
+    projectCount: 3
+  },
+  {
+    id: 2,
+    nom: "SPA Promotech",
+    contactName: "Karim Hadj",
+    email: "info@promotech.dz",
+    telephone: "023-56-78-90",
+    ville: "Oran",
+    region: "Ouest",
+    projectCount: 2
+  },
+  {
+    id: 3,
+    nom: "EURL Architectura",
+    contactName: "Leila Mansouri",
+    email: "contact@architectura.dz",
+    telephone: "025-78-90-12",
+    ville: "Constantine",
+    region: "Est",
+    projectCount: 1
+  }
+];
+
 export function ClientListContent({
-  clients,
-  onEdit,
-  onViewProjects,
-  onDocumentUpload,
-  onDelete,
-  onViewDetails,
+  onClientSelect,
+  selectedClientId
 }: ClientListContentProps) {
   return (
     <motion.div
@@ -38,13 +64,16 @@ export function ClientListContent({
       transition={{ duration: 0.4 }}
       className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8"
     >
-      {clients.map((client, index) => (
+      {mockClients.map((client, index) => (
         <motion.div
           key={client.id}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: index * 0.1 }}
-          className="bg-gray-800/70 backdrop-blur-md rounded-xl w-full shadow-lg hover:shadow-xl transition-all"
+          className={`bg-gray-800/70 backdrop-blur-md rounded-xl w-full shadow-lg hover:shadow-xl transition-all ${
+            selectedClientId === client.id ? "ring-2 ring-indigo-500" : ""
+          }`}
+          onClick={() => onClientSelect(client.id)}
         >
           <div className="p-6">
             <div className="flex items-start mb-4">
@@ -79,7 +108,10 @@ export function ClientListContent({
               <Button 
                 variant="ghost" 
                 className="text-indigo-400 hover:text-white hover:bg-indigo-600/40 px-4 py-2 rounded-lg transition-all"
-                onClick={() => onViewDetails(client)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onClientSelect(client.id);
+                }}
               >
                 Voir les détails
               </Button>
