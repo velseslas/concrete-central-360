@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Users, Package, DollarSign, ShoppingCart, Factory } from "lucide-react";
@@ -8,7 +7,6 @@ import { ProductWidget } from "@/components/clients/widgets/ProductWidget";
 import { PriceWidget } from "@/components/clients/widgets/PriceWidget";
 import { ReportsWidget } from "@/components/clients/widgets/ReportsWidget";
 import { OrderWidget } from "@/components/clients/widgets/OrderWidget";
-import { ProductionWidget } from "@/components/production/ProductionWidget";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 const Clients = () => {
@@ -26,7 +24,7 @@ const Clients = () => {
     },
     {
       id: 'produits',
-      title: 'Produits',
+      title: 'Gestion Produits',
       icon: Package,
       color: 'text-purple-400',
       component: ProductWidget
