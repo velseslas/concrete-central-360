@@ -1,13 +1,11 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Users, FileText, Construction, Building2, Package, DollarSign, ShoppingCart, Factory } from "lucide-react";
+import { Users, Package, DollarSign, ShoppingCart, Factory } from "lucide-react";
 import { motion } from "framer-motion";
 import { ClientList } from "@/components/clients/ClientList";
-import { ProductCategoryWidget } from "@/components/clients/widgets/ProductCategoryWidget";
-import { ProjectWidget } from "@/components/clients/widgets/ProjectWidget";
 import { ProductWidget } from "@/components/clients/widgets/ProductWidget";
 import { PriceWidget } from "@/components/clients/widgets/PriceWidget";
-import { AdminDocumentsWidget } from "@/components/clients/widgets/AdminDocumentsWidget";
 import { ReportsWidget } from "@/components/clients/widgets/ReportsWidget";
 import { OrderWidget } from "@/components/clients/widgets/OrderWidget";
 import { ProductionWidget } from "@/components/production/ProductionWidget";
@@ -25,27 +23,6 @@ const Clients = () => {
       icon: Users,
       color: 'text-blue-400',
       component: ClientList
-    },
-    {
-      id: 'documents',
-      title: 'Documents',
-      icon: FileText,
-      color: 'text-yellow-400',
-      component: AdminDocumentsWidget
-    },
-    {
-      id: 'chantiers',
-      title: 'Chantiers',
-      icon: Construction,
-      color: 'text-orange-400',
-      component: ProjectWidget
-    },
-    {
-      id: 'categories',
-      title: 'Catégories',
-      icon: Building2,
-      color: 'text-green-400',
-      component: ProductCategoryWidget
     },
     {
       id: 'produits',
@@ -71,16 +48,9 @@ const Clients = () => {
     {
       id: 'rapports',
       title: 'Rapports',
-      icon: FileText,
+      icon: Factory,
       color: 'text-gray-400',
       component: ReportsWidget
-    },
-    {
-      id: 'production',
-      title: 'Production',
-      icon: Factory,
-      color: 'text-blue-500',
-      component: ProductionWidget
     }
   ];
 
