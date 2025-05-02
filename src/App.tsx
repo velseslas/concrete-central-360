@@ -5,6 +5,7 @@ import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import Clients from "./pages/Clients";
 import ClientForm from "./pages/ClientForm";
+import ClientDetailPage from "./pages/ClientDetailPage";
 import Suppliers from "./pages/Suppliers";
 import Finance from "./pages/Finance";
 import Invoices from "./pages/Invoices";
@@ -35,6 +36,7 @@ function App() {
               <Route path="/clients" element={<Clients />} />
               <Route path="/client/new" element={<ClientForm />} />
               <Route path="/client/:clientId" element={<ClientForm />} />
+              <Route path="/client-details/:clientId" element={<ClientDetailPage />} />
               <Route path="/suppliers" element={<Suppliers />} />
               <Route path="/finance" element={<Finance />} />
               <Route path="/finance/client-payments" element={<ClientPayments />} />

@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { User, Mail, Phone, MapPin, Building } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 interface Client {
   id: number;
@@ -23,13 +24,13 @@ interface ClientListContentProps {
 const mockClients: Client[] = [
   {
     id: 1,
-    nom: "SARL Construction",
-    contactName: "Ahmed Benaissa",
-    email: "contact@sarlconstruction.dz",
-    telephone: "021-45-67-89",
+    nom: "Constructions Modernes",
+    contactName: "Jean Dupont",
+    email: "j.dupont@construmod.fr",
+    telephone: "01 23 45 67 89",
     ville: "Alger",
     region: "Centre",
-    projectCount: 3
+    projectCount: 5
   },
   {
     id: 2,
@@ -57,6 +58,13 @@ export function ClientListContent({
   onClientSelect,
   selectedClientId
 }: ClientListContentProps) {
+  const navigate = useNavigate();
+
+  const handleViewDetails = (clientId: number, e: React.MouseEvent) => {
+    e.stopPropagation();
+    navigate(`/client-details/${clientId}`);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -108,10 +116,7 @@ export function ClientListContent({
               <Button 
                 variant="ghost" 
                 className="text-indigo-400 hover:text-white hover:bg-indigo-600/40 px-4 py-2 rounded-lg transition-all"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onClientSelect(client.id);
-                }}
+                onClick={(e) => handleViewDetails(client.id, e)}
               >
                 Voir les détails
               </Button>
