@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Users, Package, DollarSign, ShoppingCart, Factory } from "lucide-react";
+import { Users, Package, ShoppingCart, Factory } from "lucide-react";
 import { motion } from "framer-motion";
 import { ClientList } from "@/components/clients/ClientList";
 import { ProductWidget } from "@/components/clients/widgets/ProductWidget";
@@ -13,34 +13,34 @@ const Clients = () => {
   const [activeWidget, setActiveWidget] = useState<string | null>(null);
   const [selectedClientId, setSelectedClientId] = useState<number>(1);
   const navigate = useNavigate();
-  
+
   const widgets = [
     {
       id: 'clients',
       title: 'Gestion des Clients',
       icon: Users,
-      color: 'text-blue-400',
+      color: 'text-primary',
       component: ClientList
     },
     {
       id: 'produits',
       title: 'Gestion Produits',
       icon: Package,
-      color: 'text-purple-400',
+      color: 'text-primary',
       component: ProductWidget
     },
     {
       id: 'commandes',
       title: 'Commandes',
       icon: ShoppingCart,
-      color: 'text-indigo-400',
+      color: 'text-primary',
       component: () => <OrderWidget clientId={selectedClientId} />
     },
     {
       id: 'rapports',
       title: 'Rapports',
       icon: Factory,
-      color: 'text-gray-400',
+      color: 'text-primary',
       component: ReportsWidget
     }
   ];
@@ -80,19 +80,19 @@ const Clients = () => {
               transition={{ duration: 0.3, delay: index * 0.1 }}
             >
               <Card 
-                className="cursor-pointer group hover:scale-105 transition-all duration-300 bg-gray-900/50 backdrop-blur-xl border-gray-800 hover:border-gray-700"
+                className="cursor-pointer group hover:scale-105 transition-all duration-300 bg-card border border-border hover:border-muted"
                 onClick={() => setActiveWidget(widget.id)}
               >
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-3 text-gray-100">
-                    <div className={`p-2 rounded-lg bg-gray-800/50 group-hover:scale-110 transition-transform duration-300 ${widget.color}`}>
+                  <CardTitle className="flex items-center gap-3 text-foreground">
+                    <div className={`p-2 rounded-lg bg-muted group-hover:scale-110 transition-transform duration-300 ${widget.color}`}>
                       <IconComponent className="h-5 w-5" />
                     </div>
                     {widget.title}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-400">
+                  <p className="text-muted-foreground">
                     Gestion de {widget.title.toLowerCase()}
                   </p>
                 </CardContent>
@@ -105,7 +105,7 @@ const Clients = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+    <div className="min-h-screen bg-background text-foreground">
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
