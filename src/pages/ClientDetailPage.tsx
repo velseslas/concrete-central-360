@@ -231,19 +231,20 @@ const ClientDetailPage = () => {
         
         <h1 className="text-2xl font-bold mb-8">{client.nom}</h1>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Client Information Card */}
+        <div className="space-y-8">
+          {/* Client Information Card - Floating freely without grid */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
+            className="bg-gray-900/90 border border-gray-800 rounded-lg shadow-xl"
           >
-            <Card className="bg-gray-900/90 border-gray-800">
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-xl text-white flex items-center gap-2">
+            <div className="p-6">
+              <div className="flex flex-row items-center justify-between pb-2">
+                <div className="text-xl text-white flex items-center gap-2">
                   <User className="h-5 w-5 text-blue-400" />
                   Informations du client
-                </CardTitle>
+                </div>
                 <Button 
                   variant="ghost" 
                   size="sm" 
@@ -253,8 +254,8 @@ const ClientDetailPage = () => {
                   <Edit className="h-4 w-4 mr-2" />
                   Modifier
                 </Button>
-              </CardHeader>
-              <CardContent className="pt-4">
+              </div>
+              <div className="pt-4">
                 <div className="space-y-4">
                   <div>
                     <p className="text-sm font-medium text-gray-400">Entreprise</p>
@@ -296,11 +297,11 @@ const ClientDetailPage = () => {
                     </p>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </motion.div>
           
-          {/* Price Widget */}
+          {/* Price Widget - Floating freely without grid */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -308,29 +309,29 @@ const ClientDetailPage = () => {
           >
             <PriceWidget />
           </motion.div>
-        </div>
         
-        {/* Projects Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.2 }}
-          className="mt-8"
-        >
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold">Chantiers du client</h2>
-            <Button className="bg-violet-600 hover:bg-violet-700 text-white">
-              <Plus className="mr-2 h-4 w-4" />
-              Nouveau chantier
-            </Button>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {clientProjects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
-          </div>
-        </motion.div>
+          {/* Projects Section - Floating freely without grid */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.2 }}
+            className="mt-8"
+          >
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold">Chantiers du client</h2>
+              <Button className="bg-violet-600 hover:bg-violet-700 text-white">
+                <Plus className="mr-2 h-4 w-4" />
+                Nouveau chantier
+              </Button>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {clientProjects.map((project) => (
+                <ProjectCard key={project.id} project={project} />
+              ))}
+            </div>
+          </motion.div>
+        </div>
       </motion.div>
     </div>
   );
