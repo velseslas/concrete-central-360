@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ProductPriceForm } from "@/components/clients/ProductPriceForm";
 import { ProjectListSection } from "@/components/clients/widgets/ProjectListSection";
+import { PriceWidget } from "@/components/clients/widgets/PriceWidget";
 
 // Mock data for client
 const getClientById = (id: number) => {
@@ -299,51 +300,13 @@ const ClientDetailPage = () => {
             </Card>
           </motion.div>
           
-          {/* Project Summary Card */}
+          {/* Price Widget */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.1 }}
           >
-            <Card className="bg-gray-900/90 border-gray-800">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-xl text-white flex items-center gap-2">
-                  <Building className="h-5 w-5 text-blue-400" />
-                  Résumé des projets
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="pt-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <Card className="bg-purple-900/20 border-purple-800/30">
-                    <CardContent className="p-4">
-                      <p className="text-sm font-medium text-gray-400">Total des projets</p>
-                      <p className="text-3xl font-bold text-white mt-2">{clientProjects.length}</p>
-                    </CardContent>
-                  </Card>
-                  
-                  <Card className="bg-blue-900/20 border-blue-800/30">
-                    <CardContent className="p-4">
-                      <p className="text-sm font-medium text-gray-400">En cours</p>
-                      <p className="text-3xl font-bold text-white mt-2">{clientProjects.filter(p => p.status === "En cours").length}</p>
-                    </CardContent>
-                  </Card>
-                  
-                  <Card className="bg-amber-900/20 border-amber-800/30">
-                    <CardContent className="p-4">
-                      <p className="text-sm font-medium text-gray-400">Planifiés</p>
-                      <p className="text-3xl font-bold text-white mt-2">{clientProjects.filter(p => p.status === "Planifié").length}</p>
-                    </CardContent>
-                  </Card>
-                  
-                  <Card className="bg-green-900/20 border-green-800/30">
-                    <CardContent className="p-4">
-                      <p className="text-sm font-medium text-gray-400">Terminés</p>
-                      <p className="text-3xl font-bold text-white mt-2">{clientProjects.filter(p => p.status === "Terminé").length}</p>
-                    </CardContent>
-                  </Card>
-                </div>
-              </CardContent>
-            </Card>
+            <PriceWidget />
           </motion.div>
         </div>
         
@@ -367,21 +330,6 @@ const ClientDetailPage = () => {
               <ProjectCard key={project.id} project={project} />
             ))}
           </div>
-        </motion.div>
-        
-        {/* Products Price Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.3 }}
-          className="mt-12"
-        >
-          <h2 className="text-2xl font-bold mb-6">Prix des produits</h2>
-          <Card className="bg-gray-900/90 border-gray-800">
-            <CardContent className="p-6">
-              <ProductPriceForm clientId={parsedClientId} />
-            </CardContent>
-          </Card>
         </motion.div>
       </motion.div>
     </div>
