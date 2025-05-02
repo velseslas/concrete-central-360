@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Edit, FileText, Trash2 } from "lucide-react";
 import { motion } from "framer-motion";
@@ -44,7 +45,7 @@ export function PriceList({ onEdit }: PriceListProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="p-4 rounded-lg bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm border border-gray-700/50 hover:bg-gray-800/60 transition-all duration-300 cursor-pointer shadow-lg hover:shadow-xl"
+          className="p-5 bg-gray-800/50 rounded-lg border border-gray-700/50 hover:bg-gray-800/60 transition-all duration-300 cursor-pointer shadow-lg hover:shadow-xl"
         >
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
